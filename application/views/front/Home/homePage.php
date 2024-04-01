@@ -1,5 +1,5 @@
  <div class="home-slider margin-bottom-0">
-                <div class="item" data-overlay="3" style="background-image: url(images/banner-3.jpg);">
+                <div class="item" data-overlay="3" style="background-image: url('<?php echo base_url("images/banner-3.jpg") ?>');">
                     <div class="container">
                         <div class="row">
                             <div class="col-12">
@@ -17,7 +17,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="item" data-overlay="3" style="background-image: <?php echo base_url('images/banner-2.jpg') ?>;">
+                <div class="item" data-overlay="3" style="background-image: url('<?php echo base_url("images/banner-2.jpg") ?>')">
                     <div class="container">
                         <div class="row">
                             <div class="col-12">
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="item" data-overlay="3" style="background-image: url(images/banner-1.jpg);">
+                <div class="item" data-overlay="3" style="background-image:  url('<?php echo base_url('images/banner-1.jpg');?>')">
                     <div class="container">
                         <div class="row">
                             <div class="col-12">
@@ -84,7 +84,7 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                             <div class="single_cats">
                                 <a href="javaScript:;" class="cards card-overflow card-scale lg_height">
-                                    <div class="bg-image" style="background:url(images/b-8.png)no-repeat;"></div>
+                                    <div class="bg-image" style="background: url('<?php echo base_url("images/b-8.png") ?>')  no-repeat;"></div>
                                     <div class="ct_body">
                                         <div class="ct_body_caption left">
                                             <h2 class="m-0 ft-bold lh-1 fs-md text-upper">Women Clothes</h2>
@@ -98,7 +98,7 @@
                             </div>
                             <div class="single_cats">
                                 <a href="javaScript:;" class="cards card-overflow card-scale md_height">
-                                    <div class="bg-image" style="background:url(images/b-5.png)no-repeat;"></div>
+                                    <div class="bg-image" style="background: url('<?php echo base_url("images/b-5.png") ?>') no-repeat;"></div>
                                     <div class="ct_body">
                                         <div class="ct_body_caption left">
                                             <h2 class="m-0 ft-bold lh-1 fs-md text-upper">Men's Wear</h2>
@@ -117,7 +117,7 @@
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                     <div class="single_cats">
                                         <a href="javaScript:;" class="cards card-overflow card-scale md_height">
-                                            <div class="bg-image" style="background:url(images/b-3.png)no-repeat;"></div>
+                                            <div class="bg-image" style="background: url('<?php echo base_url("images/b-3.png") ?>') no-repeat;"></div>
                                             <div class="ct_body">
                                                 <div class="ct_body_caption left">
                                                     <h2 class="m-0 ft-bold lh-1 fs-md text-upper">Kid's Wear</h2>
@@ -131,7 +131,7 @@
                                     </div>
                                     <div class="single_cats">
                                         <a href="javaScript:;" class="cards card-overflow card-scale lg_height">
-                                            <div class="bg-image" style="background:url(images/b-7.png)no-repeat;"></div>
+                                            <div class="bg-image" style="background: url('<?php echo base_url("images/b-7.png") ?>') no-repeat;"></div>
                                             <div class="ct_body">
                                                 <div class="ct_body_caption left">
                                                     <h2 class="m-0 ft-bold lh-1 fs-md text-upper">Men's Jackets</h2>
@@ -156,7 +156,7 @@
                     <div class="row justify-content-center">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                             <div class="sec_title position-relative text-center">
-                                <h2 class="off_title">Trendy Products</h2>
+                                <!-- <h2 class="off_title">Trendy Products</h2> -->
                                 <h3 class="ft-bold pt-3">Our Trending Products</h3>
                             </div>
                         </div>
@@ -331,7 +331,7 @@
                 </div>
             </section>
 
-            <section class="bg-cover" data-overlay="5" style="background:url(images/banner-3.jpg) no-repeat fixed;">
+            <section class="bg-cover" data-overlay="5" style="background: url('<?php echo base_url("images/b-3.png") ?>') no-repeat fixed;">
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-xl-8 col-lg-9 col-md-12 col-sm-12">
