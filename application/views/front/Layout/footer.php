@@ -1,4 +1,4 @@
-<footer class="light-footer">
+<footer class="light-footer mt-5">
     <div class="footer-middle">
         <div class="container">
             <div class="row">

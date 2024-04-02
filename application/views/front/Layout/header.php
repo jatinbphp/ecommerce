@@ -8,6 +8,7 @@
         <meta name="format-detection" content="telephone=no"/>
         <title>Blu leisure</title>
         <link href="<?php echo base_url('css/styles.css'); ?>" rel="stylesheet">
+        <link href="<?php echo base_url('css/bootstrap.min.css'); ?>" rel="stylesheet">
     </head>
     <body>
         <div id="main-wrapper">

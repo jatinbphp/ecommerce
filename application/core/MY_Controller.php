@@ -6,7 +6,7 @@ class MY_Controller extends CI_Controller
         parent::__construct();
     }
 
-	public function render_template($page = null, $data = array())
+	public function frontRenderTemplate($page = null, $data = array())
 	{   
 		$this->load->view('front/Layout/header',$data);
 		$this->load->view($page, $data);
