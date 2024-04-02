@@ -67,3 +67,8 @@ $route['dashboard'] = 'front/homeController';
 $route['logout'] = 'front/auth/AuthController/logout';
 $route['check-email'] = 'front/auth/AuthController/check_email_exists';
 
+//Admin
+$route['admin'] = 'admin/AdminController';
+$route['admin/dashboard'] = 'admin/DashboardController';
+
+
