@@ -1,6 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link href="<?php echo base_url('css/bootstrap.min.css'); ?>" rel="stylesheet">
+    <style>
+        /* Custom CSS for logo and background color */
+        body {
+            background-color: #f8f9fa; /* Set your desired background color */
+        }
+        .company-logo {
+            max-width: 200px; /* Adjust the size of the logo as needed */
+            margin-bottom: 20px; /* Add some margin below the logo */
+        }
+    </style>
+</head>
+<body>
     <div class="container">
         <div class="row justify-content-center mt-5">
             <div class="col-md-6">
+                <img src="<?php echo base_url('images/logo.png')?>" class="company-logo mx-auto d-block" alt="Company Logo">
                 <div class="card">
                     <div class="card-header">
                         OTP Verification
@@ -23,3 +43,9 @@
             </div>
         </div>
     </div>
+    <script src="<?php echo base_url('js/jquery.min.js'); ?>"></script>
+    <script src="<?php echo base_url('js/popper.min.js'); ?>"></script>
+    <script src="<?php echo base_url('js/bootstrap.min.js'); ?>"></script>
+
+</body>
+</html>
