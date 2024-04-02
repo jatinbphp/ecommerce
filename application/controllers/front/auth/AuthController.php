@@ -9,20 +9,18 @@ class AuthController extends MY_Controller {
     }
 
     public function index() {
-
-        $this->frontRenderTemplate('front/auth/signUp');
-        //$this->load->view('front/auth/signUp'); 
+        $this->load->view('front/auth/signUp'); 
     }
 
     public function optCheckView()
     {
-        $this->frontRenderTemplate('front/auth/otpCheck');
-        //$this->load->view('front/auth/otpCheck');
+        //$this->frontRenderTemplate('front/auth/otpCheck');
+        $this->load->view('front/auth/otpCheck');
     }
 
     public function logIn() {
-        $this->frontRenderTemplate('front/auth/signIn');
-        //$this->load->view('front/auth/signIn'); 
+        
+        $this->load->view('front/auth/signIn'); 
     }
 
     public function dashboard() {
@@ -161,6 +159,20 @@ class AuthController extends MY_Controller {
             if ($otp_entered == $stored_otp) {
                 $this->session->set_flashdata('success', 'OTP verified successfully. User authenticated.');
                 $this->user_model->reset_otp($user->id);
+
+                $userdata = array(
+                    'id ' => $user->id,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
+                    'email' => $user->email,
+                    'role' => $user->role,
+                    'phone' => $user->phone,
+                    'status' => $user->status,
+                    'login_attempts' => $user->login_attempts,
+                    'logged_in' => true
+                );
+
+                $this->session->set_userdata($userdata);
                 redirect('dashboard');
             } else {
                 $this->session->set_flashdata('error', 'Invalid OTP. Please try again.');

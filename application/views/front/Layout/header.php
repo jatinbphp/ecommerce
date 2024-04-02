@@ -73,25 +73,33 @@
                                         <i class="lni lni-user"></i>
                                     </a>
                                     <ul class="dropdown-menu popup-content link">
-                                        <li class="current">
-                                            <a href="javascript:void(0);" class="dropdown-item medium text-medium">Cart</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" class="dropdown-item medium text-medium">Checout</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" class="dropdown-item medium text-medium">Wishlist</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" class="dropdown-item medium text-medium">Log Out</a>
-                                        </li>
+                                        
+                                        <?php if ($this->session->userdata('logged_in')): ?>
+                                            <li>
+                                                <a href="javascript:void(0);" class="dropdown-item medium text-medium">My Account</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0);" class="dropdown-item medium text-medium">My Orders</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0);" class="dropdown-item medium text-medium">My Wishlist</a>
+                                            </li>
+                                            <li>
+                                                <a href="logout" class="dropdown-item medium text-medium">Log Out</a>
+                                            </li>
+                                            
+                                         <?php else: ?>
+                                            <li><a href="signIn" class="dropdown-item medium text-medium">Sign In</a></li>
+                                         <?php endif; ?>
                                     </ul>
                                 </li>
-                                <li>
-                                    <a href="javaScript:;" onclick="openWishlist()">
-                                    <i class="lni lni-heart"></i><span class="dn-counter">2</span>
-                                    </a>
-                                </li>
+                                <?php if ($this->session->userdata('logged_in')): ?>
+                                    <li>
+                                        <a href="javaScript:;" onclick="openWishlist()">
+                                        <i class="lni lni-heart"></i><span class="dn-counter">2</span>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
                                 <li>
                                     <a href="javaScript:;" onclick="openCart()">
                                     <i class="lni lni-shopping-basket"></i><span class="dn-counter">3</span>
