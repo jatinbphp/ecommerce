@@ -1,6 +1,53 @@
 <?php
 class User_model extends CI_Model {
 
+	public function getStudentData($studentId = null)
+	{
+		if($studentId) {
+			$sql = "SELECT * FROM users WHERE id = ? AND role += '2' ";
+			$query = $this->db->query($sql, array($studentId));
+			return $query->row_array();
+		}
+
+		$sql = "SELECT * FROM users WHERE role == '2' ORDER BY id DESC";
+		$query = $this->db->query($sql, array(0));
+		return $query->result_array();
+	}
+
+	public function edit($data = array(), $id = null)
+	{
+		$this->db->where('id', $id);
+		$update = $this->db->update('users', $data);
+
+		return ($update == true) ? true : false;
+	}
+
+	function check_other_username($table,$username,$id='') {
+		$this->db->select('*');
+		$this->db->where('username', $username);
+		if($id != '')
+			$this->db->where('id != ', $id);
+		$query = $this->db->get($table);
+		$data = $query->row_array();
+		if(empty($data))
+			return 'No';
+		else
+			return 'Yes';
+	}
+
+	function check_other_email($table,$email,$id='') {
+		$this->db->select('*');
+		$this->db->where('email', $email);
+		if($id != '')
+			$this->db->where('id !=', $id);
+		$query = $this->db->get($table);
+		$data = $query->row_array();
+		if(empty($data))
+			return 'No';
+		else
+			return 'Yes';
+	}
+
 	const STATUS_ACTIVE        = 1;
     const STATUS_INACTIVE      = 0;
     const STATUS_ACTIVE_TEXT   = "Active";

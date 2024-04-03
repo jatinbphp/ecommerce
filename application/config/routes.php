@@ -53,6 +53,5 @@ $route['default_controller'] = 'HomeController';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-
 include('routes_admin.php');
 include('routes_user.php');
