@@ -1,37 +1,61 @@
 <?php
 
-class Students extends AdminController
+class UserController extends MY_Controller
 {
 	public function __construct()
 	{
 		parent::__construct();
 
-		$this->notLoggedIn();
+		//$this->notLoggedIn();
 
 		$this->data['page_title'] = $this->lang->line('lang_page_title_applicant');
 
-		$this->load->model('model_students');
+		$this->load->model('user_model');
 
-		if($this->session->userdata('role')!='admin'){
-			$this->session->set_flashdata('error', $this->lang->line('lang_error_not_authorised_section'));
-			redirect('dashboard', 'refresh');
-		}
+//		if($this->session->userdata('role')!='1'){
+//			$this->session->set_flashdata('error', $this->lang->line('lang_error_not_authorised_section'));
+//			redirect('dashboard', 'refresh');
+//		}
 	}
 
 	public function index()
 	{
-		$students_data = $this->model_students->getStudentData();
-
+		$user_data = $this->user_model->getUserData();
 		$result_info = array();
-		foreach ($students_data as $k => $v) {
-
-			$result_info[$k]['students_info'] = $v;
-
+		foreach ($user_data as $k => $v) {
+			$result_info[$k]['users_info'] = $v;
 		}
+		$this->data['users_data'] = $result_info;
+		$this->adminRenderTemplate('admin/users/index', $this->data);
+	}
 
-		$this->data['students_data'] = $result_info;
+	public function fetch_users()
+	{
+		$fetch_data = $this->user_model->make_datatables();
+		$data = array();
+		foreach ($fetch_data as $row) {
+			$sub_array = array();
+			$sub_array[] = $row->first_name;
+			$sub_array[] = $row->last_name;
+			$sub_array[] = $row->email;
+			$sub_array[] = $row->phone;
+			if($row->status==1){
+				$sub_array[] = 'Active';
+			} else {
+				$sub_array[] = 'Inactive';
+			}
+			$sub_array1 = '<a href="' . base_url('admin/users/edit/' . $row->id) . '" class="btn btn-warning"  style="margin-right:5px;"><i class="fa fa-edit"></i></a><a href="javascript:void(0);" class="btn btn-danger deleteRecord" data-id="' . $row->id . '" data-controller="users" data-title="user"><i class="fa fa-trash"></i></a>';
+			$sub_array[] = $sub_array1;
+			$data[] = $sub_array;
+		}
+		$output = array(
+			"draw" => intval($_POST["draw"]),
+			"recordsTotal" => $this->user_model->get_all_data(),
+			"recordsFiltered" => $this->user_model->get_filtered_data(),
+			"data" => $data,
+		);
+		echo json_encode($output);
 
-		@$this->render_template('students/index', $this->data);
 	}
 
 	public function create()
@@ -49,21 +73,19 @@ class Students extends AdminController
 				'phone' => $this->input->post('phone')
 			);
 
-			$create = $this->model_students->create($data);
+			$create = $this->user_model->create($data);
 			if($create == true) {
 				$this->session->set_flashdata('success', $this->lang->line('lang_successfully_created_applicants'));
 				redirect('students', 'refresh');
 			}
 			else {
 				$this->session->set_flashdata('error', $this->lang->line('lang_error_occurred'));
-				redirect('students/create', 'refresh');
+				redirect('admin/users/create', 'refresh');
 			}
 
 		} else {
-			// false case
 			$this->data['datas'] = '';
-
-			@$this->render_template('students/create', $this->data);
+			$this->adminRenderTemplate('admin/users/create', $this->data);
 		}
 	}
 
@@ -84,14 +106,14 @@ class Students extends AdminController
 						'status' => $this->input->post('status'),
 					);
 
-					$update = $this->model_students->edit($data, $id);
+					$update = $this->user_model->edit($data, $id);
 					if($update == true) {
 						$this->session->set_flashdata('success', $this->lang->line('lang_successfully_updated_applicants'));
 						redirect('students', 'refresh');
 					}
 					else {
 						$this->session->set_flashdata('error', $this->lang->line('lang_error_occurred'));
-						redirect('students/edit/'.$id, 'refresh');
+						redirect('admin/users/edit/'.$id, 'refresh');
 					}
 				}
 				else {
@@ -108,23 +130,23 @@ class Students extends AdminController
 						'status' => $this->input->post('status'),
 					);
 
-					$update = $this->model_students->edit($data, $id);
+					$update = $this->user_model->edit($data, $id);
 					if($update == true) {
 						$this->session->set_flashdata('success', $this->lang->line('lang_successfully_updated_applicants'));
 						redirect('students', 'refresh');
 					}
 					else {
 						$this->session->set_flashdata('error', $this->lang->line('lang_error_occurred'));
-						redirect('students/edit/'.$id, 'refresh');
+						redirect('admin/users/edit/'.$id, 'refresh');
 					}
 				}
 			} else {
 				// false case
-				$student_data = $this->model_students->getStudentData($id);
+				$student_data = $this->user_model->getStudentData($id);
 
 				$this->data['student_data'] = $student_data;
 
-				@$this->render_template('students/edit', $this->data);
+				@$this->render_template('admin/users/edit', $this->data);
 			}
 		}
 	}
@@ -136,9 +158,9 @@ class Students extends AdminController
 			$data = array(
 				'deleted' => 1
 			);
-			//$update = $this->model_students->edit($data, $id);
-			$update = $this->model_students->edit_application($data, $id);
-			$delete = $this->model_students->delete($id);
+			//$update = $this->user_model->edit($data, $id);
+			$update = $this->user_model->edit_application($data, $id);
+			$delete = $this->user_model->delete($id);
 			if($update == true) {
 				$this->session->set_flashdata('success', $this->lang->line('lang_successfully_removed_applicants'));
 				redirect('students', 'refresh');
@@ -155,7 +177,7 @@ class Students extends AdminController
 	{
 		$email = $this->input->post('email');
 		if($email != ''){
-			$data['student_email']=$this->model_students->check_student_email_exist($email);
+			$data['student_email']=$this->user_model->check_student_email_exist($email);
 
 			$return = '';
 			if($data['student_email'] == 'Yes'){
@@ -173,7 +195,7 @@ class Students extends AdminController
 	{
 		$username = $this->input->post('username');
 		if($username != ''){
-			$data['username']=$this->model_students->check_username_exist($username);
+			$data['username']=$this->user_model->check_username_exist($username);
 
 			$return = '';
 			if($data['username'] == 'Yes'){
@@ -192,7 +214,7 @@ class Students extends AdminController
 		$email = $this->input->post('email');
 		$id = $this->input->post('id');
 		if($email != ''){
-			$data['student_email']=$this->model_students->check_other_email('students',$email,$id);
+			$data['student_email']=$this->user_model->check_other_email('students',$email,$id);
 
 			$return = '';
 			if($data['student_email'] == 'Yes'){
@@ -211,7 +233,7 @@ class Students extends AdminController
 		$username = $this->input->post('username');
 		$id = $this->input->post('id');
 		if($username != ''){
-			$data['student_email']=$this->model_students->check_other_username('students',$username,$id);
+			$data['student_email']=$this->user_model->check_other_username('students',$username,$id);
 			$return = '';
 			if($data['student_email'] == 'Yes'){
 				$return = false;
@@ -224,43 +246,12 @@ class Students extends AdminController
 		}
 	}
 
-	public function fetch_students(){
-
-		$fetch_data = $this->model_students->make_datatables();
-
-		$data = array();
-		foreach ($fetch_data as $row) {
-
-			$sub_array = array();
-			$sub_array[] = $row->username;
-			$sub_array[] = $row->email;
-			$sub_array[] = $row->firstname.' '.$row->lastname;
-			$sub_array[] = $row->phone;
-			if($row->status==1){
-				$sub_array[] = 'Active';
-			} else {
-				$sub_array[] = 'Inactive';
-			}
-			$sub_array1 = '<a href="' . base_url('students/edit/' . $row->id) . '" class="btn btn-warning"  style="margin-right:5px;"><i class="fa fa-edit"></i></a><a href="javascript:void(0);" class="btn btn-danger deleteRecord" data-id="' . $row->id . '" data-controller="students" data-title="student"><i class="fa fa-trash"></i></a>';
-			$sub_array[] = $sub_array1;
-			$data[] = $sub_array;
-		}
-		$output = array(
-			"draw" => intval($_POST["draw"]),
-			"recordsTotal" => $this->model_students->get_all_data(),
-			"recordsFiltered" => $this->model_students->get_filtered_data(),
-			"data" => $data,
-		);
-		echo json_encode($output);
-
-	}
-
 	public function export()
 	{
 
-		$students_data = $this->model_students->getStudentData();
+		$user_data = $this->user_model->getStudentData();
 
-		if(count($students_data)>0){
+		if(count($user_data)>0){
 
 			$delimiter = ",";
 			$filename = "SARIMA-STUDENTS-LIST-" . date('Y-m-d-h-i-s') . ".csv";
@@ -273,7 +264,7 @@ class Students extends AdminController
 			fputcsv($f, $fields, $delimiter);
 
 			//output each row of the data, format line as csv and write to file pointer
-			foreach ($students_data as $key => $value) {
+			foreach ($user_data as $key => $value) {
 
 				$username = $value['username'];
 

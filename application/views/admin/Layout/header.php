@@ -38,6 +38,7 @@
 				</div>
 				<div class="info">
 					<a href="#" class="d-block">Alexander Pierce</a>
+					<a href="<?php echo base_url('admin/logOut'); ?>" class="d-block">LogOut</a>
 				</div>
 			</div>
 			<nav class="mt-2">
@@ -50,14 +51,35 @@
 							</p>
 						</a>
 					</li>
-					<li class="nav-item">
-						<a href="<?php echo base_url('contact-us'); ?>" class="nav-link">
+					<li class="nav-item has-treeview" id="usersMainNav">
+						<a href="#" class="nav-link" id="usersMainNava">
 							<i class="nav-icon fas fa-users"></i>
 							<p>
 								Users
+								<i class="right fas fa-angle-left"></i>
 							</p>
 						</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item" id="createUsersSubNav">
+								<a href="<?php echo base_url('admin/users/create') ?>" class="nav-link">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Add User</p>
+								</a>
+							</li>
+							<li class="nav-item" id="manageUsersSubNav">
+								<a href="<?php echo base_url('admin/users') ?>" class="nav-link">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Manage Users</p>
+								</a>
+							</li>
+						</ul>
 					</li>
+					<li class="nav-item">
+                        <a href="<?php echo base_url('admin/categories'); ?>" id="CategoriesList" class="nav-link">
+                            <i class="nav-icon fa fa-sitemap"></i>
+                            <p>Categories</p>
+                        </a>
+                    </li>
 				</ul>
 			</nav>
 		</div>

@@ -1,13 +1,11 @@
 $(document).ready(function() {
-
-    //Admin Students Table Get
     $('#CategoriesTable').DataTable({
         "processing": true,
         "serverSide": true,
         "order":[],
         "ajax":{
             url:"categories/fetch_categories",
-            type:"POST"
+            type:"POST",
         },
         "columnDefs": [{
             "targets":[4],
@@ -57,6 +55,21 @@ $(document).ready(function() {
                 swal("Cancelled", yourDataSafe, "error");
             }
         });
+    });
+
+    $('#usersTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "order":[],
+        "ajax":{
+
+            url:"users/fetch_users",
+            type:"POST"
+        },
+        "columnDefs": [{
+            "targets":[4,5],
+            "orderable": false
+        }]
     });
 
 });

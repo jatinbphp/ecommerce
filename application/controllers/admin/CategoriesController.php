@@ -20,9 +20,9 @@ class CategoriesController extends MY_Controller
         	return $this;
         }
 
-		$data = array(
+		$data = [
 			'name' => $this->input->post('name'),
-		);
+		];
 
 		$create = $this->Categories_model->create($data);
 		if($create == true) {
@@ -37,9 +37,9 @@ class CategoriesController extends MY_Controller
 	public function edit($id = null){
 		if($id) {
 			if(!empty($this->input->post('name'))){
-				$data = array(
+				$data = [
 					'name' => $this->input->post('name'),
-				);
+				];
 
 				$update = $this->Categories_model->edit($data, $id);
 				if($update == true) {
@@ -60,9 +60,9 @@ class CategoriesController extends MY_Controller
 	public function delete($id)
 	{
 		if($id) {
-			$data = array(
+			$data = [
 				'deleted' => 1
-			);
+			];
 			$delete = $this->Categories_model->delete($id);
 			if($delete == true) {
 				$this->session->set_flashdata('success', 'Successfully Deleted');

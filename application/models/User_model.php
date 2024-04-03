@@ -1,15 +1,15 @@
 <?php
 class User_model extends CI_Model {
 
-	public function getStudentData($studentId = null)
+	public function getUserData($studentId = null)
 	{
 		if($studentId) {
-			$sql = "SELECT * FROM users WHERE id = ? AND role += '2' ";
+			$sql = "SELECT * FROM users WHERE id = ? AND role += 2 ";
 			$query = $this->db->query($sql, array($studentId));
 			return $query->row_array();
 		}
 
-		$sql = "SELECT * FROM users WHERE role == '2' ORDER BY id DESC";
+		$sql = "SELECT * FROM users WHERE role = 2 ORDER BY id DESC";
 		$query = $this->db->query($sql, array(0));
 		return $query->result_array();
 	}
@@ -119,5 +119,47 @@ class User_model extends CI_Model {
         $this->db->where('id', $user_id);
         $this->db->update('users');
     }
+
+	public function make_query()
+	{
+		$this->db->from('users');
+		$this->db->where('role !=', '1');
+		if ($_POST["search"]["value"]!='') {
+			$searchString = $_POST["search"]["value"];
+			$this->db->where("(username LIKE '%".$searchString."%' OR firstname LIKE '%".$searchString."%' OR lastname LIKE '%".$searchString."%' OR email LIKE '%".$searchString."%' OR phone LIKE '%".$searchString."%')", NULL, FALSE);
+
+		}
+		if (isset($_POST['order'][0]['column'])) {
+			$this->db->order_by($this->order_column[$_POST['order'][0]['column']], $_POST['order']['0']['dir']);
+		} else {
+			$this->db->order_by('id', 'DESC');
+		}
+	}
+
+	public function make_datatables()
+	{
+		$this->make_query();
+		if ($_POST["length"] != -1) {
+			$this->db->limit($_POST['length'], $_POST['start']);
+		}
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	public function get_filtered_data()
+	{
+		$this->make_query();
+		$query = $this->db->get();
+		return $query->num_rows();
+	}
+
+	public function get_all_data()
+	{
+		$this->db->select("*");
+		$this->db->from('users');
+		//$this->db->where('id !=', 1);
+		$this->db->where('role !=', '1');
+		return $this->db->count_all_results();
+	}
 }
 
