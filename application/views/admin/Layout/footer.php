@@ -16,7 +16,11 @@
 <script src="<?php echo base_url('public/assets/admin/dist/js/adminlte.js'); ?>"></script>
 <script src="<?php echo base_url('public/assets/admin/plugins/chart.js/Chart.min.js'); ?>"></script>
 <script src="<?php echo base_url('public/assets/admin/dist/js/demo.js'); ?>"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script src="<?php echo base_url('public/assets/admin/plugins/ladda/spin.min.js') ?>"></script>
+<script src="<?php echo base_url('public/assets/admin/plugins/ladda/ladda.min.js') ?>"></script>
+<script>Ladda.bind( 'input[type=submit]' );</script>
+
 	<!-- <script type="text/javascript">
 		// Total Sales Chart
 

@@ -80,4 +80,45 @@ $(document).ready(function() {
         }]
     });
 
+    $("#CategoriesTable").on('click', '.assign_unassign', function(event) {
+        event.preventDefault();
+        var url = $(this).attr('data-url');
+        var id = $(this).attr("data-id");
+        var type = $(this).attr("data-type");
+        var table_name = $(this).attr("data-table_name");
+        var section = $(this).attr("data-table_name");
+
+        var l = Ladda.create(this);
+        l.start();
+        $.ajax({
+            url: url,
+            type: "post",
+            data: {
+                'id': id,
+                'type': type,
+                'table_name': table_name,
+            },
+            success: function(data){
+                l.stop();
+                console.log(type);
+                if(type=='unassign'){
+                    $('#assign_remove_'+id).hide();
+                    $('#assign_add_'+id).show();
+                } else {
+                    $('#assign_remove_'+id).show();
+                    $('#assign_add_'+id).hide();
+                }
+
+                if(section=='users_table'){
+                    users_table.draw(false);
+                } else if(section=='products_table'){
+                    products_table.draw(false);
+                } else if(section=='products_table'){
+                    products_table.draw(false);
+                } else if(section=='options_table'){
+                    options_table.draw(false);
+                }
+            }
+        });
+    });
 });

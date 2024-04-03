@@ -3,6 +3,7 @@
 $route['admin/logIn'] = 'admin/AdminController/logIn';
 $route['admin/logOut'] = 'admin/AdminController/logout';
 $route['admin'] = 'admin/AdminController';
+$route['admin/update-status'] = 'admin/AdminController/updateStatus';
 $route['admin/dashboard'] = 'admin/DashboardController';
 $route['admin/users'] = 'admin/UserController';
 $route['admin/users/create'] = 'admin/UserController/create';

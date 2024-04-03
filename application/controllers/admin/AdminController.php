@@ -42,7 +42,20 @@ class AdminController extends MY_Controller {
         {
             $this->session->set_flashdata('error', 'Your Email or Password is wrong,Please check your email and password');   
             redirect('admin');
-        }        
+        }
+       
     }
 
+    public function updateStatus()
+    {
+        $id = $this->input->post('id');
+        $tableName = $this->input->post('table_name');
+        $type = $this->input->post('type');
+        
+        if($id && $tableName && $type){
+            $data = ['status' => ($type == 'unassign') ? 'inactive' : 'active'];
+            $this->db->where('id', $id);
+            $this->db->update($tableName, $data);
+        }
+    } 
 }

@@ -86,9 +86,9 @@ class CategoriesController extends MY_Controller
 			$categoryData = [];
 			$categoryData[] = "#".$row->id;
 			$categoryData[] = $row->name;
-			$categoryData[] = $row->status;
+			$categoryData[] = $this->getStatusButton($row->id, $row->status);
 			$categoryData[] = $row->created_at;
-			$categoryData[] = '<a href="' . base_url('admin/categories/edit/' . $row->id) . '" class="btn btn-warning"  style="margin-right:5px;"><i class="fa fa-edit"></i></a><a href="javascript:void(0);" class="btn btn-danger deleteRecord" data-id="' . $row->id . '" data-controller="categories" data-title="Categories"><i class="fa fa-trash"></i></a>';
+			$categoryData[] = '<a href="' . base_url('admin/categories/edit/' . $row->id) . '" class="btn btn-sm btn-warning"  style="margin-right:5px;"><i class="fa fa-edit"></i></a><a href="javascript:void(0);" class="btn btn-sm btn-danger deleteRecord" data-id="' . $row->id . '" data-controller="categories" data-title="Categories"><i class="fa fa-trash"></i></a>';
 
 			$data[] = $categoryData;
 		}
@@ -101,4 +101,33 @@ class CategoriesController extends MY_Controller
 		];
 		echo json_encode($output);
 	}
+
+	public function getStatusButton($id, $status){
+		if(!$id || !$status){
+			return '';
+		}
+		$button = '';
+		if ($status == "active"){
+			$button .= 
+				'<div class="btn-group-horizontal" id="assign_remove_'.$id.'">
+	        		<button class = "btn btn-sm btn-success assign_unassign ladda-button" data-style = "slide-left"  data-url = '. base_url("admin/AdminController/updateStatus").' data-id = '.$id.' type = "button" data-type = "unassign" data-table_name = "categories"><span class="ladda-label">Active</span>
+	        		</button>
+	    		</div>
+	    		<div class="btn-group-horizontal" id="assign_add_'.$id.'" style="display: none">
+	        		<button class = "btn btn-sm btn-danger assign_unassign ladda-button" data-style = "slide-left"  data-url = '. base_url("admin/AdminController/updateStatus").' data-id = '.$id.' type = "button" data-type = "assign" data-table_name = "categories"><span class="ladda-label">In Active</span>
+	        		</button>
+	    		</div>';
+		} else {
+			$button .= 
+				'<div class="btn-group-horizontal" id="assign_add_'.$id.'">
+	        		<button class = "btn btn-sm btn-danger assign_unassign ladda-button" data-style = "slide-left"  data-url = '. base_url("admin/AdminController/updateStatus").' data-id = '.$id.' type = "button" data-type = "assign" data-table_name = "categories"><span class="ladda-label">In Active</span>
+	        		</button>
+	    		</div>
+	    		<div class="btn-group-horizontal" id="assign_remove_'.$id.'" style="display: none">
+	        		<button class = "btn btn-sm btn-success assign_unassign ladda-button" data-style = "slide-left"  data-url = '. base_url("admin/AdminController/updateStatus").' data-id = '.$id.' type = "button" data-type = "unassign" data-table_name = "categories"><span class="ladda-label">Active</span>
+	        		</button>
+	    		</div>';
+		}
+		return $button;
+  	}
 }

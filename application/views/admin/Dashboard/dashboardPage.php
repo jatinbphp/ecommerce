@@ -17,3 +17,9 @@
 		</div>
 	</section>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#dashboard").addClass('active');
+});
+</script>
