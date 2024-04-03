@@ -52,25 +52,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'HomeController';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-// $route['about'] = 'about';
-$route['about'] = 'about';
-$route['home'] = 'about/home';
-$route['contact-us'] = 'about/contact_us';
-$route['test'] = 'front/homeController';
-$route['signup'] = 'front/auth/AuthController';
-$route['signIn'] = 'front/auth/AuthController/logIn';
-$route['authUser'] = 'front/auth/AuthController/authUser';
-$route['registerUser'] = 'front/auth/AuthController/storeUser';
-$route['otpCheck'] = 'front/auth/AuthController/optCheckView';
-$route['verifyOtp'] = 'front/auth/AuthController/verifyOTP';
-$route['dashboard'] = 'front/homeController';
-$route['logout'] = 'front/auth/AuthController/logout';
-$route['check-email'] = 'front/auth/AuthController/check_email_exists';
 
-//Admin
-$route['admin'] = 'admin/AdminController';
-$route['admin/dashboard'] = 'admin/DashboardController';
-$route['admin/users'] = 'admin/UserController';
-$route['admin/fetch_users'] = 'admin/UserController/fetch_users';
-
-
+include('routes_admin.php');
+include('routes_user.php');

@@ -8,7 +8,6 @@
         <meta name="format-detection" content="telephone=no"/>
         <title>Blu leisure</title>
         <link href="<?php echo base_url('css/styles.css'); ?>" rel="stylesheet">
-        <link href="<?php echo base_url('css/bootstrap.min.css'); ?>" rel="stylesheet">
     </head>
     <body>
         <div id="main-wrapper">
@@ -16,7 +15,7 @@
                 <div class="container">
                     <nav id="navigation" class="navigation navigation-landscape">
                         <div class="nav-header">
-                            <a class="nav-brand" href="javaScript:;">
+                            <a class="nav-brand" href="<?php echo base_url(); ?>">
                                 <img src="<?php echo base_url('images/logo.png')?>" class="logo" alt="" />
                             </a>
                             <div class="nav-toggle"></div>
@@ -47,10 +46,10 @@
                         </div>
                         <div class="nav-menus-wrapper" style="transition-property: none;">
                             <ul class="nav-menu">
-                                <li><a href="index.html">Home</a></li>
-                                <li><a href="about-us.html">About Us</a></li>
+                                <li><a href="<?php echo base_url(); ?>">Home</a></li>
+                                <li><a href="<?php echo base_url('about-us'); ?>">About Us</a></li>
                                 <li>
-                                    <a href="shop.html">Shop</a>
+                                    <a href="<?php echo base_url('shop'); ?>">Shop</a>
                                 <li>
                                     <a href="javascript:void(0);">Clothing</a>
                                     <ul class="nav-dropdown nav-submenu">
@@ -59,8 +58,8 @@
                                         <li><a href="#">Kids</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="shop.html">Accessories</a></li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="<?php echo base_url('shop'); ?>">Accessories</a></li>
+                                <li><a href="contact">Contact</a></li>
                             </ul>
                             <ul class="nav-menu nav-menu-social align-to-right">
                                 <li>

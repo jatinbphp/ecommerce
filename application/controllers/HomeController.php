@@ -10,4 +10,18 @@ class HomeController extends MY_Controller {
     public function index() {
         $this->frontRenderTemplate('front/Home/homePage');
     }
+
+    public function aboutUs() {
+        $this->frontRenderTemplate('front/About/aboutUs');
+    }
+
+    public function shopPage() {
+        $this->frontRenderTemplate('front/Shop/shop');
+    }
+
+    public function contactPage() {
+        $this->frontRenderTemplate('front/Contact/contactUs');
+    }
+
+
 }

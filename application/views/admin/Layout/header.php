@@ -8,9 +8,12 @@
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/fontawesome-free/css/all.min.css'); ?>">
 	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/dist/css/adminlte.min.css'); ?>">
+	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/dist/css/custom.css'); ?>">
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') ?>">
-	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">
-	<script src="<?php echo base_url('public/assets/admin/plugins/jquery/jquery.min.js'); ?>"></script>
+    <link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="<?php echo base_url('public/assets/admin/plugins/jquery/jquery.min.js') ?>"></script>
+    <script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -70,6 +73,12 @@
 							</li>
 						</ul>
 					</li>
+					<li class="nav-item">
+                        <a href="<?php echo base_url('admin/categories'); ?>" class="nav-link">
+                            <i class="nav-icon fa fa-sitemap"></i>
+                            <p>Categories</p>
+                        </a>
+                    </li>
 				</ul>
 			</nav>
 		</div>
