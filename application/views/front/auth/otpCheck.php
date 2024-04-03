@@ -34,7 +34,7 @@
                             <?php } ?>
                             <div class="form-group">
                                 <?php echo form_label('Enter OTP <span class="text-danger">*</span>', 'otp'); ?>
-                                <?php echo form_input(array('type' => 'text', 'class' => 'form-control', 'id' => 'otp', 'name' => 'otp', 'maxlength' => '6', 'minlength' => '6', 'required' => 'required')); ?>
+                                <?php echo form_input(array('type' => 'text', 'class' => 'form-control', 'id' => 'otp', 'name' => 'otp', 'maxlength' => '6', 'required' => 'required')); ?>
                             </div>
                             <?php echo form_submit(array('class' => 'btn btn-primary', 'value' => 'Verify OTP')); ?>
                         <?php echo form_close(); ?>

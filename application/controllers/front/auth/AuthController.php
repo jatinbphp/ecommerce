@@ -9,6 +9,7 @@ class AuthController extends MY_Controller {
     }
 
     public function index() {
+        $this->userRedirectIfLoggedIn();
         $this->load->view('front/auth/signUp'); 
     }
 
@@ -19,7 +20,7 @@ class AuthController extends MY_Controller {
     }
 
     public function logIn() {
-        
+        $this->userRedirectIfLoggedIn();
         $this->load->view('front/auth/signIn'); 
     }
 
@@ -51,7 +52,6 @@ class AuthController extends MY_Controller {
                 'first_name' => $this->input->post('fname'),
                 'last_name' => $this->input->post('lname'),
                 'email' => $this->input->post('email'),
-                'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
                 'phone' => $this->input->post('mobileNo'),
                 'role' => 2,
                 'status' => 1,
@@ -87,7 +87,7 @@ class AuthController extends MY_Controller {
     public function authUser() {
         $email = $this->input->post('email');
         $password = $this->input->post('password');
-        $user = $this->user_model->authenticate($email, $password);
+        $user = $this->user_model->authenticate($email, $password, 2);
         if ($user) {
             $this->session->set_userdata('user_data', $user);
             $this->session->set_userdata('user_email', $email);
@@ -136,8 +136,8 @@ class AuthController extends MY_Controller {
         }
     }
 
-    private function generateOTP($length = 6) {
-
+    private function generateOTP() {
+        $length = 6;
         $otp = "";
         $characters = "0123456789";
         $charLength = strlen($characters);
@@ -145,7 +145,6 @@ class AuthController extends MY_Controller {
             $otp .= $characters[rand(0, $charLength - 1)];
         }
         return $otp;
-
     }
 
      public function verifyOTP() {
@@ -173,7 +172,7 @@ class AuthController extends MY_Controller {
                 );
 
                 $this->session->set_userdata($userdata);
-                redirect('dashboard');
+                redirect(base_url());
             } else {
                 $this->session->set_flashdata('error', 'Invalid OTP. Please try again.');
                 redirect('otpCheck');

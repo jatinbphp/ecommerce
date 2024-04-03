@@ -9,7 +9,7 @@ class DashboardController extends MY_Controller {
 	}
 
 	public function index() {
-
+		$this->checkAdminLoggedIn();
 		$this->adminRenderTemplate('admin/Dashboard/dashboardPage');
 	}
 }
