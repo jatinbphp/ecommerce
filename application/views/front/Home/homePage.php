@@ -10,7 +10,7 @@
                                             <h1 class="mb-1 ft-bold lg-heading">New Summer<br>Collections 2024</h1>
                                             <span class="trending text-light">There's nothing like trend</span>
                                         </div>
-                                        <a href="shop.html" class="btn stretched-link light-borders ft-bold">Shop Now<i class="lni lni-arrow-right ml-2"></i></a>
+                                        <a href="<?php echo base_url('shop'); ?>" class="btn stretched-link light-borders ft-bold">Shop Now<i class="lni lni-arrow-right ml-2"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -28,7 +28,7 @@
                                             <h1 class="mb-1 ft-bold lg-heading">New Summer<br>Collections 2024</h1>
                                             <span class="trending text-light">There's nothing like trend</span>
                                         </div>
-                                        <a href="shop.html" class="btn stretched-link light-borders ft-bold">Shop Now<i class="lni lni-arrow-right ml-2"></i></a>
+                                        <a href="<?php echo base_url('shop'); ?>" class="btn stretched-link light-borders ft-bold">Shop Now<i class="lni lni-arrow-right ml-2"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -46,7 +46,7 @@
                                             <h1 class="mb-1 ft-bold lg-heading">New Summer<br>Collections 2024</h1>
                                             <span class="trending text-light">There's nothing like trend</span>
                                         </div>
-                                        <a href="shop.html" class="btn stretched-link light-borders ft-bold">Shop Now<i class="lni lni-arrow-right ml-2"></i></a>
+                                        <a href="<?php echo base_url('shop'); ?>" class="btn stretched-link light-borders ft-bold">Shop Now<i class="lni lni-arrow-right ml-2"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -324,7 +324,7 @@
                     <div class="row justify-content-center">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                             <div class="position-relative text-center">
-                                <a href="shop.html" class="btn stretched-link borders">Explore More<i class="lni lni-arrow-right ml-2"></i></a>
+                                <a href="<?php echo base_url('shop'); ?>" class="btn stretched-link borders">Explore More<i class="lni lni-arrow-right ml-2"></i></a>
                             </div>
                         </div>
                     </div>
