@@ -50,13 +50,28 @@
 							</p>
 						</a>
 					</li>
-					<li class="nav-item">
-						<a href="<?php echo base_url('contact-us'); ?>" class="nav-link">
+					<li class="nav-item has-treeview" id="usersMainNav">
+						<a href="#" class="nav-link" id="usersMainNava">
 							<i class="nav-icon fas fa-users"></i>
 							<p>
 								Users
+								<i class="right fas fa-angle-left"></i>
 							</p>
 						</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item" id="createUsersSubNav">
+								<a href="<?php echo base_url('admin/users/create') ?>" class="nav-link">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Add User</p>
+								</a>
+							</li>
+							<li class="nav-item" id="manageUsersSubNav">
+								<a href="<?php echo base_url('admin/users') ?>" class="nav-link">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Manage Users</p>
+								</a>
+							</li>
+						</ul>
 					</li>
 					<li class="nav-item">
                         <a href="<?php echo base_url('admin/categories'); ?>" class="nav-link">
