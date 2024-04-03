@@ -70,5 +70,7 @@ $route['check-email'] = 'front/auth/AuthController/check_email_exists';
 //Admin
 $route['admin'] = 'admin/AdminController';
 $route['admin/dashboard'] = 'admin/DashboardController';
+$route['admin/users'] = 'admin/UserController';
+$route['admin/fetch_users'] = 'admin/UserController/fetch_users';
 
 

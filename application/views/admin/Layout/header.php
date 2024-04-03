@@ -8,6 +8,9 @@
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/fontawesome-free/css/all.min.css'); ?>">
 	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/dist/css/adminlte.min.css'); ?>">
+	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') ?>">
+	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">
+	<script src="<?php echo base_url('public/assets/admin/plugins/jquery/jquery.min.js'); ?>"></script>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -44,13 +47,28 @@
 							</p>
 						</a>
 					</li>
-					<li class="nav-item">
-						<a href="<?php echo base_url('contact-us'); ?>" class="nav-link">
+					<li class="nav-item has-treeview" id="usersMainNav">
+						<a href="#" class="nav-link" id="usersMainNava">
 							<i class="nav-icon fas fa-users"></i>
 							<p>
 								Users
+								<i class="right fas fa-angle-left"></i>
 							</p>
 						</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item" id="createUsersSubNav">
+								<a href="<?php echo base_url('admin/users/create') ?>" class="nav-link">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Add User</p>
+								</a>
+							</li>
+							<li class="nav-item" id="manageUsersSubNav">
+								<a href="<?php echo base_url('admin/users') ?>" class="nav-link">
+									<i class="far fa-circle nav-icon"></i>
+									<p>Manage Users</p>
+								</a>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</nav>
