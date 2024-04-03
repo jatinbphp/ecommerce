@@ -58,6 +58,12 @@
 							</p>
 						</a>
 					</li>
+					<li class="nav-item">
+                        <a href="<?php echo base_url('admin/categories'); ?>" class="nav-link">
+                            <i class="nav-icon fa fa-sitemap"></i>
+                            <p>Categories</p>
+                        </a>
+                    </li>
 				</ul>
 			</nav>
 		</div>
