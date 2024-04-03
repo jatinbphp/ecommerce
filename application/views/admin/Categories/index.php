@@ -1,6 +1,4 @@
-<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -25,16 +23,12 @@
                 <?php echo $this->session->flashdata('error'); ?>
             </div>
             <?php endif; ?>
-        </div><!-- /.container-fluid -->
+        </div>
     </section>
-
-    <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-            <!-- left column -->
                 <div class="col-md-12">
-                <!-- general form elements -->
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title w-100">
@@ -43,7 +37,6 @@
                                 <a href="<?php echo base_url('admin/categories/create') ?>" class="btn btn-sm btn-primary float-right"> <i class="fa fa-plus"></i> Add New</a>
                             </h3>
                         </div>
-                          <!-- /.card-header -->
                         <div class="card-body">
                             <table id="CategoriesTable" class="table table-bordered table-striped">
                                 <thead>
@@ -61,25 +54,16 @@
                                 </tfoot>
                             </table>
                         </div>
-                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card -->
                 </div>
-                <!-- /.col -->
             </div>
-            <!-- /.row -->
         </div>
-        <!-- /.container-fluid -->
     </section>
-    <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $("#studentMainNav").addClass('menu-open');
-    $("#manageStudentSubNav a").addClass('active');
-    $("#studentMainNav #studentMainNava").addClass('active');
+    $("#CategoriesList").addClass('active');
 });
 </script>
 

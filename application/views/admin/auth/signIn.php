@@ -18,14 +18,14 @@
                     <?php echo form_open('authUser'); ?>
                         <div class="form-group">
                             <?php echo form_label('Email', 'email'); ?>
-                            <?php echo form_input(array('type' => 'email', 'class' => 'form-control', 'id' => 'email', 'name' => 'email', 'required' => 'required','placeholder' => 'Enter your email')); ?>
+                            <?php echo form_input(['type' => 'email', 'class' => 'form-control', 'id' => 'email', 'name' => 'email', 'required' => 'required','placeholder' => 'Enter your email']); ?>
                         </div>
                         <div class="form-group">
                             <?php echo form_label('Password', 'password'); ?>
-                            <?php echo form_input(array('type' => 'password', 'class' => 'form-control', 'id' => 'password', 'name' => 'password', 'required' => 'required', 'placeholder' => 'Enter your password')); ?>
+                            <?php echo form_input(['type' => 'password', 'class' => 'form-control', 'id' => 'password', 'name' => 'password', 'required' => 'required', 'placeholder' => 'Enter your password']); ?>
                         </div>
                         <div class="form-group">
-                            <?php echo form_submit(array('class' => 'btn btn-primary btn-block', 'value' => 'Sign In')); ?>
+                            <?php echo form_submit(['class' => 'btn btn-primary btn-block', 'value' => 'Sign In']); ?>
                         </div>
                     <?php echo form_close(); ?>
                     <p class="text-center">Don't have an account? <?php echo anchor('signup', 'Sign Up'); ?></p>

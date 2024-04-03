@@ -74,7 +74,7 @@
 						</ul>
 					</li>
 					<li class="nav-item">
-                        <a href="<?php echo base_url('admin/categories'); ?>" class="nav-link">
+                        <a href="<?php echo base_url('admin/categories'); ?>" id="CategoriesList" class="nav-link">
                             <i class="nav-icon fa fa-sitemap"></i>
                             <p>Categories</p>
                         </a>

@@ -62,8 +62,6 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $("#studentMainNav").addClass('menu-open');
-    $("#createStudentSubNav a").addClass('active');
-    $("#studentMainNav #studentMainNava").addClass('active');
+    $("#CategoriesList").addClass('active');
 });
 </script>

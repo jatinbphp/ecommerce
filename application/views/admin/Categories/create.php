@@ -29,7 +29,6 @@
                             <?php echo $this->session->flashdata('error'); ?>
                         </div>
                     <?php endif; ?>
-
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">Add Category</h3>
@@ -58,6 +57,6 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $("#studentMainNav #studentMainNava").addClass('active');
+    $("#CategoriesList").addClass('active');
 });
 </script>

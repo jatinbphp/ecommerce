@@ -21,21 +21,16 @@ class UserController extends MY_Controller
 	public function index()
 	{
 		$user_data = $this->user_model->getUserData();
-
 		$result_info = array();
 		foreach ($user_data as $k => $v) {
-
 			$result_info[$k]['users_info'] = $v;
-
 		}
-
 		$this->data['users_data'] = $result_info;
-
-		@$this->adminRenderTemplate('admin/users/index', $this->data);
+		$this->adminRenderTemplate('admin/users/index', $this->data);
 	}
 
-	public function fetch_users(){
-
+	public function fetch_users()
+	{
 		$fetch_data = $this->user_model->make_datatables();
 		$data = array();
 		foreach ($fetch_data as $row) {
@@ -89,10 +84,8 @@ class UserController extends MY_Controller
 			}
 
 		} else {
-			// false case
 			$this->data['datas'] = '';
-
-			@$this->render_template('admin/users/create', $this->data);
+			$this->adminRenderTemplate('admin/users/create', $this->data);
 		}
 	}
 
