@@ -86,6 +86,7 @@ $db['default'] = array(
 	'cache_on' => FALSE,
 	'cachedir' => '',
 	'char_set' => 'utf8',
+	
 	'dbcollat' => 'utf8_general_ci',
 	'swap_pre' => '',
 	'encrypt' => FALSE,
