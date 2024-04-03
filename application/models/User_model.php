@@ -76,8 +76,8 @@ class User_model extends CI_Model {
         return $query->num_rows() > 0;
     }
 
-     public function authenticate($username, $password) {
-        $query = $this->db->get_where('users', array('email' => $username,'status' => self::STATUS_ACTIVE));
+     public function authenticate($username, $password, $role) {
+        $query = $this->db->get_where('users', array('email' => $username,'status' => self::STATUS_ACTIVE,'role' => $role));
         $user = $query->row();
 
         if (!$user) {
@@ -106,6 +106,12 @@ class User_model extends CI_Model {
         $this->db->where('email', $email);
         $this->db->set('login_attempts', 0);
         $this->db->update('users');
+     }
+
+     public function getAdminData($email)
+     {
+        $getAdminData = $this->db->get_where('users', array('email' => $email,'role' => 1));
+        return $getAdminData->row_array();
      }
 
     public function reset_otp($user_id) {

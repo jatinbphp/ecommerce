@@ -38,6 +38,7 @@
 				</div>
 				<div class="info">
 					<a href="#" class="d-block">Alexander Pierce</a>
+					<a href="<?php echo base_url('admin/logOut'); ?>" class="d-block">LogOut</a>
 				</div>
 			</div>
 			<nav class="mt-2">

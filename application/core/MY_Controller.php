@@ -21,21 +21,33 @@ class MY_Controller extends CI_Controller
 		$this->load->view('admin/Layout/footer',$data);
 	}
 
-	public function loggedIn()
-	{
-		$session_data = $this->session->userdata();
-		if($session_data['logged_in'] == TRUE) {
-			unset($_SESSION['admin_loggedin']);
-			redirect('dashboard', 'refresh');
-		}
-	}
+	public function adminRedirect() {
+        $CI =& get_instance();
+        if ($CI->session->userdata('admin_logged_in')) {
+            redirect('admin/dashboard');
+            exit;
+        }
+    }
 
-	public function notLoggedIn()
-	{
-		$session_data = $this->session->userdata();
-		if($session_data['logged_in'] == FALSE) {
-			$this->session->sess_destroy();
-			redirect('admin/login', 'refresh');
-		}
-	}
+	public function userRedirectIfLoggedIn() {
+        $CI =& get_instance();
+        if ($CI->session->userdata('logged_in')) {
+            redirect(base_url());
+            exit;
+        }
+    }
+
+	public function getAdminData($email) {
+        $CI =& get_instance();
+        $adminData = $CI->user_model->getAdminData($email);
+        return $adminData;
+    }
+
+	public function checkAdminLoggedIn() {
+        $CI =& get_instance();
+        if (!$CI->session->userdata('admin_logged_in')) {
+            redirect('admin');
+            exit;
+        }
+    }
 }
