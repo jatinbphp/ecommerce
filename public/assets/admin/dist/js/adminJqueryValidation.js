@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
     //Admin Students Table Get
     $('#CategoriesTable').DataTable({
         "processing": true,
