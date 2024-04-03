@@ -6,7 +6,7 @@ $(document).ready(function() {
         "order":[],
         "ajax":{
             url:"categories/fetch_categories",
-            type:"POST"
+            type:"POST",
         },
         "columnDefs": [{
             "targets":[4],
