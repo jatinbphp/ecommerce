@@ -2,13 +2,23 @@
 		All Rights
 	</footer>
 </div>
-<script src="<?php echo base_url('public/assets/admin/plugins/jquery/jquery.min.js'); ?>"></script>
+
+<script src="<?php echo base_url('public/assets/admin/dist/js/adminJqueryValidation.js') ?>"></script>
+
+<!-- DataTables -->
+<script src="<?php echo base_url('public/assets/admin/plugins/datatables/jquery.dataTables.min.js') ?>"></script>
+<script src="<?php echo base_url('public/assets/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>"></script>
+<script src="<?php echo base_url('public/assets/admin/plugins/datatables-responsive/js/dataTables.responsive.min.js') ?>"></script>
+<script src="<?php echo base_url('public/assets/admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') ?>"></script>
+
+<!-- <script src="<?php echo base_url('public/assets/admin/plugins/jquery/jquery.min.js'); ?>"></script> -->
+<script src="<?php echo base_url('public/assets/admin/dist/js/jquery.validate.js') ?>"></script>
 <script src="<?php echo base_url('public/assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
 <script src="<?php echo base_url('public/assets/admin/dist/js/adminlte.js'); ?>"></script>
 <script src="<?php echo base_url('public/assets/admin/plugins/chart.js/Chart.min.js'); ?>"></script>
 <script src="<?php echo base_url('public/assets/admin/dist/js/demo.js'); ?>"></script>
-<script src="<?php echo base_url('public/assets/admin/dist/js/pages/dashboard3.js'); ?>"></script>
-	<script type="text/javascript">
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+	<!-- <script type="text/javascript">
 		// Total Sales Chart
 
 		function getMonthName(monthAbbreviation) {
@@ -107,6 +117,6 @@
 			data: barChartDataOrders,
 			options: ordersChartOptions
 		});
-	</script>
+	</script> -->
 </body>
 </html>
