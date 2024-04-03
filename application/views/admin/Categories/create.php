@@ -33,21 +33,35 @@
                         <div class="card-header">
                             <h3 class="card-title">Add Category</h3>
                         </div>
-                        <form role="form" action="<?php base_url('categories/create') ?>" method="post" id="categories-form">
+                        <?php echo form_open('admin/categories/create', ['method' => 'post', 'id' => 'categories_form']); ?>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="name">Name :<span class="asterisk-sign">*</span></label>
-                                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" autocomplete="off" value="<?php echo $this->input->post('name'); ?>">
+                                            <?php
+                                                echo form_label('Name <span class="text-danger">*</span>', 'fname');
+                                                echo form_input([
+                                                    'name' => 'name',
+                                                    'id' => 'name',
+                                                    'class' => 'form-control',
+                                                    'placeholder' => 'Please Enter Category Name',
+                                                    'value' => $this->input->post('name')
+                                                ]);
+                                            ?>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer">
-                              <button type="submit" class="btn btn-primary">Save</button>
+                                <?php
+                                    echo form_submit([
+                                        'name' => 'submit',
+                                        'class' => 'btn btn-primary',
+                                        'value' => 'Save'
+                                    ]);
+                                ?>
                             </div>
-                        </form>
+                        <?php echo form_close(); ?>
                     </div>
                 </div>
             </div>

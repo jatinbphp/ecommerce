@@ -25,12 +25,13 @@ class CategoriesController extends MY_Controller
 		];
 
 		$create = $this->Categories_model->create($data);
+	
 		if($create == true) {
 			$this->session->set_flashdata('success', 'Successfully created.');
 			redirect('admin/categories', 'refresh');
 		} else {
 			$this->session->set_flashdata('error', 'Error occurred!!');
-			redirect('admin/Categories/create', 'refresh');
+			redirect('admin/categories/create', 'refresh');
 		}
 	}
 
@@ -76,7 +77,7 @@ class CategoriesController extends MY_Controller
 		}
 	}
 
-	public function fetch_categories()
+	public function fetchCategories()
 	{
 		$data    = [];
 		$allData = $this->Categories_model->make_datatables();

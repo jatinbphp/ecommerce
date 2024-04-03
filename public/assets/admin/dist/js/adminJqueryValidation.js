@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#CategoriesTable').DataTable({
+    var category_table = $('#CategoriesTable').DataTable({
         "processing": true,
         "serverSide": true,
         "order":[],
@@ -13,7 +13,7 @@ $(document).ready(function() {
         }]
     });
 
-    $("#categories-form").validate(
+    $("#categories_form").validate(
     {                
         rules:
         {     
@@ -50,7 +50,15 @@ $(document).ready(function() {
         },
         function(isConfirm) {
             if (isConfirm) {
-                window.location.href = controller+"/delete/" + id;
+                $.ajax({
+                    url: controller+"/delete/" + id,
+                    type: "POST",
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                    success: function(data){
+                        category_table.row('.selected').remove().draw(false);
+                        swal("Deleted", "Your data successfully deleted!", "success");
+                    }
+                })
             } else {
                 swal("Cancelled", yourDataSafe, "error");
             }
