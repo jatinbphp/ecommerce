@@ -16,6 +16,7 @@ class MY_Controller extends CI_Controller
 
 	public function adminRenderTemplate($page = null, $data = array())
 	{
+        $this->checkAdminLoggedIn();
 		$this->load->view('admin/Layout/header',$data);
 		$this->load->view($page, $data);
 		$this->load->view('admin/Layout/footer',$data);

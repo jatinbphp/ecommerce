@@ -48,7 +48,10 @@
                             <?php echo form_submit(array('class' => 'btn btn-primary btn-block', 'value' => 'Sign In')); ?>
                         </div>
                     <?php echo form_close(); ?>
-                    <p class="text-center">Don't have an account? <?php echo anchor('signup', 'Sign Up'); ?></p>
+                    <div class="d-flex justify-content-between">
+                        <p>Don't have an account? <?php echo anchor('signup', 'Sign Up'); ?></p>
+                        <p><a href="<?php echo site_url('forgotPassword'); ?>">Forgot Password?</a></p>
+                    </div>
                 </div>
             </div>
         </div>

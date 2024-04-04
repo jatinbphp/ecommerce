@@ -6,10 +6,10 @@ class DashboardController extends MY_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('user_model');
+		$this->checkAdminLoggedIn();
 	}
 
 	public function index() {
-		$this->checkAdminLoggedIn();
 		$this->adminRenderTemplate('admin/Dashboard/dashboardPage');
 	}
 }
