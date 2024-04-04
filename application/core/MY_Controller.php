@@ -16,6 +16,7 @@ class MY_Controller extends CI_Controller
 
 	public function adminRenderTemplate($page = null, $data = array())
 	{
+        $this->checkAdminLoggedIn();
 		$this->load->view('admin/Layout/header',$data);
 		$this->load->view($page, $data);
 		$this->load->view('admin/Layout/footer',$data);
@@ -49,5 +50,34 @@ class MY_Controller extends CI_Controller
             redirect('admin');
             exit;
         }
+    }
+
+    public function getStatusButton($id, $status, $tableName){
+        if(!$id || !$status || !$tableName){
+            return '';
+        }
+        $button = '';
+        if ($status == "active"){
+            $button .= 
+                '<div class="btn-group-horizontal" id="assign_remove_'.$id.'">
+                    <button class = "btn btn-sm btn-success assign_unassign ladda-button" data-style = "slide-left"  data-url = '. base_url("admin/AdminController/updateStatus").' data-id = '.$id.' type = "button" data-type = "unassign" data-table_name = "'.$tableName.'"><span class="ladda-label">Active</span>
+                    </button>
+                </div>
+                <div class="btn-group-horizontal" id="assign_add_'.$id.'" style="display: none">
+                    <button class = "btn btn-sm btn-danger assign_unassign ladda-button" data-style = "slide-left"  data-url = '. base_url("admin/AdminController/updateStatus").' data-id = '.$id.' type = "button" data-type = "assign" data-table_name = "'.$tableName.'"><span class="ladda-label">In Active</span>
+                    </button>
+                </div>';
+        } else {
+            $button .= 
+                '<div class="btn-group-horizontal" id="assign_add_'.$id.'">
+                    <button class = "btn btn-sm btn-danger assign_unassign ladda-button" data-style = "slide-left"  data-url = '. base_url("admin/AdminController/updateStatus").' data-id = '.$id.' type = "button" data-type = "assign" data-table_name = "'.$tableName.'"><span class="ladda-label">In Active</span>
+                    </button>
+                </div>
+                <div class="btn-group-horizontal" id="assign_remove_'.$id.'" style="display: none">
+                    <button class = "btn btn-sm btn-success assign_unassign ladda-button" data-style = "slide-left"  data-url = '. base_url("admin/AdminController/updateStatus").' data-id = '.$id.' type = "button" data-type = "unassign" data-table_name = "'.$tableName.'"><span class="ladda-label">Active</span>
+                    </button>
+                </div>';
+        }
+        return $button;
     }
 }

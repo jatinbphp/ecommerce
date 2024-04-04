@@ -57,5 +57,5 @@ class AdminController extends MY_Controller {
             $this->db->where('id', $id);
             $this->db->update($tableName, $data);
         }
-    } 
+    }
 }

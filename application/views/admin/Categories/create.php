@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Manage Categories</h1>
+                    <h1>Categories</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -29,7 +29,7 @@
                             <?php echo $this->session->flashdata('error'); ?>
                         </div>
                     <?php endif; ?>
-                    <div class="card card-primary">
+                    <div class="card card-info card-outline">
                         <div class="card-header">
                             <h3 class="card-title">Add Category</h3>
                         </div>

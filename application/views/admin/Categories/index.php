@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Manage Categories</h1>
+                    <h1>Categories</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -32,8 +32,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title w-100">
-                                Categories List
-
+                                Manage Categories
                                 <a href="<?php echo base_url('admin/categories/create') ?>" class="btn btn-sm btn-primary float-right"> <i class="fa fa-plus"></i> Add New</a>
                             </h3>
                         </div>

@@ -5,11 +5,7 @@ class UserController extends MY_Controller
 	public function __construct()
 	{
 		parent::__construct();
-
-		//$this->notLoggedIn();
-
 		$this->data['page_title'] = $this->lang->line('lang_page_title_applicant');
-
 		$this->load->model('user_model');
 
 //		if($this->session->userdata('role')!='1'){
