@@ -16,8 +16,9 @@
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/ladda/ladda-themeless.min.css') ?>">
     <script src="<?php echo base_url('public/assets/admin/plugins/jquery/jquery.min.js') ?>"></script>
     <script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <script type="text/javascript">const baseUrl = "<?php echo base_url(); ?>";</script>
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">
 	<nav class="main-header navbar navbar-expand navbar-white navbar-light">
 		<ul class="navbar-nav">
@@ -51,29 +52,12 @@
 							<p>Dashboard</p>
 						</a>
 					</li>
-					<li class="nav-item has-treeview" id="usersMainNav">
-						<a href="#" class="nav-link" id="usersMainNava">
-							<i class="nav-icon fas fa-users"></i>
-							<p>
-								Users
-								<i class="right fas fa-angle-left"></i>
-							</p>
-						</a>
-						<ul class="nav nav-treeview">
-							<li class="nav-item" id="createUsersSubNav">
-								<a href="<?php echo base_url('admin/users/create') ?>" class="nav-link">
-									<i class="far fa-circle nav-icon"></i>
-									<p>Add User</p>
-								</a>
-							</li>
-							<li class="nav-item" id="manageUsersSubNav">
-								<a href="<?php echo base_url('admin/users') ?>" class="nav-link">
-									<i class="far fa-circle nav-icon"></i>
-									<p>Manage Users</p>
-								</a>
-							</li>
-						</ul>
-					</li>
+					<li class="nav-item">
+                        <a href="<?php echo base_url('admin/users') ?>" id="UserList" class="nav-link">
+                            <i class="nav-icon fa fa-users"></i>
+                            <p>Users</p>
+                        </a>
+                    </li>
 					<li class="nav-item">
                         <a href="<?php echo base_url('admin/categories'); ?>" id="CategoriesList" class="nav-link">
                             <i class="nav-icon fa fa-sitemap"></i>

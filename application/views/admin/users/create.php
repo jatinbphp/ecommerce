@@ -1,30 +1,23 @@
-<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1><?php echo $this->lang->line('lang_title_manage_applicant'); ?></h1>
+                    <h1>Users</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?php echo base_url('dashboard') ?>"><?php echo $this->lang->line('lang_title_home'); ?></a></li>
-                        <li class="breadcrumb-item active"><?php echo $this->lang->line('lang_title_manage_applicant'); ?></li>
+                        <li class="breadcrumb-item"><a href="<?php echo base_url('admin/dashboard') ?>">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Users</li>
                     </ol>
                 </div>
             </div>
-        </div><!-- /.container-fluid -->
+        </div>
     </section>
-
-    <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-            <!-- left column -->
                 <div class="col-md-12">
-                <!-- general form elements -->
-
                     <?php if($this->session->flashdata('success')): ?>
                     <div class="alert alert-success alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -36,95 +29,122 @@
                         <?php echo $this->session->flashdata('error'); ?>
                     </div>
                     <?php endif; ?>
-
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title"><?php echo $this->lang->line('lang_title_add_applicant'); ?></h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
-                        <form role="form" action="<?php base_url('student/create') ?>" method="post" id="student_create_form">
-                            
+                    <div class="card-footer">
+                        <div class="card card-info card-outline">
+                            <div class="card-header">
+                                <h3 class="card-title">Add User</h3>
+                            </div>
                             <div class="card-body">
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="username"><?php echo $this->lang->line('lang_field_title_username'); ?> :<span class="asterisk-sign">*</span></label>
-                                            <input type="text" class="form-control" id="username" name="username" placeholder="<?php echo $this->lang->line('lang_placeholder_username'); ?>" autocomplete="off" REQUIRED value="<?php echo $this->input->post('username'); ?>">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="email"><?php echo $this->lang->line('lang_field_title_email_address'); ?> :<span class="asterisk-sign">*</span></label>
-                                            <input type="email" class="form-control" id="email" name="email" placeholder="<?php echo $this->lang->line('lang_field_title_email_address'); ?>" autocomplete="off" REQUIRED value="<?php echo $this->input->post('email'); ?>">
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="firstname"><?php echo $this->lang->line('lang_field_title_firstname'); ?> :<span class="asterisk-sign">*</span></label>
-                                            <input type="text" class="form-control" id="firstname" name="firstname" placeholder="<?php echo $this->lang->line('lang_field_title_firstname'); ?>" autocomplete="off" REQUIRED value="<?php echo $this->input->post('firstname'); ?>">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="lastname"><?php echo $this->lang->line('lang_field_title_lastname'); ?> :<span class="asterisk-sign">*</span></label>
-                                            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="<?php echo $this->lang->line('lang_field_title_lastname'); ?>" autocomplete="off" REQUIRED value="<?php echo $this->input->post('lastname'); ?>">
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="phone"><?php echo $this->lang->line('lang_field_title_phoneno'); ?> :<span class="asterisk-sign">*</span></label>
-                                            <input type="number" class="form-control" id="phone" name="phone" placeholder="<?php echo $this->lang->line('lang_field_title_phoneno'); ?>" autocomplete="off" REQUIRED value="<?php echo $this->input->post('phone'); ?>">
-                                        </div>
-                                    </div>
-                                </div>
-                                
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="password"><?php echo $this->lang->line('lang_field_title_password'); ?> :<span class="asterisk-sign">*</span></label>
-                                            <input type="password" class="form-control" id="password" name="password" placeholder="<?php echo $this->lang->line('lang_field_title_password'); ?>" autocomplete="off" REQUIRED value="<?php echo $this->input->post('password'); ?>">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="cpassword"><?php echo $this->lang->line('lang_field_title_confim_password'); ?> :<span class="asterisk-sign">*</span></label>
-                                            <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="<?php echo $this->lang->line('lang_field_title_confim_password'); ?>" autocomplete="off" REQUIRED value="<?php echo $this->input->post('password'); ?>">
-                                        </div>
-                                    </div>
+                                <ul class="nav nav-tabs" id="myTabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="tab1" data-toggle="tab" href="#content1">General Information</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link <?php if(!isset($user_data)) 'disabled' endif ?>" id="tab2" data-toggle="tab" href="#content2">Addresses</a>
+                                    </li>
+                                </ul>
+                                <?php echo form_open('admin/users/create', ['id' => 'user_create_form']); ?>
+                                    <?php $this->load->view('admin/users/form'); ?>
+                                <?php echo form_close(); ?>
+                                <div class="tab-content mt-2">
+                                    <a href="<?php echo base_url('admin/users') ?>" class="btn btn-sm btn-default">Back</a>
+                                    <?php echo form_submit(['class' => 'btn btn-sm btn-info float-right', 'value' => 'Create']); ?>
                                 </div>
                             </div>
-                            <!-- /.card-body -->
-
-                            <div class="card-footer">
-                              <button type="submit" class="btn btn-primary"><?php echo $this->lang->line('lang_button_save'); ?></button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
-                    <!-- /.card -->
                 </div>
-                <!--/.col (left) -->
             </div>
-            <!-- /.row -->
         </div>
-        <!-- /.container-fluid -->
     </section>
-    <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $("#studentMainNav").addClass('menu-open');
-    $("#createStudentSubNav a").addClass('active');
-    $("#studentMainNav #studentMainNava").addClass('active');
+    $("#UserList").addClass('active');
+    var addressCounter = 1;
+
+    $('#addressBtn').on('click', function(){
+        addressCounter = addressCounter + 1;
+
+        $.ajax({
+            url: "{{route('user.add-address')}}",
+            type: "POST",
+            data: {
+                _token: '{{csrf_token()}}',
+                'addressCounter': addressCounter,            
+             },
+            success: function(data){                        
+                $('#extraAddress').append(data);
+            }
+        });
+    });
+
+    function removeAddressRow(divId, type){
+        const removeRowAlert = createAddressAlert("Are you sure?", "Do want to delete this row", "warning");
+        swal(removeRowAlert, function(isConfirm) {
+            if (isConfirm) {
+                var flag =  deleteRow(divId, type);
+                if(flag){
+                    swal.close();
+                }
+            } else{
+                 swal("Cancelled", "Your data safe!", "error");
+            }
+        });
+    }
+
+    //remove the row
+    function deleteRow(divId, type){
+        $('#address_'+divId).remove();
+        if ($(".user-addresses").length == 0) {
+            $('#addressBtn').click();
+        }
+        return 1;  
+    }
+
+    function createAddressAlert(title, text, type) {
+        return {
+            title: title,
+            text: text,
+            type: type,
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'Yes, Delete',
+            cancelButtonText: "No, cancel",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        };
+    }
+
+    $(function() {
+        $(document).on("change",".uploadFile", function(){
+            var uploadFile = $(this);
+            var files = !!this.files ? this.files : [];
+            if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+     
+            if (/^image/.test( files[0].type)){ // only image file
+                var reader = new FileReader(); // instance of the FileReader
+                reader.readAsDataURL(files[0]); // read the local file
+     
+                reader.onloadend = function(){ // set image data as background of div
+                    //alert(uploadFile.closest(".upimage").find('.imagePreview').length);
+                    uploadFile.closest(".imgUp").find('.imagePreview').css("background-image", "url("+this.result+")");
+                }
+            }
+        });
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#imagePreview').css('background-image', 'url('+e.target.result +')');
+                $('#imagePreview').hide();
+                $('#imagePreview').fadeIn(650);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 });
 </script>

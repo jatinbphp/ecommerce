@@ -1,30 +1,23 @@
-<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1><?php echo $this->lang->line('lang_title_manage_applicant'); ?></h1>
+                    <h1>Users</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?php echo base_url('dashboard') ?>"><?php echo $this->lang->line('lang_title_home'); ?></a></li>
-                        <li class="breadcrumb-item active"><?php echo $this->lang->line('lang_title_manage_applicant'); ?></li>
+                        <li class="breadcrumb-item"><a href="<?php echo base_url('admin/dashboard') ?>">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Users</li>
                     </ol>
                 </div>
             </div>
-        </div><!-- /.container-fluid -->
+        </div>
     </section>
-
-    <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-            <!-- left column -->
                 <div class="col-md-12">
-                <!-- general form elements -->
-
                     <?php if($this->session->flashdata('success')): ?>
                     <div class="alert alert-success alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -36,116 +29,515 @@
                         <?php echo $this->session->flashdata('error'); ?>
                     </div>
                     <?php endif; ?>
-
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title"><?php echo $this->lang->line('lang_title_edit_applicant'); ?></h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
-                        <form role="form" action="<?php base_url('students/create') ?>" method="post"  id="student_edit_form">
-                            
+                    <?php echo form_open('admin/users/create'); ?>
+                    <div class="card card-info card-outline">
+                            <div class="card-header">
+                                <h3 class="card-title">Add User</h3>
+                            </div>
                             <div class="card-body">
-                                <input type="hidden" id="id" name="id" value="<?php echo $student_data['id'] ?>">
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="username"><?php echo $this->lang->line('lang_field_title_username'); ?> :<span class="asterisk-sign">*</span></label>
-                                            <input type="text" class="form-control" id="username" name="username" placeholder="<?php echo $this->lang->line('lang_placeholder_username'); ?>" autocomplete="off" REQUIRED value="<?php echo $student_data['username'] ?>">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="email"><?php echo $this->lang->line('lang_field_title_email_address'); ?> :<span class="asterisk-sign">*</span></label>
-                                            <input type="email" class="form-control" id="email" name="email" placeholder="<?php echo $this->lang->line('lang_field_title_email_address'); ?>" autocomplete="off" REQUIRED value="<?php echo $student_data['email'] ?>">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="firstname"><?php echo $this->lang->line('lang_field_title_firstname'); ?> :<span class="asterisk-sign">*</span></label>
-                                            <input type="text" class="form-control" id="firstname" name="firstname" placeholder="<?php echo $this->lang->line('lang_field_title_firstname'); ?>" autocomplete="off" REQUIRED value="<?php echo $student_data['firstname'] ?>">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="lastname"><?php echo $this->lang->line('lang_field_title_lastname'); ?> :<span class="asterisk-sign">*</span></label>
-                                            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="<?php echo $this->lang->line('lang_field_title_lastname'); ?>" autocomplete="off" REQUIRED value="<?php echo $student_data['lastname'] ?>">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="phone"><?php echo $this->lang->line('lang_field_title_phoneno'); ?> :<span class="asterisk-sign">*</span></label>
-                                            <input type="number" class="form-control" id="phone" name="phone" placeholder="<?php echo $this->lang->line('lang_field_title_phoneno'); ?>" autocomplete="off" REQUIRED value="<?php echo $student_data['phone'] ?>">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="status"><?php echo $this->lang->line('lang_field_title_status'); ?> :<span class="asterisk-sign">*</span></label>
-                                            <select name="status" id="status" class="form-control" REQUIRED>
-                                                <option value=""><?php echo $this->lang->line('lang_field_title_status_option'); ?></option>
-                                                <option value="1" <?php if($student_data['status']==1){ echo "selected"; } ?>><?php echo $this->lang->line('lang_field_title_status_active'); ?></option>
-                                                <option value="0" <?php if($student_data['status']==0){ echo "selected"; } ?>><?php echo $this->lang->line('lang_field_title_status_inactive'); ?></option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <div class="alert alert-info alert-dismissible" role="alert">
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <?php echo $this->lang->line('lang_field_title_password_empty_message'); ?>
+                                <ul class="nav nav-tabs" id="myTabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="tab1" data-toggle="tab" href="#content1">General Information</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link @if(!isset($users)) disabled @endif" id="tab2" data-toggle="tab" href="#content2">Addresses</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content mt-2">
+                                <div class="row tab-pane fade show active" id="content1">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="card mb-4">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <div class="form-group">
+                                                                <?php
+                                                                    echo form_label('First Name <span class="text-danger">*</span>', 'fname');
+                                                                    echo form_input([
+                                                                        'name' => 'first_name',
+                                                                        'class' => 'form-control',
+                                                                        'required' => 'required',
+                                                                        'placeholder' => 'Enter First Name'
+                                                                    ]);
+                                                                ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <div class="form-group">
+                                                                <?php
+                                                                    echo form_label('Last Name <span class="text-danger">*</span>', 'fname');
+                                                                    echo form_input(array(
+                                                                        'name' => 'lname',
+                                                                        'id' => 'lname',
+                                                                        'class' => 'form-control',
+                                                                        'required' => 'required',
+                                                                        'placeholder' => 'Enter Last Name'
+                                                                    ));
+                                                                ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <?php
+                                                                echo form_label('Email <span class="text-danger">*</span>', 'email');
+                                                                echo form_input([
+                                                                    'type' => 'email',
+                                                                    'name' => 'email',
+                                                                    'id' => 'email',
+                                                                    'class' => 'form-control',
+                                                                    'required' => 'required',
+                                                                    'placeholder' => 'Enter Email'
+                                                                ]);
+                                                            ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <?php
+                                                                echo form_label('Mobile No <span class="text-danger">*</span>', 'mobileNo');
+                                                                echo form_input([
+                                                                    'type' => 'tel',
+                                                                    'name' => 'phone',
+                                                                    'class' => 'form-control',
+                                                                    'required' => 'required',
+                                                                    'placeholder' => 'Enter Mobile number'
+                                                                ]);
+                                                            ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="callout callout-danger">
+                                                            <h4><i class="fa fa-info"></i> Note:</h4>
+                                                            <p>Leave Password and Confirm Password empty if you are not going to change the password.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <?php
+                                                                echo form_label('Password <span class="text-danger">*</span>', 'password');
+                                                                echo form_password([
+                                                                    'name' => 'password',
+                                                                    'id' => 'password',
+                                                                    'class' => 'form-control',
+                                                                    'required' => 'required',
+                                                                    'placeholder' => 'Enter your password'
+                                                                ]);
+                                                            ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <?php
+                                                                echo form_label('Confirm Password <span class="text-danger">*</span>', 'confirm_password');
+                                                                echo form_password(array(
+                                                                    'name' => 'confirm_password',
+                                                                    'id' => 'confirm_password',
+                                                                    'class' => 'form-control',
+                                                                    'required' => 'required',
+                                                                    'placeholder' => 'Confirm your password'
+                                                                ));
+                                                            ?>
+                                                        </div>
+                                                    </div>                    
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <?php
+                                                                echo form_label('Image :');
+                                                            ?>
+                                                            <div class="">
+                                                                <div class="fileError">
+                                                                    <?php echo form_open_multipart('', ['id' => 'image']); ?>
+                                                                        <input type="file" name="userfile" id="image" accept="image/*" onchange="AjaxUploadImage(this)">
+                                                                    <?php echo form_close(); ?>
+                                                                </div>
+                                                                
+                                                                <?php if(!empty($user['image']) && file_exists($user['image'])): ?>
+                                                                    <img src="<?php echo base_url($user['image']); ?>" alt="User Image" style="border: 1px solid #ccc; margin-top: 5px;" width="150" id="DisplayImage">
+                                                                <?php else: ?>
+                                                                    <img src="<?php echo base_url('public/assets/admin/dist/img/no-image.png'); ?>" alt="User Image" style="border: 1px solid #ccc; margin-top: 5px; padding: 20px;" width="150" id="DisplayImage">
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <?php
+                                                                echo form_label('Status :');
+                                                            ?>
+                                                            <div class="">
+                                                                <?php foreach ($status as $key => $value): ?>
+                                                                    <?php $checked = !isset($users) && $key == 'active' ? 'checked' : ''; ?>    
+                                                                    <label>
+                                                                        <input type="radio" name="status" value="<?php echo $key; ?>" class="flat-red" <?php echo $checked; ?>>
+                                                                        <span style="margin-right: 10px"><?php echo $value; ?></span>
+                                                                    </label>
+                                                                <?php endforeach; ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <?php $addressesCounter = 1; ?>
+                                <div class="row tab-pane fade" id="content2">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="card mb-4">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12 mb-2">
+                                                        <h5>Add Addresses
+                                                            {!! Form::button('<i class="fa fa-plus"></i> Add New', [
+                                                                'type' => 'button',
+                                                                'class' => 'btn btn-info btn-sm',
+                                                                'id' => 'addressBtn',
+                                                                'style' => 'float: right;'
+                                                            ]) !!}
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                                @if(count($user_addresses)>0)
+                                                    @foreach ($user_addresses as $key => $address) 
+                                                        <div class="card user-addresses" id="address_{{ $address->id }}">
+                                                            <div class="row p-2">
+                                                                <div class="col-md-12">
+                                                                    <div class="row">
+                                                                        <div class="col-md-11">
+                                                                            <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
+                                                                                @include('admin.common.label', ['field' => 'title', 'labelText' => 'Title', 'isRequired' => true])
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="password"><?php echo $this->lang->line('lang_field_title_password'); ?></label>
-                                            <input type="password" class="form-control" id="password" name="password" placeholder="<?php echo $this->lang->line('lang_field_title_password'); ?>" autocomplete="off">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="cpassword"><?php echo $this->lang->line('lang_field_title_confim_password'); ?></label>
-                                            <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="<?php echo $this->lang->line('lang_field_title_confim_password'); ?>" autocomplete="off" >
+                                                                                {!! Form::text("addresses[old][$address->id][title]", $address->title, ['class' => 'form-control', 'placeholder' => 'Enter Title', 'id' => 'title']) !!}
+                                                                                
+                                                                                @include('admin.common.errors', ['field' => 'title'])
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-1">
+                                                                            {!! Form::button('<i class="fa fa-trash"></i>', [
+                                                                                'type' => 'button',
+                                                                                'class' => 'btn btn-danger',
+                                                                                'onclick' => 'removeAddressRow(' . $address->id . ', 0)',
+                                                                                'style' => 'margin-top: 30px;'
+                                                                            ]) !!}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
+                                                                        @include('admin.common.label', ['field' => 'first_name', 'labelText' => 'First Name', 'isRequired' => true])
+
+                                                                        {!! Form::text("addresses[old][$address->id][first_name]", $address->first_name, ['class' => 'form-control', 'placeholder' => 'Enter First Name', 'id' => 'first_name']) !!}
+                                                                        
+                                                                        @include('admin.common.errors', ['field' => 'first_name'])
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
+                                                                        @include('admin.common.label', ['field' => 'last_name', 'labelText' => 'Last Name', 'isRequired' => true])
+
+                                                                        {!! Form::text("addresses[old][$address->id][last_name]", $address->last_name, ['class' => 'form-control', 'placeholder' => 'Enter Last Name', 'id' => 'last_name']) !!}
+                                                                            
+                                                                        @include('admin.common.errors', ['field' => 'last_name'])
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group{{ $errors->has('company') ? ' has-error' : '' }}">
+                                                                        @include('admin.common.label', ['field' => 'company', 'labelText' => 'Company', 'isRequired' => false])
+
+                                                                        {!! Form::text("addresses[old][$address->id][company]", $address->company, ['class' => 'form-control', 'placeholder' => 'Enter Company', 'id' => 'company']) !!}
+                                                                        
+                                                                        @include('admin.common.errors', ['field' => 'first_name'])
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group{{ $errors->has('mobile_phone') ? ' has-error' : '' }}">
+                                                                        @include('admin.common.label', ['field' => 'mobile_phone', 'labelText' => 'Mobile No', 'isRequired' => true])
+
+                                                                        {!! Form::text("addresses[old][$address->id][mobile_phone]", $address->mobile_phone, ['class' => 'form-control', 'placeholder' => 'Enter Mobile No', 'id' => 'mobile_phone']) !!}
+                                                                        
+                                                                        @include('admin.common.errors', ['field' => 'mobile_phone'])
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group{{ $errors->has('address_line1') ? ' has-error' : '' }}">
+                                                                        @include('admin.common.label', ['field' => 'address_line1', 'labelText' => 'Address', 'isRequired' => true])
+
+                                                                        {!! Form::textarea("addresses[old][$address->id][address_line1]", $address->address_line1, ['class' => 'form-control', 'placeholder' => 'Enter Address', 'id' => 'address_line1', 'rows' => '2']) !!}
+                                                                        
+                                                                        @include('admin.common.errors', ['field' => 'address_line1'])
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group{{ $errors->has('address_line2') ? ' has-error' : '' }}">
+                                                                        @include('admin.common.label', ['field' => 'address_line2', 'labelText' => 'Address (Line 2)', 'isRequired' => false])
+
+                                                                        {!! Form::textarea("addresses[old][$address->id][address_line2]", $address->address_line2, ['class' => 'form-control', 'placeholder' => 'Enter Address Line 2', 'id' => 'address_line2', 'rows' => '2']) !!}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group{{ $errors->has('pincode') ? ' has-error' : '' }}">
+                                                                        @include('admin.common.label', ['field' => 'pincode', 'labelText' => 'ZIP / Pincode', 'isRequired' => true])
+
+                                                                        {!! Form::text("addresses[old][$address->id][pincode]", $address->pincode, ['class' => 'form-control', 'placeholder' => 'Enter ZIP / Pincode', 'id' => 'pincode']) !!}
+                                                                        
+                                                                        @include('admin.common.errors', ['field' => 'pincode'])
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group{{ $errors->has('country') ? ' has-error' : '' }}">
+                                                                        @include('admin.common.label', ['field' => 'country', 'labelText' => 'Country', 'isRequired' => true])
+
+                                                                        {!! Form::text("addresses[old][$address->id][country]", 'United Kingdom', ['class' => 'form-control', 'placeholder' => 'Enter Country', 'id' => 'country', 'readonly']) !!}
+                                                                        
+                                                                        @include('admin.common.errors', ['field' => 'country'])
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group{{ $errors->has('state') ? ' has-error' : '' }}">
+                                                                        @include('admin.common.label', ['field' => 'state', 'labelText' => 'State', 'isRequired' => true])
+
+                                                                        {!! Form::text("addresses[old][$address->id][state]", $address->state, ['class' => 'form-control', 'placeholder' => 'Enter State', 'id' => 'state']) !!}
+                                                                        
+                                                                        @include('admin.common.errors', ['field' => 'state'])
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
+                                                                        @include('admin.common.label', ['field' => 'city', 'labelText' => 'City / Town', 'isRequired' => true])
+
+
+                                                                        {!! Form::text("addresses[old][$address->id][city]", $address->city, ['class' => 'form-control', 'placeholder' => 'Enter City / Town', 'id' => 'city']) !!}
+                                                                        
+                                                                        @include('admin.common.errors', ['field' => 'city'])
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group{{ $errors->has('additional_information') ? ' has-error' : '' }}">
+                                                                        @include('admin.common.label', ['field' => 'additional_information', 'labelText' => 'Additional Information', 'isRequired' => false])
+
+                                                                        {!! Form::textarea("addresses[old][$address->id][additional_information]", $address->additional_information, ['class' => 'form-control', 'placeholder' => 'Enter Additional Information', 'id' => 'additional_information', 'rows' => '2']) !!}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @php
+                                                        $addressesCounter = $address->id;
+                                                        @endphp
+                                                    @endforeach
+                                                @else
+                                                    <div class="card user-addresses" id="address_1">
+                                                        <div class="row p-2">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
+
+                                                                    @include('admin.common.label', ['field' => 'title', 'labelText' => 'Title', 'isRequired' => true])
+
+                                                                    {!! Form::text('addresses[new][1][title]', null, ['class' => 'form-control', 'placeholder' => 'Enter Title', 'id' => 'title']) !!}
+
+                                                                    @include('admin.common.errors', ['field' => 'title'])
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
+                                                                    @include('admin.common.label', ['field' => 'first_name', 'labelText' => 'First Name', 'isRequired' => true])
+
+                                                                    {!! Form::text('addresses[new][1][first_name]', null, ['class' => 'form-control', 'placeholder' => 'Enter First Name', 'id' => 'first_name']) !!}
+                                                                    
+                                                                    @include('admin.common.errors', ['field' => 'first_name'])
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
+                                                                    @include('admin.common.label', ['field' => 'last_name', 'labelText' => 'Last Name', 'isRequired' => true])
+
+                                                                    {!! Form::text('addresses[new][1][last_name]', null, ['class' => 'form-control', 'placeholder' => 'Enter Last Name', 'id' => 'last_name']) !!}
+                                                                    
+                                                                    @include('admin.common.errors', ['field' => 'last_name'])
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group{{ $errors->has('company') ? ' has-error' : '' }}">
+                                                                    @include('admin.common.label', ['field' => 'company', 'labelText' => 'Company', 'isRequired' => false])
+
+                                                                    {!! Form::text('addresses[new][1][company]', null, ['class' => 'form-control', 'placeholder' => 'Enter Company', 'id' => 'company']) !!}
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group{{ $errors->has('mobile_phone') ? ' has-error' : '' }}">
+                                                                    @include('admin.common.label', ['field' => 'mobile_phone', 'labelText' => 'Mobile No', 'isRequired' => true])
+
+                                                                    {!! Form::text('addresses[new][1][mobile_phone]', null, ['class' => 'form-control', 'placeholder' => 'Enter Mobile No', 'id' => 'mobile_phone']) !!}
+                                                                    
+                                                                    @include('admin.common.errors', ['field' => 'mobile_phone'])
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group{{ $errors->has('address_line1') ? ' has-error' : '' }}">
+                                                                    @include('admin.common.label', ['field' => 'address_line1', 'labelText' => 'Address', 'isRequired' => true])
+
+                                                                    {!! Form::textarea('addresses[new][1][address_line1]', null, ['class' => 'form-control', 'placeholder' => 'Enter Address', 'id' => 'address_line1', 'rows' => '2']) !!}
+
+                                                                    @include('admin.common.errors', ['field' => 'address_line1'])
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group{{ $errors->has('address_line2') ? ' has-error' : '' }}">
+                                                                    @include('admin.common.label', ['field' => 'address_line2', 'labelText' => 'Address (Line 2)', 'isRequired' => false])
+
+                                                                    {!! Form::textarea('addresses[new][1][address_line2]', null, ['class' => 'form-control', 'placeholder' => 'Enter Address Line 2', 'id' => 'address_line2', 'rows' => '2']) !!}
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group{{ $errors->has('pincode') ? ' has-error' : '' }}">
+                                                                    @include('admin.common.label', ['field' => 'pincode', 'labelText' => 'ZIP / Pincode', 'isRequired' => true])
+
+                                                                    {!! Form::text('addresses[new][1][pincode]', null, ['class' => 'form-control', 'placeholder' => 'Enter ZIP / Pincode', 'id' => 'pincode']) !!}
+
+                                                                    @include('admin.common.errors', ['field' => 'pincode'])
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group{{ $errors->has('country') ? ' has-error' : '' }}">
+                                                                    @include('admin.common.label', ['field' => 'country', 'labelText' => 'Country', 'isRequired' => true])
+
+                                                                    {!! Form::text('addresses[new][1][country]', 'United Kingdom', ['class' => 'form-control', 'placeholder' => 'Enter Country', 'id' => 'country', 'readonly']) !!}
+                                                                    
+                                                                    @include('admin.common.errors', ['field' => 'country'])
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group{{ $errors->has('state') ? ' has-error' : '' }}">
+                                                                    @include('admin.common.label', ['field' => 'state', 'labelText' => 'State', 'isRequired' => true])
+
+                                                                    {!! Form::text('addresses[new][1][state]', null, ['class' => 'form-control', 'placeholder' => 'Enter State', 'id' => 'state']) !!}
+
+                                                                    @include('admin.common.errors', ['field' => 'state'])
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
+                                                                    @include('admin.common.label', ['field' => 'city', 'labelText' => 'City / Town', 'isRequired' => true])
+
+                                                                    {!! Form::text('addresses[new][1][city]', null, ['class' => 'form-control', 'placeholder' => 'Enter City / Town', 'id' => 'city']) !!}
+
+                                                                    @include('admin.common.errors', ['field' => 'city'])
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group{{ $errors->has('additional_information') ? ' has-error' : '' }}">
+                                                                    @include('admin.common.label', ['field' => 'additional_information', 'labelText' => 'Additional Information', 'isRequired' => false])
+
+                                                                    {!! Form::textarea('addresses[new][1][additional_information]', null, ['class' => 'form-control', 'placeholder' => 'Enter Additional Information', 'id' => 'additional_information', 'rows' => '2']) !!}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                                <div id="extraAddress"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- /.card-body -->
-
-                            <div class="card-footer">
-                              <button type="submit" class="btn btn-primary"><?php echo $this->lang->line('lang_button_save'); ?></button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
-                    <!-- /.card -->
+                    <?php echo form_close(); ?>
                 </div>
-                <!--/.col (left) -->
             </div>
-            <!-- /.row -->
         </div>
-        <!-- /.container-fluid -->
     </section>
-    <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $("#studentMainNav").addClass('menu-open');
-    $("#createStudentSubNav a").addClass('active');
-    $("#studentMainNav #studentMainNava").addClass('active');
+    $("#UserList").addClass('active');
+    var addressCounter = <?php echo $addressesCounter ?>;
+
+    $('#addressBtn').on('click', function(){
+        addressCounter = addressCounter + 1;
+
+        $.ajax({
+            url: "{{route('user.add-address')}}",
+            type: "POST",
+            data: {
+                _token: '{{csrf_token()}}',
+                'addressCounter': addressCounter,            
+             },
+            success: function(data){                        
+                $('#extraAddress').append(data);
+            }
+        });
+    });
+
+    function removeAddressRow(divId, type){
+        const removeRowAlert = createAddressAlert("Are you sure?", "Do want to delete this row", "warning");
+        swal(removeRowAlert, function(isConfirm) {
+            if (isConfirm) {
+                var flag =  deleteRow(divId, type);
+                if(flag){
+                    swal.close();
+                }
+            } else{
+                 swal("Cancelled", "Your data safe!", "error");
+            }
+        });
+    }
+
+    //remove the row
+    function deleteRow(divId, type){
+        $('#address_'+divId).remove();
+        if ($(".user-addresses").length == 0) {
+            $('#addressBtn').click();
+        }
+        return 1;  
+    }
+
+    function createAddressAlert(title, text, type) {
+        return {
+            title: title,
+            text: text,
+            type: type,
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'Yes, Delete',
+            cancelButtonText: "No, cancel",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        };
+    }
+
+    $(function() {
+        $(document).on("change",".uploadFile", function(){
+            var uploadFile = $(this);
+            var files = !!this.files ? this.files : [];
+            if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+     
+            if (/^image/.test( files[0].type)){ // only image file
+                var reader = new FileReader(); // instance of the FileReader
+                reader.readAsDataURL(files[0]); // read the local file
+     
+                reader.onloadend = function(){ // set image data as background of div
+                    //alert(uploadFile.closest(".upimage").find('.imagePreview').length);
+                    uploadFile.closest(".imgUp").find('.imagePreview').css("background-image", "url("+this.result+")");
+                }
+            }
+        });
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#imagePreview').css('background-image', 'url('+e.target.result +')');
+                $('#imagePreview').hide();
+                $('#imagePreview').fadeIn(650);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 });
 </script>

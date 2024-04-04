@@ -65,7 +65,7 @@ $(document).ready(function() {
         });
     });
 
-    $('#usersTable').DataTable({
+    var user_table = $('#usersTable').DataTable({
         "processing": true,
         "serverSide": true,
         "order":[],
@@ -75,18 +75,17 @@ $(document).ready(function() {
             type:"POST"
         },
         "columnDefs": [{
-            "targets":[4,5],
+            "targets":[5,6],
             "orderable": false
         }]
     });
 
-    $("#CategoriesTable").on('click', '.assign_unassign', function(event) {
+    $("#CategoriesTable, #usersTable").on('click', '.assign_unassign', function(event) {
         event.preventDefault();
         var url = $(this).attr('data-url');
         var id = $(this).attr("data-id");
         var type = $(this).attr("data-type");
         var table_name = $(this).attr("data-table_name");
-        var section = $(this).attr("data-table_name");
 
         var l = Ladda.create(this);
         l.start();
@@ -108,17 +107,68 @@ $(document).ready(function() {
                     $('#assign_remove_'+id).show();
                     $('#assign_add_'+id).hide();
                 }
-
-                if(section=='users_table'){
-                    users_table.draw(false);
-                } else if(section=='products_table'){
-                    products_table.draw(false);
-                } else if(section=='products_table'){
-                    products_table.draw(false);
-                } else if(section=='options_table'){
-                    options_table.draw(false);
-                }
             }
         });
+    });
+
+    $("#user_create_form").validate(
+    {                
+        rules:
+        {     
+            first_name:{
+                required: true
+            },
+            last_name:{
+                required: true
+            },
+             email: {
+                required: true,
+                email: true,
+                remote: {
+                    url: baseUrl+"check-email",
+                    type: "post"
+                }
+            },
+            phone: {
+                required: true,
+                number: true,
+                minlength: 10,
+                maxlength: 10
+            },
+            password: {
+                required: true,
+                minlength: 6,
+            },
+            confirm_password: {
+                required: true,
+                equalTo: "#password"
+            }
+        },
+        messages:
+        {
+            first_name:'Please Enter First Name.',
+            last_name:'Please Enter Last Name.',
+            email: {
+                required: 'Please Enter Email address.',
+                email: 'Please Enter a Valid Email Address.',
+                remote: "Email already exists",
+            },
+            phone: {
+                required: 'Please Enter Phone Number.',
+                number: 'Please Enter a Valid Phone Number.'
+            },
+            password: {
+                required: 'Please Enter Password.',
+                minlength: 'Your Password Must Be At Least 6 Characters Long.',
+            },
+            confirm_password: {
+                required: 'Please Confirm Password.',
+                equalTo: 'Passwords do not match.',
+            }
+        },
+        submitHandler: function(form)
+        {
+            form.submit();
+        }
     });
 });

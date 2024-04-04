@@ -19,7 +19,30 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <script src="<?php echo base_url('public/assets/admin/plugins/ladda/spin.min.js') ?>"></script>
 <script src="<?php echo base_url('public/assets/admin/plugins/ladda/ladda.min.js') ?>"></script>
-<script>Ladda.bind( 'input[type=submit]' );</script>
+<script type="text/javascript">
+	function AjaxUploadImage(obj,id){
+        var file = obj.files[0];
+        var imagefile = file.type;
+        var match = ["image/jpeg", "image/png", "image/jpg"];
+        if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2])))
+        {
+            $('#previewing'+URL).attr('src', 'noimage.png');
+            alert("<p id='error'>Please Select A valid Image File</p>" + "<h4>Note</h4>" + "<span id='error_message'>Only jpeg, jpg and png Images type allowed</span>");
+            return false;
+        } else{
+            var reader = new FileReader();
+            reader.onload = imageIsLoaded;
+            reader.readAsDataURL(obj.files[0]);
+        }
+
+        function imageIsLoaded(e){
+            $('#DisplayImage').css("display", "block");
+            $('#DisplayImage').css("margin-top", "1.5%");
+            $('#DisplayImage').attr('src', e.target.result);
+            $('#DisplayImage').attr('width', '150');
+        }
+    }
+</script>
 
 	<!-- <script type="text/javascript">
 		// Total Sales Chart
