@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#CategoriesTable').DataTable({
+    var category_table = $('#CategoriesTable').DataTable({
         "processing": true,
         "serverSide": true,
         "order":[],
@@ -13,7 +13,7 @@ $(document).ready(function() {
         }]
     });
 
-    $("#categories-form").validate(
+    $("#categories_form").validate(
     {                
         rules:
         {     
@@ -50,7 +50,15 @@ $(document).ready(function() {
         },
         function(isConfirm) {
             if (isConfirm) {
-                window.location.href = controller+"/delete/" + id;
+                $.ajax({
+                    url: controller+"/delete/" + id,
+                    type: "POST",
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                    success: function(data){
+                        category_table.row('.selected').remove().draw(false);
+                        swal("Deleted", "Your data successfully deleted!", "success");
+                    }
+                })
             } else {
                 swal("Cancelled", yourDataSafe, "error");
             }
@@ -72,4 +80,45 @@ $(document).ready(function() {
         }]
     });
 
+    $("#CategoriesTable").on('click', '.assign_unassign', function(event) {
+        event.preventDefault();
+        var url = $(this).attr('data-url');
+        var id = $(this).attr("data-id");
+        var type = $(this).attr("data-type");
+        var table_name = $(this).attr("data-table_name");
+        var section = $(this).attr("data-table_name");
+
+        var l = Ladda.create(this);
+        l.start();
+        $.ajax({
+            url: url,
+            type: "post",
+            data: {
+                'id': id,
+                'type': type,
+                'table_name': table_name,
+            },
+            success: function(data){
+                l.stop();
+                console.log(type);
+                if(type=='unassign'){
+                    $('#assign_remove_'+id).hide();
+                    $('#assign_add_'+id).show();
+                } else {
+                    $('#assign_remove_'+id).show();
+                    $('#assign_add_'+id).hide();
+                }
+
+                if(section=='users_table'){
+                    users_table.draw(false);
+                } else if(section=='products_table'){
+                    products_table.draw(false);
+                } else if(section=='products_table'){
+                    products_table.draw(false);
+                } else if(section=='options_table'){
+                    options_table.draw(false);
+                }
+            }
+        });
+    });
 });

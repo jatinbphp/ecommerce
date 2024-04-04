@@ -35,16 +35,22 @@
                         <div class="card-header">
                             <h3 class="card-title">Manage Categories</h3>
                         </div>
-                        <form role="form" action="<?php base_url('admin/categories/edit') ?>" method="post"  id="categories-form">
-                            
+                        <?php echo form_open('admin/categories/edit', ['method' => 'post', 'id' => 'categories_form']); ?>
                             <div class="card-body">
-                                <input type="hidden" id="id" name="id" value="<?php echo $categories_data['id'] ?>">
-
+                                <?php echo form_hidden('id', isset($categories_data['id']) ? $categories_data['id'] : '') ?>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="name">Name :<span class="asterisk-sign">*</span></label>
-                                            <input type="text" class="form-control" id="name" name="name" placeholder="Please Enter Category Name" autocomplete="off" REQUIRED value="<?php echo $categories_data['name'] ?>">
+                                            <?php
+                                                echo form_label('Name <span class="text-danger">*</span>', 'fname');
+                                                echo form_input([
+                                                    'name' => 'name',
+                                                    'id' => 'name',
+                                                    'class' => 'form-control',
+                                                    'placeholder' => 'Please Enter Category Name',
+                                                    'value' => isset($categories_data['name']) ? $categories_data['name'] : '',
+                                                ]);
+                                            ?>
                                         </div>
                                     </div>
                                 </div>

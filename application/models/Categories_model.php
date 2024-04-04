@@ -3,8 +3,8 @@
 class Categories_model extends CI_Model
 {   
     public $table = "categories";
-    public $select_column = array('*');
-    public $order_column = array("id");
+    public $select_column = ['*'];
+    public $order_column = ['id', 'name', 'status', 'created_at'];
 
 	public function __construct(){
 		parent::__construct();
@@ -48,14 +48,11 @@ class Categories_model extends CI_Model
         $this->db->from($this->table);
 
         if ($_POST["search"]["value"]!='') {
-           
             $searchString = $_POST["search"]["value"];
-
-            $this->db->where("(name LIKE '%".$searchString."%')", NULL, FALSE);
-
+            $this->db->where("(name LIKE '%".$searchString."%' OR status LIKE '%".$searchString."%' OR id LIKE '%".$searchString."%')", NULL, FALSE);
         }
 
-        if (isset($_POST['order'][0]['column'])) {
+        if (isset($_POST['order'][0]['column']) && isset($_POST['order'][0]['dir'])) {
             $this->db->order_by($this->order_column[$_POST['order'][0]['column']], $_POST['order']['0']['dir']);
         } else {
             $this->db->order_by('id', 'DESC');
@@ -65,12 +62,10 @@ class Categories_model extends CI_Model
     public function make_datatables()
     {
         $this->make_query();
-
         if ($_POST["length"] != -1) {
-
             $this->db->limit($_POST['length'], $_POST['start']);
-
         }
+
         $query = $this->db->get();
 
         return $query->result();

@@ -12,6 +12,8 @@
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+	
+	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/ladda/ladda-themeless.min.css') ?>">
     <script src="<?php echo base_url('public/assets/admin/plugins/jquery/jquery.min.js') ?>"></script>
     <script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 </head>
@@ -44,11 +46,9 @@
 			<nav class="mt-2">
 				<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 					<li class="nav-item">
-						<a href="<?php echo base_url('home'); ?>" class="nav-link">
+						<a href="<?php echo base_url('admin/dashboard'); ?>" class="nav-link" id="dashboard">
 							<i class="nav-icon fas fa-tachometer-alt"></i>
-							<p>
-								Dashboard
-							</p>
+							<p>Dashboard</p>
 						</a>
 					</li>
 					<li class="nav-item has-treeview" id="usersMainNav">
