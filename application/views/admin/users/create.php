@@ -40,7 +40,7 @@
                                         <a class="nav-link active" id="tab1" data-toggle="tab" href="#content1">General Information</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link <?php if(!isset($user_data)) 'disabled' endif ?>" id="tab2" data-toggle="tab" href="#content2">Addresses</a>
+                                        <a class="nav-link <?php if(!isset($user_data)) : ?> disabled <?php endif ?>" id="tab2" data-toggle="tab" href="#content2">Addresses</a>
                                     </li>
                                 </ul>
                                 <?php echo form_open('admin/users/create', ['id' => 'user_create_form']); ?>
