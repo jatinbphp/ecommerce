@@ -70,11 +70,58 @@ class User_model extends CI_Model {
         return $this->db->insert('users', $data);
     }
 
-    public function check_email_exists($email) {
+	public function saveResetToken($email, $token) {
+        $this->db->where('email', $email);
+        $this->db->update('users', array('reset_token' => $token));
+    }
+
+	public function updatePasswordByResetToken($token, $password)
+	{	
+		$this->db->where('reset_token', $token);
+        $query = $this->db->get('users');
+        if ($query->num_rows() == 1) {
+            $user = $query->row();
+            $this->db->where('reset_token', $token);
+            $this->db->update('users', array('password' => password_hash($password, PASSWORD_DEFAULT), 'reset_token' => NULL));
+            return $this->db->affected_rows() > 0;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public function getUserByResetToken($token)
+	{
+		$query = $this->db->get_where('users', array('reset_token' => $token));
+    	return $query->row();
+	}
+
+    public function isEmailExists($email) {
         $this->db->where('email', $email);
         $query = $this->db->get('users');
-        return $query->num_rows() > 0;
+
+		if ($query->num_rows() > 0) {
+			return true;
+		}
+		else
+		{
+			return false;
+		}
     }
+
+	public function getUserDataByEmail($email,$role)
+	{
+		$this->db->where('email', $email);
+		$this->db->where('role', $role);
+        $query = $this->db->get('users'); 
+        
+        if ($query->num_rows() > 0) {
+            return $query->row();
+        } else {
+            return null;
+        }
+	}
 
      public function authenticate($username, $password, $role) {
         $query = $this->db->get_where('users', array('email' => $username,'status' => self::STATUS_ACTIVE,'role' => $role));
@@ -114,7 +161,7 @@ class User_model extends CI_Model {
         return $getAdminData->row_array();
      }
 
-    public function reset_otp($user_id) {
+    public function resetOtp($user_id) {
         $this->db->set('otp_code', NULL);
         $this->db->where('id', $user_id);
         $this->db->update('users');

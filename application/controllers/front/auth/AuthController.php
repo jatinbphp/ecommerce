@@ -6,6 +6,7 @@ class AuthController extends MY_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('user_model');
+        $this->load->library('email');
     }
 
     public function index() {
@@ -15,7 +16,6 @@ class AuthController extends MY_Controller {
 
     public function optCheckView()
     {
-        //$this->frontRenderTemplate('front/auth/otpCheck');
         $this->load->view('front/auth/otpCheck');
     }
 
@@ -31,6 +31,91 @@ class AuthController extends MY_Controller {
     public function logout() {
         $this->session->sess_destroy();
         redirect('signIn');
+    }
+
+    public function forgotPassword(){
+        $this->load->view('front/auth/forgotPassword'); 
+    }
+
+    public function setNewPassword($token){
+        $user = $this->user_model->getUserByResetToken($token);
+
+        if ($user) {
+            $this->load->view('front/auth/resetPassword', array('token' => $token));
+        } else {
+            redirect(base_url('forgotPassword'));
+        }
+    }
+
+    public function updateNewPassword()
+    {
+        $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]|callback_strong_password_check');
+        $this->form_validation->set_rules('confirm_password', 'Retype Password', 'trim|required|matches[password]');
+
+        $getTokenVal = $this->input->post('token');
+        if ($this->form_validation->run() == FALSE) {
+            $error_messages = validation_errors();
+            $this->session->set_flashdata('error', $error_messages);
+            redirect(base_url('setNewPassword/' . $getTokenVal));
+        }
+
+        $getTokenChk = $this->user_model->getUserByResetToken($getTokenVal);
+
+        if($getTokenChk)
+        {
+            $password = $this->input->post('password');
+            if ($this->user_model->updatePasswordByResetToken($getTokenVal, $password)) {
+                $this->session->set_flashdata('success_message', 'Your password has been reset successfully. You can now log in with your new password');
+                redirect(base_url('signIn'));
+            } 
+            else
+            {
+                $this->session->set_flashdata('error', 'Failed to update password. Please try again.');
+                redirect(base_url('setNewPassword/' . $getTokenVal));
+            }
+        }
+        else
+        {
+            redirect(base_url('forgotPassword'));
+        }
+    }
+
+    public function sendForgotPasswordMail(){
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+        if ($this->form_validation->run() == FALSE) {
+            $error_messages = validation_errors();
+            $this->session->set_flashdata('error', $error_messages);
+            redirect(base_url('forgotPassword'));
+        }
+
+        $email = $this->input->post('email');
+        $getEmailFlag = $this->user_model->isEmailExists($email);
+
+        if($getEmailFlag)
+        {   
+            $getUsrData = $this->user_model->getUserDataByEmail($email,2);
+            $getUsrId = (isset($getUsrData->id)) ? $getUsrData->id : 0;
+            $token = md5(uniqid(rand(), true)).$getUsrId;
+            $this->user_model->saveResetToken($email, $token);
+            $reset_link = base_url('setNewPassword/' . $token);
+            $this->email->from('ecommerce@info.com', 'Support');
+            $this->email->to($email);
+            $this->email->subject('Password Reset Request');
+            $message = "<p>Click this link to reset your password: <a href='$reset_link'>$reset_link</a></p>";
+            $this->email->message($message);
+            if ($this->email->send()) {
+                $this->session->set_flashdata('success_message', 'An email has been sent to your email address with instructions on how to reset your password.');
+                redirect(base_url('forgotPassword'));
+            } else {
+                $this->session->set_flashdata('error', $this->email->print_debugger());
+                redirect(base_url('forgotPassword'));
+            }
+        }
+        else
+        {
+            $this->session->set_flashdata('error', 'Email is not found');
+            redirect(base_url('forgotPassword'));
+        }
     }
 
 
@@ -106,7 +191,7 @@ class AuthController extends MY_Controller {
 
    public function check_email_exists() {
         $email = $this->input->post('email');
-        $result = $this->user_model->check_email_exists($email);
+        $result = $this->user_model->isEmailExists($email);
         if($result)
         {
             echo json_encode(false);
@@ -115,7 +200,6 @@ class AuthController extends MY_Controller {
             echo json_encode(true);
         }
     }
-
 
      private function incrementLoginAttempts($email) {
         $user = $this->user_model->getUserByUsername($email);
@@ -157,7 +241,7 @@ class AuthController extends MY_Controller {
 
             if ($otp_entered == $stored_otp) {
                 $this->session->set_flashdata('success', 'OTP verified successfully. User authenticated.');
-                $this->user_model->reset_otp($user->id);
+                $this->user_model->resetOtp($user->id);
 
                 $userdata = array(
                     'id ' => $user->id,

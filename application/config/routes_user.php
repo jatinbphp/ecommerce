@@ -11,3 +11,7 @@ $route['check-email'] = 'front/auth/AuthController/check_email_exists';
 $route['about-us'] = 'HomeController/aboutUs';
 $route['shop'] = 'HomeController/shopPage';
 $route['contact'] = 'HomeController/contactPage';
+$route['forgotPassword'] = 'front/auth/AuthController/forgotPassword';
+$route['sendforgotPasswordLink'] = 'front/auth/AuthController/sendForgotPasswordMail';
+$route['setNewPassword/(:any)'] = 'front/auth/AuthController/setNewPassword/$1';
+$route['updateNewPassword'] = 'front/auth/AuthController/updateNewPassword';

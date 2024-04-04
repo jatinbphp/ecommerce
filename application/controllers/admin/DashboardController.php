@@ -7,6 +7,7 @@ class DashboardController extends MY_Controller {
 		parent::__construct();
 		$this->checkAdminLoggedIn();
 		$this->load->model('user_model');
+		$this->checkAdminLoggedIn();
 	}
 
 	public function index() {
