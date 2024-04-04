@@ -139,7 +139,7 @@ class AuthController extends MY_Controller {
                 'email' => $this->input->post('email'),
                 'phone' => $this->input->post('mobileNo'),
                 'role' => 2,
-                'status' => 1,
+                'status' => 'active',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             );
@@ -214,7 +214,7 @@ class AuthController extends MY_Controller {
             else
             {
                 $this->db->where('id', $user->id);
-                $this->db->update('users', array('status' => 0));
+                $this->db->update('users', array('status' => 'inactive'));
                 $this->session->set_flashdata('error', 'You have reached the maximum login attempts. Please contact customer service.');
             }
         }

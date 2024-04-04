@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <link href="<?php echo base_url('css/bootstrap.min.css'); ?>" rel="stylesheet">
+    <link href="<?php echo base_url('css/plugins/font-awesome.css'); ?>" rel="stylesheet">
     <style>
         /* Custom CSS for logo and background color */
         body {
@@ -13,6 +14,28 @@
         .company-logo {
             max-width: 200px; /* Adjust the size of the logo as needed */
             margin-bottom: 20px; /* Add some margin below the logo */
+        }
+        .eye-icon {
+            position: absolute;
+            top: 30%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            pointer-events: auto;
+            color:gray;
+        }
+
+        .confirm-eye-icon {
+            position: absolute;
+            top: 30%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            pointer-events: auto;
+            color:gray;
+        }
+        .confirm-eye-icon i {
+            pointer-events: none;
         }
     </style>
 </head>
@@ -71,27 +94,41 @@
                             <div class="form-group">
                                 <?php
                                 echo form_label('Password <span class="text-danger">*</span>', 'password');
-                                echo form_password(array(
-                                    'name' => 'password',
-                                    'id' => 'password',
-                                    'class' => 'form-control',
-                                    'required' => 'required',
-                                    'placeholder' => 'Enter your password'
-                                ));
                                 ?>
+                                <div class="position-relative">
+                                    <?php
+                                    echo form_password(array(
+                                        'name' => 'password',
+                                        'id' => 'password',
+                                        'class' => 'form-control',
+                                        'required' => 'required',
+                                        'placeholder' => 'Enter your password'
+                                    ));
+                                    ?>
+                                    <span class="eye-icon" onclick="togglePasswordVisibility()">
+                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                    </span>
+                                </div>
                             </div>
 
                             <div class="form-group">
                                 <?php
                                 echo form_label('Confirm Password <span class="text-danger">*</span>', 'confirm_password');
-                                echo form_password(array(
-                                    'name' => 'confirm_password',
-                                    'id' => 'confirm_password',
-                                    'class' => 'form-control',
-                                    'required' => 'required',
-                                    'placeholder' => 'Confirm your password'
-                                ));
                                 ?>
+                                <div class="position-relative">
+                                    <?php
+                                    echo form_password(array(
+                                        'name' => 'confirm_password',
+                                        'id' => 'confirm_password',
+                                        'class' => 'form-control',
+                                        'required' => 'required',
+                                        'placeholder' => 'Confirm your password'
+                                    ));
+                                    ?>
+                                    <span class="confirm-eye-icon" onclick="toggleConfirmPasswordVisibility()">
+                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                    </span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <?php
@@ -127,6 +164,37 @@
     <script src="<?php echo base_url('js/jquery.validate.min.js'); ?>"></script>
 
 <script type="text/javascript">
+
+function togglePasswordVisibility() {
+            var passwordField = document.getElementById('password');
+            var eyeIcon = document.querySelector('.eye-icon i');
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = "password";
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            }
+    }
+
+function toggleConfirmPasswordVisibility() {
+            var passwordField = document.getElementById('confirm_password');
+            var eyeIcon = document.querySelector('.confirm-eye-icon i');
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = "password";
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            }
+    }
+
     //signUp Validation code
         $.validator.addMethod("strongPassword", function(value, element) {
         return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/.test(value);
@@ -183,10 +251,8 @@
                 }
             },
             errorPlacement: function(error, element) {
-               error.insertAfter(element); 
-               error.css('color', 'red');
+               error.insertAfter(element).css('color', 'red');
             }
-
         });
     
 </script>

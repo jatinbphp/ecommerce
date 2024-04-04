@@ -48,8 +48,8 @@ class User_model extends CI_Model {
 			return 'Yes';
 	}
 
-	const STATUS_ACTIVE        = 1;
-    const STATUS_INACTIVE      = 0;
+	const STATUS_ACTIVE        = 'active';
+    const STATUS_INACTIVE      = 'inactive';
     const STATUS_ACTIVE_TEXT   = "Active";
     const STATUS_INACTIVE_TEXT = "In Active";
 
