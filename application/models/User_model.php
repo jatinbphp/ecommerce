@@ -5,27 +5,6 @@ class User_model extends CI_Model
     public $select_column = '*';
     public $order_column = ['id', 'first_name', 'first_name', 'email', 'phone', 'status', 'created_at'];
 
-	public function getUserData($studentId = null)
-	{
-		if($studentId) {
-			$sql = "SELECT * FROM users WHERE id = ? AND role += 2 ";
-			$query = $this->db->query($sql, array($studentId));
-			return $query->row_array();
-		}
-
-		$sql = "SELECT * FROM users WHERE role = 2 ORDER BY id DESC";
-		$query = $this->db->query($sql, array(0));
-		return $query->result_array();
-	}
-
-	public function edit($data = array(), $id = null)
-	{
-		$this->db->where('id', $id);
-		$update = $this->db->update('users', $data);
-
-		return ($update == true) ? true : false;
-	}
-
 	function check_other_username($table,$username,$id='') {
 		$this->db->select('*');
 		$this->db->where('username', $username);

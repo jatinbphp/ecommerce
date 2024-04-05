@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/dist/css/custom.css'); ?>">
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/summernote/summernote-bs4.min.css') ?>">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 	
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/ladda/ladda-themeless.min.css') ?>">
@@ -50,6 +51,12 @@
 						<a href="<?php echo base_url('admin/dashboard'); ?>" class="nav-link" id="dashboard">
 							<i class="nav-icon fas fa-tachometer-alt"></i>
 							<p>Dashboard</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="<?php echo base_url('admin/banners'); ?>" class="nav-link" id="bannerlist">
+							<i class="nav-icon fa fa-images"></i>
+							<p>Banners</p>
 						</a>
 					</li>
 					<li class="nav-item">

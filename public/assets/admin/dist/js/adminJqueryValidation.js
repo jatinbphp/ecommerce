@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var category_table = $('#CategoriesTable').DataTable({
+    var categories = $('#CategoriesTable').DataTable({
         "processing": true,
         "serverSide": true,
         "order":[],
@@ -12,6 +12,36 @@ $(document).ready(function() {
             "orderable": false
         }]
     });
+
+    var users = $('#usersTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "order":[],
+        "ajax":{
+
+            url:"users/fetch_users",
+            type:"POST"
+        },
+        "columnDefs": [{
+            "targets":[5,6],
+            "orderable": false
+        }]
+    });
+
+    var banners = $('#banerTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "order":[],
+        "ajax":{
+            url:"banners/fetch_banners",
+            type:"POST",
+        },
+        "columnDefs": [{
+            "targets":[5],
+            "orderable": false
+        }]
+    });
+
 
     $("#categories_form").validate(
     {                
@@ -32,7 +62,7 @@ $(document).ready(function() {
     });
 
     //Admin Delete
-    $("#CategoriesTable").on('click', '.deleteRecord', function(event) {
+    $("#CategoriesTable, #banerTable").on('click', '.deleteRecord', function(event) {
         event.preventDefault();
         var id = $(this).attr("data-id");
         var controller = $(this).attr("data-controller");
@@ -55,32 +85,40 @@ $(document).ready(function() {
                     type: "POST",
                     headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
                     success: function(data){
-                        category_table.row('.selected').remove().draw(false);
+                        if(controller == 'users'){
+                            users.row('.selected').remove().draw(false);
+                        } else if(controller == 'banners'){
+                            banners.row('.selected').remove().draw(false);
+                        } else if(controller == 'categories'){
+                            categories.row('.selected').remove().draw(false);
+                        }
+                                                    
                         swal("Deleted", "Your data successfully deleted!", "success");
                     }
                 })
             } else {
-                swal("Cancelled", yourDataSafe, "error");
+                swal("Cancelled", "Your Data is Safe.", "error");
             }
         });
     });
 
-    var user_table = $('#usersTable').DataTable({
-        "processing": true,
-        "serverSide": true,
-        "order":[],
-        "ajax":{
-
-            url:"users/fetch_users",
-            type:"POST"
-        },
-        "columnDefs": [{
-            "targets":[5,6],
-            "orderable": false
-        }]
+    $("#CategoriesTable, #usersTable, #banerTable, #banerTable").on('click', '.view-info', function(event) {
+        var url = $(this).attr('data-url');
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function(response) {
+                console.log(response);
+                $("#bannerModelBody").html(response);
+                $("#bannerShowmodal").modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
     });
 
-    $("#CategoriesTable, #usersTable").on('click', '.assign_unassign', function(event) {
+    $("#CategoriesTable, #usersTable, #banerTable, #banerTable").on('click', '.assign_unassign', function(event) {
         event.preventDefault();
         var url = $(this).attr('data-url');
         var id = $(this).attr("data-id");
@@ -166,6 +204,88 @@ $(document).ready(function() {
                 equalTo: 'Passwords do not match.',
             }
         },
+        submitHandler: function(form)
+        {
+            form.submit();
+        }
+    });
+
+    $("#bannerFormCreate").validate(
+    {
+        ignore: ".description *",          
+        rules:
+        {     
+            title:{
+                required: true
+            },
+            subtitle:{
+                required: true
+            },
+            image: {
+                required: true,
+                // extension: "jpeg,jpg,png"
+            },
+            description: {
+                required: true,
+            },
+        },
+        messages:
+        {
+            title:'Please Enter Title.',
+            subtitle:'Please Enter Sub Title.',
+            description:'Please Enter Description.',
+            image: {
+                required: 'Please select an image file.',
+                // extension: 'Please select a valid image file (JPEG, JPG, PNG).'
+            }
+        },
+        errorPlacement: function(error, element) {
+            if(element.attr("name") == "description"){
+                error.insertAfter(".note-editor");
+            }else if(element.attr("name") == "image"){
+                error.insertAfter(".image");
+            }else{
+                error.insertAfter(element);
+            }
+        },  
+        submitHandler: function(form)
+        {
+            form.submit();
+        }
+    });
+
+    $("#bannerFormEdit").validate(
+    {
+        ignore: ".description *",          
+        rules:
+        {     
+            title:{
+                required: true
+            },
+            subtitle:{
+                required: true
+            },
+            description: {
+                required: true,
+            },
+        },
+        messages:
+        {
+            title:'Please Enter Title.',
+            subtitle:'Please Enter Sub Title.',
+            description:'Please Enter Description.',
+            image: {
+                required: 'Please select an image file.',
+                // extension: 'Please select a valid image file (JPEG, JPG, PNG).'
+            }
+        },
+        errorPlacement: function(error, element) {
+            if(element.attr("name") == "description"){
+                error.insertAfter(".note-editor");
+            }else{
+                error.insertAfter(element);
+            }
+        },  
         submitHandler: function(form)
         {
             form.submit();

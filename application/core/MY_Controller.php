@@ -19,6 +19,7 @@ class MY_Controller extends CI_Controller
         $this->checkAdminLoggedIn();
 		$this->load->view('admin/Layout/header',$data);
 		$this->load->view($page, $data);
+        $this->load->view('admin/Layout/models',$data);
 		$this->load->view('admin/Layout/footer',$data);
 	}
 
@@ -79,5 +80,28 @@ class MY_Controller extends CI_Controller
                 </div>';
         }
         return $button;
+    }
+
+
+    public function uploadFile($data)
+    {
+        $config['upload_path'] = './uploads/'; // Set the upload directory
+        $config['allowed_types'] = 'gif|jpg|png'; // Set allowed file types
+        $config['max_size'] = 1024 * 5; // Set max file size in KB
+
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('image')) {
+            // If file upload failed, return an error
+            $error = array('error' => $this->upload->display_errors());
+            echo json_encode($error);
+        } else {
+            // If file upload success, return the uploaded file path
+            $data = array('upload_data' => $this->upload->data());
+            $uploaded_path = 'uploads/' . $data['upload_data']['file_name'];
+            
+            // Save the uploaded path to database
+            $this->File_model->saveFilePath($uploaded_path);
+        }
     }
 }
