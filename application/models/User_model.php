@@ -61,6 +61,20 @@ class User_model extends CI_Model
 		}
 	}
 
+	public function addUserAndGetId($data = ''){
+		if($data) {
+			$create = $this->db->insert($this->table, $data);
+			if($create == true)
+			{
+				return $this->db->insert_id();
+			}
+			else
+			{
+				return 0;	
+			}
+		}
+	}
+
 	public function edit($data = array(), $id = null)
 	{
 		$this->db->where('id', $id);
@@ -218,6 +232,17 @@ class User_model extends CI_Model
 		//$this->db->where('id !=', 1);
 		$this->db->where('role !=', '1');
 		return $this->db->count_all_results();
+	}
+
+	public function updateUserImage($userId,$fileName)
+	{
+		$data = [
+    		'image' => $fileName, 
+		];
+
+		$this->db->where('id', $userId); // Assuming 'user_id' is the column name for the user ID
+		$this->db->update('users', $data);
+		return;
 	}
 }
 

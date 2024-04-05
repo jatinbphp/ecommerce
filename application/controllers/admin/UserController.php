@@ -45,46 +45,76 @@ class UserController extends MY_Controller
 
 	public function create()
 	{
-		$this->form_validation->set_rules('first_name', 'Name', 'required');
-		$this->form_validation->set_rules('last_name', 'Name', 'required');
-		$this->form_validation->set_rules('password', 'Password', 'required|min_length[6]|matches[confirm_password]');
-		$this->form_validation->set_rules('confirm_password', 'Password Confirmation', 'required');
-		$this->form_validation->set_rules('phone', 'Phone', 'required|numeric');
-		$this->form_validation->set_rules('status', 'Status', 'required');
-		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
+			$this->form_validation->set_rules('first_name', 'Name', 'required');
+			$this->form_validation->set_rules('last_name', 'Name', 'required');
+			$this->form_validation->set_rules('password', 'Password', 'required|min_length[6]|matches[confirm_password]');
+			$this->form_validation->set_rules('confirm_password', 'Password Confirmation', 'required');
+			$this->form_validation->set_rules('phone', 'Phone', 'required|numeric');
+			$this->form_validation->set_rules('status', 'Status', 'required');
+			$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
+			//$this->form_validation->set_rules('userfile', 'Image', 'required');
 	
-	    if ($this->form_validation->run() == FALSE) {
-        	$this->data['status'] = $this->user_model::$status;
-			$this->adminRenderTemplate('admin/users/create', $this->data);
-        	return $this;
-        }
+			if ($this->form_validation->run() == FALSE) {
+				$this->data['status'] = $this->user_model::$status;
+				$this->adminRenderTemplate('admin/users/create', $this->data);
+				return $this;
+			}
         
-		$password = md5($this->input->post('password'));
-		$data = [
-			'first_name' => $this->input->post('first_name'),
-			'last_name' => $this->input->post('last_name'),
-			'password' => $password,
-			'phone' => $this->input->post('phone'),
-			'email' => $this->input->post('email'),
-			'first_name' => $this->input->post('first_name'),
-			'last_name' => $this->input->post('last_name'),
-		];
+			$password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
+			
 
-		$create = $this->user_model->create($data);
-		if($create == true) {
-	        $config['upload_path']   = './uploads/users/';
-	        $config['allowed_types'] = '*';
-	        $config['overwrite']     = TRUE; // overwrite if file with same name already exists
+			$data = [
+				'first_name' => $this->input->post('first_name'),
+				'last_name' => $this->input->post('last_name'),
+				'password' => $password,
+				'phone' => $this->input->post('phone'),
+				'email' => $this->input->post('email'),
+				'image' => $this->input->post('userfile'),
+				'role' => 2,
+				'country_code' => '+91',//$this->input->post('countryCode'),
+				'status' => $this->input->post('status'),
+				'created_at' => date('Y-m-d H:i:s'),
+				'updated_at' => date('Y-m-d H:i:s'),
+			];
 
-	        $this->load->library('upload', $config);
-			$this->session->set_flashdata('success', 'User has been inserted successfully! Please add user addresses.');
-			redirect('admin/users/edit', 'refresh');
-		}
-		else {
-			$this->session->set_flashdata('error', $this->lang->line('lang_error_occurred'));
-			redirect('admin/users/create', 'refresh');
-		}
 
+			$create = $this->user_model->addUserAndGetId($data);
+			if($create > 0) {
+				$uniqueFlNm =  uniqid().time().$create;
+				if (!empty($_FILES['userfile']['name'])) {
+				    $original_name = $_FILES['userfile']['name'];
+    				$file_extension = pathinfo($original_name, PATHINFO_EXTENSION);
+    				$uniqueFlNm = $uniqueFlNm.'.'.$file_extension;
+				}
+				
+				$config['file_name'] = $uniqueFlNm;
+				$config['upload_path']   = FCPATH .'uploads/users/';
+				$config['allowed_types'] = '*';
+				$config['overwrite']     = TRUE; // overwrite if file with same name already exists
+
+				$this->load->library('upload', $config);
+
+				if (empty($_FILES['userfile']['name'])) {
+				    $error = 'Please select a file to upload.';
+				} else{
+
+					$this->upload->initialize($config);
+
+					 if (!$this->upload->do_upload('userfile')) {
+					        $error = $this->upload->display_errors();
+					    } else {
+					        $uploadData = $this->upload->data();
+		             		$this->user_model->updateUserImage($create,$uniqueFlNm);
+				    }
+				}
+
+				$this->session->set_flashdata('success', 'User has been inserted successfully! Please add user addresses.');
+				redirect('admin/users/edit/'.$create, 'refresh');
+			}
+			else {
+				$this->session->set_flashdata('error', $this->lang->line('lang_error_occurred'));
+				redirect('admin/users/create', 'refresh');
+			}
 	}
 	
 	public function edit($id = null)

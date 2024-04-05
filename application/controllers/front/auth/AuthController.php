@@ -6,12 +6,14 @@ class AuthController extends MY_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('user_model');
+        $this->load->model('countries_model');
         $this->load->library('email');
     }
 
     public function index() {
         $this->userRedirectIfLoggedIn();
-        $this->load->view('front/auth/signUp'); 
+        $countryCode = $this->countries_model->getCountryData();
+        $this->load->view('front/auth/signUp',['countryCode' => $countryCode]); 
     }
 
     public function optCheckView()
@@ -127,6 +129,7 @@ class AuthController extends MY_Controller {
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]|callback_strong_password_check');
         $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required|matches[password]');
         $this->form_validation->set_rules('mobileNo', 'Mobile No', 'required');
+        $this->form_validation->set_rules('countryCode', 'Country Code', 'required');
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('front/auth/signUp');
@@ -138,7 +141,9 @@ class AuthController extends MY_Controller {
                 'last_name' => $this->input->post('lname'),
                 'email' => $this->input->post('email'),
                 'phone' => $this->input->post('mobileNo'),
+                'country_code' => $this->input->post('countryCode'),
                 'role' => 2,
+                'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
                 'status' => 'active',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
