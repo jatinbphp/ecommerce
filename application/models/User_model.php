@@ -239,7 +239,6 @@ class User_model extends CI_Model
 		$data = [
     		'image' => $fileName, 
 		];
-
 		$this->db->where('id', $userId); // Assuming 'user_id' is the column name for the user ID
 		$this->db->update('users', $data);
 		return;

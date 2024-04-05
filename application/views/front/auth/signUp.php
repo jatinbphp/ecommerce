@@ -154,7 +154,6 @@
                                 </div>
                             </div>
 
-
                             <?php
                                 echo form_submit(array(
                                 'name' => 'submit',
@@ -231,6 +230,9 @@ function toggleConfirmPasswordVisibility() {
                         required: true,
                         equalTo: "#password"
                 },
+                countryCode: {
+                        required: true,
+                },
                  mobileNo: {
                         required: true,
                         minlength: 10,
@@ -259,6 +261,9 @@ function toggleConfirmPasswordVisibility() {
                     required: "Please enter your mobile number",
                     minlength: "Mobile number must be at least 10 characters long",
                     maxlength: "Mobile number can't be longer than 12 characters"
+                },
+                countryCode: {
+                    required: "Please select country code",
                 }
             },
             errorPlacement: function(error, element) {

@@ -8,6 +8,7 @@ class UserController extends MY_Controller
 		$this->checkAdminLoggedIn();
 		$this->data['page_title'] = 'Users';
 		$this->load->model('user_model');
+		$this->load->model('countries_model');
 	}
 
 	public function index()
@@ -46,30 +47,33 @@ class UserController extends MY_Controller
 			$this->form_validation->set_rules('first_name', 'Name', 'required');
 			$this->form_validation->set_rules('last_name', 'Name', 'required');
 			$this->form_validation->set_rules('password', 'Password', 'required|min_length[6]|matches[confirm_password]');
-			$this->form_validation->set_rules('confirm_password', 'Password Confirmation', 'required');
-			$this->form_validation->set_rules('phone', 'Phone', 'required|numeric');
+			$this->form_validation->set_rules('confirm_password', 'Password Confirmation', 'required');	
+			$this->form_validation->set_rules('mobileNo', 'Phone', 'required|numeric');
+			$this->form_validation->set_rules('countryCode', '', 'required');
 			$this->form_validation->set_rules('status', 'Status', 'required');
 			$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
-			//$this->form_validation->set_rules('userfile', 'Image', 'required');
 	
 			if ($this->form_validation->run() == FALSE) {
+
+				// $error_messages = validation_errors();
+				// print_r($error_messages);exit;
 				$this->data['status'] = $this->user_model::$status;
+				$getCountryCode = $this->countries_model->getCountryData();
+				$this->data['countryCodes'] = $getCountryCode;				
 				$this->adminRenderTemplate('admin/users/create', $this->data);
 				return $this;
 			}
         
 			$password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
 			
-
 			$data = [
 				'first_name' => $this->input->post('first_name'),
 				'last_name' => $this->input->post('last_name'),
 				'password' => $password,
-				'phone' => $this->input->post('phone'),
+				'phone' => $this->input->post('mobileNo'),
 				'email' => $this->input->post('email'),
-				'image' => $this->input->post('userfile'),
 				'role' => 2,
-				'country_code' => '+91',//$this->input->post('countryCode'),
+				'country_code' => $this->input->post('countryCode'),
 				'status' => $this->input->post('status'),
 				'created_at' => date('Y-m-d H:i:s'),
 				'updated_at' => date('Y-m-d H:i:s'),
@@ -78,32 +82,21 @@ class UserController extends MY_Controller
 
 			$create = $this->user_model->addUserAndGetId($data);
 			if($create > 0) {
-				$uniqueFlNm =  uniqid().time().$create;
+
 				if (!empty($_FILES['userfile']['name'])) {
-				    $original_name = $_FILES['userfile']['name'];
-    				$file_extension = pathinfo($original_name, PATHINFO_EXTENSION);
-    				$uniqueFlNm = $uniqueFlNm.'.'.$file_extension;
-				}
-				
-				$config['file_name'] = $uniqueFlNm;
-				$config['upload_path']   = FCPATH .'uploads/users/';
-				$config['allowed_types'] = '*';
-				$config['overwrite']     = TRUE; // overwrite if file with same name already exists
 
-				$this->load->library('upload', $config);
-
-				if (empty($_FILES['userfile']['name'])) {
-				    $error = 'Please select a file to upload.';
-				} else{
-
-					$this->upload->initialize($config);
-
-					 if (!$this->upload->do_upload('userfile')) {
-					        $error = $this->upload->display_errors();
-					    } else {
-					        $uploadData = $this->upload->data();
-		             		$this->user_model->updateUserImage($create,$uniqueFlNm);
-				    }
+					$this->load->library('upload');
+			        $config['upload_path'] = 'uploads/users/';
+			        $config['allowed_types'] = 'gif|jpg|png';
+			        $config['max_size'] = 2048;
+			        $config['encrypt_name'] = FALSE; 
+			        $this->upload->initialize($config);
+			    
+			        if ($this->upload->do_upload('userfile')) {
+			            $uploadData = $this->upload->data();
+			            $imagePath = 'uploads/users/' . $uploadData['file_name'];
+			            $this->user_model->updateUserImage($create,$imagePath);
+			        } 
 				}
 
 				$this->session->set_flashdata('success', 'User has been inserted successfully! Please add user addresses.');
@@ -118,58 +111,124 @@ class UserController extends MY_Controller
 	public function edit($id = null)
 	{
 		if($id) {
-			if(($this->input->post('firstname')!='') && ($this->input->post('lastname')!='') && ($this->input->post('phone')!='') && ($this->input->post('email')!='') && ($this->input->post('username')!='')){
+
+			$this->form_validation->set_rules('first_name', 'Name', 'required');
+			$this->form_validation->set_rules('last_name', 'Name', 'required');
+			
+			$this->form_validation->set_rules('mobileNo', 'Phone', 'required|numeric');
+			$this->form_validation->set_rules('countryCode', '', 'required');
+			$this->form_validation->set_rules('status', 'Status', 'required');
+			$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+
+			if ($this->form_validation->run() == FALSE) {
+				$usersData = $this->user_model->getUserData($id);
+				$this->data['userData'] = $usersData;
+				$this->data['status'] = $this->user_model::$status;
+				$getCountryCode = $this->countries_model->getCountryData();
+				$this->data['countryCodes'] = $getCountryCode;
+				$this->adminRenderTemplate('admin/users/create', $this->data);
+				return;
+			}
+
+
+			if(($this->input->post('first_name')!='') && ($this->input->post('last_name')!='') && ($this->input->post('mobileNo')!='') && ($this->input->post('email')!='')){
+
+				//process images
+				if (!empty($_FILES['userfile']['name'])) {
+
+					$getUsrImg = $this->user_model->getUserData($id);
+					if(isset($getUsrImg['image']))
+					{
+						if (file_exists($getUsrImg['image'])) {
+							unlink($getUsrImg['image']);
+						}
+					}
+
+					$this->load->library('upload');
+			        $config['upload_path'] = 'uploads/users/';
+			        $config['allowed_types'] = 'gif|jpg|png';
+			        $config['max_size'] = 2048;
+			        $config['encrypt_name'] = FALSE; 
+			        $this->upload->initialize($config);
+			    
+			        if ($this->upload->do_upload('userfile')) {
+			            $uploadData = $this->upload->data();
+			            $imagePath = 'uploads/users/' . $uploadData['file_name'];
+			            $this->user_model->updateUserImage($id,$imagePath);
+			        } 
+				}
 
 				// true case
-				if(empty($this->input->post('password')) && empty($this->input->post('cpassword'))) {
-					$data = array(
-						'username' => $this->input->post('username'),
+				if(empty($this->input->post('password')) && empty($this->input->post('confirm_password'))) {
+					$data = [
+						'first_name' => $this->input->post('first_name'),
+						'last_name' => $this->input->post('last_name'),
+						'phone' => $this->input->post('mobileNo'),
 						'email' => $this->input->post('email'),
-						'firstname' => $this->input->post('firstname'),
-						'lastname' => $this->input->post('lastname'),
-						'phone' => $this->input->post('phone'),
+						'role' => 2,
+						'country_code' => $this->input->post('countryCode'),
 						'status' => $this->input->post('status'),
-					);
+						'created_at' => date('Y-m-d H:i:s'),
+						'updated_at' => date('Y-m-d H:i:s'),
+					];
 
 					$update = $this->user_model->edit($data, $id);
 					if($update == true) {
-						$this->session->set_flashdata('success', $this->lang->line('lang_successfully_updated_applicants'));
-						redirect('students', 'refresh');
+						$this->session->set_flashdata('success','The Record is successfully updated');
+						redirect(base_url('admin/users'));
 					}
 					else {
-						$this->session->set_flashdata('error', $this->lang->line('lang_error_occurred'));
+						$this->session->set_flashdata('error', 'Something went wrong');
 						redirect('admin/users/edit/'.$id, 'refresh');
 					}
 				}
 				else {
 
-					$password = md5($this->input->post('password'));
+					$this->form_validation->set_rules('password', 'Password', 'required|min_length[6]|matches[confirm_password]');
+					$this->form_validation->set_rules('confirm_password', 'Password Confirmation', 'required');	
+
+					if ($this->form_validation->run() == FALSE) {
+						$usersData = $this->user_model->getUserData($id);
+						$this->data['userData'] = $usersData;
+						$this->data['status'] = $this->user_model::$status;
+						$getCountryCode = $this->countries_model->getCountryData();
+						$this->data['countryCodes'] = $getCountryCode;
+						$this->adminRenderTemplate('admin/users/create', $this->data);
+						return;
+					}
+
+					$password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
 
 					$data = [
-						'username' => $this->input->post('username'),
+						'first_name' => $this->input->post('first_name'),
+						'last_name' => $this->input->post('last_name'),
 						'password' => $password,
+						'phone' => $this->input->post('mobileNo'),
 						'email' => $this->input->post('email'),
-						'firstname' => $this->input->post('firstname'),
-						'lastname' => $this->input->post('lastname'),
-						'phone' => $this->input->post('phone'),
+						'role' => 2,
+						'country_code' => $this->input->post('countryCode'),
 						'status' => $this->input->post('status'),
+						'created_at' => date('Y-m-d H:i:s'),
+						'updated_at' => date('Y-m-d H:i:s'),
 					];
 
 					$update = $this->user_model->edit($data, $id);
 					if($update == true) {
-						$this->session->set_flashdata('success', $this->lang->line('lang_successfully_updated_applicants'));
-						redirect('students', 'refresh');
+						$this->session->set_flashdata('success','The Record is successfully updated');
+						redirect(base_url('admin/users'));
 					}
 					else {
-						$this->session->set_flashdata('error', $this->lang->line('lang_error_occurred'));
+						$this->session->set_flashdata('error', 'Error Occured');
 						redirect('admin/users/edit/'.$id, 'refresh');
 					}
 				}
 			} else {
 				$usersData = $this->user_model->getUserData($id);
-				$this->data['user_data'] = $usersData;
+				$this->data['userData'] = $usersData;
 				$this->data['status'] = $this->user_model::$status;
-				$this->adminRenderTemplate('admin/users/edit', $this->data);
+				$getCountryCode = $this->countries_model->getCountryData();
+				$this->data['countryCodes'] = $getCountryCode;
+				$this->adminRenderTemplate('admin/users/create', $this->data);
 			}
 		}
 	}

@@ -8,11 +8,8 @@
                             <div class="form-group">
                                 <?php
                                     echo form_label('First Name <span class="text-danger">*</span>', 'fname');
-                                    echo form_input([
-                                        'name' => 'first_name',
-                                        'class' => 'form-control',
-                                        'placeholder' => 'Enter First Name'
-                                    ]);
+                                    echo form_input('first_name', isset($userData['first_name']) ? $userData['first_name'] : set_value('first_name'), 'class="form-control" placeholder="Enter First Name"');
+                                    echo form_error('first_name', '<span class="help-block text-danger">', '</span>');
                                 ?>
                             </div>
                         </div>
@@ -22,11 +19,8 @@
                             <div class="form-group">
                                 <?php
                                     echo form_label('Last Name <span class="text-danger">*</span>', 'fname');
-                                    echo form_input([
-                                        'name' => 'last_name',
-                                        'class' => 'form-control',
-                                        'placeholder' => 'Enter Last Name'
-                                    ]);
+                                    echo form_input('last_name', isset($userData['last_name']) ? $userData['last_name'] : set_value('last_name'), 'class="form-control" placeholder="Enter Last Name"');
+                                    echo form_error('last_name', '<span class="help-block text-danger">', '</span>');
                                 ?>
                             </div>
                         </div>
@@ -35,31 +29,34 @@
                         <div class="form-group">
                             <?php
                                 echo form_label('Email <span class="text-danger">*</span>', 'email');
-                                echo form_input([
-                                    'type' => 'email',
-                                    'name' => 'email',
-                                    'id' => 'email',
-                                    'class' => 'form-control',
-                                    'placeholder' => 'Enter Email'
-                                ]);
+                                echo form_input('email', isset($userData['email']) ? $userData['email'] : set_value('email'), 'type="email" id="email" class="form-control" required="required" placeholder="Enter Email"');
+                                echo form_error('email', '<span class="help-block text-danger">', '</span>');
                             ?>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <?php
-                                echo form_label('Mobile No <span class="text-danger">*</span>', 'mobileNo');
-                                echo form_input([
-                                    'type' => 'tel',
-                                    'name' => 'phone',
-                                    'class' => 'form-control',
-                                    'placeholder' => 'Enter Mobile number'
-                                ]);
-                            ?>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <?php
+                                        echo form_label('Country Code <span class="text-danger">*</span>', 'countryCode');
+                                        echo form_dropdown('countryCode', $countryCodes, isset($userData['country_code']) ? $userData['country_code'] : set_value('countryCode', '+91'), 'class="form-control" id="countryCode" required');
+                                        echo form_error('countryCode', '<span class="help-block text-danger">', '</span>');
+                                    ?>
+                                </div>
+                                <div class="col-md-8">
+                                    <?php
+                                    echo form_label('Mobile No <span class="text-danger">*</span>', 'mobileNo');
+                                    echo form_input('mobileNo', isset($userData['phone']) ? $userData['phone'] : set_value('mobileNo'),"type = 'tel' id = 'mobileNo' class = 'form-control' required = 'required' placeholder = 'Enter your mobile number'");
+                                    echo form_error('mobileNo', '<span class="help-block text-danger">', '</span>');
+                                    ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <?php if(isset($user)): ?>
+
+                    <?php if(isset($userData)): ?>
                         <div class="col-md-12">
                             <div class="callout callout-danger">
                                 <h4><i class="fa fa-info"></i> Note:</h4>
@@ -70,26 +67,30 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <?php
-                                echo form_label('Password <span class="text-danger">*</span>', 'password');
-                                echo form_password([
-                                    'name' => 'password',
-                                    'id' => 'password',
-                                    'class' => 'form-control',
-                                    'placeholder' => 'Enter your password'
-                                ]);
+                                if(isset($userData)):
+                                    echo form_label('Password', 'password');
+                                    echo form_password('password', '', 'id="password" class="form-control" placeholder="Enter your password"');
+
+                                else:
+                                    echo form_label('Password <span class="text-danger">*</span>', 'password');
+                                    echo form_password('password', '', 'id="password" class="form-control" placeholder="Enter your password" required = "required"');
+                                endif;
+                                echo form_error('password', '<span class="help-block text-danger">', '</span>');
                             ?>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <?php
-                                echo form_label('Confirm Password <span class="text-danger">*</span>', 'confirm_password');
-                                echo form_password(array(
-                                    'name' => 'confirm_password',
-                                    'id' => 'confirm_password',
-                                    'class' => 'form-control',
-                                    'placeholder' => 'Confirm your password'
-                                ));
+                                if(isset($userData)):
+                                    echo form_label('Confirm Password', 'confirm_password');
+                                    echo form_password('confirm_password', '', 'id="confirm_password" class="form-control" placeholder="Confirm your password"');
+                                else:
+                                    echo form_label('Confirm Password', 'confirm_password');
+                                    echo form_password('confirm_password', '', 'id="confirm_password" class="form-control" placeholder="Confirm your password"');
+                                endif;
+
+                                echo form_error('confirm_password', '<span class="help-block text-danger">', '</span>');
                             ?>
                         </div>
                     </div>                    
@@ -100,13 +101,12 @@
                             ?>
                             <div class="">
                                 <div class="fileError">
-                                    <!-- <?php //echo form_open_multipart('', ['id' => 'image']); ?> -->
-                                        <input type="file" name="userfile" id="image" accept="image/*" onchange="AjaxUploadImage(this)">
-                                    <!-- <?php //echo form_close(); ?> -->
+                                    <?php echo form_upload('userfile', '', 'id="image" onchange="AjaxUploadImage(this)" accept="image/*"');
+                                    echo form_error('userfile', '<span class="help-block text-danger">', '</span>'); ?>
                                 </div>
                                 
-                                <?php if(!empty($user['image']) && file_exists($user['image'])): ?>
-                                    <img src="<?php echo base_url($user['image']); ?>" alt="User Image" style="border: 1px solid #ccc; margin-top: 5px;" width="150" id="DisplayImage">
+                                <?php if(!empty($userData['image']) && file_exists($userData['image'])): ?>
+                                    <img src="<?php echo base_url($userData['image']); ?>" alt="User Image" style="border: 1px solid #ccc; margin-top: 5px;" width="150" id="DisplayImage">
                                 <?php else: ?>
                                     <img src="<?php echo base_url('public/assets/admin/dist/img/no-image.png'); ?>" alt="User Image" style="border: 1px solid #ccc; margin-top: 5px; padding: 20px;" width="150" id="DisplayImage">
                                 <?php endif; ?>
@@ -120,12 +120,13 @@
                             ?>
                             <div class="">
                                 <?php foreach ($status as $key => $value): ?>
-                                    <?php $checked = !isset($users) && $key == 'active' ? 'checked' : ''; ?>    
-                                    <label>
-                                        <input type="radio" name="status" value="<?php echo $key; ?>" class="flat-red" <?php echo $checked; ?>>
-                                        <span style="margin-right: 10px"><?php echo $value; ?></span>
-                                    </label>
-                                <?php endforeach; ?>
+                                <?php $checked = !isset($users) && $key == 'active' ? 'checked' : ''; ?>    
+                                <label>
+                                    <?php echo form_radio('status', $key, $checked, 'class="flat-red"'); ?>
+                                    <span style="margin-right: 10px"><?php echo $value; ?></span>
+                                </label>
+                            <?php endforeach; ?>
+
                             </div>
                         </div>
                     </div>

@@ -32,7 +32,11 @@
                     <div class="card-footer">
                         <div class="card card-info card-outline">
                             <div class="card-header">
-                                <h3 class="card-title">Add User</h3>
+                                <h3 class="card-title"><?php if (!isset($userData)): ?>
+                                        Add User
+                                    <?php else: ?>
+                                        Edit User
+                                    <?php endif; ?></h3>
                             </div>
                             <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTabs">
@@ -40,13 +44,24 @@
                                         <a class="nav-link active" id="tab1" data-toggle="tab" href="#content1">General Information</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link <?php if(!isset($user_data)) : ?> disabled <?php endif ?>" id="tab2" data-toggle="tab" href="#content2">Addresses</a>
+                                        <a class="nav-link <?php if(!isset($userData)) : ?> disabled <?php endif ?>" id="tab2" data-toggle="tab" href="#content2" onclick="showAddAddressesContent();">Addresses</a>
                                     </li>
                                 </ul>
 
-                                <?php echo form_open_multipart('admin/users/create', ['id' => 'user_create_form']); ?>
+
+                                <?php 
+                                    if(isset($userData)):
+                                        echo form_open_multipart('admin/users/edit/'.$userData['id'], ['id' => 'user_edit_form']);
+                                    else:
+                                        echo form_open_multipart('admin/users/create', ['id' => 'user_create_form']);
+                                    endif;
+
+                                         ?>
                                     <?php $this->load->view('admin/users/form'); ?>
-                                    <?php echo form_submit(['class' => 'btn btn-sm btn-info float-right', 'value' => 'Create']); ?>
+                                    <?php if(isset($userData)): ?>
+                                        <?php $this->load->view('admin/users/userAddresses'); ?>
+                                    <?php endif; ?>
+                                    <?php echo form_submit(['class' => 'btn btn-sm btn-info float-right', 'value' => isset($userData) ? 'Update' : 'Create']); ?>
                                 <?php echo form_close(); ?>
                                 <div class="tab-content mt-2">
                                     <a href="<?php echo base_url('admin/users') ?>" class="btn btn-sm btn-default">Back</a>

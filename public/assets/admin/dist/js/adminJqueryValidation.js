@@ -111,64 +111,174 @@ $(document).ready(function() {
         });
     });
 
-    // $("#user_create_form").validate(
-    // {                
-    //     rules:
-    //     {     
-    //         first_name:{
-    //             required: true
-    //         },
-    //         last_name:{
-    //             required: true
-    //         },
-    //          email: {
-    //             required: true,
-    //             email: true,
-    //             remote: {
-    //                 url: baseUrl+"check-email",
-    //                 type: "post"
-    //             }
-    //         },
-    //         phone: {
-    //             required: true,
-    //             number: true,
-    //             minlength: 10,
-    //             maxlength: 10
-    //         },
-    //         password: {
-    //             required: true,
-    //             minlength: 6,
-    //         },
-    //         confirm_password: {
-    //             required: true,
-    //             equalTo: "#password"
-    //         }
-    //     },
-    //     messages:
-    //     {
-    //         first_name:'Please Enter First Name.',
-    //         last_name:'Please Enter Last Name.',
-    //         email: {
-    //             required: 'Please Enter Email address.',
-    //             email: 'Please Enter a Valid Email Address.',
-    //             remote: "Email already exists",
-    //         },
-    //         phone: {
-    //             required: 'Please Enter Phone Number.',
-    //             number: 'Please Enter a Valid Phone Number.'
-    //         },
-    //         password: {
-    //             required: 'Please Enter Password.',
-    //             minlength: 'Your Password Must Be At Least 6 Characters Long.',
-    //         },
-    //         confirm_password: {
-    //             required: 'Please Confirm Password.',
-    //             equalTo: 'Passwords do not match.',
-    //         }
-    //     },
-    //     submitHandler: function(form)
-    //     {
-    //         form.submit();
-    //     }
-    // });
+    $.validator.addMethod("strongPassword", function(value, element) {
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/.test(value);
+        }, "Your password must contain at least one lowercase letter, one uppercase letter, and one digit");
+
+    $("#user_create_form").validate(
+    {   
+        rules: {
+            email: {
+                required: true,
+                email: true,
+                remote: {
+                    url: baseUrl+"check-email",
+                    type: "post"
+                }
+            },
+             password: {
+                    required: true,
+                    minlength: 6,
+                    strongPassword: true
+                },
+             fname: "required",
+             lname: "required",
+             confirm_password: {
+                    required: true,
+                    equalTo: "#password"
+            },
+            countryCode: {
+                    required: true,
+            },
+             mobileNo: {
+                    required: true,
+                    minlength: 10,
+                    maxlength: 12
+            }
+        },
+        messages: {
+             fname: "Please enter your first name",
+             lname: "Please enter your last name",
+
+            email: {
+                required: "Please enter your email address",
+                email: "Please enter a valid email address",
+                remote: "Email already exists"
+            },
+             password: {
+                    required: "Please enter a password",
+                    minlength: "Your password must be at least 6 characters long",
+                    strongPassword: "Your password must contain at least one lowercase letter, one uppercase letter, and one digit"
+            },
+             confirm_password: {
+                    required: "Please confirm your password",
+                    equalTo: "Passwords do not match"
+                },
+            countryCode: {
+                required: "Please select country code",
+            },
+            mobileNo: {
+                required: "Please enter your mobile number",
+                minlength: "Mobile number must be at least 10 characters long",
+                maxlength: "Mobile number can't be longer than 12 characters"
+            },
+            countryCode: {
+                required: "Please select country code",
+            }
+        },
+        errorPlacement: function(error, element) {
+           error.insertAfter(element).css('color', 'red');
+        },
+        submitHandler: function(form)
+        {
+            form.submit();
+        }
+    });
+
+    $("#user_edit_form").validate(
+    {   
+        rules: {
+            email: {
+                required: true,
+                email: true,
+            },
+             password: {
+                    required: function(element) {
+                       return $('#password').val().trim().length > 0;
+                    },
+                    minlength: 6,
+                    strongPassword: {
+                        depends: function(element) {
+                            return $('#password').val().trim().length > 0;
+                        }
+                    }
+                },
+             fname: "required",
+             lname: "required",
+             confirm_password: {
+                    required: function(element) {
+                       return $('#password').val().trim().length > 0;
+                    },
+                    equalTo: "#password"
+            },
+             mobileNo: {
+                    required: true,
+                    minlength: 10,
+                    maxlength: 12
+            },
+            countryCode: {
+                    required: true,
+            }
+        },
+        messages: {
+             fname: "Please enter your first name",
+             lname: "Please enter your last name",
+
+            email: {
+                required: "Please enter your email address",
+                email: "Please enter a valid email address",
+                remote: "Email already exists"
+            },
+             password: {
+                    required: "Please enter a password",
+                    minlength: "Your password must be at least 6 characters long",
+                    strongPassword: "Your password must contain at least one lowercase letter, one uppercase letter, and one digit"
+            },
+             confirm_password: {
+                    required: "Please confirm your password",
+                    equalTo: "Passwords do not match"
+                },
+            mobileNo: {
+                required: "Please enter your mobile number",
+                minlength: "Mobile number must be at least 10 characters long",
+                maxlength: "Mobile number can't be longer than 12 characters"
+            },
+            countryCode: {
+                required: "Please select country code",
+            }
+        },
+        errorPlacement: function(error, element) {
+           error.insertAfter(element).css('color', 'red');
+        },
+        submitHandler: function(form)
+        {
+            form.submit();
+        }
+    });
+
+    function showAddAddressesContent()
+    {
+        $('#content2').tab('show');
+    }
+
+    var initialEmail = $('#email').val().trim();
+    $('#user_edit_form').on('input', '#email', function() {
+        var newEmail = $(this).val().trim();
+         if (newEmail !== initialEmail) {
+            $('#email').rules('add', {
+                remote: {
+                    url: baseUrl + "check-email",
+                    type: "post",
+                    data: {
+                        email: function() {
+                            return $('#email').val().trim();
+                        }
+                    }
+                }
+            });
+        }
+        else {
+            $('#email').rules('remove', 'remote');
+        } 
+    });
 });
