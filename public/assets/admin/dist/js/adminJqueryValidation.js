@@ -111,64 +111,64 @@ $(document).ready(function() {
         });
     });
 
-    $("#user_create_form").validate(
-    {                
-        rules:
-        {     
-            first_name:{
-                required: true
-            },
-            last_name:{
-                required: true
-            },
-             email: {
-                required: true,
-                email: true,
-                remote: {
-                    url: baseUrl+"check-email",
-                    type: "post"
-                }
-            },
-            phone: {
-                required: true,
-                number: true,
-                minlength: 10,
-                maxlength: 10
-            },
-            password: {
-                required: true,
-                minlength: 6,
-            },
-            confirm_password: {
-                required: true,
-                equalTo: "#password"
-            }
-        },
-        messages:
-        {
-            first_name:'Please Enter First Name.',
-            last_name:'Please Enter Last Name.',
-            email: {
-                required: 'Please Enter Email address.',
-                email: 'Please Enter a Valid Email Address.',
-                remote: "Email already exists",
-            },
-            phone: {
-                required: 'Please Enter Phone Number.',
-                number: 'Please Enter a Valid Phone Number.'
-            },
-            password: {
-                required: 'Please Enter Password.',
-                minlength: 'Your Password Must Be At Least 6 Characters Long.',
-            },
-            confirm_password: {
-                required: 'Please Confirm Password.',
-                equalTo: 'Passwords do not match.',
-            }
-        },
-        submitHandler: function(form)
-        {
-            form.submit();
-        }
-    });
+    // $("#user_create_form").validate(
+    // {                
+    //     rules:
+    //     {     
+    //         first_name:{
+    //             required: true
+    //         },
+    //         last_name:{
+    //             required: true
+    //         },
+    //          email: {
+    //             required: true,
+    //             email: true,
+    //             remote: {
+    //                 url: baseUrl+"check-email",
+    //                 type: "post"
+    //             }
+    //         },
+    //         phone: {
+    //             required: true,
+    //             number: true,
+    //             minlength: 10,
+    //             maxlength: 10
+    //         },
+    //         password: {
+    //             required: true,
+    //             minlength: 6,
+    //         },
+    //         confirm_password: {
+    //             required: true,
+    //             equalTo: "#password"
+    //         }
+    //     },
+    //     messages:
+    //     {
+    //         first_name:'Please Enter First Name.',
+    //         last_name:'Please Enter Last Name.',
+    //         email: {
+    //             required: 'Please Enter Email address.',
+    //             email: 'Please Enter a Valid Email Address.',
+    //             remote: "Email already exists",
+    //         },
+    //         phone: {
+    //             required: 'Please Enter Phone Number.',
+    //             number: 'Please Enter a Valid Phone Number.'
+    //         },
+    //         password: {
+    //             required: 'Please Enter Password.',
+    //             minlength: 'Your Password Must Be At Least 6 Characters Long.',
+    //         },
+    //         confirm_password: {
+    //             required: 'Please Confirm Password.',
+    //             equalTo: 'Passwords do not match.',
+    //         }
+    //     },
+    //     submitHandler: function(form)
+    //     {
+    //         form.submit();
+    //     }
+    // });
 });

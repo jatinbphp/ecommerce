@@ -43,12 +43,14 @@
                                         <a class="nav-link <?php if(!isset($user_data)) : ?> disabled <?php endif ?>" id="tab2" data-toggle="tab" href="#content2">Addresses</a>
                                     </li>
                                 </ul>
-                                <?php echo form_open('admin/users/create', ['id' => 'user_create_form']); ?>
+
+                                <?php echo form_open_multipart('admin/users/create', ['id' => 'user_create_form']); ?>
                                     <?php $this->load->view('admin/users/form'); ?>
+                                    <?php echo form_submit(['class' => 'btn btn-sm btn-info float-right', 'value' => 'Create']); ?>
                                 <?php echo form_close(); ?>
                                 <div class="tab-content mt-2">
                                     <a href="<?php echo base_url('admin/users') ?>" class="btn btn-sm btn-default">Back</a>
-                                    <?php echo form_submit(['class' => 'btn btn-sm btn-info float-right', 'value' => 'Create']); ?>
+                                    
                                 </div>
                             </div>
                         </div>

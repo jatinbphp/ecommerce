@@ -45,6 +45,7 @@
                             ?>
                         </div>
                     </div>
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <?php
@@ -99,9 +100,9 @@
                             ?>
                             <div class="">
                                 <div class="fileError">
-                                    <?php echo form_open_multipart('', ['id' => 'image']); ?>
+                                    <!-- <?php //echo form_open_multipart('', ['id' => 'image']); ?> -->
                                         <input type="file" name="userfile" id="image" accept="image/*" onchange="AjaxUploadImage(this)">
-                                    <?php echo form_close(); ?>
+                                    <!-- <?php //echo form_close(); ?> -->
                                 </div>
                                 
                                 <?php if(!empty($user['image']) && file_exists($user['image'])): ?>

@@ -131,18 +131,29 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <?php
-                                echo form_label('Mobile No <span class="text-danger">*</span>', 'mobileNo');
-                                echo form_input(array(
-                                    'type' => 'tel',
-                                    'name' => 'mobileNo',
-                                    'id' => 'mobileNo',
-                                    'class' => 'form-control',
-                                    'required' => 'required',
-                                    'placeholder' => 'Enter your mobile number'
-                                ));
-                                ?>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <?php
+                                        echo form_label('Country Code <span class="text-danger">*</span>', 'countryCode');
+                                        echo form_dropdown('countryCode', $countryCode, '+91', 'class="form-control" id="countryCode" required');
+                                        ?>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <?php
+                                        echo form_label('Mobile No <span class="text-danger">*</span>', 'mobileNo');
+                                        echo form_input(array(
+                                            'type' => 'tel',
+                                            'name' => 'mobileNo',
+                                            'id' => 'mobileNo',
+                                            'class' => 'form-control',
+                                            'required' => 'required',
+                                            'placeholder' => 'Enter your mobile number'
+                                        ));
+                                        ?>
+                                    </div>
+                                </div>
                             </div>
+
 
                             <?php
                                 echo form_submit(array(
