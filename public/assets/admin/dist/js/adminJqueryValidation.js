@@ -378,6 +378,7 @@ $(document).ready(function() {
         else {
             $('#email').rules('remove', 'remote');
         } 
+    });
 
     $("#bannerFormCreate").validate(
     {
