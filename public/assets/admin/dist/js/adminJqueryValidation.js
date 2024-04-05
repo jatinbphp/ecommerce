@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var category_table = $('#CategoriesTable').DataTable({
+    var categories = $('#CategoriesTable').DataTable({
         "processing": true,
         "serverSide": true,
         "order":[],
@@ -12,6 +12,36 @@ $(document).ready(function() {
             "orderable": false
         }]
     });
+
+    var users = $('#usersTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "order":[],
+        "ajax":{
+
+            url:"users/fetch_users",
+            type:"POST"
+        },
+        "columnDefs": [{
+            "targets":[5,6],
+            "orderable": false
+        }]
+    });
+
+    var banners = $('#banerTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "order":[],
+        "ajax":{
+            url:"banners/fetch_banners",
+            type:"POST",
+        },
+        "columnDefs": [{
+            "targets":[5],
+            "orderable": false
+        }]
+    });
+
 
     $("#categories_form").validate(
     {                
@@ -32,7 +62,7 @@ $(document).ready(function() {
     });
 
     //Admin Delete
-    $("#CategoriesTable").on('click', '.deleteRecord', function(event) {
+    $("#CategoriesTable, #banerTable").on('click', '.deleteRecord', function(event) {
         event.preventDefault();
         var id = $(this).attr("data-id");
         var controller = $(this).attr("data-controller");
@@ -55,32 +85,40 @@ $(document).ready(function() {
                     type: "POST",
                     headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
                     success: function(data){
-                        category_table.row('.selected').remove().draw(false);
+                        if(controller == 'users'){
+                            users.row('.selected').remove().draw(false);
+                        } else if(controller == 'banners'){
+                            banners.row('.selected').remove().draw(false);
+                        } else if(controller == 'categories'){
+                            categories.row('.selected').remove().draw(false);
+                        }
+                                                    
                         swal("Deleted", "Your data successfully deleted!", "success");
                     }
                 })
             } else {
-                swal("Cancelled", yourDataSafe, "error");
+                swal("Cancelled", "Your Data is Safe.", "error");
             }
         });
     });
 
-    var user_table = $('#usersTable').DataTable({
-        "processing": true,
-        "serverSide": true,
-        "order":[],
-        "ajax":{
-
-            url:"users/fetch_users",
-            type:"POST"
-        },
-        "columnDefs": [{
-            "targets":[5,6],
-            "orderable": false
-        }]
+    $("#CategoriesTable, #usersTable, #banerTable, #banerTable").on('click', '.view-info', function(event) {
+        var url = $(this).attr('data-url');
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function(response) {
+                console.log(response);
+                $("#bannerModelBody").html(response);
+                $("#bannerShowmodal").modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
     });
 
-    $("#CategoriesTable, #usersTable").on('click', '.assign_unassign', function(event) {
+    $("#CategoriesTable, #usersTable, #banerTable, #banerTable").on('click', '.assign_unassign', function(event) {
         event.preventDefault();
         var url = $(this).attr('data-url');
         var id = $(this).attr("data-id");
@@ -109,6 +147,66 @@ $(document).ready(function() {
                 }
             }
         });
+    });
+    $("#user_create_form").validate(
+    {                
+        rules:
+        {     
+            first_name:{
+                required: true
+            },
+            last_name:{
+                required: true
+            },
+             email: {
+                required: true,
+                email: true,
+                remote: {
+                    url: baseUrl+"check-email",
+                    type: "post"
+                }
+            },
+            phone: {
+                required: true,
+                number: true,
+                minlength: 10,
+                maxlength: 10
+            },
+            password: {
+                required: true,
+                minlength: 6,
+            },
+            confirm_password: {
+                required: true,
+                equalTo: "#password"
+            }
+        },
+        messages:
+        {
+            first_name:'Please Enter First Name.',
+            last_name:'Please Enter Last Name.',
+            email: {
+                required: 'Please Enter Email address.',
+                email: 'Please Enter a Valid Email Address.',
+                remote: "Email already exists",
+            },
+            phone: {
+                required: 'Please Enter Phone Number.',
+                number: 'Please Enter a Valid Phone Number.'
+            },
+            password: {
+                required: 'Please Enter Password.',
+                minlength: 'Your Password Must Be At Least 6 Characters Long.',
+            },
+            confirm_password: {
+                required: 'Please Confirm Password.',
+                equalTo: 'Passwords do not match.',
+            }
+        },
+        submitHandler: function(form)
+        {
+            form.submit();
+        }
     });
 
     $.validator.addMethod("strongPassword", function(value, element) {
@@ -280,5 +378,86 @@ $(document).ready(function() {
         else {
             $('#email').rules('remove', 'remote');
         } 
+
+    $("#bannerFormCreate").validate(
+    {
+        ignore: ".description *",          
+        rules:
+        {     
+            title:{
+                required: true
+            },
+            subtitle:{
+                required: true
+            },
+            image: {
+                required: true,
+                // extension: "jpeg,jpg,png"
+            },
+            description: {
+                required: true,
+            },
+        },
+        messages:
+        {
+            title:'Please Enter Title.',
+            subtitle:'Please Enter Sub Title.',
+            description:'Please Enter Description.',
+            image: {
+                required: 'Please select an image file.',
+                // extension: 'Please select a valid image file (JPEG, JPG, PNG).'
+            }
+        },
+        errorPlacement: function(error, element) {
+            if(element.attr("name") == "description"){
+                error.insertAfter(".note-editor");
+            }else if(element.attr("name") == "image"){
+                error.insertAfter(".image");
+            }else{
+                error.insertAfter(element);
+            }
+        },  
+        submitHandler: function(form)
+        {
+            form.submit();
+        }
+    });
+
+    $("#bannerFormEdit").validate(
+    {
+        ignore: ".description *",          
+        rules:
+        {     
+            title:{
+                required: true
+            },
+            subtitle:{
+                required: true
+            },
+            description: {
+                required: true,
+            },
+        },
+        messages:
+        {
+            title:'Please Enter Title.',
+            subtitle:'Please Enter Sub Title.',
+            description:'Please Enter Description.',
+            image: {
+                required: 'Please select an image file.',
+                // extension: 'Please select a valid image file (JPEG, JPG, PNG).'
+            }
+        },
+        errorPlacement: function(error, element) {
+            if(element.attr("name") == "description"){
+                error.insertAfter(".note-editor");
+            }else{
+                error.insertAfter(element);
+            }
+        },  
+        submitHandler: function(form)
+        {
+            form.submit();
+        }
     });
 });

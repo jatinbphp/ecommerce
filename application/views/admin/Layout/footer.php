@@ -2,15 +2,11 @@
 		All Rights
 	</footer>
 </div>
-<script src="<?php echo base_url('public/assets/admin/dist/js/adminJqueryValidation.js') ?>"></script>
-
 <!-- DataTables -->
 <script src="<?php echo base_url('public/assets/admin/plugins/datatables/jquery.dataTables.min.js') ?>"></script>
 <script src="<?php echo base_url('public/assets/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>"></script>
 <script src="<?php echo base_url('public/assets/admin/plugins/datatables-responsive/js/dataTables.responsive.min.js') ?>"></script>
 <script src="<?php echo base_url('public/assets/admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') ?>"></script>
-
-<!-- <script src="<?php echo base_url('public/assets/admin/plugins/jquery/jquery.min.js'); ?>"></script> -->
 <script src="<?php echo base_url('public/assets/admin/dist/js/jquery.validate.js') ?>"></script>
 <script src="<?php echo base_url('public/assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
 <script src="<?php echo base_url('public/assets/admin/dist/js/adminlte.js'); ?>"></script>
@@ -19,6 +15,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <script src="<?php echo base_url('public/assets/admin/plugins/ladda/spin.min.js') ?>"></script>
 <script src="<?php echo base_url('public/assets/admin/plugins/ladda/ladda.min.js') ?>"></script>
+<script src="<?php echo base_url('public/assets/admin/plugins/summernote/summernote.js') ?>"></script>
+<script src="<?php echo base_url('public/assets/admin/dist/js/adminJqueryValidation.js') ?>"></script>
 <script type="text/javascript">
 	function AjaxUploadImage(obj,id){
         var file = obj.files[0];
@@ -42,6 +40,41 @@
             $('#DisplayImage').attr('width', '150');
         }
     }
+
+    $(".description").each(function() {
+            var textarea = $(this);
+            textarea.summernote({
+                height: 250,
+                placeholder: textarea.attr('placeholder'),
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize', 'height']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['table','picture','link','map','minidiag']],
+                    ['misc', ['codeview']],
+                ],
+                callbacks: {
+                    onImageUpload: function(files) {
+                        for (var i = 0; i < files.length; i++)
+                            upload_image(files[i], this);
+                    }
+                },
+                onInit: function() {
+                    var placeholderText = textarea.attr('placeholder');
+                    placeholderText = placeholderText.replace(/\n/g, "<br>");
+                    textarea.summernote('option', 'placeholder', placeholderText);
+                },
+                onChange: function(contents) {
+                    if (contents.trim() === '') {
+                        var placeholderText = textarea.attr('placeholder');
+                        placeholderText = placeholderText.replace(/\n/g, "<br>");
+                        textarea.summernote('option', 'placeholder', placeholderText);
+                    }
+                }
+            });
+        });
 </script>
 
 	<!-- <script type="text/javascript">
