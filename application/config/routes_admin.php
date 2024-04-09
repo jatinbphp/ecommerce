@@ -8,6 +8,7 @@ $route['admin/dashboard'] = 'admin/DashboardController';
 $route['admin/users'] = 'admin/UserController';
 $route['admin/users/create'] = 'admin/UserController/create';
 $route['admin/users/edit/(:num)'] = 'admin/UserController/edit/$1';
+$route['admin/users/delete/(:num)'] = 'admin/UserController/delete/$1';
 $route['admin/users/fetch_users'] = 'admin/UserController/fetchUsers';
 $route['admin/profile/edit/(:num)'] = 'admin/ProfileController/edit/$1';
 $route['admin/categories'] = 'admin/CategoriesController';

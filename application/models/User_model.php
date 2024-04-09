@@ -256,5 +256,12 @@ class User_model extends CI_Model
 		$this->db->update('users', $data);
 		return;
 	}
+
+	public function delete($id)
+	{
+		$this->db->where('id', $id);
+		$delete = $this->db->delete($this->table);
+		return ($delete == true) ? true : false;
+	}
 }
 

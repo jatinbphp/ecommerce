@@ -77,7 +77,7 @@ $(document).ready(function() {
     });
 
     //Admin Delete
-    $("#CategoriesTable, #banerTable").on('click', '.deleteRecord', function(event) {
+    $("#CategoriesTable, #banerTable, #usersTable").on('click', '.deleteRecord', function(event) {
         event.preventDefault();
         var id = $(this).attr("data-id");
         var controller = $(this).attr("data-controller");

@@ -35,7 +35,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Manage Categories</h3>
                         </div>
-                        <?php echo form_open('admin/categories/edit', ['method' => 'post', 'id' => 'categories_form']); ?>
+                        <?php echo form_open("admin/categories/edit/" . $categories_data['id'], ['method' => 'post', 'id' => 'categories_form']); ?>
                             <div class="card-body">
                                 <?php echo form_hidden('id', isset($categories_data['id']) ? $categories_data['id'] : '') ?>
                                 <div class="row">
