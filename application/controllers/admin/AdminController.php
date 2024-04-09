@@ -33,9 +33,10 @@ class AdminController extends MY_Controller {
         $adminUser = $this->user_model->authenticate($email, $password, 1);    
 
         if ($adminUser) {
-            $getAdminData = $this->getAdminData($this->input->post('email'));
-            $getAdminData['admin_logged_in'] = 'true';
-            $this->session->set_userdata($getAdminData);
+            $adminData = $this->getAdminData($this->input->post('email'));
+            unset($adminData['password']);
+            $adminData['admin_logged_in'] = 'true';
+            $this->session->set_userdata($adminData);
             redirect('admin/dashboard');
         }
         else    

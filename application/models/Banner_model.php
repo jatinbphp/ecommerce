@@ -94,4 +94,10 @@ class Banner_model extends CI_Model
         $this->db->from($this->table);
         return $this->db->count_all_results();
     }
+
+    public function getActiveBammerData() {
+        $sql = "SELECT * FROM $this->table where status = '" . self::STATUS_ACTIVE . "'  ORDER BY id DESC";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
 }

@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class BannerController extends MY_Controller
 {
+	protected $_data = [];
 	public function __construct(){
 		parent::__construct();
 		$this->checkAdminLoggedIn();
@@ -12,7 +13,7 @@ class BannerController extends MY_Controller
 	}
 
 	public function index(){
-		$this->adminRenderTemplate('admin/Banner/index', $this->data);
+		$this->adminRenderTemplate('admin/Banner/index');
 	}
 
 	public function create(){
@@ -66,9 +67,10 @@ class BannerController extends MY_Controller
 	        $this->load->library('upload');
 
 	        $config['upload_path'] = 'uploads/banners/';
-	        $config['allowed_types'] = 'gif|jpg|jpeg|png';
-	        $config['max_size'] = 2048;
-	        $config['encrypt_name'] = TRUE; // Change to TRUE for security reasons
+			$config['allowed_types'] = 'gif|jpg|jpeg|png';
+			$config['max_size'] = 106610;
+			$config['encrypt_name'] = TRUE; // Change to TRUE for security reasons
+
 	        $this->upload->initialize($config);
 
 	        if ($this->upload->do_upload('image')) {
@@ -77,7 +79,8 @@ class BannerController extends MY_Controller
 
 	            return $imagePath;
 	        } else {
-	        	// return $this->upload->display_errors();
+	        	//echo $this->upload->display_errors();
+	        	//return $this->upload->display_errors();
 	            return '';
 	        }
 	    } else {

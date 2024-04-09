@@ -2,7 +2,7 @@
     RewriteEngine On
     RewriteBase /ecommerce/
 
-    # Removes index.php from URLs
+    # Remove index.php from URLs
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ index.php/$1 [L]

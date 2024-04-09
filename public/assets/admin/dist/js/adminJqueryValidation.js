@@ -359,8 +359,8 @@ $(document).ready(function() {
         $('#content2').tab('show');
     }
 
-    var initialEmail = $('#email').val().trim();
     $('#user_edit_form').on('input', '#email', function() {
+        var initialEmail = $('#email').val().trim();
         var newEmail = $(this).val().trim();
          if (newEmail !== initialEmail) {
             $('#email').rules('add', {

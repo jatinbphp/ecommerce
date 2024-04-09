@@ -54,6 +54,19 @@ class User_model extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getAdminUserData($userId = null)
+	{
+		if($userId) {
+			$sql = "SELECT $this->select_column FROM $this->table WHERE id = ? AND role = 1 ";
+			$query = $this->db->query($sql, array($userId));
+			return $query->row_array();
+		}
+
+		$sql = "SELECT $this->select_column FROM $this->table WHERE role = 1 ORDER BY id DESC";
+		$query = $this->db->query($sql, array(0));
+		return $query->result_array();
+	}
+
 	public function create($data = ''){
 		if($data) {
 			$create = $this->db->insert($this->table, $data);
