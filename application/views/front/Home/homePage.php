@@ -1,5 +1,5 @@
 <?php $this->load->view('front/Home/banners');  ?>
-<section class="middle">
+<section class="middle d-none">
     <div class="container">
         <div class="row no-gutters exlio_gutters">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
@@ -90,14 +90,14 @@
                     <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                     <div class="card-body p-0">
                         <div class="shop_thumb position-relative">
-                            <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/1.jpg'); ?>" alt="..."></a>
+                            <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/1.jpg'); ?>" alt="..."></a>
                             <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                         </div>
                     </div>
                     <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                         <div class="text-left">
                             <div class="text-center">
-                                <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Half Running Set</a></h5>
+                                <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Half Running Set</a></h5>
                                 <div class="elis_rty"><span class="ft-bold fs-md text-dark">$119.00</span></div>
                             </div>
                         </div>
@@ -110,14 +110,14 @@
                     <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                     <div class="card-body p-0">
                         <div class="shop_thumb position-relative">
-                            <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/2.jpg'); ?>" alt="..."></a>
+                            <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/2.jpg'); ?>" alt="..."></a>
                             <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                         </div>
                     </div>
                     <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                         <div class="text-left">
                             <div class="text-center">
-                                <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Formal Men Lowers</a></h5>
+                                <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Formal Men Lowers</a></h5>
                                 <div class="elis_rty"><span class="text-muted ft-medium line-through mr-2">$129.00</span><span class="ft-bold theme-cl fs-md">$79.00</span></div>
                             </div>
                         </div>
@@ -129,14 +129,14 @@
                     <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                     <div class="card-body p-0">
                         <div class="shop_thumb position-relative">
-                            <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/3.jpg'); ?>" alt="..."></a>
+                            <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/3.jpg'); ?>" alt="..."></a>
                             <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                         </div>
                     </div>
                     <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                         <div class="text-left">
                             <div class="text-center">
-                                <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Half Running Suit</a></h5>
+                                <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Half Running Suit</a></h5>
                                 <div class="elis_rty"><span class="ft-bold fs-md text-dark">$80.00</span></div>
                             </div>
                         </div>
@@ -149,14 +149,14 @@
                     <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                     <div class="card-body p-0">
                         <div class="shop_thumb position-relative">
-                            <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/4.jpg'); ?>" alt="..."></a>
+                            <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/4.jpg'); ?>" alt="..."></a>
                             <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                         </div>
                     </div>
                     <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                         <div class="text-left">
                             <div class="text-center">
-                                <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Half Fancy Lady Dress</a></h5>
+                                <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Half Fancy Lady Dress</a></h5>
                                 <div class="elis_rty"><span class="text-muted ft-medium line-through mr-2">$149.00</span><span class="ft-bold theme-cl fs-md">$110.00</span></div>
                             </div>
                         </div>
@@ -168,14 +168,14 @@
                     <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                     <div class="card-body p-0">
                         <div class="shop_thumb position-relative">
-                            <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/5.jpg'); ?>" alt="..."></a>
+                            <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/5.jpg'); ?>" alt="..."></a>
                             <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                         </div>
                     </div>
                     <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                         <div class="text-left">
                             <div class="text-center">
-                                <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Flix Flox Jeans</a></h5>
+                                <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Flix Flox Jeans</a></h5>
                                 <div class="elis_rty"><span class="text-muted ft-medium line-through mr-2">$90.00</span><span class="ft-bold theme-cl fs-md">$49.00</span></div>
                             </div>
                         </div>
@@ -188,14 +188,14 @@
                     <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                     <div class="card-body p-0">
                         <div class="shop_thumb position-relative">
-                            <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/6.jpg'); ?>" alt="..."></a>
+                            <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/6.jpg'); ?>" alt="..."></a>
                             <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                         </div>
                     </div>
                     <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                         <div class="text-left">
                             <div class="text-center">
-                                <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Fancy Salwar Suits</a></h5>
+                                <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Fancy Salwar Suits</a></h5>
                                 <div class="elis_rty"><span class="ft-bold fs-md text-dark">$114.00</span></div>
                             </div>
                         </div>
@@ -208,14 +208,14 @@
                     <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                     <div class="card-body p-0">
                         <div class="shop_thumb position-relative">
-                            <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/7.jpg'); ?>" alt="..."></a>
+                            <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/7.jpg'); ?>" alt="..."></a>
                             <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                         </div>
                     </div>
                     <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                         <div class="text-left">
                             <div class="text-center">
-                                <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Collot Full Dress</a></h5>
+                                <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Collot Full Dress</a></h5>
                                 <div class="elis_rty"><span class="ft-bold theme-cl fs-md text-dark">$120.00</span></div>
                             </div>
                         </div>
@@ -227,14 +227,14 @@
                     <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                     <div class="card-body p-0">
                         <div class="shop_thumb position-relative">
-                            <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/8.jpg'); ?>" alt="..."></a>
+                            <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/8.jpg'); ?>" alt="..."></a>
                             <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                         </div>
                     </div>
                     <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                         <div class="text-left">
                             <div class="text-center">
-                                <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Formal Fluex Kurti</a></h5>
+                                <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Formal Fluex Kurti</a></h5>
                                 <div class="elis_rty"><span class="text-muted ft-medium line-through mr-2">$149.00</span><span class="ft-bold theme-cl fs-md">$129.00</span></div>
                             </div>
                         </div>
@@ -298,14 +298,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/1.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/1.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Half Running Set</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Half Running Set</a></h5>
                                                     <div class="elis_rty"><span class="ft-bold fs-md text-dark">$119.00</span></div>
                                                 </div>
                                             </div>
@@ -318,14 +318,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/2.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/2.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Formal Men Lowers</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Formal Men Lowers</a></h5>
                                                     <div class="elis_rty"><span class="text-muted ft-medium line-through mr-2">$129.00</span><span class="ft-bold theme-cl fs-md">$79.00</span></div>
                                                 </div>
                                             </div>
@@ -337,14 +337,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/3.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/3.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Half Running Suit</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Half Running Suit</a></h5>
                                                     <div class="elis_rty"><span class="ft-bold fs-md text-dark">$80.00</span></div>
                                                 </div>
                                             </div>
@@ -357,14 +357,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/4.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/4.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Half Fancy Lady Dress</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Half Fancy Lady Dress</a></h5>
                                                     <div class="elis_rty"><span class="text-muted ft-medium line-through mr-2">$149.00</span><span class="ft-bold theme-cl fs-md">$110.00</span></div>
                                                 </div>
                                             </div>
@@ -376,14 +376,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/5.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/5.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Flix Flox Jeans</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Flix Flox Jeans</a></h5>
                                                     <div class="elis_rty"><span class="text-muted ft-medium line-through mr-2">$90.00</span><span class="ft-bold theme-cl fs-md">$49.00</span></div>
                                                 </div>
                                             </div>
@@ -396,14 +396,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/6.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/6.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Fancy Salwar Suits</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Fancy Salwar Suits</a></h5>
                                                     <div class="elis_rty"><span class="ft-bold fs-md text-dark">$114.00</span></div>
                                                 </div>
                                             </div>
@@ -416,14 +416,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/7.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/7.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Collot Full Dress</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Collot Full Dress</a></h5>
                                                     <div class="elis_rty"><span class="ft-bold theme-cl fs-md text-dark">$120.00</span></div>
                                                 </div>
                                             </div>
@@ -435,14 +435,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/8.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/8.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Formal Fluex Kurti</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Formal Fluex Kurti</a></h5>
                                                     <div class="elis_rty"><span class="text-muted ft-medium line-through mr-2">$149.00</span><span class="ft-bold theme-cl fs-md">$129.00</span></div>
                                                 </div>
                                             </div>
@@ -461,14 +461,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/1.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/1.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Half Running Set</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Half Running Set</a></h5>
                                                     <div class="elis_rty"><span class="ft-bold fs-md text-dark">$119.00</span></div>
                                                 </div>
                                             </div>
@@ -481,14 +481,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url(); ?>images/2.jpg" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url(); ?>images/2.jpg" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Formal Men Lowers</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Formal Men Lowers</a></h5>
                                                     <div class="elis_rty"><span class="text-muted ft-medium line-through mr-2">$129.00</span><span class="ft-bold theme-cl fs-md">$79.00</span></div>
                                                 </div>
                                             </div>
@@ -500,14 +500,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/3.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/3.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Half Running Suit</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Half Running Suit</a></h5>
                                                     <div class="elis_rty"><span class="ft-bold fs-md text-dark">$80.00</span></div>
                                                 </div>
                                             </div>
@@ -520,14 +520,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/4.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/4.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Half Fancy Lady Dress</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Half Fancy Lady Dress</a></h5>
                                                     <div class="elis_rty"><span class="text-muted ft-medium line-through mr-2">$149.00</span><span class="ft-bold theme-cl fs-md">$110.00</span></div>
                                                 </div>
                                             </div>
@@ -539,14 +539,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/5.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/5.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Flix Flox Jeans</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Flix Flox Jeans</a></h5>
                                                     <div class="elis_rty"><span class="text-muted ft-medium line-through mr-2">$90.00</span><span class="ft-bold theme-cl fs-md">$49.00</span></div>
                                                 </div>
                                             </div>
@@ -559,14 +559,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/6.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/6.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Fancy Salwar Suits</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Fancy Salwar Suits</a></h5>
                                                     <div class="elis_rty"><span class="ft-bold fs-md text-dark">$114.00</span></div>
                                                 </div>
                                             </div>
@@ -579,14 +579,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/7.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/7.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Collot Full Dress</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Collot Full Dress</a></h5>
                                                     <div class="elis_rty"><span class="ft-bold theme-cl fs-md text-dark">$120.00</span></div>
                                                 </div>
                                             </div>
@@ -598,14 +598,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/8.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/8.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Formal Fluex Kurti</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Formal Fluex Kurti</a></h5>
                                                     <div class="elis_rty"><span class="text-muted ft-medium line-through mr-2">$149.00</span><span class="ft-bold theme-cl fs-md">$129.00</span></div>
                                                 </div>
                                             </div>
@@ -625,14 +625,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/1.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/1.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Half Running Set</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Half Running Set</a></h5>
                                                     <div class="elis_rty"><span class="ft-bold fs-md text-dark">$119.00</span></div>
                                                 </div>
                                             </div>
@@ -645,14 +645,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/2.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/2.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Formal Men Lowers</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Formal Men Lowers</a></h5>
                                                     <div class="elis_rty"><span class="text-muted ft-medium line-through mr-2">$129.00</span><span class="ft-bold theme-cl fs-md">$79.00</span></div>
                                                 </div>
                                             </div>
@@ -664,14 +664,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/3.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/3.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Half Running Suit</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Half Running Suit</a></h5>
                                                     <div class="elis_rty"><span class="ft-bold fs-md text-dark">$80.00</span></div>
                                                 </div>
                                             </div>
@@ -684,14 +684,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/4.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/4.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Half Fancy Lady Dress</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Half Fancy Lady Dress</a></h5>
                                                     <div class="elis_rty"><span class="text-muted ft-medium line-through mr-2">$149.00</span><span class="ft-bold theme-cl fs-md">$110.00</span></div>
                                                 </div>
                                             </div>
@@ -703,14 +703,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/5.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/5.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Flix Flox Jeans</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Flix Flox Jeans</a></h5>
                                                     <div class="elis_rty"><span class="text-muted ft-medium line-through mr-2">$90.00</span><span class="ft-bold theme-cl fs-md">$49.00</span></div>
                                                 </div>
                                             </div>
@@ -723,14 +723,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/6.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/6.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Fancy Salwar Suits</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Fancy Salwar Suits</a></h5>
                                                     <div class="elis_rty"><span class="ft-bold fs-md text-dark">$114.00</span></div>
                                                 </div>
                                             </div>
@@ -743,14 +743,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/7.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/7.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Collot Full Dress</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Collot Full Dress</a></h5>
                                                     <div class="elis_rty"><span class="ft-bold theme-cl fs-md text-dark">$120.00</span></div>
                                                 </div>
                                             </div>
@@ -762,14 +762,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/8.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/8.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Formal Fluex Kurti</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Formal Fluex Kurti</a></h5>
                                                     <div class="elis_rty"><span class="text-muted ft-medium line-through mr-2">$149.00</span><span class="ft-bold theme-cl fs-md">$129.00</span></div>
                                                 </div>
                                             </div>
@@ -788,14 +788,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/1.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/1.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Half Running Set</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Half Running Set</a></h5>
                                                     <div class="elis_rty"><span class="ft-bold fs-md text-dark">$119.00</span></div>
                                                 </div>
                                             </div>
@@ -808,14 +808,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/2.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/2.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Formal Men Lowers</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Formal Men Lowers</a></h5>
                                                     <div class="elis_rty"><span class="text-muted ft-medium line-through mr-2">$129.00</span><span class="ft-bold theme-cl fs-md">$79.00</span></div>
                                                 </div>
                                             </div>
@@ -827,14 +827,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/3.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/3.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Half Running Suit</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Half Running Suit</a></h5>
                                                     <div class="elis_rty"><span class="ft-bold fs-md text-dark">$80.00</span></div>
                                                 </div>
                                             </div>
@@ -847,14 +847,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/4.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/4.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Half Fancy Lady Dress</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Half Fancy Lady Dress</a></h5>
                                                     <div class="elis_rty"><span class="text-muted ft-medium line-through mr-2">$149.00</span><span class="ft-bold theme-cl fs-md">$110.00</span></div>
                                                 </div>
                                             </div>
@@ -866,14 +866,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/5.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/5.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Flix Flox Jeans</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Flix Flox Jeans</a></h5>
                                                     <div class="elis_rty"><span class="text-muted ft-medium line-through mr-2">$90.00</span><span class="ft-bold theme-cl fs-md">$49.00</span></div>
                                                 </div>
                                             </div>
@@ -886,14 +886,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/6.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/6.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Fancy Salwar Suits</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Fancy Salwar Suits</a></h5>
                                                     <div class="elis_rty"><span class="ft-bold fs-md text-dark">$114.00</span></div>
                                                 </div>
                                             </div>
@@ -906,14 +906,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/7.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/7.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Collot Full Dress</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Collot Full Dress</a></h5>
                                                     <div class="elis_rty"><span class="ft-bold theme-cl fs-md text-dark">$120.00</span></div>
                                                 </div>
                                             </div>
@@ -925,14 +925,14 @@
                                         <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" href="shop-single.html"><img class="card-img-top" src="<?php echo base_url('images/8.jpg'); ?>" alt="..."></a>
+                                                <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url('images/8.jpg'); ?>" alt="..."></a>
                                                 <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                                             </div>
                                         </div>
                                         <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
                                             <div class="text-left">
                                                 <div class="text-center">
-                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="shop-single.html">Formal Fluex Kurti</a></h5>
+                                                    <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);">Formal Fluex Kurti</a></h5>
                                                     <div class="elis_rty"><span class="text-muted ft-medium line-through mr-2">$149.00</span><span class="ft-bold theme-cl fs-md">$129.00</span></div>
                                                 </div>
                                             </div>

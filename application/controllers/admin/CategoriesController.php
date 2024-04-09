@@ -88,7 +88,7 @@ class CategoriesController extends MY_Controller
 		foreach ($allData as $row) {
 			$categoryData = [];
 			$categoryData[] = "#".$row->id;
-			$categoryData[] = $row->name;
+			$categoryData[] = $row->full_name;
 			$categoryData[] = $this->getStatusButton($row->id, $row->status, 'categories');
 			$categoryData[] = $row->created_at;
 			$categoryData[] = '<a href="' . base_url('admin/categories/edit/' . $row->id) . '" class="btn btn-sm btn-warning"  style="margin-right:5px;"><i class="fa fa-edit"></i></a><a href="javascript:void(0);" class="btn btn-sm btn-danger deleteRecord" data-id="' . $row->id . '" data-controller="categories" data-title="Categories"><i class="fa fa-trash"></i></a>';

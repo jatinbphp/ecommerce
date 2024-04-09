@@ -21,3 +21,8 @@ $route['admin/banners/edit/(:num)'] = 'admin/BannerController/edit/$1';
 $route['admin/banners/show/(:num)'] = 'admin/BannerController/show/$1';
 $route['admin/banners/delete/(:num)'] = 'admin/BannerController/delete/$1';
 $route['admin/banners/fetch_banners'] = 'admin/BannerController/fetchBanners';
+$route['admin/contemt-management'] = 'admin/ContentManagementController';
+$route['admin/contemt-management/edit/(:num)'] = 'admin/ContentManagementController/edit/$1';
+$route['admin/contemt-management/fetch_content'] = 'admin/ContentManagementController/fetchContent';
+$route['admin/contemt-management/show/(:num)'] = 'admin/ContentManagementController/show/$1';
+

@@ -3,12 +3,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Categories</h1>
+                    <h1>Content Management</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="<?php echo base_url('admin/dashboard') ?>">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Categories</li>
+                        <li class="breadcrumb-item active">Content Management</li>
                     </ol>
                 </div>
             </div>
@@ -32,25 +32,18 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title w-100">
-                                Manage Categories
-                                <a href="<?php echo base_url('admin/categories/create') ?>" class="btn btn-sm btn-primary float-right"> <i class="fa fa-plus"></i> Add New</a>
+                                Manage Content Management
                             </h3>
                         </div>
                         <div class="card-body">
-                            <table id="CategoriesTable" class="table table-bordered table-striped">
+                            <table id="contentTable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Category Name</th>
-                                    <th>Status</th>
-                                    <th>Date Created</th>
-                                    <th>Action</th>
+                                    <th style="width: 10%;">#</th>
+                                    <th>Title</th>
+                                    <th  style="width: 10%;">Action</th>
                                 </tr>
                                 </thead>
-                                <tbody>                        
-                                </tbody>
-                                <tfoot>
-                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -62,7 +55,6 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $("#CategoriesList").addClass('active');
+    $("#contentManagement").addClass('active');
 });
 </script>
-

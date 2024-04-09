@@ -25,4 +25,18 @@ class HomeController extends MY_Controller {
         $this->frontRenderTemplate('front/Contact/contactUs');
     }
 
+    public function termaConditions() {
+        $sql = "SELECT * FROM content_management WHERE id = 2";
+        $query = $this->db->query($sql);
+        $data = $query->row_array();
+        $this->frontRenderTemplate('front/TermsConditions/termaConditionsPage',['terms_data' => $data]);
+    }
+
+    public function privecyPolicy() {
+        $sql = "SELECT * FROM content_management WHERE id = 1";
+        $query = $this->db->query($sql);
+        $data = $query->row_array();
+        $this->frontRenderTemplate('front/PrivecyPolicy/privecyPolicyPage',['privecy_data' => $data]);
+    }
+
 }

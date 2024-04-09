@@ -42,6 +42,21 @@ $(document).ready(function() {
         }]
     });
 
+    var contentTable = $('#contentTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "order":[],
+        "ajax":{
+            url:"contemt-management/fetch_content",
+            type:"POST",
+        },
+        "columnDefs": [{
+            "targets":[2],
+            "orderable": false,
+            "searchable": false,
+        }]
+    });
+
 
     $("#categories_form").validate(
     {                
@@ -102,15 +117,16 @@ $(document).ready(function() {
         });
     });
 
-    $("#CategoriesTable, #usersTable, #banerTable, #banerTable").on('click', '.view-info', function(event) {
+    $("#banerTable, #contentTable").on('click', '.view-info', function(event) {
+        var title = $(this).attr('data-title');
         var url = $(this).attr('data-url');
         $.ajax({
             url: url,
             type: "GET",
             success: function(response) {
-                console.log(response);
-                $("#bannerModelBody").html(response);
-                $("#bannerShowmodal").modal('show');
+                $("#viewModalTitle").html(title);
+                $("#viewModalBody").html(response);
+                $("#viewShowModal").modal('show');
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -448,6 +464,36 @@ $(document).ready(function() {
                 required: 'Please select an image file.',
                 // extension: 'Please select a valid image file (JPEG, JPG, PNG).'
             }
+        },
+        errorPlacement: function(error, element) {
+            if(element.attr("name") == "description"){
+                error.insertAfter(".note-editor");
+            }else{
+                error.insertAfter(element);
+            }
+        },  
+        submitHandler: function(form)
+        {
+            form.submit();
+        }
+    });
+
+    $("#contentFormEdit").validate(
+    {
+        ignore: ".description *",          
+        rules:
+        {     
+            title:{
+                required: true
+            },
+            description: {
+                required: true,
+            },
+        },
+        messages:
+        {
+            title:'Please Enter Title.',
+            description:'Please Enter Description.',
         },
         errorPlacement: function(error, element) {
             if(element.attr("name") == "description"){
