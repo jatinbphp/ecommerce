@@ -152,7 +152,7 @@ class User_model extends CI_Model
 	{
 		$this->db->where('email', $email);
 		$this->db->where('role', $role);
-        $query = $this->db->get($this->this); 
+        $query = $this->db->get($this->table); 
         
         if ($query->num_rows() > 0) {
             return $query->row();

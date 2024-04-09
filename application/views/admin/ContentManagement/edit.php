@@ -77,9 +77,6 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $("#profileTreeview").addClass('menu-open');
-    $("#profileTreeview a:first").addClass('active');
-    $("#profileEdit").addClass('active');
+    $("#contentManagement").addClass('active');
 });
 </script>
-

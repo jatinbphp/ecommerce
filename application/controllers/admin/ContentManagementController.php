@@ -28,7 +28,7 @@ class ContentManagementController extends MY_Controller {
 
 				$update = $this->Content_model->edit($data, $id);
 				if($update == true) {
-					$this->session->set_flashdata('success', 'Successfully updated.');
+					$this->session->set_flashdata('success', 'Content has been updated successfully!');
 					redirect('admin/contemt-management', 'refresh');
 				} else {
 					$this->session->set_flashdata('error', 'Error occurred!!');

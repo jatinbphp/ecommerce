@@ -39,7 +39,7 @@ class BannerController extends MY_Controller
 		$create = $this->Banner_model->create($data);
 	
 		if($create == true) {
-			$this->session->set_flashdata('success', 'Successfully created.');
+			$this->session->set_flashdata('success', 'Banner has been inserted successfully!.');
 			redirect('admin/banners', 'refresh');
 		} else {
 			$this->session->set_flashdata('error', 'Error occurred!!');
@@ -113,7 +113,7 @@ class BannerController extends MY_Controller
 
 				$update = $this->Banner_model->edit($data, $id);
 				if($update == true) {
-					$this->session->set_flashdata('success', 'Successfully updated.');
+					$this->session->set_flashdata('success', 'Banner has been updated successfully!.');
 					redirect('admin/banners', 'refresh');
 				} else {
 					$this->session->set_flashdata('error', 'Error occurred!!');
@@ -142,7 +142,7 @@ class BannerController extends MY_Controller
 			}
 			$delete = $this->Banner_model->delete($id);
 			if($delete == true) {
-				$this->session->set_flashdata('success', 'Successfully Deleted');
+				$this->session->set_flashdata('success', 'Banner has been deleted successfully!');
 				redirect('admin/banners', 'refresh');
 			}
 			else {

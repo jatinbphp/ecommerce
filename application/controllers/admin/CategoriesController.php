@@ -30,7 +30,7 @@ class CategoriesController extends MY_Controller
 		$create = $this->Categories_model->create($data);
 	
 		if($create == true) {
-			$this->session->set_flashdata('success', 'Successfully created.');
+			$this->session->set_flashdata('success', 'Category has been inserted successfully!');
 			redirect('admin/categories', 'refresh');
 		} else {
 			$this->session->set_flashdata('error', 'Error occurred!!');
@@ -47,7 +47,7 @@ class CategoriesController extends MY_Controller
 
 				$update = $this->Categories_model->edit($data, $id);
 				if($update == true) {
-					$this->session->set_flashdata('success', 'Successfully updated.');
+					$this->session->set_flashdata('success', 'Category has been updated successfully!');
 					redirect('admin/categories', 'refresh');
 				} else {
 					$this->session->set_flashdata('error', 'Error occurred!!');
@@ -69,7 +69,7 @@ class CategoriesController extends MY_Controller
 			];
 			$delete = $this->Categories_model->delete($id);
 			if($delete == true) {
-				$this->session->set_flashdata('success', 'Successfully Deleted');
+				$this->session->set_flashdata('success', 'Category has been deleted successfully!');
 				redirect('admin/categories', 'refresh');
 			}
 			else {
