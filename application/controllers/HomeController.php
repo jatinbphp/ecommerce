@@ -21,10 +21,6 @@ class HomeController extends MY_Controller {
         $this->frontRenderTemplate('front/Shop/shop');
     }
 
-    public function contactPage() {
-        $this->frontRenderTemplate('front/Contact/contactUs');
-    }
-
     public function termaConditions() {
         $sql = "SELECT * FROM content_management WHERE id = 2";
         $query = $this->db->query($sql);

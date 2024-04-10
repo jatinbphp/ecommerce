@@ -5,10 +5,22 @@ class Categories_model extends CI_Model
     public $table = "categories";
     public $select_column = ['*'];
     public $order_column = ['id', 'name', 'status', 'created_at'];
+    protected $_categoryIdWiseName = [];
 
 	public function __construct(){
 		parent::__construct();
 	}
+
+	const STATUS_ACTIVE        = 'active';
+    const STATUS_INACTIVE      = 'inactive';
+    const STATUS_ACTIVE_TEXT   = "Active";
+    const STATUS_INACTIVE_TEXT = "In Active";
+
+    public static $status = [
+        self::STATUS_ACTIVE   => self::STATUS_ACTIVE_TEXT,
+        self::STATUS_INACTIVE => self::STATUS_INACTIVE_TEXT,
+    ];
+
 
 	public function getDetails($categoryId = null) {
 		if($categoryId) {
@@ -22,11 +34,16 @@ class Categories_model extends CI_Model
 		return $query->result_array();
 	}
 
-	public function create($data = ''){
+	public function create($data = []){
 		if($data) {
 			$create = $this->db->insert($this->table, $data);
-			return ($create == true) ? true : false;
+			if ($create) {
+	            return $this->db->insert_id();
+	        } else {
+	            return 0;
+	        }
 		}
+		return 0;
 	}
 
 	public function edit($data = array(), $id = null){
@@ -45,6 +62,7 @@ class Categories_model extends CI_Model
     public function make_query()
     {
         $this->db->select($this->select_column);
+        $this->db->order_by('full_path', 'asc');
         $this->db->from($this->table);
 
         if ($_POST["search"]["value"]!='') {
@@ -83,5 +101,119 @@ class Categories_model extends CI_Model
         $this->db->select("*");
         $this->db->from($this->table);
         return $this->db->count_all_results();
+    }
+
+    public function getCategoryArray() {
+    	$this->db->select('id, name, full_path');
+    	$this->db->order_by('full_path', 'asc');
+        $query = $this->db->get($this->table);
+        
+        $categories = ['0' => 'Select Parent Category'];
+        
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $categories[$row->id] = $this->getFullPathName($row->id);
+            }
+        }
+        
+        return $categories;
+    }
+
+	public function getAllCategoriesHavingCurrentId($id){
+		if(!$id){
+			return [];
+		}
+
+	    $this->db->from($this->table);
+	    $this->db->where("FIND_IN_SET($id, full_path) > 0");
+	    $query = $this->db->get();
+
+	    if ($query->num_rows() > 0) {
+	        return $query->result_array();
+	    }
+	       
+	    return [];
+	}
+
+
+	public function getFullPathName($categoryId) {
+        if (!$categoryId) {
+            return '';
+        }
+        
+        $category = $this->db->get_where($this->table, ['id' => $categoryId])->row_array();
+        
+        if (!$category) {
+            return '';
+        }
+        
+        if (!$category['parent_category_id']) {
+            return $category['name'];
+        }
+        
+        $parentFullPath = $this->getFullPathName($category['parent_category_id']);
+        return $parentFullPath ? $parentFullPath . ' -> ' . $category['name'] : $category['name'];
+    }
+
+    public function getFullPathId($categoryId) {
+        if (!$categoryId) {
+            return '';
+        }
+        
+        $category = $this->db->get_where($this->table, ['id' => $categoryId])->row_array();
+        
+        if (!$category) {
+            return '';
+        }
+        
+        if (!$category['parent_category_id']) {
+            return $category['id'];
+        }
+        
+        $parentFullPath = $this->getFullPathId($category['parent_category_id']);
+        return $parentFullPath ? $parentFullPath . ',' . $category['id'] : $category['id'];
+    }
+
+    public function updateCategoryFullPath($categoryId){
+    	if(!$categoryId){
+    		return $this;
+    	}
+
+    	$allCategoriesHavingCurrentId = $this->getAllCategoriesHavingCurrentId($categoryId);
+
+    	if(!empty($allCategoriesHavingCurrentId)){
+    		foreach ($allCategoriesHavingCurrentId as $category) {
+    			$id = isset($category['id']) ? $category['id'] : 0;
+    			if(!$id){
+    				continue;
+    			}
+
+    			$data['full_path'] = $this->getFullPathId($id);
+    			$this->Categories_model->edit($data, $id);
+    		}
+    	}
+
+    	return $this;
+    }
+
+    public function getChildCategories($categoryId) {
+        return $this->db->get_where($this->table, ['parent_category_id' => $categoryId])->result_array();
+    }
+
+    public function getCategoryArrayExceptSub($categoryId){
+    	$this->db->select('id, name, full_path');
+    	$this->db->where("FIND_IN_SET($categoryId, full_path) = 0");
+    	$this->db->order_by('full_path', 'asc');
+        $query = $this->db->get($this->table);
+        
+        $categories = ['0' => 'Select Parent Category'];
+        
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $categories[$row->id] = $this->getFullPathName($row->id);
+            }
+        }
+        
+        return $categories;
     }
 }

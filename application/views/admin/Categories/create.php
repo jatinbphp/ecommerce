@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Categories</h1>
+                    <h1>Category</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -33,30 +33,14 @@
                         <div class="card-header">
                             <h3 class="card-title">Add Category</h3>
                         </div>
-                        <?php echo form_open('admin/categories/create', ['method' => 'post', 'id' => 'categories_form']); ?>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <?php
-                                                echo form_label('Name <span class="text-danger">*</span>', 'fname');
-                                                echo form_input([
-                                                    'name' => 'name',
-                                                    'id' => 'name',
-                                                    'class' => 'form-control',
-                                                    'placeholder' => 'Please Enter Category Name',
-                                                    'value' => $this->input->post('name')
-                                                ]);
-                                            ?>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <?php echo form_open_multipart('admin/categories/create', ['method' => 'post', 'id' => 'categories_form_add']); ?>
+                            <?php $this->load->view('admin/Categories/form'); ?>
                             <div class="card-footer">
+                                <a href="<?php echo base_url('admin/categories') ?>" class="btn btn-sm btn-default">Back</a>
                                 <?php
                                     echo form_submit([
                                         'name' => 'submit',
-                                        'class' => 'btn btn-primary',
+                                        'class' => 'btn btn-sm btn-info float-right',
                                         'value' => 'Save'
                                     ]);
                                 ?>

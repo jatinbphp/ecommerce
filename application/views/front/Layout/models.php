@@ -321,6 +321,7 @@
         <script src="<?php echo base_url('js/jQuery.style.switcher.js'); ?>"></script>
         <script src="<?php echo base_url('js/custom.js'); ?>"></script>
         <script src="<?php echo base_url('js/jquery.validate.min.js'); ?>"></script>
+        <script src="<?php echo base_url('public/assets/front/dist/js/frontValidations.js'); ?>"></script>
 
         <script>
             function openWishlist() {

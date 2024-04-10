@@ -59,7 +59,7 @@ class Banner_model extends CI_Model
 
         if ($_POST["search"]["value"]!='') {
             $searchString = $_POST["search"]["value"];
-            $this->db->where("(name LIKE '%".$searchString."%' OR status LIKE '%".$searchString."%' OR id LIKE '%".$searchString."%')", NULL, FALSE);
+            $this->db->where("(id LIKE '%".$searchString."%' OR title LIKE '%".$searchString."%' OR subtitle LIKE '%".$searchString."%' OR description LIKE '%".$searchString."%' OR status LIKE '%".$searchString."%')", NULL, FALSE);
         }
 
         if (isset($_POST['order'][0]['column']) && isset($_POST['order'][0]['dir'])) {

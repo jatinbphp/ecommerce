@@ -8,7 +8,7 @@ $(document).ready(function() {
             type:"POST",
         },
         "columnDefs": [{
-            "targets":[4],
+            "targets":[0,1,2,3,4],
             "orderable": false
         }]
     });
@@ -57,14 +57,54 @@ $(document).ready(function() {
         }]
     });
 
+    var contactUs = $('#contactUsTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "order":[],
+        "ajax":{
+            url:"contact-us/fetch_contactus",
+            type:"POST",
+        },
+        "columnDefs": [{
+            "targets":[5],
+            "orderable": false,
+            "searchable": false,
+        }]
+    });
 
-    $("#categories_form").validate(
+
+    $("#categories_form_add").validate(
     {                
         rules:
         {     
             name:{
                 required: true
+            },
+        },
+        messages:
+        {
+            name:'Please enter Category Name.',
+        },
+         errorPlacement: function(error, element) {
+            if(element.attr("name") == "image"){
+                error.insertAfter(".image");
+            }else{
+                error.insertAfter(element);
             }
+        },  
+        submitHandler: function(form)
+        {
+            form.submit();
+        }
+    });
+
+    $("#categories_form_edit").validate(
+    {                
+        rules:
+        {     
+            name:{
+                required: true
+            },
         },
         messages:
         {
@@ -77,7 +117,7 @@ $(document).ready(function() {
     });
 
     //Admin Delete
-    $("#CategoriesTable, #banerTable, #usersTable").on('click', '.deleteRecord', function(event) {
+    $("#CategoriesTable, #banerTable, #usersTable, #contactUsTable").on('click', '.deleteRecord', function(event) {
         event.preventDefault();
         var id = $(this).attr("data-id");
         var controller = $(this).attr("data-controller");
@@ -106,6 +146,8 @@ $(document).ready(function() {
                             banners.row('.selected').remove().draw(false);
                         } else if(controller == 'categories'){
                             categories.row('.selected').remove().draw(false);
+                        } else if(controller == 'contact-us'){
+                            contactUs.row('.selected').remove().draw(false);
                         }
                                                     
                         swal("Deleted", "Your data successfully deleted!", "success");
@@ -117,7 +159,7 @@ $(document).ready(function() {
         });
     });
 
-    $("#banerTable, #contentTable").on('click', '.view-info', function(event) {
+    $("#banerTable, #contentTable, #contactUsTable, #CategoriesTable").on('click', '.view-info', function(event) {
         var title = $(this).attr('data-title');
         var url = $(this).attr('data-url');
         $.ajax({

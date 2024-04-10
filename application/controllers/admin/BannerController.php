@@ -37,7 +37,8 @@ class BannerController extends MY_Controller
 		];
 
 		$create = $this->Banner_model->create($data);
-	
+		var_dump($create);
+		die;
 		if($create == true) {
 			$this->session->set_flashdata('success', 'Banner has been inserted successfully!.');
 			redirect('admin/banners', 'refresh');
@@ -131,9 +132,6 @@ class BannerController extends MY_Controller
 	public function delete($id)
 	{
 		if($id) {
-			$data = [
-				'deleted' => 1
-			];
 			$bannerDataRow = $this->Banner_model->getDetails($id);
 			if(isset($bannerDataRow['image'])){
 				if (file_exists($bannerDataRow['image'])) {
