@@ -17,7 +17,7 @@
         </div>
         <div class="col-md-6">
             <div class="form-group <?php echo form_error('image') ? 'has-error' : ''; ?>">
-                <?php echo form_label('Image : <span class="text-danger">*</span>', 'image'); ?>
+                <?php echo form_label('Image : ', 'image'); ?>
                 <small></small>
                 <div class="image">
                     <div class="fileError">

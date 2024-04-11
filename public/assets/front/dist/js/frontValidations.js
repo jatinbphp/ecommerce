@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $("#sendMessage2").validate(
+    $("#sendMessage").validate(
     {                
         rules:
         {     

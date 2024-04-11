@@ -35,10 +35,10 @@ class ContactusController extends MY_Controller {
 	
 		if($create == true) {
 			$this->session->set_flashdata('success', 'Thank you for getting in touch! We will get back in touch with you soon! Have a great day!.');
-			redirect('contact/send_message', 'refresh');
+			redirect('contact', 'refresh');
 		} else {
 			$this->session->set_flashdata('error', 'Error occurred!!');
-			redirect('contact/send_message', 'refresh');
+			redirect('contact', 'refresh');
 		}
     }
 
