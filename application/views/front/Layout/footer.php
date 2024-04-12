@@ -28,12 +28,10 @@
                     <div class="footer_widget">
                         <h4 class="widget_title">Supports</h4>
                         <ul class="footer-menu">
-                            <li><a href="javaScript:;">Contact Us</a></li>
-                            <li><a href="javaScript:;">About Page</a></li>
                             <li><a href="javaScript:;">Size Guide</a></li>
                             <li><a href="javaScript:;">Shipping & Returns</a></li>
-                            <li><a href="javaScript:;">FAQ's Page</a></li>
-                            <li><a href="javaScript:;">Privacy</a></li>
+                            <!-- <li><a href="javaScript:;">FAQ's Page</a></li>
+                            <li><a href="javaScript:;">Privacy</a></li> -->
                         </ul>
                     </div>
                 </div>
@@ -53,9 +51,13 @@
                     <div class="footer_widget">
                         <h4 class="widget_title">Company</h4>
                         <ul class="footer-menu">
-                            <li><a href="<?php echo site_url('about-us'); ?>">About</a></li>
-                            <li><a href="<?php echo site_url('contact'); ?>">Contact Us</a></li>
-                            <li><a href="<?php echo site_url('shop'); ?>">Shop</a></li>
+                            <li><a href="<?php echo base_url() ?>">Home</a></li>
+                            <li><a href="about-us">About Us</a></li>
+                            <li><a href="contact">Contact Us</a></li>
+                            <li><a href="javaScript:;">FAQ's Page</a></li>
+                            <li><a href="privecy-policy">Privacy Policy</a></li>
+                            <li><a href="terms-conditions">Terms & Conditions</a></li>
+                            <li><a href="signIn">Login</a></li>
                         </ul>
                     </div>
                 </div>
@@ -83,12 +85,12 @@
         </div>
     </div>
     <div class="footer-bottom">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-12 col-md-12 text-center">
-                    <p class="mb-0">© 2024 blu. Designd By <a href="#">Nxsol</a>.</p>
-                </div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-12 col-md-12 text-center">
+                <p class="mb-0">© 2024 Ecommerce. Designd By <a href="javaScript:void(0)" target="_blank">Nxsol</a>.</p>
             </div>
         </div>
     </div>
+</div>
 </footer>

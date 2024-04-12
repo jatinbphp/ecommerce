@@ -152,7 +152,7 @@ class User_model extends CI_Model
 	{
 		$this->db->where('email', $email);
 		$this->db->where('role', $role);
-        $query = $this->db->get($this->this); 
+        $query = $this->db->get($this->table); 
         
         if ($query->num_rows() > 0) {
             return $query->row();
@@ -255,6 +255,13 @@ class User_model extends CI_Model
 		$this->db->where('id', $userId); // Assuming 'user_id' is the column name for the user ID
 		$this->db->update('users', $data);
 		return;
+	}
+
+	public function delete($id)
+	{
+		$this->db->where('id', $id);
+		$delete = $this->db->delete($this->table);
+		return ($delete == true) ? true : false;
 	}
 }
 

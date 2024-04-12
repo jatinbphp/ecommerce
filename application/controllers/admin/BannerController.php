@@ -37,9 +37,10 @@ class BannerController extends MY_Controller
 		];
 
 		$create = $this->Banner_model->create($data);
-	
+		var_dump($create);
+		die;
 		if($create == true) {
-			$this->session->set_flashdata('success', 'Successfully created.');
+			$this->session->set_flashdata('success', 'Banner has been inserted successfully!.');
 			redirect('admin/banners', 'refresh');
 		} else {
 			$this->session->set_flashdata('error', 'Error occurred!!');
@@ -113,7 +114,7 @@ class BannerController extends MY_Controller
 
 				$update = $this->Banner_model->edit($data, $id);
 				if($update == true) {
-					$this->session->set_flashdata('success', 'Successfully updated.');
+					$this->session->set_flashdata('success', 'Banner has been updated successfully!.');
 					redirect('admin/banners', 'refresh');
 				} else {
 					$this->session->set_flashdata('error', 'Error occurred!!');
@@ -131,9 +132,6 @@ class BannerController extends MY_Controller
 	public function delete($id)
 	{
 		if($id) {
-			$data = [
-				'deleted' => 1
-			];
 			$bannerDataRow = $this->Banner_model->getDetails($id);
 			if(isset($bannerDataRow['image'])){
 				if (file_exists($bannerDataRow['image'])) {
@@ -142,7 +140,7 @@ class BannerController extends MY_Controller
 			}
 			$delete = $this->Banner_model->delete($id);
 			if($delete == true) {
-				$this->session->set_flashdata('success', 'Successfully Deleted');
+				$this->session->set_flashdata('success', 'Banner has been deleted successfully!');
 				redirect('admin/banners', 'refresh');
 			}
 			else {
@@ -165,7 +163,7 @@ class BannerController extends MY_Controller
 			$bannersData[] = $row->subtitle;
 			$bannersData[] = $this->getStatusButton($row->id, $row->status, 'banners');
 			$bannersData[] = $row->created_at;
-			$bannersData[] = '<a href="' . base_url('admin/banners/edit/' . $row->id) . '" class="btn btn-sm btn-info"  style="margin-right:5px;"><i class="fa fa-edit"></i></a><a href="javascript:void(0);" class="btn btn-sm btn-danger deleteRecord" style="margin-right:5px;" data-id="' . $row->id . '" data-controller="banners" data-title="banners"><i class="fa fa-trash"></i></a><a href="javascript:void(0)" title="View Banner" data-id="'. $row->id .'" class="btn btn-sm btn-warning tip  view-info" data-url="'.base_url('admin/banners/show/' . $row->id).'">
+			$bannersData[] = '<a href="' . base_url('admin/banners/edit/' . $row->id) . '" class="btn btn-sm btn-info"  style="margin-right:5px;"><i class="fa fa-edit"></i></a><a href="javascript:void(0);" class="btn btn-sm btn-danger deleteRecord" style="margin-right:5px;" data-id="' . $row->id . '" data-controller="banners" data-title="banners"><i class="fa fa-trash"></i></a><a href="javascript:void(0)" title="View Banner" data-id="'. $row->id .'" class="btn btn-sm btn-warning tip  view-info" data-title="Banner Details" data-url="'.base_url('admin/banners/show/' . $row->id).'">
             	<i class="fa fa-eye"></i></a>';
 
 			$data[] = $bannersData;

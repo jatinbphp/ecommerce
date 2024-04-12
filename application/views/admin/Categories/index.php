@@ -29,11 +29,11 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card">
+                    <div class="card card-info card-outline">
                         <div class="card-header">
                             <h3 class="card-title w-100">
                                 Manage Categories
-                                <a href="<?php echo base_url('admin/categories/create') ?>" class="btn btn-sm btn-primary float-right"> <i class="fa fa-plus"></i> Add New</a>
+                                <a href="<?php echo base_url('admin/categories/create') ?>" class="btn btn-sm btn-primary float-right"> <i class="fa fa-plus"></i>Add New</a>
                             </h3>
                         </div>
                         <div class="card-body">
@@ -41,10 +41,10 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Status</th>
-                                    <th>Date Created</th>
-                                    <th>Action</th>
+                                    <th>Category Name</th>
+                                    <th style="width: 10%;">Status</th>
+                                    <th style="width: 15%;">Date Created</th>
+                                    <th style="width: 15%;">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>                        

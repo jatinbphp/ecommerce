@@ -6,7 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="format-detection" content="telephone=no"/>
-        <title>Blu leisure</title>
+        <title>Ecommerce</title>
+        <link rel="shortcut icon" href="<?php echo base_url('images/favicon.png') ?>" type="image/x-icon" />
         <link href="<?php echo base_url('css/styles.css'); ?>" rel="stylesheet">
     </head>
     <body>
@@ -67,7 +68,7 @@
                                     </ul>
                                 </li>
                                 <li><a href="<?php echo base_url('shop'); ?>">Accessories</a></li>
-                                <li><a href="contact">Contact</a></li>
+                                <li><a href="contact">Contact Us</a></li>
                             </ul>
                             <ul class="nav-menu nav-menu-social align-to-right">
                                 <li>

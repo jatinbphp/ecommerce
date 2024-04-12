@@ -237,13 +237,10 @@ class UserController extends MY_Controller
 
 	public function delete($id)
 	{
-
 		if($id) {
 			$data = array(
 				'deleted' => 1
 			);
-			//$update = $this->user_model->edit($data, $id);
-			$update = $this->user_model->edit_application($data, $id);
 			$delete = $this->user_model->delete($id);
 			if($update == true) {
 				$this->session->set_flashdata('success', $this->lang->line('lang_successfully_removed_applicants'));

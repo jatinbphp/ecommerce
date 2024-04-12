@@ -40,7 +40,7 @@
                                     <a class="nav-link active" id="tab1" data-toggle="tab" href="#content1">General Information</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link @if(!isset($users)) disabled @endif" id="tab2" data-toggle="tab" href="#content2">Addresses</a>
+                                    <a class="nav-link disabled" id="tab2" data-toggle="tab" href="#content2">Addresses</a>
                                 </li>
                             </ul>
                             <div class="tab-content mt-2">
