@@ -24,7 +24,7 @@ class MY_Controller extends CI_Controller
             $footerMenuCategoriesIds = explode(',', $settingsData['footer_menu_categories']);
             $footerMenuCategoriesNames = [];
             foreach ($footerMenuCategoriesIds as $categoryId) {
-                $categoryData = $this->Categories_model->getCategoryById($categoryId);
+                $categoryData = $this->Categories_model->getDetails($categoryId);
                 if ($categoryData) {
                     $footerMenuCategoriesNames[] = $categoryData['full_name'];
                 }
@@ -33,7 +33,7 @@ class MY_Controller extends CI_Controller
             $headerMenuCategoriesIds = explode(',', $settingsData['header_menu_categories']);
             $headerMenuCategoriesNames = [];
             foreach ($headerMenuCategoriesIds as $categoryId) {
-                $headerCategoryData = $this->Categories_model->getCategoryById($categoryId);
+                $headerCategoryData = $this->Categories_model->getDetails($categoryId);
                 if ($headerCategoryData) {
                     $headerMenuCategoriesNames[] = $headerCategoryData['full_name'];
                 }

@@ -109,13 +109,9 @@
                                 <div class="form-group <?php echo form_error('header_menu_categories') ? 'has-error' : ''; ?>">
                                     <label for="header_menu_categories">Which Categories menu do you want to display in header menu? :</label>
                                     <select name="header_menu_categories[]" class="form-control select2 w-100" id="header_menu_categories" multiple data-placeholder="Please Select" data-maximum-selection-length="2">
-                                        <option value="">Select</option>
-                                        <?php foreach ($categories_data as $category): ?>
-                                            <?php if (in_array($category['id'], $selected_header_categories)): ?>
-                                                <option value="<?php echo $category['id']; ?>" selected><?php echo $category['full_name']; ?></option>
-                                            <?php else: ?>
-                                                <option value="<?php echo $category['id']; ?>"><?php echo $category['full_name']; ?></option>
-                                            <?php endif; ?>
+                                        <?php foreach ($categories_data as $id => $category): ?>
+                                            <?php $selected = (in_array($id, $selected_header_categories)) ? 'selected' : ''; ?>
+                                                <option value="<?php echo $id; ?>" <?php echo $selected; ?>><?php echo $category; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                     <?php echo form_error('header_menu_categories', '<span class="help-block text-danger">', '</span>'); ?>
@@ -125,13 +121,9 @@
                                 <div class="form-group <?php echo form_error('footer_menu_categories') ? 'has-error' : ''; ?>">
                                     <label for="footer_menu_categories">Which Categories menu do you want to display in footer menu? :</label>
                                     <select name="footer_menu_categories[]" class="form-control select2 w-100" id="footer_menu_categories" multiple="true" data-placeholder="Please Select" data-maximum-selection-length="5">
-                                        <option value="">Select</option>
-                                        <?php foreach ($categories_data as $category): ?>
-                                            <?php if (in_array($category['id'], $selected_footer_categories)): ?>
-                                                <option value="<?php echo $category['id']; ?>" selected><?php echo $category['full_name']; ?></option>
-                                            <?php else: ?>
-                                                <option value="<?php echo $category['id']; ?>"><?php echo $category['full_name']; ?></option>
-                                            <?php endif; ?>
+                                        <?php foreach ($categories_data as $id => $category): ?>
+                                            <?php $selected = (in_array($id, $selected_footer_categories)) ? 'selected' : ''; ?>
+                                                <option value="<?php echo $id; ?>" <?php echo $selected; ?>><?php echo $category; ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                     <?php echo form_error('footer_menu_categories', '<span class="help-block text-danger">', '</span>'); ?>

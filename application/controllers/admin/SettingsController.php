@@ -18,7 +18,7 @@ class SettingsController extends MY_Controller
         $this->load->model('Categories_model');
 
         $settings_data = $this->Settings_model->getSettingsById(1);
-        $categories_data = $this->Categories_model->getparentdata();
+        $categories_data = $this->Categories_model->getCategoryArray(false);
 
         $selected_header_categories = [];
         $selected_footer_categories = [];
@@ -35,8 +35,9 @@ class SettingsController extends MY_Controller
         $this->data['settings_data'] = $settings_data;
         $this->data['selected_header_categories'] = $selected_header_categories;
         $this->data['selected_footer_categories'] = $selected_footer_categories;
-         
+
         $this->adminRenderTemplate('admin/Setting/edit', $this->data);
+        return $this;
     }
 
     public function update()
