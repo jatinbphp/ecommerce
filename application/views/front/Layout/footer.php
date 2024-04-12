@@ -6,20 +6,20 @@
                     <div class="footer_widget">
                         <img src="<?php echo base_url('images/logo.png')?>" class="img-footer small mb-2" alt="" />
                         <div class="address mt-3">
-                            <a href="javaScript:;">3298 Grant Street Longview, TX<br>United Kingdom 75601</a>
+                        <a href="javaScript:;"><?php echo isset($footer_data['settingsData']['address']) ? $footer_data['settingsData']['address'] : ''; ?></a>
                         </div>
                         <div class="address mt-3">
-                            <a href="javaScript:;">1-202-555-0106</a>
+                            <a href="tel:<?php echo isset($footer_data['settingsData']['phone_number']) ? $footer_data['settingsData']['phone_number'] : ''; ?>"><?php echo isset($footer_data['settingsData']['phone_number']) ? $footer_data['settingsData']['phone_number'] : ''; ?></a>
                             <br>
-                            <a href="javaScript:;">help@shopper.com</a>
+                            <a href="mailto:<?php echo isset($footer_data['settingsData']['email_address']) ? $footer_data['settingsData']['email_address'] : ''; ?>"><?php echo isset($footer_data['settingsData']['email_address']) ? $footer_data['settingsData']['email_address'] : ''; ?></a>
                         </div>
                         <div class="address mt-3">
                             <ul class="list-inline">
-                                <li class="list-inline-item"><a href="javaScript:;"><i class="lni lni-facebook-filled"></i></a></li>
-                                <li class="list-inline-item"><a href="javaScript:;"><i class="lni lni-twitter-filled"></i></a></li>
-                                <li class="list-inline-item"><a href="javaScript:;"><i class="lni lni-youtube"></i></a></li>
-                                <li class="list-inline-item"><a href="javaScript:;"><i class="lni lni-instagram-filled"></i></a></li>
-                                <li class="list-inline-item"><a href="javaScript:;"><i class="lni lni-linkedin-original"></i></a></li>
+                                <li class="list-inline-item"><a href="<?php echo isset($footer_data['settingsData']['facebook_url']) ? $footer_data['settingsData']['facebook_url'] : 'javascript:(0);'; ?>" target="_blank"><i class="lni lni-facebook-filled"></i></a></li>
+                                <li class="list-inline-item"><a href="<?php echo isset($footer_data['settingsData']['twitter_url']) ? $footer_data['settingsData']['twitter_url'] : 'javascript:(0);'; ?>" target="_blank"><i class="lni lni-twitter-filled"></i></a></li>
+                                <li class="list-inline-item"><a href="<?php echo isset($footer_data['settingsData']['youtube_url']) ? $footer_data['settingsData']['youtube_url'] : 'javascript:(0);'; ?>" target="_blank"><i class="lni lni-youtube"></i></a></li>
+                                <li class="list-inline-item"><a href="<?php echo isset($footer_data['settingsData']['instagram_url']) ? $footer_data['settingsData']['instagram_url'] : 'javascript:(0);'; ?>" target="_blank"><i class="lni lni-instagram-filled"></i></a></li>
+                                <li class="list-inline-item"><a href="<?php echo isset($footer_data['settingsData']['linkedin_url']) ? $footer_data['settingsData']['linkedin_url'] : 'javascript:(0);'; ?>" target="_blank"><i class="lni lni-linkedin-original"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -41,11 +41,11 @@
                     <div class="footer_widget">
                         <h4 class="widget_title">Shop</h4>
                         <ul class="footer-menu">
-                            <li><a href="javaScript:;">Men's Shopping</a></li>
-                            <li><a href="javaScript:;">Women's Shopping</a></li>
-                            <li><a href="javaScript:;">Kids's Shopping</a></li>
-                            <li><a href="javaScript:;">Accessories</a></li>
-                            <li><a href="javaScript:;">Discounts</a></li>
+                            <?php if (isset($footer_data['footerMenuCategoriesNames']) && is_array($footer_data['footerMenuCategoriesNames'])): ?>
+                                <?php foreach ($footer_data['footerMenuCategoriesNames'] as $categoryName): ?>
+                                    <li><a href="javaScript:;"><?php echo $categoryName; ?></a></li>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </ul>
                     </div>
                 </div>
@@ -53,10 +53,9 @@
                     <div class="footer_widget">
                         <h4 class="widget_title">Company</h4>
                         <ul class="footer-menu">
-                            <li><a href="javaScript:;">Home</a></li>
-                            <li><a href="javaScript:;">About</a></li>
-                            <li><a href="javaScript:;">Contact Us</a></li>
-                            <li><a href="javaScript:;">Login</a></li>
+                            <li><a href="<?php echo site_url('about-us'); ?>">About</a></li>
+                            <li><a href="<?php echo site_url('contact'); ?>">Contact Us</a></li>
+                            <li><a href="<?php echo site_url('shop'); ?>">Shop</a></li>
                         </ul>
                     </div>
                 </div>
