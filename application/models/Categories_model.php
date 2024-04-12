@@ -107,7 +107,9 @@ class Categories_model extends CI_Model
     	$this->db->select('id, name, full_path');
     	$this->db->order_by('full_path', 'asc');
         $query = $this->db->get($this->table);
-        
+
+        $categories = [];
+
         if($isDefaultOptions){
             $categories = ['0' => 'Select Parent Category'];            
         }

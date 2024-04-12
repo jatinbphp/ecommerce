@@ -50,7 +50,15 @@
                                 <li><a href="<?php echo base_url(); ?>">Home</a></li>
                                 <li><a href="<?php echo base_url('about-us'); ?>">About Us</a></li>
                                 <li>
-                                    <a href="<?php echo base_url('shop'); ?>">Shop</a>
+                                    <a href="javascript:void(0);">Shop</a>
+                                    <ul class="nav-dropdown nav-submenu">
+                                        <?php if (isset($footer_data['headerMenuCategoriesNames']) && is_array($footer_data['headerMenuCategoriesNames'])): ?>
+                                            <?php foreach ($footer_data['headerMenuCategoriesNames'] as $categoryName): ?>
+                                                <li><a href="javaScript:;"><?php echo $categoryName; ?></a></li>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    </ul>
+                                </li>
                                 <li>
                                     <a href="javascript:void(0);">Clothing</a>
                                     <ul class="nav-dropdown nav-submenu">

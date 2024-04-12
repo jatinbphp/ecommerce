@@ -104,6 +104,12 @@
                             <p>Categories</p>
                         </a>
                     </li>
+					<li class="nav-item">
+                        <a href="<?php echo base_url('admin/settings/edit'); ?>" id="SettingsList" class="nav-link">
+                            <i class="nav-icon fa fa-cog"></i>
+                            <p>Settings</p>
+						</a>
+					</li>
                     <li class="nav-item">
                         <a href="<?php echo base_url('admin/products'); ?>" id="productlist" class="nav-link">
                             <i class="nav-icon fa fa-tag"></i>

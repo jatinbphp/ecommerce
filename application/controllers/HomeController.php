@@ -20,7 +20,7 @@ class HomeController extends MY_Controller {
     public function shopPage() {
         $this->frontRenderTemplate('front/Shop/shop');
     }
-
+    
     public function termaConditions() {
         $sql = "SELECT * FROM content_management WHERE id = 2";
         $query = $this->db->query($sql);

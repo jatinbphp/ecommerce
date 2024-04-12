@@ -9,7 +9,10 @@ class ContactusController extends MY_Controller {
     }
 
 	public function index() {
-        $this->frontRenderTemplate('front/Contact/contactUs');
+		$this->load->model('Settings_model');
+		$settingsData = $this->Settings_model->getSettingsById(1);
+		$data['settingsData']= $settingsData;
+        $this->frontRenderTemplate('front/Contact/contactUs', $data);
     }
 
     public function sendMessage() {

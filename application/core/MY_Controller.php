@@ -8,11 +8,44 @@ class MY_Controller extends CI_Controller
 
 	public function frontRenderTemplate($page = null, $data = array())
 	{   
+        $data['footer_data'] = $this->getFooterData();
 		$this->load->view('front/Layout/header',$data);
 		$this->load->view($page, $data);
 		$this->load->view('front/Layout/footer',$data);
 		$this->load->view('front/Layout/models',$data);
 	}
+
+    public function getFooterData(){
+        $this->load->model('Settings_model');
+        $this->load->model('Categories_model');
+        $settingsData = $this->Settings_model->getSettingsById(1);
+        
+        if ($settingsData) {
+            $footerMenuCategoriesIds = explode(',', $settingsData['footer_menu_categories']);
+            $footerMenuCategoriesNames = [];
+            foreach ($footerMenuCategoriesIds as $categoryId) {
+                $categoryData = $this->Categories_model->getDetails($categoryId);
+                if ($categoryData) {
+                    $footerMenuCategoriesNames[] = $categoryData['full_name'];
+                }
+            }
+    
+            $headerMenuCategoriesIds = explode(',', $settingsData['header_menu_categories']);
+            $headerMenuCategoriesNames = [];
+            foreach ($headerMenuCategoriesIds as $categoryId) {
+                $headerCategoryData = $this->Categories_model->getDetails($categoryId);
+                if ($headerCategoryData) {
+                    $headerMenuCategoriesNames[] = $headerCategoryData['full_name'];
+                }
+            }
+            return [
+                'headerMenuCategoriesNames' => $headerMenuCategoriesNames,
+                'settingsData' => $settingsData,
+                'footerMenuCategoriesNames' => $footerMenuCategoriesNames
+            ];
+        }
+        return [];
+    }
 
 	public function adminRenderTemplate($page = null, $data = array())
 	{
