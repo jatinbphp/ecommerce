@@ -103,12 +103,14 @@ class Categories_model extends CI_Model
         return $this->db->count_all_results();
     }
 
-    public function getCategoryArray() {
+    public function getCategoryArray($isDefaultOptions=true) {
     	$this->db->select('id, name, full_path');
     	$this->db->order_by('full_path', 'asc');
         $query = $this->db->get($this->table);
         
-        $categories = ['0' => 'Select Parent Category'];
+        if($isDefaultOptions){
+            $categories = ['0' => 'Select Parent Category'];            
+        }
         
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {

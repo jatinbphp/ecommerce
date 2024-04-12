@@ -72,6 +72,20 @@ $(document).ready(function() {
         }]
     });
 
+    var products = $('#productsTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "order":[],
+        "ajax":{
+            url:"products/fetch_products",
+            type:"POST",
+        },
+        "columnDefs": [{
+            "targets":[4,6],
+            "orderable": false
+        }]
+    });
+
 
     $("#categories_form_add").validate(
     {                
@@ -176,7 +190,7 @@ $(document).ready(function() {
         });
     });
 
-    $("#CategoriesTable, #usersTable, #banerTable, #banerTable").on('click', '.assign_unassign', function(event) {
+    $("#CategoriesTable, #usersTable, #banerTable, #banerTable, #productsTable").on('click', '.assign_unassign', function(event) {
         event.preventDefault();
         var url = $(this).attr('data-url');
         var id = $(this).attr("data-id");
@@ -547,6 +561,96 @@ $(document).ready(function() {
         submitHandler: function(form)
         {
             form.submit();
+        }
+    });
+
+    $("#productFormInfo").validate(
+    {    
+        rules:
+        {     
+            category_id:{
+                required: true
+            },
+            product_name:{
+                required: true
+            },
+            sku: {
+                required: true,
+            },
+            description: {
+                required: true,
+            },
+            type: {
+                required: true,
+            },
+            price: {
+                required: true,
+                number: true,
+                min: 0,            },
+            status: {
+                required: true,
+            },
+        },
+        messages:
+        {
+            category_id:'Please enter category id.',
+            product_name:'Please enter product name.',
+            sku:'Please enter sku.',
+            description: 'Please enter description.',
+            type: 'Please enter type.',
+            price: {
+                required: "Please enter Price.",
+                number: "Please enter valid number.",
+                min: "Price must be greater than or equal to 0."
+            },
+            status: "Please enter status."
+        },
+        errorPlacement: function(error, element) {
+            if(element.attr("name") == "type"){
+                error.insertAfter(".type-error");
+            } else if(element.attr("name") == "category_id") {
+                error.insertAfter(".category-error");
+            }else{
+                error.insertAfter(element);
+            }
+        },  
+        submitHandler: function(form)
+        {
+            form.submit();
+        }
+    });
+
+    $('#productFormEdit').submit(function(event) {
+        var emptyFields = [];
+        var tabIds = [];
+        $('.error').remove();
+        $(this).find('input').each(function() {
+            // Get the name and value of the input field
+            var fieldName = $(this).attr('name');
+            var fieldValue = $(this).val();
+            var filedType = $(this).attr('type');
+
+            // If the input field has no value, add its name to the emptyFields array
+            if (fieldValue === '') {
+                emptyFields.push(fieldName);
+                var errorMessage = 'This field is required.';
+                if(filedType == 'file'){
+                    $('.image-error').remove();
+                    $('.imagediv').after('<span class="text-danger text-bold image-error">' + errorMessage + '</span>');
+                }
+                else {
+                    $(this).after('<span class="text-danger text-bold error">' + errorMessage + '</span>');
+                }
+                tabIds.push($(this).closest('.tab-pane').attr('id'));
+            }
+        });
+
+
+        if (emptyFields.length > 0) {
+            if (tabIds.length > 0) {
+                $('.' + tabIds[0]).click();
+            }
+            event.preventDefault();
         }
     });
 });

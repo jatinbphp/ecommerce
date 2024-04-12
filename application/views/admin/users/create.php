@@ -47,8 +47,6 @@
                                         <a class="nav-link disabled <?php if(!isset($userData)) : ?> disabled <?php endif ?>" id="tab2" data-toggle="tab" href="#content2" onclick="showAddAddressesContent();">Addresses</a>
                                     </li>
                                 </ul>
-
-
                                 <?php 
                                     if(isset($userData)):
                                         echo form_open_multipart('admin/users/edit/'.$userData['id'], ['id' => 'user_edit_form']);

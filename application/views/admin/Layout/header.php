@@ -15,8 +15,21 @@
     <link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/summernote/summernote-bs4.min.css') ?>">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
-	
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/ladda/ladda-themeless.min.css') ?>">
+	<style type="text/css">
+		.imagePreview{
+			width:100%;
+			height:140px;
+			background-position:center center;
+			background:url("<?php echo base_url('public/assets/admin/dist/img/default.jpeg'); ?>");
+			background-color:#fff;
+			background-size:cover;
+			background-repeat:no-repeat;
+			display:inline-block;
+			background-position: center;
+			box-shadow:0 -3px 6px 2px rgba(0,0,0,0.2)
+		}
+	</style>
     <script src="<?php echo base_url('public/assets/admin/plugins/jquery/jquery.min.js') ?>"></script>
     <script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
     <script type="text/javascript">const baseUrl = "<?php echo base_url(); ?>";</script>
@@ -89,6 +102,12 @@
                         <a href="<?php echo base_url('admin/categories'); ?>" id="CategoriesList" class="nav-link">
                             <i class="nav-icon fa fa-sitemap"></i>
                             <p>Categories</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo base_url('admin/products'); ?>" id="productlist" class="nav-link">
+                            <i class="nav-icon fa fa-tag"></i>
+                            <p>Products</p>
                         </a>
                     </li>
                     <li class="nav-item">

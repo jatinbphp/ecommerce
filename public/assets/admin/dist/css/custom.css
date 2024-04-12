@@ -1,1 +1,19 @@
 .error, .asterisk-sign{color: #ff0000}
+.imagePreviewPlus{width:100%;height:180px;background-position:center center;background-color:#fff;background-size:cover;background-repeat:no-repeat;display:inline-block;box-shadow:0 -3px 6px 2px rgba(0,0,0,0.2);display:flex;align-content:center;justify-content:center;align-items:center}
+.additionalImageClass .btn-primary{display:block;border-radius:0;box-shadow:0 4px 6px 2px rgba(0,0,0,0.2);margin-top:-5px}
+.imgUp{margin-bottom:15px}
+.del{position:absolute;top:0;right:15px;width:30px;height:30px;text-align:center;line-height:30px;background-color:rgba(255,255,255,0.6);cursor:pointer}
+.additionalImageClass input[type=file]{display:contents}
+.removeImage{position:absolute;top:0;right:0;margin-right:15px}
+.additionalImageClass .col-md-3{margin-bottom:20px}
+.ladda-button{height:28px; padding:0 12px}
+#content3 .col-md-8 {border-left: 1px solid #ccc;}
+.qty{display:flex;align-items:center;justify-content:space-between;width:130px;border:1px solid #ccc;border-radius:5px;padding:5px}
+.qty input{width:50px;text-align:center}
+.qty button{color:#fff;border:none;cursor:pointer;border-radius:3px}
+.dt-body-right {text-align: right;}
+.edit-option .color-box{display:inline-block;width:20px;height:20px;margin-right:5px;border:2px solid #ccc}
+.edit-option #options input[type="radio"]{display:none}
+.edit-option #options input[type="radio"] + label{cursor:pointer}
+.edit-option #options input[type="radio"]:checked + label .color-box{border-color:#000}
+i.fas.fa-star.filled {color: #ff9800;}

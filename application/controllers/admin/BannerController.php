@@ -37,8 +37,7 @@ class BannerController extends MY_Controller
 		];
 
 		$create = $this->Banner_model->create($data);
-		var_dump($create);
-		die;
+
 		if($create == true) {
 			$this->session->set_flashdata('success', 'Banner has been inserted successfully!.');
 			redirect('admin/banners', 'refresh');
