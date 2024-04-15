@@ -175,7 +175,7 @@ $(document).ready(function() {
         });
     });
 
-    $("#banerTable, #contentTable, #contactUsTable, #CategoriesTable, #productsTable").on('click', '.view-info', function(event) {
+    $("#banerTable, #usersTable, #contentTable, #contactUsTable, #CategoriesTable, #productsTable").on('click', '.view-info', function(event) {
         var title = $(this).attr('data-title');
         var url = $(this).attr('data-url');
         $.ajax({

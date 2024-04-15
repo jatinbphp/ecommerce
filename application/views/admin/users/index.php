@@ -46,7 +46,7 @@
                                         <th>Email</th>
                                         <th>Phone</th>
                                         <th>Status</th>
-                                        <th>Action</th>
+                                        <th style="width:12%">Action</th>
                                     </tr>
                                 </thead>
                             </table>
