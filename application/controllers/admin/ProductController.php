@@ -12,6 +12,8 @@ class ProductController extends MY_Controller
 		$this->load->model('Product_model');
 		$this->load->model('Categories_model');
 		$this->load->model('ProductImage_model');
+		$this->load->model('ProductOptions_model');
+		$this->load->model('ProductOptionValues_model');
 	}
 
 	public function index(){
@@ -110,6 +112,8 @@ class ProductController extends MY_Controller
 		            }
 				}
 
+				$this->addProductOptionAddUpdate($this->input->post(), $id);
+
 				$update = $this->Product_model->edit($productInfo, $id);
 				if($update == true) {
 					$this->session->set_flashdata('success', 'Product has been updated successfully!.');
@@ -126,10 +130,113 @@ class ProductController extends MY_Controller
         		$this->data['optionsType'] = $this->getOpionType();
         		$this->data['type'] = $this->getProductType();
         		$this->data['product_images'] = $this->ProductImage_model->getDetails($id);
+        		$this->data['product_options'] = $this->ProductOptions_model->getOptionsWithValues($id);
+
 				$this->adminRenderTemplate('admin/Product/edit', $this->data);
 			}
 		}
 	}
+
+	public function addProductOptionAddUpdate($input, $product_id)
+    {
+        $option_ids = [];
+        $option_values_ids = [];
+
+        if(!empty($input['options']['old'])){
+            foreach ($input['options']['old'] as $key => $value) {
+                $inputOption = [
+                    'product_id' => $product_id,
+                    'option_name' => isset($value['name']) ? $value['name'] : '',
+                    'option_type' => isset($value['type']) ? $value['type'] : '',
+                ];
+                $this->ProductOptions_model->edit($inputOption, $key, $product_id);
+                $option_ids[] = $key;
+               
+                if(!empty($input['option_values']['old'][$key])){
+                    foreach ($input['option_values']['old'][$key] as $oKey => $oValue) {
+                        $option_value = $this->ProductOptionValues_model->getDetails($oKey, $key, $product_id);
+                        $inputOptionValues = [
+                            'product_id' => $product_id,
+                            'option_id' => $key,
+                            'option_value' => $oValue,
+                            /*'option_price' => $input['option_price']['old'][$key][$oKey],*/
+                        ];
+
+                        if(empty($option_value)){
+                            $option_new_value = $this->ProductOptionValues_model->create($inputOptionValues);
+
+                            $option_values_ids[] = $option_new_value;
+                        } else {
+                        	$this->ProductOptionValues_model->edit($inputOptionValues, $oKey, $key, $product_id);
+                            $option_values_ids[] = $oKey;
+                        }
+                    }
+                }
+
+                if(!empty($input['option_values']['new'][$key])){
+                    foreach ($input['option_values']['new'][$key] as $oKey => $oValue) {
+                        $inputOptionValues = [
+                            'product_id' => $product_id,
+                            'option_id' => $key,
+                            'option_value' => $oValue,
+                            /*'option_price' => $input['option_price']['new'][$key][$oKey],*/
+                        ];
+                        $option_new_value = $this->ProductOptionValues_model->create($inputOptionValues);
+
+                        $option_values_ids[] = $option_new_value;
+                    }
+                }
+            }
+
+            if(count($option_ids) > 0){
+            	$this->db->where_not_in('id', $option_ids);
+				$this->db->where('product_id', $product_id);
+				$this->db->delete('products_options');
+
+				$this->db->where_not_in('option_id', $option_ids);
+				$this->db->where('product_id', $product_id);
+				$this->db->delete('products_options_values');
+            }
+
+            if(count($option_values_ids) > 0){
+            	$this->db->where_not_in('id', $option_values_ids);
+				$this->db->where('product_id', $product_id);
+				$this->db->delete('products_options_values');
+            }
+        }
+        
+        // echo "<pre>";
+        // print_r($input);
+
+        if(!empty($input['options']['new'])){
+            foreach ($input['options']['new'] as $key => $value) {
+                if(!empty($value)){
+                	// echo $key;
+                	// print_r($value);
+                	// die;
+                    $inputOption = [
+                        'product_id' => $product_id,
+                        'option_name' => isset($value['name']) ? $value['name'] : '',
+                    	'option_type' => isset($value['type']) ? $value['type'] : '',
+                    ];
+
+                    $optionId = $this->ProductOptions_model->create($inputOption);
+
+                    if(!empty($input['option_values']['new'][$key])){
+                        foreach ($input['option_values']['new'][$key] as $oKey => $oValue) {
+                            $inputOptionValues = [
+                                'product_id' => $product_id,
+                                'option_id' => $optionId,
+                                'option_value' => $oValue,
+                                /*'option_price' => $input['option_price']['new'][$key][$oKey],*/
+                            ];
+                            $this->ProductOptionValues_model->create($inputOptionValues);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 	public function uploadImagesAndgetPath() {
 	    $imagePaths = [];

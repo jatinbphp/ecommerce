@@ -1,5 +1,4 @@
 <?php
-
 $route['admin/logIn'] = 'admin/AdminController/logIn';
 $route['admin/logOut'] = 'admin/AdminController/logout';
 $route['admin'] = 'admin/AdminController';

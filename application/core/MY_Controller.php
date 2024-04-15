@@ -26,7 +26,7 @@ class MY_Controller extends CI_Controller
             foreach ($footerMenuCategoriesIds as $categoryId) {
                 $categoryData = $this->Categories_model->getDetails($categoryId);
                 if ($categoryData) {
-                    $footerMenuCategoriesNames[] = $categoryData['full_name'];
+                    $footerMenuCategoriesNames[] = $this->Categories_model->getFullPathName($categoryId);
                 }
             }
     
@@ -35,7 +35,7 @@ class MY_Controller extends CI_Controller
             foreach ($headerMenuCategoriesIds as $categoryId) {
                 $headerCategoryData = $this->Categories_model->getDetails($categoryId);
                 if ($headerCategoryData) {
-                    $headerMenuCategoriesNames[] = $headerCategoryData['full_name'];
+                    $headerMenuCategoriesNames[] = $this->Categories_model->getFullPathName($categoryId);
                 }
             }
             return [
