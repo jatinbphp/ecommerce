@@ -331,13 +331,6 @@ class ProductController extends MY_Controller
 		echo json_encode($output);
 	}
 
-	public function show($id){
-        $banner = $this->Product_model->getDetails($id);
-       	$data['banner'] = $banner;
-        $html = $this->load->view('admin/Product/view', $data, true);
-        echo $html;
-    }
-
     public function getOpionType(){
     	return [
     		'color'    => 'Color',
@@ -353,5 +346,15 @@ class ProductController extends MY_Controller
             'new'  => 'New',
             'hot'  => 'Hot',
     	];
+    }
+
+    public function show($id){
+        $product = $this->Product_model->getDetails($id);
+        $productImage = $this->ProductImage_model->getDetails($id);
+       	$data['product'] = $product;
+       	$data['product_image'] = $productImage;
+       	$data['product_options'] = $this->ProductOptions_model->getOptionsWithValues($id);
+        $html = $this->load->view('admin/Product/view', $data, true);
+        echo $html;
     }
 }

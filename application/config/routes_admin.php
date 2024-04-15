@@ -23,6 +23,7 @@ $route['admin/product/removeimage'] = 'admin/ProductController/removeimage';
 $route['admin/products/show/(:num)'] = 'admin/ProductController/show/$1';
 $route['admin/products/fetch_products'] = 'admin/ProductController/fetchProducts';
 $route['admin/products/delete/(:num)'] = 'admin/ProductController/delete/$1';
+$route['admin/products/show/(:num)'] = 'admin/ProductController/show/$1';
 $route['admin/banners'] = 'admin/BannerController';
 $route['admin/banners/create'] = 'admin/BannerController/create';
 $route['admin/banners/edit/(:num)'] = 'admin/BannerController/edit/$1';
