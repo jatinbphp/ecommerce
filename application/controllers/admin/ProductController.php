@@ -204,16 +204,10 @@ class ProductController extends MY_Controller
 				$this->db->delete('products_options_values');
             }
         }
-        
-        // echo "<pre>";
-        // print_r($input);
 
         if(!empty($input['options']['new'])){
             foreach ($input['options']['new'] as $key => $value) {
                 if(!empty($value)){
-                	// echo $key;
-                	// print_r($value);
-                	// die;
                     $inputOption = [
                         'product_id' => $product_id,
                         'option_name' => isset($value['name']) ? $value['name'] : '',
