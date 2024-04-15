@@ -11,6 +11,7 @@ class UserController extends MY_Controller
 		$this->data['page_title'] = 'Users';
 		$this->load->model('user_model');
 		$this->load->model('countries_model');
+		$this->load->model('user_address_model');
 	}
 
 	public function index()
@@ -48,7 +49,7 @@ class UserController extends MY_Controller
 	{
 			$this->form_validation->set_rules('first_name', 'Name', 'required');
 			$this->form_validation->set_rules('last_name', 'Name', 'required');
-			$this->form_validation->set_rules('password', 'Password', 'required|min_length[6]|matches[confirm_password]');
+			$this->form_validation->set_rules('password', 'Password', 'required|min_length[6]|callback_strong_password_check|matches[confirm_password]');
 			$this->form_validation->set_rules('confirm_password', 'Password Confirmation', 'required');	
 			$this->form_validation->set_rules('mobileNo', 'Phone', 'required|numeric');
 			$this->form_validation->set_rules('countryCode', '', 'required');
@@ -113,7 +114,6 @@ class UserController extends MY_Controller
 	public function edit($id = null)
 	{
 		if($id) {
-
 			$this->form_validation->set_rules('first_name', 'Name', 'required');
 			$this->form_validation->set_rules('last_name', 'Name', 'required');
 			
@@ -122,10 +122,18 @@ class UserController extends MY_Controller
 			$this->form_validation->set_rules('status', 'Status', 'required');
 			$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 
+			$userId = $id;
+
 			if ($this->form_validation->run() == FALSE) {
-				$usersData = $this->user_model->getUserData($id);
+
+				$getUsrAddr = $this->user_address_model->getUserAddresses($userId); 
+				$userAddrCnt = count($getUsrAddr);
+
+				$usersData = $this->user_model->getUserData($userId);
 				$this->data['userData'] = $usersData;
 				$this->data['status'] = $this->user_model::$status;
+				$this->data['userAddress'] = $getUsrAddr;
+				$this->data['userAddressCnt'] = $userAddrCnt;
 				$getCountryCode = $this->countries_model->getCountryData();
 				$this->data['countryCodes'] = $getCountryCode;
 				$this->adminRenderTemplate('admin/users/create', $this->data);
@@ -133,7 +141,67 @@ class UserController extends MY_Controller
 			}
 
 
-			if(($this->input->post('first_name')!='') && ($this->input->post('last_name')!='') && ($this->input->post('mobileNo')!='') && ($this->input->post('email')!='')){
+			if(isset($_POST['addresses']['existing']))
+			{
+				  $addresses = $this->input->post('addresses')['existing'];
+
+				   foreach ($addresses as $key => $address) {
+			            $this->form_validation->set_rules("addresses[existing][$key][title]", 'Title', 'required');
+			            $this->form_validation->set_rules("addresses[existing][$key][first_name]", 'First Name', 'required');
+			            $this->form_validation->set_rules("addresses[existing][$key][last_name]", 'Last Name', 'required');
+			            $this->form_validation->set_rules("addresses[existing][$key][mobile_phone]", 'Mobile No', 'required');
+			            $this->form_validation->set_rules("addresses[existing][$key][address_line1]", 'Address', 'required');
+			            $this->form_validation->set_rules("addresses[existing][$key][pincode]", 'ZIP / Pincode', 'required');
+			            $this->form_validation->set_rules("addresses[existing][$key][country]", 'Country', 'required');
+			            $this->form_validation->set_rules("addresses[existing][$key][state]", 'State', 'required');
+			            $this->form_validation->set_rules("addresses[existing][$key][city]", 'City / Town', 'required');
+	        		}
+
+
+				if ($this->form_validation->run() == FALSE) {
+					$error_messages = validation_errors();
+					$this->session->set_flashdata('error', $error_messages);
+					redirect('admin/users/edit/'.$userId, 'refresh');
+				}
+				else
+				{
+					 foreach ($addresses as $id => $address) {
+		                $this->user_address_model->updateAddress($id, $address);
+	            	}
+				}
+			}
+
+				if(isset($_POST['addresses']['new']))
+				{
+					$newAddresses = $this->input->post('addresses')['new'];
+
+					foreach ($newAddresses as $key => $address) {
+
+				            $this->form_validation->set_rules("addresses[new][$key][title]", 'Title', 'required');
+				            $this->form_validation->set_rules("addresses[new][$key][first_name]", 'First Name', 'required');
+				            $this->form_validation->set_rules("addresses[new][$key][last_name]", 'Last Name', 'required');
+				            $this->form_validation->set_rules("addresses[new][$key][mobile_phone]", 'Mobile No', 'required');
+				            $this->form_validation->set_rules("addresses[new][$key][address_line1]", 'Address', 'required');
+				            $this->form_validation->set_rules("addresses[new][$key][pincode]", 'ZIP / Pincode', 'required');
+				            $this->form_validation->set_rules("addresses[new][$key][country]", 'Country', 'required');
+				            $this->form_validation->set_rules("addresses[new][$key][state]", 'State', 'required');
+				            $this->form_validation->set_rules("addresses[new][$key][city]", 'City / Town', 'required');
+		    		}
+
+		    		if ($this->form_validation->run() == FALSE) {
+		    			$error_messages = validation_errors();
+						$this->session->set_flashdata('error', $error_messages);
+						redirect('admin/users/edit/'.$userId, 'refresh');
+					}
+					else
+					{
+						 foreach ($newAddresses as $address) {
+						 	$address['user_id'] = $userId;
+			                $this->user_address_model->createByUser($address);
+		            	}
+					}
+				}
+
 
 				//process images
 				if (!empty($_FILES['userfile']['name'])) {
@@ -156,7 +224,7 @@ class UserController extends MY_Controller
 			        if ($this->upload->do_upload('userfile')) {
 			            $uploadData = $this->upload->data();
 			            $imagePath = 'uploads/users/' . $uploadData['file_name'];
-			            $this->user_model->updateUserImage($id,$imagePath);
+			            $this->user_model->updateUserImage($userId,$imagePath);
 			        } 
 				}
 
@@ -174,29 +242,30 @@ class UserController extends MY_Controller
 						'updated_at' => date('Y-m-d H:i:s'),
 					];
 
-					$update = $this->user_model->edit($data, $id);
+					if($this->user_model->isEmailExists($this->input->post('email')))
+					{
+						unset($data['email']);
+					}
+
+					$update = $this->user_model->edit($data, $userId);
 					if($update == true) {
 						$this->session->set_flashdata('success','The Record is successfully updated');
 						redirect(base_url('admin/users'));
 					}
 					else {
 						$this->session->set_flashdata('error', 'Something went wrong');
-						redirect('admin/users/edit/'.$id, 'refresh');
+						redirect('admin/users/edit/'.$userId, 'refresh');
 					}
 				}
 				else {
 
-					$this->form_validation->set_rules('password', 'Password', 'required|min_length[6]|matches[confirm_password]');
+					$this->form_validation->set_rules('password', 'Password', 'required|min_length[6]|callback_strong_password_check|matches[confirm_password]');
 					$this->form_validation->set_rules('confirm_password', 'Password Confirmation', 'required');	
 
 					if ($this->form_validation->run() == FALSE) {
-						$usersData = $this->user_model->getUserData($id);
-						$this->data['userData'] = $usersData;
-						$this->data['status'] = $this->user_model::$status;
-						$getCountryCode = $this->countries_model->getCountryData();
-						$this->data['countryCodes'] = $getCountryCode;
-						$this->adminRenderTemplate('admin/users/create', $this->data);
-						return;
+						$error_messages = validation_errors();
+						$this->session->set_flashdata('error', $error_messages);
+						redirect('admin/users/edit/'.$userId, 'refresh');
 					}
 
 					$password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
@@ -214,33 +283,33 @@ class UserController extends MY_Controller
 						'updated_at' => date('Y-m-d H:i:s'),
 					];
 
-					$update = $this->user_model->edit($data, $id);
+					if($this->user_model->isEmailExists($this->input->post('email')))
+					{
+						unset($data['email']);
+					}
+
+					$update = $this->user_model->edit($data, $userId);
 					if($update == true) {
 						$this->session->set_flashdata('success','The Record is successfully updated');
 						redirect(base_url('admin/users'));
 					}
 					else {
 						$this->session->set_flashdata('error', 'Error Occured');
-						redirect('admin/users/edit/'.$id, 'refresh');
+						redirect('admin/users/edit/'.$userId, 'refresh');
 					}
 				}
-			} else {
-				$usersData = $this->user_model->getUserData($id);
-				$this->data['userData'] = $usersData;
-				$this->data['status'] = $this->user_model::$status;
-				$getCountryCode = $this->countries_model->getCountryData();
-				$this->data['countryCodes'] = $getCountryCode;
-				$this->adminRenderTemplate('admin/users/create', $this->data);
-			}
 		}
 	}
 
 	public function delete($id)
 	{
+
 		if($id) {
 			$data = array(
 				'deleted' => 1
 			);
+			//$update = $this->user_model->edit($data, $id);
+			$update = $this->user_model->edit_application($data, $id);
 			$delete = $this->user_model->delete($id);
 			if($update == true) {
 				$this->session->set_flashdata('success', $this->lang->line('lang_successfully_removed_applicants'));
@@ -271,4 +340,32 @@ class UserController extends MY_Controller
 			exit();
 		}
 	}
+
+	 public function deleteAddress() {
+        $addressId = $this->input->post('address_id');
+
+        // Delete address record
+        $success = $this->user_address_model->deleteAddress($addressId);
+
+        // Prepare response
+        $response = array();
+        if ($success) {
+            $response['success'] = true;
+            $response['message'] = 'Address deleted successfully.';
+        } else {
+            $response['success'] = false;
+            $response['message'] = 'Failed to delete address.';
+        }
+
+        $this->output->set_content_type('application/json')->set_output(json_encode($response));
+    }
+
+   public function strong_password_check($password) {
+	    if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/', $password)) {
+	        $this->form_validation->set_message('password_check', 'Your password must contain at least one lowercase letter, one uppercase letter, and one digit');
+	        return FALSE;
+	    } else {
+	        return TRUE;
+	    }
+    }
 }
