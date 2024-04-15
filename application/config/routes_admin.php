@@ -38,3 +38,4 @@ $route['admin/contact-us'] = 'admin/ContactusController';
 $route['admin/contact-us/delete/(:num)'] = 'admin/ContactusController/delete/$1';
 $route['admin/contact-us/show/(:num)'] = 'admin/ContactusController/show/$1';
 $route['admin/contact-us/fetch_contactus'] = 'admin/ContactusController/fetchContactUs';
+$route['admin/user/deleteAddress'] = 'admin/UserController/deleteAddress';
