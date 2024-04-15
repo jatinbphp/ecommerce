@@ -131,7 +131,7 @@ $(document).ready(function() {
     });
 
     //Admin Delete
-    $("#CategoriesTable, #banerTable, #usersTable, #contactUsTable").on('click', '.deleteRecord', function(event) {
+    $("#CategoriesTable, #banerTable, #usersTable, #contactUsTable, #productsTable").on('click', '.deleteRecord', function(event) {
         event.preventDefault();
         var id = $(this).attr("data-id");
         var controller = $(this).attr("data-controller");
@@ -162,6 +162,8 @@ $(document).ready(function() {
                             categories.row('.selected').remove().draw(false);
                         } else if(controller == 'contact-us'){
                             contactUs.row('.selected').remove().draw(false);
+                        } else if(controller == 'products'){
+                            products.row('.selected').remove().draw(false);
                         }
                                                     
                         swal("Deleted", "Your data successfully deleted!", "success");
@@ -329,22 +331,36 @@ $(document).ready(function() {
         var addressId = $(this).data('address-id');
         var addressForm = $(this).closest('.user-addresses');
 
-        $.ajax({
-                type: 'POST',
-                url: usrDelAddrUrl, 
-                data: { address_id: addressId },
-                dataType: 'json',
-                success: function(response) {
-                    if (response.success) {
-                        addressForm.remove();
-                        // Reload page or update UI as needed
-                        alert(response.message);
-                    } else {
-                        alert('Failed to delete address.');
+        swal({
+            title: "Are you sure?",
+            text: "You want to delete address?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'Yes, Delete',
+            cancelButtonText: 'No, cancel',
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function(isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    type: 'POST',
+                    url: usrDelAddrUrl, 
+                    data: { address_id: addressId },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            addressForm.remove();
+                            swal("Deleted", "Your data successfully deleted!", "success");
+                        }
                     }
-                }
-            });
+                });
+            } else {
+                swal("Cancelled", "Your Data is Safe.", "error");
+            }
         });
+    });
 
     $('#user_edit_form').submit(function(event) {
         var emptyFields = [];

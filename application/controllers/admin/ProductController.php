@@ -284,7 +284,9 @@ class ProductController extends MY_Controller
 	public function delete($id)
 	{
 		if($id) {
-			$bannerDataRow = $this->Product_model->getDetails($id);
+			$productImage = $this->ProductImage_model->getDetails($id);
+
+			if(!empty($productImage))
 			if(isset($bannerDataRow['image'])){
 				if (file_exists($bannerDataRow['image'])) {
 					unlink($bannerDataRow['image']);
@@ -292,14 +294,12 @@ class ProductController extends MY_Controller
 			}
 			$delete = $this->Product_model->delete($id);
 			if($delete == true) {
-				$this->session->set_flashdata('success', 'Product has been deleted successfully!');
-				redirect('admin/products', 'refresh');
+				$this->ProductImage_model->deleteProductImages($id);
+				$this->ProductOptions_model->deleteProductOptions($id);
+				$this->ProductOptionValues_model->deleteProductOptionsValues($id);
+				echo true;
 			}
-			else {
-				$this->session->set_flashdata('error', 'Error occurred!!');
-				redirect('admin/products', 'refresh');
-			}
-
+			echo false;
 		}
 	}
 

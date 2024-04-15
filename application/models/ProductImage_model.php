@@ -38,4 +38,24 @@ class ProductImage_model extends CI_Model
         $delete = $this->db->delete($this->table);
         return ($delete == true) ? true : false;
     }
+
+    public function deleteProductImages($productId) {
+
+        $this->db->select('image');
+        $this->db->where('product_id', $productId);
+        $query = $this->db->get($this->table);
+        $images = $query->result_array();
+
+        $this->db->where('product_id', $productId);
+        $this->db->delete($this->table);
+
+        foreach ($images as $image) {
+            $imagePath = $image['image'];
+            if (!empty($imagePath) && file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+        
+        return $this->db->affected_rows() > 0;
+    }
 }

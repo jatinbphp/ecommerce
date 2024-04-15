@@ -66,4 +66,11 @@ class ProductOptions_model extends CI_Model
 
         return array_values($productOptions);
     }
+
+    public function deleteProductOptions($productId) {
+        $this->db->where('product_id', $productId);
+        $this->db->delete($this->table);
+        
+        return $this->db->affected_rows() > 0;
+    }
 }

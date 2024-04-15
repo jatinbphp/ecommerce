@@ -67,7 +67,7 @@ class User_address_model extends CI_Model
         ];
 
         $this->db->where('id', $id);
-        $this->db->update('user_addresses', $address_data);
+        $this->db->update($this->table, $address_data);
 
         if ($this->db->affected_rows() > 0) {
             return true; // Address updated successfully
@@ -77,13 +77,19 @@ class User_address_model extends CI_Model
 
     }
 
-   public function deleteAddress($addressId) {
+    public function deleteAddress($addressId) {
         $this->db->where('id', $addressId);
-        $this->db->delete('user_addresses');
+        $this->db->delete($this->table);
 
         // Check if delete was successful
         return $this->db->affected_rows() > 0;
     }
 
+    public function deleteUserAddress($userId) {
+        $this->db->where('user_id', $userId);
+        $this->db->delete($this->table);
+        
+        return $this->db->affected_rows() > 0;
+    }
 
 }
