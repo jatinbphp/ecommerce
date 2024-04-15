@@ -18,6 +18,7 @@
 <script src="<?php echo base_url('public/assets/admin/plugins/summernote/summernote.js') ?>"></script>
 <script src="<?php echo base_url('public/assets/admin/dist/js/adminJqueryValidation.js?time='.time()) ?>"></script>
 <script src="<?php echo base_url('public/assets/admin/plugins/select2/select2.full.min.js') ?>"></script>
+<script src="<?php echo base_url('public/assets/admin/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js') ?>"></script>
 <script type="text/javascript">
 	function AjaxUploadImage(obj,id){
         var file = obj.files[0];
@@ -80,6 +81,13 @@
 <script type="text/javascript">
 	$(function () {
 		$('.select2').select2();
+         $('.my-colorpicker2').colorpicker()
+
+        $(document).on('colorpickerChange', '.my-colorpicker2', function(event) {
+            event.preventDefault();
+            var id = $(this).attr("data-id");
+            $('.my-colorpicker2 .fa-square_'+id).css('color', event.color.toString());
+        })
 	});
 </script>
 </body>

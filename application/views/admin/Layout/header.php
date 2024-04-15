@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/summernote/summernote-bs4.min.css') ?>">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/ladda/ladda-themeless.min.css') ?>">
+	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') ?>">
 	<style type="text/css">
 		.imagePreview{
 			width:100%;
