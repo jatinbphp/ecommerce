@@ -62,7 +62,7 @@ class Categories_model extends CI_Model
     public function make_query()
     {
         $this->db->select($this->select_column);
-        //$this->db->order_by('full_path', 'asc');
+        $this->db->order_by('full_path', 'asc');
         $this->db->from($this->table);
 
         if ($_POST["search"]["value"]!='') {
