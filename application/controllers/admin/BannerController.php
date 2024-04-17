@@ -9,11 +9,12 @@ class BannerController extends MY_Controller
 		parent::__construct();
 		$this->checkAdminLoggedIn();
 		$this->data['page_title'] = 'Banners';
+		$this->data['form_title'] = 'Banner';
 		$this->load->model('Banner_model');
 	}
 
 	public function index(){
-		$this->adminRenderTemplate('admin/Banner/index');
+		$this->adminRenderTemplate('admin/Banner/index', $this->data);
 	}
 
 	public function create(){

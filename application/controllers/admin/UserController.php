@@ -9,6 +9,7 @@ class UserController extends MY_Controller
 		parent::__construct();
 		$this->checkAdminLoggedIn();
 		$this->data['page_title'] = 'Users';
+		$this->data['form_title'] = 'User';
 		$this->load->model('user_model');
 		$this->load->model('countries_model');
 		$this->load->model('user_address_model');
@@ -60,7 +61,7 @@ class UserController extends MY_Controller
 		if ($this->form_validation->run() == FALSE) {
 			$this->data['status'] = $this->user_model::$status;
 			$getCountryCode = $this->countries_model->getCountryData();
-			$this->data['countryCodes'] = $getCountryCode;				
+			$this->data['countryCodes'] = $getCountryCode;
 			$this->adminRenderTemplate('admin/users/create', $this->data);
 			return $this;
 		}

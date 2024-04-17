@@ -3,12 +3,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Users</h1>
+                    <h1><?php echo $page_title; ?></h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="<?php echo base_url('admin/dashboard') ?>">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Users</li>
+                        <li class="breadcrumb-item active"><?php echo $page_title; ?></li>
                     </ol>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                     <div class="card card-info card-outline">
                         <div class="card-header">
                             <h3 class="card-title w-100">
-                                Manage Users
+                                Manage <?php echo $page_title; ?>
                                 <a href="<?php echo base_url('admin/users/create') ?>" class="btn btn-sm btn-primary float-right"> <i class="fa fa-plus"></i> Add New</a>
                             </h3>
                         </div>

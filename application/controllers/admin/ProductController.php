@@ -9,6 +9,7 @@ class ProductController extends MY_Controller
 		parent::__construct();
 		$this->checkAdminLoggedIn();
 		$this->data['page_title'] = 'Products';
+		$this->data['form_title'] = 'Product';
 		$this->load->model('Product_model');
 		$this->load->model('Categories_model');
 		$this->load->model('ProductImage_model');

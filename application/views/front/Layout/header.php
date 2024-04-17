@@ -9,6 +9,7 @@
         <title>Ecommerce</title>
         <link rel="shortcut icon" href="<?php echo base_url('images/favicon.png') ?>" type="image/x-icon" />
         <link href="<?php echo base_url('css/styles.css'); ?>" rel="stylesheet">
+        <script type="text/javascript">const baseUrl = "<?php echo base_url(); ?>";</script>
     </head>
     <body>
         <div id="main-wrapper">
