@@ -334,8 +334,8 @@ class ProductController extends MY_Controller
 
     public function getOpionType(){
     	return [
+			'select'   => 'Select',
     		'color'    => 'Color',
-            'select'   => 'Select',
             'checkbox' =>'Checkbox',
             'radio'    => 'Radio Button',
     	];

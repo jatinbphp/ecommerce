@@ -683,9 +683,13 @@ $(document).ready(function() {
                 if(filedType == 'file'){
                     $('.image-error').remove();
                     $('.imagediv').after('<span class="text-danger text-bold image-error">' + errorMessage + '</span>');
-                }
-                else {
-                    $(this).after('<span class="text-danger text-bold error">' + errorMessage + '</span>');
+                } else {
+                    if($(this).closest('div').hasClass('my-colorpicker2')){
+                        $(this).closest('.my-colorpicker2').next('.error-color').remove();
+                        $(this).closest('.my-colorpicker2').addClass('mb-0').after('<span class="text-danger text-bold error-color">' + errorMessage + '</span>');
+                    } else {
+                        $(this).after('<span class="text-danger text-bold error">' + errorMessage + '</span>');
+                    }
                 }
                 tabIds.push($(this).closest('.tab-pane').attr('id'));
             }
