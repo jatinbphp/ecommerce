@@ -3,12 +3,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Users</h1>
+                    <h1><?php echo $page_title; ?></h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="<?php echo base_url('admin/dashboard') ?>">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Users</li>
+                        <li class="breadcrumb-item active"><?php echo $page_title; ?></li>
                     </ol>
                 </div>
             </div>
@@ -33,9 +33,9 @@
                                     <div class="card card-info card-outline">
                                         <div class="card-header">
                                             <h3 class="card-title"><?php if (!isset($userData)): ?>
-                                            Add User
+                                            Add <?php echo $form_title; ?>
                                         <?php else: ?>
-                                            Edit User
+                                            Edit <?php echo $form_title; ?>
 
                                             <!-- address tamplate for edit clone form -->
 
@@ -54,11 +54,10 @@
                                                         <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <?php echo form_label('Title :', 'title_0', array('class' => 'control-label')); ?>
-                                                                <span class="text-red">*</span>
                                                                 <?php echo form_input(array(
                                                                     'name' => 'addresses[new][0][title]',
                                                                     'id' => 'title_0',
-                                                                    'class' => 'form-control chk-required',
+                                                                    'class' => 'form-control',
                                                                     'placeholder' => 'Enter Title'
                                                                 )); ?>
                                                             </div>

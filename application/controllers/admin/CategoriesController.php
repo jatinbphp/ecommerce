@@ -8,6 +8,7 @@ class CategoriesController extends MY_Controller
 		parent::__construct();
 		$this->checkAdminLoggedIn();
 		$this->data['page_title'] = 'Categories';
+		$this->data['form_title'] = 'Category';
 		$this->load->model('Categories_model');
 	}
 
