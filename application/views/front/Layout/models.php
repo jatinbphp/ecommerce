@@ -322,6 +322,8 @@
         <script src="<?php echo base_url('js/custom.js'); ?>"></script>
         <script src="<?php echo base_url('js/jquery.validate.min.js'); ?>"></script>
         <script src="<?php echo base_url('public/assets/front/dist/js/frontValidations.js'); ?>"></script>
+        <!-- all the script for home page -->
+        <script src="<?php echo base_url('public/assets/front/dist/js/homePage.js'); ?>"></script>
 
         <script>
             function openWishlist() {

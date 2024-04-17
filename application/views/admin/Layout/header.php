@@ -129,6 +129,12 @@
                             <p>Contact Us</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="<?php echo base_url('admin/subscription-plan'); ?>" id="subscriptionPlan" class="nav-link">
+                            <i class="nav-icon fa fa-calendar-check"></i>
+                            <p>Subscription Plans</p>
+                        </a>
+                    </li>
 				</ul>
 			</nav>
 		</div>

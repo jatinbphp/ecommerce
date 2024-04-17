@@ -42,3 +42,9 @@ $route['admin/contact-us/delete/(:num)'] = 'admin/ContactusController/delete/$1'
 $route['admin/contact-us/show/(:num)'] = 'admin/ContactusController/show/$1';
 $route['admin/contact-us/fetch_contactus'] = 'admin/ContactusController/fetchContactUs';
 $route['admin/user/deleteAddress'] = 'admin/UserController/deleteAddress';
+/*subscription-plan*/
+$route['admin/subscription-plan'] = 'admin/SubscriptionPlanController';
+$route['admin/subscription-plan/create'] = 'admin/SubscriptionPlanController/create';
+$route['admin/subscription-plan/edit/(:num)'] = 'admin/SubscriptionPlanController/edit/$1';
+$route['admin/subscription-plan/delete/(:num)'] = 'admin/SubscriptionPlanController/delete/$1';
+$route['admin/subscription-plan/fetch_subscription_plan'] = 'admin/SubscriptionPlanController/fetchSubscriptionPlan';

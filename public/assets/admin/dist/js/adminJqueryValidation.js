@@ -86,6 +86,19 @@ $(document).ready(function() {
         }]
     });
 
+    var subscriptionPlan = $('#subscriptionPlanTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "order":[],
+        "ajax":{
+            url:"subscription-plan/fetch_subscription_plan",
+            type:"POST",
+        },
+        "columnDefs": [{
+            "targets":[5],
+            "orderable": false
+        }]
+    });
 
     $("#categories_form_add").validate(
     {                
@@ -131,7 +144,7 @@ $(document).ready(function() {
     });
 
     //Admin Delete
-    $("#CategoriesTable, #banerTable, #usersTable, #contactUsTable, #productsTable").on('click', '.deleteRecord', function(event) {
+    $("#CategoriesTable, #banerTable, #usersTable, #contactUsTable, #productsTable, #subscriptionPlanTable").on('click', '.deleteRecord', function(event) {
         event.preventDefault();
         var id = $(this).attr("data-id");
         var controller = $(this).attr("data-controller");
@@ -164,6 +177,8 @@ $(document).ready(function() {
                             contactUs.row('.selected').remove().draw(false);
                         } else if(controller == 'products'){
                             products.row('.selected').remove().draw(false);
+                        } else if(controller == 'subscription-plan'){
+                            subscriptionPlan.row('.selected').remove().draw(false);
                         }
                                                     
                         swal("Deleted", "Your data successfully deleted!", "success");
@@ -192,7 +207,7 @@ $(document).ready(function() {
         });
     });
 
-    $("#CategoriesTable, #usersTable, #banerTable, #banerTable, #productsTable").on('click', '.assign_unassign', function(event) {
+    $("#CategoriesTable, #usersTable, #banerTable, #banerTable, #productsTable, #subscriptionPlanTable").on('click', '.assign_unassign', function(event) {
         event.preventDefault();
         var url = $(this).attr('data-url');
         var id = $(this).attr("data-id");
@@ -701,6 +716,39 @@ $(document).ready(function() {
                 $('.' + tabIds[0]).click();
             }
             event.preventDefault();
+        }
+    });
+
+    /*Subscription Plan*/
+    $("#subscriptionForm").validate({
+        ignore: ".description *",          
+        rules:
+        {     
+            name:{
+                required: true
+            },
+            duration:{
+                required: true
+            },
+            description: {
+                required: true,
+            },
+        },
+        messages:
+        {
+            name:'Please Enter the Name.',
+            duration:'Please select Duration.',
+            description:'Please Enter Description.',
+        },
+        errorPlacement: function(error, element) {
+            if(element.attr("name") == "description"){
+                error.insertAfter(".note-editor");
+            }else{
+                error.insertAfter(element);
+            }
+        },  
+        submitHandler: function(form){
+            form.submit();
         }
     });
 });

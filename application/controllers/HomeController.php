@@ -6,10 +6,14 @@ class HomeController extends MY_Controller {
 	public function __construct() {
         parent::__construct();
         $this->load->model('Banner_model');
+        $this->load->model('Product_model');
+        $this->load->model('Categories_model');
     }
 
     public function index() {
-        $data['banner_data'] = $this->Banner_model->getActiveBammerData();
+        $data['banner_data']     = $this->Banner_model->getActiveBammerData();
+        $data['latest_products'] = $this->Product_model->getLatestProducts();
+        $data['categories']      = $this->Categories_model->getCategoriesWithManyProducts();
         $this->frontRenderTemplate('front/Home/homePage', $data);
     }
 

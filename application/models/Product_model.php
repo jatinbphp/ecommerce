@@ -99,4 +99,30 @@ class Product_model extends CI_Model
         $this->db->from($this->table);
         return $this->db->count_all_results();
     }
+
+    public function getLatestProducts(){
+        $this->db->select('products.*, product_images.image as image');
+        $this->db->from($this->table);
+        $this->db->join('product_images', 'products.id = product_images.product_id', 'left');
+        $this->db->where('products.status', self::STATUS_ACTIVE);
+        $this->db->order_by('products.created_at', 'DESC');
+        $this->db->limit(8);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function getFilteredProducts($categoryId=0){
+        $this->db->select('products.*, product_images.image as image');
+        $this->db->from($this->table);
+        $this->db->join('product_images', 'products.id = product_images.product_id', 'left');
+        $this->db->where('products.status', self::STATUS_ACTIVE);
+
+        if ($categoryId) {
+            $this->db->where('products.category_id', $categoryId);
+        }
+
+        $this->db->limit(8);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 }
