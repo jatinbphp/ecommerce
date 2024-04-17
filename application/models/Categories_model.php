@@ -62,7 +62,7 @@ class Categories_model extends CI_Model
     public function make_query()
     {
         $this->db->select($this->select_column);
-        $this->db->order_by('full_path', 'asc');
+        //$this->db->order_by('full_path', 'asc');
         $this->db->from($this->table);
 
         if ($_POST["search"]["value"]!='') {
@@ -220,4 +220,16 @@ class Categories_model extends CI_Model
         
         return $categories;
     }
+
+    /*get categories which has may products*/
+    public function getCategoriesWithManyProducts() {
+        $this->db->select('categories.*, COUNT(products.id) as product_count');
+        $this->db->from('categories');
+        $this->db->join('products', 'categories.id = products.category_id', 'left');
+        $this->db->group_by('categories.id');
+        //$this->db->order_by('categories.name', 'asc');
+        $this->db->order_by('product_count', 'DESC');
+        $this->db->limit(4);
+        return $this->db->get()->result_array();
+    }   
 }

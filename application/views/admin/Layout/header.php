@@ -118,6 +118,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="<?php echo base_url('admin/subscription-plan'); ?>" id="subscriptionPlan" class="nav-link">
+                            <i class="nav-icon fa fa-calendar-check"></i>
+                            <p>Subscription Plans</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="<?php echo base_url('admin/contemt-management'); ?>" id="contentManagement" class="nav-link">
                             <i class="nav-icon fa fa-desktop"></i>
                             <p>Content Management</p>
