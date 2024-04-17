@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var stripe = Stripe('pk_test_51OtRCaSFVmTeEsbhRi2LBu40raKWlvp7Fll3BBpizCKdl1ZzspDxRMkR7jI801mRfcRNQNenKnYxJiy4KWreTe3s00beSpV4ds');
+    var stripe = Stripe('');
     var elements = stripe.elements();
     // var cardElement = elements.create('card');
     // cardElement.mount('#card-element');

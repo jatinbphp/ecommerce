@@ -9,7 +9,7 @@ class PaymentController extends MY_Controller {
 	public function processPayment() {
 		require_once('./vendor/stripe/stripe-php/init.php');
 
-        \Stripe\Stripe::setApiKey('sk_test_51OtRCaSFVmTeEsbhC5dKFW7taW2OGib3qINNmyOiH7WPniWFu4yX0XWY2rP3RFOMGiNnduCoggSPHY9NOhSwVZwD00xkCBYfh4');
+        \Stripe\Stripe::setApiKey('');
 
 		header('Content-Type: application/json');
 
