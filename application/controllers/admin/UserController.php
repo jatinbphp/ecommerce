@@ -158,7 +158,7 @@ class UserController extends MY_Controller
 				  $addresses = $this->input->post('addresses')['existing'];
 
 				   foreach ($addresses as $key => $address) {
-			            $this->form_validation->set_rules("addresses[existing][$key][title]", 'Title', 'required');
+			            // $this->form_validation->set_rules("addresses[existing][$key][title]", 'Title', 'required');
 			            $this->form_validation->set_rules("addresses[existing][$key][first_name]", 'First Name', 'required');
 			            $this->form_validation->set_rules("addresses[existing][$key][last_name]", 'Last Name', 'required');
 			            $this->form_validation->set_rules("addresses[existing][$key][mobile_phone]", 'Mobile No', 'required');
@@ -189,7 +189,7 @@ class UserController extends MY_Controller
 
 				foreach ($newAddresses as $key => $address) {
 
-			            $this->form_validation->set_rules("addresses[new][$key][title]", 'Title', 'required');
+			            // $this->form_validation->set_rules("addresses[new][$key][title]", 'Title', 'required');
 			            $this->form_validation->set_rules("addresses[new][$key][first_name]", 'First Name', 'required');
 			            $this->form_validation->set_rules("addresses[new][$key][last_name]", 'Last Name', 'required');
 			            $this->form_validation->set_rules("addresses[new][$key][mobile_phone]", 'Mobile No', 'required');

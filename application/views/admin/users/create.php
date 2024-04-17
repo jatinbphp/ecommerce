@@ -54,11 +54,10 @@
                                                         <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <?php echo form_label('Title :', 'title_0', array('class' => 'control-label')); ?>
-                                                                <span class="text-red">*</span>
                                                                 <?php echo form_input(array(
                                                                     'name' => 'addresses[new][0][title]',
                                                                     'id' => 'title_0',
-                                                                    'class' => 'form-control chk-required',
+                                                                    'class' => 'form-control',
                                                                     'placeholder' => 'Enter Title'
                                                                 )); ?>
                                                             </div>
