@@ -8,7 +8,6 @@
                 </div>
             </div>
             <?php if (isset($product_options) && count($product_options) > 0) : ?>
-                <?php  $i=1; ?>
                 <?php foreach ($product_options as $key => $option) : ?>
                     <?php $optionId = isset($option['id']) ? $option['id'] : ''; ?>
                     <?php $optionName = isset($option['option_name']) ? $option['option_name'] : ''; ?>
@@ -448,8 +447,8 @@ function updateOptions(select, optionId){
                 '</div>'+
                 '<div class="row">'+
                     '<div class="col-md-6">'+
-                        '<div class="'+className+' form-group" id="options_values_'+optionName+'">'+
-                            '<input type="text" name="option_values[new]['+optionName+'][]" class="form-control" placeholder="Enter Option Value">'+colorElement+
+                        '<div class="'+className+' form-group" data-id="'+optionName+'" id="options_values_'+optionName+'">'+
+                            '<input type="text" name="option_values[new]['+optionName+'][]" data-id="'+optionName+'" class="form-control" placeholder="Enter Option Value">'+colorElement+
                         '</div>'+
                     '</div>'+
                     '<div class="col-md-6">'+
