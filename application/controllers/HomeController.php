@@ -11,9 +11,10 @@ class HomeController extends MY_Controller {
     }
 
     public function index() {
-        $data['banner_data']     = $this->Banner_model->getActiveBammerData();
-        $data['latest_products'] = $this->Product_model->getLatestProducts();
-        $data['categories']      = $this->Categories_model->getCategoriesWithManyProducts();
+        $data['banner_data']           = $this->Banner_model->getActiveBammerData();
+        $data['latest_products']       = $this->Product_model->getLatestProducts();
+        $data['categories']            = $this->Categories_model->getCategoriesWithManyProducts();
+        $data['categorized_products']  = isset($data['categories'][0]['id']) ? $this->Product_model->filter_products($data['categories'][0]['id']) : null;
         $this->frontRenderTemplate('front/Home/homePage', $data);
     }
 

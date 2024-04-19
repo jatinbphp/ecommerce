@@ -10,18 +10,30 @@ class ProductController extends MY_Controller {
         $this->load->model('Categories_model');
     }
 
-    public function getProducts(){
+    public function index(){
         $categoryId = $this->input->get('categoryId');
-        $data['products'] = $this->Product_model->getFilteredProducts($categoryId);
-        $view_content = $this->load->view('front/Products/filteredProducts', $data, TRUE);
+        $data['products'] = $this->Product_model->filter_products($categoryId);
+        $content = $this->load->view('front/Products/filter', $data, TRUE);
         $response = [
-            'success' => true,
-            'html' => $view_content
+            'status'   => !empty($data['products']) ? true : false,
+            'html'     => $content
         ];
 
-        $this->output->set_content_type('application/json')
-            ->set_output(json_encode($response));
+        $this->output->set_content_type('application/json')->set_output(json_encode($response));
     }
 
-    
+    public function show($id){
+        $data['product']                   = $this->Product_model->show($id);
+        $data['product']['sizes']          = $this->Product_model->product_sizes($id);
+        $data['product']['colors']         = $this->Product_model->product_colors($id);
+        $data['product']['stock_status']   = $this->Product_model::$stock_status;
+        $data['product']['quantity']       = $this->Product_model::$quantity;
+
+        $response = [
+            'status'   => !empty($data['product']) ? true : false,
+            'html'     => $this->load->view('front/Products/quickView', $data, TRUE)
+        ];
+
+        $this->output->set_content_type('application/json')->set_output(json_encode($response));
+    }    
 }
