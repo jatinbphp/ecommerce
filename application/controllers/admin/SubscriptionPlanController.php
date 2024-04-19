@@ -2,9 +2,19 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * This class represents a controller for managing subscription plans.
+ * It extends the MY_Controller class, which is likely a custom base controller class.
+ */
 class SubscriptionPlanController extends MY_Controller
 {
 	protected $_data = [];
+	/**
+	 * Constructor for the SubscriptionPlansController class.
+	* Initializes the parent constructor and checks if the admin is logged in.
+	* Sets the page title and form title for the view.
+	* Loads the SubscriptionPlan_model.
+	*/
 	public function __construct(){
 		parent::__construct();
 		$this->checkAdminLoggedIn();
@@ -13,10 +23,19 @@ class SubscriptionPlanController extends MY_Controller
 		$this->load->model('SubscriptionPlan_model');
 	}
 
+	/**
+	 * Render the index page for the Subscription Plan in the admin panel.
+	*/
 	public function index(){
 		$this->adminRenderTemplate('admin/SubscriptionPlan/index', $this->data);
 	}
 
+	/**
+	 * Fetches subscription plan data for display in a DataTable.
+	* Retrieves subscription plan data from the SubscriptionPlan_model and formats it for display.
+	* Includes subscription plan ID, name, duration, status button, creation date, and edit/delete buttons.
+	* Returns JSON-encoded output for DataTable rendering.
+	*/
 	public function fetchSubscriptionPlan(){
 		$data    = [];
 		$allData = $this->SubscriptionPlan_model->make_datatables();
@@ -42,6 +61,13 @@ class SubscriptionPlanController extends MY_Controller
 		echo json_encode($output);
 	}
 
+	/**
+	 * Create a new subscription plan based on the form input data.
+	* Validates the form input data for 'name', 'duration', 'description', and 'status'.
+	* If validation fails, it renders the create template with the necessary data and returns the instance.
+	* If validation passes, it creates a new subscription plan with the provided data and redirects accordingly.
+	*
+	*/
 	public function create(){
 		$this->form_validation->set_rules('name', 'Name', 'required');
 		$this->form_validation->set_rules('duration', 'Duration', 'required');
@@ -74,6 +100,12 @@ class SubscriptionPlanController extends MY_Controller
 		}
 	}
 
+	/**
+	 * Edit a subscription plan by updating its details in the database.
+	*
+	* @param int|null $id The ID of the subscription plan to edit.
+	* @return void
+	*/
 	public function edit($id = null){
 		if($id) {
 			$this->form_validation->set_rules('name', 'Name', 'required');
@@ -109,6 +141,14 @@ class SubscriptionPlanController extends MY_Controller
 		}
 	}
 
+	/**
+	 * Delete a subscription plan by its ID.
+	*
+	* This method deletes a subscription plan from the database based on the provided ID.
+	*
+	* @param int $id The ID of the subscription plan to delete.
+	* @return void
+	*/
 	public function delete($id){
 		if($id) {			
 			$delete = $this->SubscriptionPlan_model->delete($id);

@@ -27,7 +27,6 @@ class ContactusController extends MY_Controller {
 	 * The function `sendMessage` validates and processes a contact form submission, storing the data
 	 * in the database and displaying success or error messages accordingly.
 	 * 
-	 * @return The `sendMessage()` function is returning the current object instance by using ``.
 	 */
 	public function sendMessage() {
     	$this->form_validation->set_rules('name', 'Name', 'required');

@@ -1,10 +1,23 @@
 <?php
+/**
+ * User_model Class
+ *
+ * This class serves as the model for handling user-related database operations in CodeIgniter.
+ */
 class User_model extends CI_Model 
 {
 	public $table = "users";
     public $select_column = '*';
     public $order_column = ['id', 'first_name', 'first_name', 'email', 'phone', 'status', 'created_at'];
 
+ /**
+  * Check if a username exists in the specified table, excluding a specific ID if provided.
+  *
+  * @param string $table
+  * @param string $username
+  * @param string $id
+  * @return string 'Yes' if the username exists, 'No' if it does not
+  */
 	function check_other_username($table,$username,$id='') {
 		$this->db->select('*');
 		$this->db->where('username', $username);
@@ -18,6 +31,14 @@ class User_model extends CI_Model
 			return 'Yes';
 	}
 
+ /**
+  * Check if the given email exists in the specified table, excluding the record with the given ID.
+  *
+  * @param string $table
+  * @param string $email
+  * @param string $id
+  * @return string 'Yes' if the email exists (excluding the record with the given ID), 'No' otherwise
+  */
 	function check_other_email($table,$email,$id='') {
 		$this->db->select('*');
 		$this->db->where('email', $email);
@@ -31,6 +52,9 @@ class User_model extends CI_Model
 			return 'Yes';
 	}
 
+ /**
+  * Class containing constants for status values and their corresponding text representations.
+  */
 	const STATUS_ACTIVE        = 'active';
     const STATUS_INACTIVE      = 'inactive';
     const STATUS_ACTIVE_TEXT   = "Active";
@@ -41,6 +65,12 @@ class User_model extends CI_Model
         self::STATUS_INACTIVE => self::STATUS_INACTIVE_TEXT,
     ];
 
+ /**
+  * Get user data based on the provided user ID or retrieve all users with role 2.
+  *
+  * @param int|null $userId
+  * @return array
+  */
 	public function getUserData($userId = null)
 	{
 		if($userId) {
@@ -54,6 +84,12 @@ class User_model extends CI_Model
 		return $query->result_array();
 	}
 
+ /**
+  * Retrieve admin user data based on the provided user ID or return all admin users.
+  *
+  * @param int|null $userId
+  * @return array
+  */
 	public function getAdminUserData($userId = null)
 	{
 		if($userId) {
@@ -67,6 +103,12 @@ class User_model extends CI_Model
 		return $query->result_array();
 	}
 
+ /**
+  * Create a new record in the database table with the provided data.
+  *
+  * @param mixed $data The data to be inserted into the table
+  * @return bool True if the record was successfully created, false otherwise
+  */
 	public function create($data = ''){
 		if($data) {
 			$create = $this->db->insert($this->table, $data);
@@ -74,6 +116,12 @@ class User_model extends CI_Model
 		}
 	}
 
+ /**
+  * Add a new user to the database with the provided data and return the user ID.
+  *
+  * @param string $data
+  * @return int The ID of the newly added user, or 0 if the user creation failed.
+  */
 	public function addUserAndGetId($data = ''){
 		if($data) {
 			$create = $this->db->insert($this->table, $data);
@@ -88,6 +136,13 @@ class User_model extends CI_Model
 		}
 	}
 
+ /**
+  * Edit a record in the database table with the provided data and ID.
+  *
+  * @param array $data The data to be updated in the record.
+  * @param int|null $id The ID of the record to be updated.
+  * @return bool Returns true if the record was successfully updated, false otherwise.
+  */
 	public function edit($data = array(), $id = null)
 	{
 		$this->db->where('id', $id);
@@ -96,6 +151,12 @@ class User_model extends CI_Model
 		return ($update == true) ? true : false;
 	}
 
+    /**
+     * Get the value of the option based on the provided key.
+     *
+     * @param mixed $value
+     * @return mixed|string
+     */
     public static function getOptionValue($value) {
         if(!$value){
             return $value;
@@ -104,15 +165,35 @@ class User_model extends CI_Model
         return (isset(self::$status[$value])) ? self::$status[$value] : '';
     }
 
+    /**
+     * Register a new user by inserting the provided data into the database table.
+     *
+     * @param array $data The data to be inserted for the new user.
+     * @return bool True if the user registration was successful, false otherwise.
+     */
     public function register_user($data) {
         return $this->db->insert($this->table, $data);
     }
 
+ /**
+  * Save the reset token for a user with the given email.
+  *
+  * @param string $email The email of the user
+  * @param string $token The reset token to be saved
+  * @return void
+  */
 	public function saveResetToken($email, $token) {
         $this->db->where('email', $email);
         $this->db->update($this->table, ['reset_token' => $token]);
     }
 
+ /**
+  * Update the user's password using the provided reset token.
+  *
+  * @param string $token The reset token associated with the user.
+  * @param string $password The new password to be set.
+  * @return bool Returns true if the password update was successful, false otherwise.
+  */
 	public function updatePasswordByResetToken($token, $password)
 	{	
 		$this->db->where('reset_token', $token);
@@ -129,12 +210,24 @@ class User_model extends CI_Model
 		}
 	}
 
+ /**
+  * Retrieve a user from the database based on the provided reset token.
+  *
+  * @param string $token The reset token to search for.
+  * @return mixed The user object if found, or null if not found.
+  */
 	public function getUserByResetToken($token)
 	{
 		$query = $this->db->get_where($this->table, ['reset_token' => $token]);
     	return $query->row();
 	}
 
+    /**
+     * Check if the given email exists in the 'users' table.
+     *
+     * @param string $email The email to check for existence
+     * @return bool True if the email exists, false otherwise
+     */
     public function isEmailExists($email) {
         $this->db->where('email', $email);
         $query = $this->db->get('users');
@@ -148,6 +241,13 @@ class User_model extends CI_Model
 		}
     }
 
+ /**
+  * Retrieves user data from the database based on the provided email and role.
+  *
+  * @param string $email The email of the user
+  * @param string $role The role of the user
+  * @return mixed Returns the user data as an object if found, otherwise returns null
+  */
 	public function getUserDataByEmail($email,$role)
 	{
 		$this->db->where('email', $email);
@@ -161,6 +261,14 @@ class User_model extends CI_Model
         }
 	}
 
+     /**
+      * Authenticates a user based on the provided username, password, and role.
+      *
+      * @param string $username The username of the user
+      * @param string $password The password of the user
+      * @param string $role The role of the user
+      * @return mixed Returns the user object if authentication is successful, false otherwise
+      */
      public function authenticate($username, $password, $role) {
         $query = $this->db->get_where($this->table, ['email' => $username,'status' => self::STATUS_ACTIVE,'role' => $role]);
         $user = $query->row();
@@ -176,35 +284,70 @@ class User_model extends CI_Model
         }
     }
 
+    /**
+     * Increments the login attempts for a specific user identified by user_id.
+     *
+     * @param int $user_id The ID of the user
+     * @return void
+     */
     public function incrementLoginAttempts($user_id) {
         $this->db->where('id', $user_id);
         $this->db->set('login_attempts', 'login_attempts+1', FALSE);
         $this->db->update($this->table);
     }
 
+    /**
+     * Retrieves a user from the database based on the provided username.
+     *
+     * @param string $username The username of the user to retrieve.
+     * @return object|null The user object if found, or null if not found.
+     */
     public function getUserByUsername($username) {
         $query = $this->db->get_where($this->table, ['email' => $username]);
         return $query->row();
     }
 
+     /**
+      * Reset the login attempts for a user with the given email address.
+      *
+      * @param string $email The email address of the user
+      * @return void
+      */
      public function resetLoginAttempts($email) {
         $this->db->where('email', $email);
         $this->db->set('login_attempts', 0);
         $this->db->update($this->table);
      }
 
+     /**
+      * Retrieves the admin data from the database based on the provided email.
+      *
+      * @param string $email The email of the admin to retrieve data for.
+      * @return array|null An associative array containing the admin data if found, or null if not found.
+      */
      public function getAdminData($email)
      {
         $getAdminData = $this->db->get_where($this->table, ['email' => $email,'role' => 1]);
         return $getAdminData->row_array();
      }
 
+    /**
+     * Reset the OTP (One-Time Password) code for a specific user.
+     *
+     * @param int $user_id The ID of the user for whom the OTP code needs to be reset.
+     * @return void
+     */
     public function resetOtp($user_id) {
         $this->db->set('otp_code', NULL);
         $this->db->where('id', $user_id);
         $this->db->update($this->table);
     }
 
+ /**
+  * Constructs a query based on the provided search criteria and order parameters.
+  * The query filters records based on the search string and role condition.
+  * It also orders the results based on the specified column and direction.
+  */
 	public function make_query()
 	{
 		$this->db->from($this->table);
@@ -221,6 +364,11 @@ class User_model extends CI_Model
 		}
 	}
 
+ /**
+  * Generates a DataTables response by executing a query and applying length and start limits.
+  *
+  * @return array The result of the query for DataTables
+  */
 	public function make_datatables()
 	{
 		$this->make_query();
@@ -231,6 +379,13 @@ class User_model extends CI_Model
 		return $query->result();
 	}
 
+ /**
+  * Retrieves filtered data based on the query conditions.
+  *
+  * This method executes the query built by the 'make_query' method and retrieves the result set.
+  *
+  * @return int The number of rows in the result set.
+  */
 	public function get_filtered_data()
 	{
 		$this->make_query();
@@ -238,6 +393,11 @@ class User_model extends CI_Model
 		return $query->num_rows();
 	}
 
+ /**
+  * Retrieves the count of all data from the 'users' table where the role is not equal to 1.
+  *
+  * @return int The total count of records that meet the specified criteria.
+  */
 	public function get_all_data()
 	{
 		$this->db->select("*");
@@ -247,6 +407,13 @@ class User_model extends CI_Model
 		return $this->db->count_all_results();
 	}
 
+ /**
+  * Update the image of a user in the database.
+  *
+  * @param int $userId The ID of the user whose image is to be updated.
+  * @param string $fileName The new image file name.
+  * @return void
+  */
 	public function updateUserImage($userId,$fileName)
 	{
 		$data = [
@@ -257,6 +424,12 @@ class User_model extends CI_Model
 		return;
 	}
 
+ /**
+  * Delete a record from the database based on the given ID.
+  *
+  * @param int $id The ID of the record to be deleted
+  * @return bool True if the record was successfully deleted, false otherwise
+  */
 	public function delete($id)
 	{
 		$this->db->where('id', $id);

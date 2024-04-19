@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Countries_model Class
+ *
+ * This class serves as the model for handling country-related data.
+ */
 class Countries_model extends CI_Model
 {   
     public $table = "countries";
@@ -9,6 +15,11 @@ class Countries_model extends CI_Model
 	}
 
 
+ /**
+  * Retrieves an array of country mobile codes from the database.
+  *
+  * @return array An array containing country mobile codes.
+  */
 	public function getCountryData()
 	{
 		$this->db->select('country_mobile_code');

@@ -1,5 +1,9 @@
 <?php 
 
+/**
+ * This class represents the Product Option Values model.
+ * It is used to interact with the database and perform CRUD operations related to product option values.
+ */
 class ProductOptionValues_model extends CI_Model
 {   
     public $table = "products_options_values";
@@ -20,6 +24,12 @@ class ProductOptionValues_model extends CI_Model
         return $query->result_array();
     }
 
+    /**
+     * Create a new record in the database table with the provided data.
+     *
+     * @param mixed $data The data to be inserted into the table
+     * @return int The ID of the newly created record, or 0 if creation fails or no data is provided
+     */
     public function create($data = ''){
         if($data) {
             $create = $this->db->insert($this->table, $data);
@@ -32,12 +42,27 @@ class ProductOptionValues_model extends CI_Model
         return 0;
     }
 
+    /**
+     * Edit a record in the database table based on the provided parameters.
+     *
+     * @param array $data
+     * @param int|null $optionValueId
+     * @param int|null $optionId
+     * @param int|null $productId
+     * @return bool
+     */
     public function edit($data = [], $optionValueId = null, $optionId = null, $productId = null){
         $this->db->where('id', $optionValueId)->where('product_id', $productId)->where('option_id', $optionId);
         $update = $this->db->update($this->table, $data);
         return ($update == true) ? true : false;    
     }
 
+    /**
+     * Delete a record from the database based on the given ID.
+     *
+     * @param int $id The ID of the record to delete
+     * @return bool True if the record was successfully deleted, false otherwise
+     */
     public function delete($id)
     {
         $this->db->where('id', $id);
@@ -45,6 +70,12 @@ class ProductOptionValues_model extends CI_Model
         return ($delete == true) ? true : false;
     }
 
+    /**
+     * Delete product options values from the database for a given product ID.
+     *
+     * @param int $productId The ID of the product whose options values need to be deleted.
+     * @return bool True if deletion was successful, false otherwise.
+     */
     public function deleteProductOptionsValues($productId) {
         $this->db->where('product_id', $productId);
         $this->db->delete($this->table);
@@ -52,3 +83,9 @@ class ProductOptionValues_model extends CI_Model
         return $this->db->affected_rows() > 0;
     }
 }
+    /**
+     * Delete product options from the database for a given product ID.
+     *
+     * @param int $productId The ID of the product whose options need to be deleted.
+     * @return bool Returns true if any rows were affected by the deletion, false otherwise.
+     */

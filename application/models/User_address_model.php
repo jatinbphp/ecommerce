@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * User_address_model class represents the model for managing user addresses in CodeIgniter.
+ */
 class User_address_model extends CI_Model
 {   
     public $table = "user_addresses";
@@ -10,12 +13,24 @@ class User_address_model extends CI_Model
 		parent::__construct();
 	}
 
+ /**
+  * Create a new record in the database using the provided data.
+  *
+  * @param array $data The data to be inserted into the database.
+  * @return bool Returns true if the record was successfully created, false otherwise.
+  */
 	public function createByUser($data) {    
         $create = $this->db->insert($this->table, $data);
         return ($create) ? true : false;
         
     }
 
+    /**
+     * Get user addresses based on the user ID.
+     *
+     * @param int $usrId The ID of the user
+     * @return array An array containing user addresses
+     */
     public function getUserAddresses($usrId)
     {
          $getData = [];
@@ -49,6 +64,13 @@ class User_address_model extends CI_Model
         return $getData;
     }
 
+    /**
+     * Update the address information in the database for a specific ID.
+     *
+     * @param int $id The ID of the address to update.
+     * @param array $data An array containing the updated address data.
+     * @return bool Returns true if the address was successfully updated, false otherwise.
+     */
     public function updateAddress($id,$data)
     {
         $address_data = [
@@ -74,9 +96,14 @@ class User_address_model extends CI_Model
         } else {
             return false; // Failed to update address
         }
-
     }
 
+    /**
+     * Deletes an address from the database based on the given address ID.
+     *
+     * @param int $addressId The ID of the address to be deleted.
+     * @return bool Returns true if the address was successfully deleted, false otherwise.
+     */
     public function deleteAddress($addressId) {
         $this->db->where('id', $addressId);
         $this->db->delete($this->table);
@@ -85,6 +112,12 @@ class User_address_model extends CI_Model
         return $this->db->affected_rows() > 0;
     }
 
+    /**
+     * Delete the user's address from the database based on the user ID.
+     *
+     * @param int $userId The ID of the user whose address is to be deleted.
+     * @return bool Returns true if the address was successfully deleted, false otherwise.
+     */
     public function deleteUserAddress($userId) {
         $this->db->where('user_id', $userId);
         $this->db->delete($this->table);
