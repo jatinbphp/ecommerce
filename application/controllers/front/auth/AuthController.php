@@ -10,12 +10,14 @@ class AuthController extends MY_Controller {
         $this->load->library('email');
     }
 
+    //This function is use for display signUp Page
     public function index() {
         $this->userRedirectIfLoggedIn();
         $countryCode = $this->countries_model->getCountryData();
         $this->load->view('front/auth/signUp',['countryCode' => $countryCode]); 
     }
 
+    //This function is use for display otp Page
     public function optCheckView()
     {
         $this->userRedirectIfOtpNotSent();
@@ -208,9 +210,12 @@ class AuthController extends MY_Controller {
 
                 $getOtpCode = $this->generateOTP();
                 $this->session->set_userdata('user_email', $this->input->post('email'));
+                $this->session->set_userdata('otp_sent', 'true');
 
                 $this->db->where('email', $this->input->post('email'));
                 $this->db->update('users', array('otp_code' =>$getOtpCode));
+
+                $this->sendUserOtpCodeEmail($this->input->post('email'),$getOtpCode);
                 redirect('otpCheck');
             } else {
                 echo 'Registration failed. Please try again.';
@@ -241,7 +246,7 @@ class AuthController extends MY_Controller {
             $this->db->where('id', $user->id);
             $this->db->update('users', array('otp_code' =>$getOtpCode));
 
-            $this->sendUserOtpCodeEmail($email,$user,$getOtpCode);
+            $this->sendUserOtpCodeEmail($email,$getOtpCode);
 
             redirect('otpCheck');
         } else {
@@ -250,7 +255,7 @@ class AuthController extends MY_Controller {
         }
     }
 
-    public function sendUserOtpCodeEmail($email,$user,$otpCode)
+    public function sendUserOtpCodeEmail($email,$otpCode)
     {
         $this->email->from('noreply@gorentonline.com', 'Support');
         $this->email->to($email);
@@ -310,8 +315,8 @@ class AuthController extends MY_Controller {
             $this->session->set_flashdata('success_message', 'Your One-Time Password (OTP) has been sent to your <strong>'.$email.'</strong> email address . Please check your email for OTP');
             redirect(base_url('otpCheck'));
         } else {
-            $this->session->set_flashdata('error', $this->email->print_debugger());
-            redirect(base_url('otpCheck'));
+            $this->session->set_flashdata('error', 'OTP email is not sent due to :'.$this->email->print_debugger()." So please signIn again.");
+            redirect(base_url('signIn'));
         }
     }
 
