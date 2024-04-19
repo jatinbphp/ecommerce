@@ -1,9 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/* This class extends MY_Controller and likely handles content management functionality. */
 class ContentManagementController extends MY_Controller {
 	protected $_data = [];
 
+	/**
+	 * The constructor function initializes the Content Management page and checks if an admin is logged
+	 * in.
+	 */
 	public function __construct(){
 		parent::__construct();
 		$this->checkAdminLoggedIn();
@@ -11,6 +16,9 @@ class ContentManagementController extends MY_Controller {
 		$this->load->model('Content_model');
 	}
 
+	/**
+	 * The index function renders the admin template for content management.
+	 */
 	public function index(){
         $this->adminRenderTemplate('admin/ContentManagement/index');		
 	}
