@@ -251,7 +251,8 @@ class AuthController extends MY_Controller {
             redirect('otpCheck');
         } else {
              $this->incrementLoginAttempts($email);
-             redirect('signIn');
+             $this->session->set_flashdata('error', 'Email or password is incorrect.Please check your email and password');
+             redirect(base_url('signIn'));
         }
     }
 
