@@ -107,61 +107,12 @@ class AuthController extends MY_Controller {
             $this->email->to($email);
             $this->email->subject('Password Reset Request');
 
-            $message = "<!DOCTYPE html>
-                        <html lang='en'>
-                        <head>
-                            <meta charset='UTF-8'>
-                            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-                            <title>Forgot Password Email</title>
-                            <style>
-                                body {
-                                    font-family: Arial, sans-serif;
-                                    background-color: lightgrey;
-                                    margin: 0;
-                                    padding: 0;
-                                }
-                                header {
-                                    background-color: lightgrey;
-                                    color: white;
-                                    padding: 20px;
-                                    text-align: center;
-                                }
-                                main {
-                                    padding: 20px;
-                                }
-                                p {
-                                    margin-bottom: 10px;
-                                }
-                                a {
-                                    color: black;
-                                    text-decoration: none;
-                                }
-                                .logo {
-                                    display: block;
-                                    margin: 0 auto;
-                                    max-width: 200px;
-                                }
-                        </style>
-                    </head>
-                <body>
-                <header>
-                    <img src='".base_url('images/logo.png')."' class='company-logo mx-auto d-block' alt='Company Logo'>
-                </header>
-                <main>
-                    <p>Dear User,</p>
-                    <p>We received a request to reset your password.</p>
-                    <p>To proceed with resetting your password, please click the following link:</p>
-                    <p><a href='".$reset_link."'>Reset Password</a></p>
-                    <p>If you didn't initiate this request, you can safely ignore this email.</p>
-                    <p>Thank you!</p>
-                </main>
-                </body></html>";
-
+            $message = $this->load->view('front/EmailTemplates/forgotPasswordEmail',['reset_link' => $reset_link],true);
 
             //$message = "<p>Click this link to reset your password: <a href='$reset_link'>$reset_link</a></p>";
             $this->email->message($message);
             if ($this->email->send()) {
-                $this->session->set_flashdata('success_message', 'An email has been sent to your email address with instructions on how to reset your password.');
+                $this->session->set_flashdata('success_message', "Instructions for resetting your password have been emailed to <strong>".$email."</strong>");
                 redirect(base_url('forgotPassword'));
             } else {
                 $this->session->set_flashdata('error', $this->email->print_debugger());
@@ -262,58 +213,11 @@ class AuthController extends MY_Controller {
         $this->email->to($email);
         $this->email->subject('Your One-Time Password (OTP) for Verification');
 
-        $message = "<!DOCTYPE html>
-        <html lang='en'>
-        <head>
-            <meta charset='UTF-8'>
-            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-            <title>OTP Email</title>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    background-color: #f4f4f4;
-                    margin: 0;
-                    padding: 0;
-                }
-                header {
-                    background-color: lightgrey;
-                    color: white;
-                    padding: 20px;
-                    text-align: center;
-                }
-                main {
-                    padding: 20px;
-                }
-                p {
-                    margin-bottom: 10px;
-                }
-                strong {
-                    color: black;
-                }
-                .logo {
-                    display: block;
-                    margin: 0 auto;
-                    max-width: 200px;
-                }
-            </style>
-        </head>
-        <body>
-            <header>
-                <img src=\"<?php echo base_url('images/logo.png')?>\" class='company-logo mx-auto d-block' alt='Company Logo'>
-            </header>
-            <main>
-                <p>Dear User,</p>
-                <p>Your One-Time Password (OTP) is: <strong>".$otpCode."</strong></p>
-                <p>Please use this OTP to complete your verification process.</p>
-                <p>If you didn't request this OTP, please ignore this email.</p>
-                <p>Thank you!</p>
-            </main>
-        </body>
-        </html>";
+        $message = $this->load->view('front/EmailTemplates/otpEmail',['otpCode' => $otpCode],true);
 
         $this->email->message($message);
         if ($this->email->send()) {
-            $this->session->set_flashdata('success_message', 'Your One-Time Password (OTP) has been sent to your <strong>'.$email.'</strong> email address . Please check your email for OTP');
+            $this->session->set_flashdata('success_message', 'Your One-Time Password (OTP) has been emailed to <strong>'.$email.'</strong>');
             redirect(base_url('otpCheck'));
         } else {
             $this->session->set_flashdata('error', 'OTP email is not sent due to :'.$this->email->print_debugger()." So please signIn again.");
