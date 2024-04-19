@@ -154,6 +154,19 @@
                                 </div>
                             </div>
 
+                            <!-- <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="consentCheckbox">
+                                            <span class="text-danger">*</span>
+                                            <input type="checkbox" id="consentCheckbox" name="consentCheckbox" required>
+                                             <span id="agreeConsent">I agree to receive SMS messages for login verification purposes.</span>
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div> -->
+
                             <?php
                                 echo form_submit(array(
                                 'name' => 'submit',
@@ -237,7 +250,10 @@ function toggleConfirmPasswordVisibility() {
                         required: true,
                         minlength: 10,
                         maxlength: 12
-                }
+                },
+                // consentCheckbox:{
+                //     required: true,
+                // }
             },
             messages: {
                  fname: "Please enter your first name",
@@ -264,10 +280,13 @@ function toggleConfirmPasswordVisibility() {
                 },
                 countryCode: {
                     required: "Please select country code",
-                }
+                },
+                // consentCheckbox:{
+                //     required: "Please agree to receive SMS messages for login verification purposes.",
+                // }
             },
             errorPlacement: function(error, element) {
-               error.insertAfter(element).css('color', 'red');
+                error.insertAfter(element).css('color', 'red');
             }
         });
     

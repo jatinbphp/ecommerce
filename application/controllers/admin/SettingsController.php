@@ -2,10 +2,22 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+
+/**
+ * SettingsController class extends MY_Controller.
+ * This controller is responsible for handling settings-related functionalities.
+ */
 class SettingsController extends MY_Controller
 {
 	protected $_data = [];
 
+    /**
+     * Constructor for the SettingsController class.
+    * Initializes the parent constructor.
+    * Checks if the admin is logged in.
+    * Sets the page title to 'Settings'.
+    * Loads the Settings_model.
+    */
 	public function __construct(){
 		parent::__construct();
 		$this->checkAdminLoggedIn();
@@ -13,6 +25,13 @@ class SettingsController extends MY_Controller
 		$this->load->model('Settings_model');
 	}
 
+    /**
+     * Loads the Categories_model, retrieves settings and category data, and prepares data for editing settings.
+    * Sets selected header and footer categories based on settings data.
+    * Renders the admin edit template with the prepared data.
+    *
+    * @return $this
+    */
 	public function edit()
     {
         $this->load->model('Categories_model');
@@ -40,6 +59,13 @@ class SettingsController extends MY_Controller
         return $this;
     }
 
+    /**
+     * Update the settings with the data provided by the user input.
+     * The function retrieves user input for email address, phone number, address, social media URLs, and menu categories.
+     * It then updates the settings in the database using the Settings_model.
+     * If header or footer menu categories are provided, they are stored as comma-separated values.
+     * Finally, a success message is set in the session flashdata and the user is redirected to the settings edit page.
+     */
     public function update()
     {
         $data = [

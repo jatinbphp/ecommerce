@@ -52,9 +52,13 @@
                                         <?php if(isset($option['option_values']) && count($option['option_values'])): ?>
                                             <?php $options = []; ?>
                                             <?php foreach($option['option_values'] as $value): ?>
-                                                <?php $options[] = isset($value['option_value']) ? $value['option_value'] : '' ?>
+                                                <?php if(isset($option['option_type']) && $option['option_type'] == 'color'): ?>
+                                                    <?php $options[] = (isset($value['option_value']) ? '<i class="fas fa-square" style="color: '.$value['option_value'].'"></i>' : ''); ?>
+                                                <?php else: ?>
+                                                    <?php $options[] = isset($value['option_value']) ? $value['option_value'] : '' ?>
+                                                <?php endif ?>
                                             <?php endforeach ?>
-                                            <?php echo implode(', ', $options); ?>
+                                            <?php echo implode(' | ', $options); ?>
                                             <br>
                                         <?php endif ?>    
                                     <?php endforeach ?>

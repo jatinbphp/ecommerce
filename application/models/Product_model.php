@@ -1,5 +1,11 @@
 <?php 
 
+/**
+ * Product_model Class
+ *
+ * This class serves as the model for products.
+ * It extends the CI_Model class provided by CodeIgniter, allowing it to interact with the database.
+ */
 class Product_model extends CI_Model
 {   
     public $table = "products";
@@ -10,7 +16,9 @@ class Product_model extends CI_Model
 		parent::__construct();
 	}
 
-    /*product status*/
+    /**
+    * Class containing constants for status values and their corresponding text representations.
+    */
 	const STATUS_ACTIVE        = 'active';
     const STATUS_INACTIVE      = 'inactive';
     const STATUS_ACTIVE_TEXT   = "Active";
@@ -46,6 +54,12 @@ class Product_model extends CI_Model
     public static $quantity = [1, 2, 3, 5, 6, 7, 8, 9, 10];
 
 
+    /**
+    * Get the details of a product by its ID or return all products if no ID is provided.
+    *
+    * @param int|null $productId
+    * @return array
+    */
 	public function getDetails($productId = null) {
 		if($productId) {
 			$sql = "SELECT * FROM $this->table WHERE id = ?";
@@ -58,6 +72,12 @@ class Product_model extends CI_Model
 		return $query->result_array();
 	}
 
+    /**
+    * Create a new record in the database table with the provided data.
+    *
+    * @param mixed $data The data to be inserted into the table.
+    * @return int The ID of the newly created record, or 0 if creation fails or no data is provided.
+    */
 	public function create($data = ''){
 		if($data) {
 			$create = $this->db->insert($this->table, $data);
@@ -70,12 +90,25 @@ class Product_model extends CI_Model
         return 0;
 	}
 
+ /**
+  * Edit a record in the database table with the provided data and ID.
+  *
+  * @param array $data The data to be updated
+  * @param int|null $id The ID of the record to be updated
+  * @return bool Returns true if the update was successful, false otherwise
+  */
 	public function edit($data = array(), $id = null){
 		$this->db->where('id', $id);
 		$update = $this->db->update($this->table, $data);
 		return ($update == true) ? true : false;	
 	}
 
+ /**
+  * Delete a record from the database based on the given ID.
+  *
+  * @param int $id The ID of the record to delete
+  * @return bool True if the record was successfully deleted, false otherwise
+  */
 	public function delete($id)
 	{
 		$this->db->where('id', $id);
@@ -83,6 +116,11 @@ class Product_model extends CI_Model
 		return ($delete == true) ? true : false;
 	}
 
+    /**
+     * Constructs a query based on the provided search and order parameters.
+     * 
+     * @return void
+     */
     public function make_query()
     {
         $this->db->select($this->select_column);
@@ -100,6 +138,14 @@ class Product_model extends CI_Model
         }        
     }
 
+    /**
+     * Generate data for DataTables.
+     *
+     * This method prepares the query for DataTables based on the POST parameters.
+     * It limits the query results based on the length and start parameters.
+     *
+     * @return array The result data for DataTables.
+     */
     public function make_datatables()
     {
         $this->make_query();
@@ -112,6 +158,11 @@ class Product_model extends CI_Model
         return $query->result();
     }
 
+    /**
+     * Retrieves and returns the number of rows from the filtered data based on the query.
+     *
+     * @return int
+     */
     public function get_filtered_data()
     {
         $this->make_query();
@@ -119,6 +170,11 @@ class Product_model extends CI_Model
         return $query->num_rows();
     }
 
+    /**
+     * Retrieves all data from the specified table.
+     *
+     * @return int The total count of rows in the table.
+     */
     public function get_all_data()
     {
         $this->db->select("*");
@@ -126,6 +182,11 @@ class Product_model extends CI_Model
         return $this->db->count_all_results();
     }
 
+    /**
+     * Retrieves the latest active products along with their images.
+     *
+     * @return array An array of the latest active products with their images.
+     */
     public function getLatestProducts(){
         $this->db->select('products.*, GROUP_CONCAT(product_images.image) as images');
         $this->db->from($this->table);
@@ -138,8 +199,14 @@ class Product_model extends CI_Model
         return $query->result_array();
     }
 
-    public function filter_products($categoryId=0){
-        $this->db->select('products.*, GROUP_CONCAT(product_images.image) as images');
+    /**
+     * Get filtered products based on the specified category ID.
+     *
+     * @param int $categoryId The ID of the category to filter by. Defaults to 0.
+     * @return array An array of filtered products with additional image information.
+     */
+    public function getFilteredProducts($categoryId=0){
+        $this->db->select('products.*, product_images.image as image');
         $this->db->from($this->table);
         $this->db->join('product_images', 'products.id = product_images.product_id', 'left');
         $this->db->where('products.status', self::STATUS_ACTIVE);

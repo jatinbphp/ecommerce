@@ -2,8 +2,18 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * This class represents a user controller that extends the MY_Controller class.
+ */
 class UserController extends MY_Controller
 {
+	/**
+	 * Constructor for the Users class.
+	* Initializes the parent constructor.
+	* Checks if the admin is logged in.
+	* Sets the page title to 'Users' and the form title to 'User'.
+	* Loads the user_model, countries_model, and user_address_model.
+	*/
 	public function __construct()
 	{
 		parent::__construct();
@@ -15,11 +25,23 @@ class UserController extends MY_Controller
 		$this->load->model('user_address_model');
 	}
 
+	/**
+	 * Render the index page for the users in the admin panel.
+	*/
 	public function index()
 	{
 		$this->adminRenderTemplate('admin/users/index', $this->data);
 	}
 
+	/**
+	 * Fetches users data and formats it for DataTables.
+	*
+	* Retrieves user data from the database using the user_model's make_datatables method,
+	* formats the data into an array suitable for DataTables display, including status buttons,
+	* edit and delete buttons, and view user details button.
+	*
+	* @return void
+	*/
 	public function fetchUsers()
 	{
 		$data = [];
@@ -47,6 +69,17 @@ class UserController extends MY_Controller
 		echo json_encode($output);
 	}
 
+	/**
+	 * Validates form input and creates a new user with the provided data.
+	* 
+	* This method sets validation rules for various form fields such as first name, last name, password, email, etc.
+	* If the form validation fails, it reloads the create user page with appropriate error messages.
+	* If the form validation passes, it hashes the password, prepares user data, and adds the user to the database.
+	* If the user is successfully added, it uploads and updates the user image if provided, sets success message, and redirects to the edit user page.
+	* If an error occurs during user creation, it sets an error message and redirects back to the create user page.
+	* 
+	* @return $this
+	*/
 	public function create()
 	{
 		$this->form_validation->set_rules('first_name', 'Name', 'required');
@@ -96,7 +129,14 @@ class UserController extends MY_Controller
 			redirect('admin/users/create', 'refresh');
 		}
 	}
-
+	/**
+	 * Uploads a file and returns the path of the uploaded file.
+	*
+	* This method checks if a file has been uploaded, initializes the upload library with specified configuration,
+	* uploads the file, and returns the path of the uploaded file if successful.
+	*
+	* @return string The path of the uploaded file, or an empty string if no file was uploaded or upload failed.
+	*/
 	public function uploadAndgetPath() {
 	    if (!empty($_FILES['userfile']['name'])) {
 	        $this->load->library('upload');
@@ -123,6 +163,11 @@ class UserController extends MY_Controller
 	    }
 	}
 	
+	/**
+	 * Edit user details based on the provided user ID.
+	*
+	* @param int|null $id
+	*/
 	public function edit($id = null)
 	{
 		if($id) {
@@ -300,6 +345,12 @@ class UserController extends MY_Controller
 		}
 	}
 
+	/**
+	 * Delete a user and their associated data based on the provided ID.
+	*
+	* @param int $id The ID of the user to be deleted.
+	* @return bool Returns true if the user and associated data were successfully deleted, false otherwise.
+	*/
 	public function delete($id)
 	{
 		if($id) {
@@ -320,6 +371,14 @@ class UserController extends MY_Controller
 		echo false;
 	}
 
+	/**
+	 * Check if the username provided in the input exists in the database.
+	* 
+	* This method retrieves the username from the input, checks its existence in the database using the user_model,
+	* and returns a JSON response indicating whether the username exists or not.
+	* 
+	* @return void
+	*/
 	public function check_username_exist()
 	{
 		$username = $this->input->post('username');
@@ -338,7 +397,12 @@ class UserController extends MY_Controller
 		}
 	}
 
-	 public function deleteAddress() {
+	/**
+	 * Deletes the address based on the address_id received from the input.
+	* It calls the deleteAddress method of the user_address_model to delete the address.
+	* Returns a JSON response indicating the success or failure of the deletion operation.
+	*/
+	public function deleteAddress() {
         $addressId = $this->input->post('address_id');
 
         // Delete address record
@@ -357,7 +421,16 @@ class UserController extends MY_Controller
         $this->output->set_content_type('application/json')->set_output(json_encode($response));
     }
 
-   public function strong_password_check($password) {
+    /**
+     * Checks if the given password meets the criteria for a strong password.
+     *
+     * The password must contain at least one lowercase letter, one uppercase letter, and one digit,
+     * and have a minimum length of 6 characters.
+     *
+     * @param string $password The password to be checked
+     * @return bool Returns TRUE if the password is strong, FALSE otherwise
+     */
+   	public function strong_password_check($password) {
 	    if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/', $password)) {
 	        $this->form_validation->set_message('password_check', 'Your password must contain at least one lowercase letter, one uppercase letter, and one digit');
 	        return FALSE;
@@ -366,6 +439,12 @@ class UserController extends MY_Controller
 	    }
     }
 
+    /**
+     * Display the user data for the specified user ID.
+     *
+     * @param int $id The ID of the user
+     * @return void
+     */
     public function show($id){
         $user = $this->user_model->getUserData($id);
        	$data['user'] = $user;

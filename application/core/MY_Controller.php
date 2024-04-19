@@ -72,6 +72,16 @@ class MY_Controller extends CI_Controller
         }
     }
 
+    public function userRedirectIfOtpNotSent(){
+
+        $CI =& get_instance();
+        $getSessionVar = $CI->session->userdata('otp_sent');
+        if (!isset($getSessionVar)) {
+            redirect(base_url());
+            exit;
+        }
+    }
+
 	public function getAdminData($email) {
         $CI =& get_instance();
         $adminData = $CI->user_model->getAdminData($email);

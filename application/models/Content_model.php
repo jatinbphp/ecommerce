@@ -1,5 +1,9 @@
 <?php 
-
+/**
+ * Content_model Class
+ *
+ * This class serves as the model for handling content-related database operations.
+ */
 class Content_model extends CI_Model
 {   
     public $table = "content_management";
@@ -10,6 +14,12 @@ class Content_model extends CI_Model
 		parent::__construct();
 	}
 
+    /**
+     * Get the details of the content based on the content ID if provided, otherwise return all content details.
+    *
+    * @param int|null $contentId
+    * @return array
+    */
 	public function getDetails($contentId = null) {
 		if($contentId) {
 			$sql = "SELECT * FROM $this->table WHERE id = ?";
@@ -22,6 +32,12 @@ class Content_model extends CI_Model
 		return $query->result_array();
 	}
 
+ /**
+  * Create a new record in the database table with the provided data.
+  *
+  * @param mixed $data The data to be inserted into the table.
+  * @return bool True if the record was successfully created, false otherwise.
+  */
 	public function create($data = ''){
 		if($data) {
 			$create = $this->db->insert($this->table, $data);
@@ -29,19 +45,39 @@ class Content_model extends CI_Model
 		}
 	}
 
+    /**
+     * Edit a record in the database table with the provided data and ID.
+    *
+    * @param array $data The data to be updated in the record.
+    * @param int|null $id The ID of the record to be updated.
+    * @return bool Returns true if the record was successfully updated, false otherwise.
+    */
 	public function edit($data = array(), $id = null){
 		$this->db->where('id', $id);
 		$update = $this->db->update($this->table, $data);
 		return ($update == true) ? true : false;	
 	}
 
-	public function delete($id)
+    /**
+     * Delete a record from the database based on the given ID.
+    *
+    * @param int $id The ID of the record to delete
+    * @return bool True if the record was successfully deleted, false otherwise
+    */
+    public function delete($id)
 	{
 		$this->db->where('id', $id);
 		$delete = $this->db->delete($this->table);
 		return ($delete == true) ? true : false;
 	}
 
+    /**
+     * Constructs and executes a query based on the provided search and order parameters.
+     * 
+     * This method builds a query using the specified select column, table, search criteria, and order criteria.
+     * If a search value is provided, it filters the results based on the search string matching the name, status, or id columns.
+     * If order information is provided, it orders the results based on the specified column and direction.
+     */
     public function make_query()
     {
         $this->db->select($this->select_column);
@@ -59,6 +95,13 @@ class Content_model extends CI_Model
         }        
     }
 
+    /**
+     * Generate data for DataTables.
+     *
+     * This method prepares the query for DataTables and returns the result set.
+     *
+     * @return array
+     */
     public function make_datatables()
     {
         $this->make_query();
@@ -71,6 +114,11 @@ class Content_model extends CI_Model
         return $query->result();
     }
 
+    /**
+     * Retrieves and returns the number of rows from the filtered data based on the query.
+     *
+     * @return int
+     */
     public function get_filtered_data()
     {
         $this->make_query();
@@ -78,6 +126,11 @@ class Content_model extends CI_Model
         return $query->num_rows();
     }
 
+    /**
+     * Retrieves all data from the specified table.
+     *
+     * @return int The total count of rows in the table.
+     */
     public function get_all_data()
     {
         $this->db->select("*");

@@ -7,7 +7,6 @@
                     <p class="h5">Add Option Values</p>
                 </div>
             </div>
-            <?php // echo "<pre>"; print_r($product_options); ?>
             <?php if (isset($product_options) && count($product_options) > 0) : ?>
                 <?php foreach ($product_options as $key => $option) : ?>
                     <?php $optionId = isset($option['id']) ? $option['id'] : ''; ?>
@@ -21,7 +20,7 @@
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <?php echo form_label('Option Type :<span class="text-red">*</span>', 'option_type', ['class' => 'control-label', 'is_required' => true]); ?>
-                                            <?php echo form_dropdown("options[old][$optionId][type]", $optionsType,$optionType, ['class' => 'form-control select2', 'style' => 'width:100%']); ?>
+                                            <?php echo form_dropdown("options[old][$optionId][type]", $optionsType,$optionType, ['class' => 'form-control select2', 'style' => 'width:100%', 'onChange' => "updateOptions(this, $optionId)"]); ?>
                                         </div>
                                     </div>
                                     <div class="col-md-5">
@@ -33,82 +32,93 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 border-left" id="extraValuesOption_<?php echo $optionId; ?>_<?php echo $optionId; ?>">
-                                <?php if (count($productOptionValues) > 0) : ?>
-                                    <?php foreach ($productOptionValues as $vkey => $option_value) : ?>
-                                        <?php $optionValueId = isset($option_value['id']) ? $option_value['id'] : ''; ?>
-                                        <?php if ($vkey == 0) : ?>
-                                            <div class='row'>
-                                                <div class="col-md-6">
-                                                    <?php echo form_label('Option Values: <span class="text-red">*</span>', 'option_values', ['class' => 'control-label']); ?>
+                            <div class="col-md-6 border-left">
+                                <div id="extraValuesOption_<?php echo $optionId; ?>_<?php echo $optionId; ?>">
+                                    <?php if (count($productOptionValues) > 0) : ?>
+                                        <?php foreach ($productOptionValues as $vkey => $option_value) : ?>
+                                            <?php $optionValueId = isset($option_value['id']) ? $option_value['id'] : ''; ?>
+                                            <?php if ($vkey == 0) : ?>
+                                                <div class='row'>
+                                                    <div class="col-md-6">
+                                                        <?php echo form_label('Option Values: <span class="text-red">*</span>', 'option_values', ['class' => 'control-label']); ?>
+                                                    </div>
+                                                </div>
+                                            <?php endif; ?>
+                                            <div class="row" id="options_values_<?php echo $optionValueId; ?>">
+                                                <?php if ($optionType != 'color') : ?>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <?php echo form_input("option_values[old][$optionId][$optionValueId]", $option_value['option_value'], array('class' => 'form-control', 'placeholder' => "Enter Option Value")); ?>
+                                                            <?php echo isset($field) && $field === 'option_values' ? $errors : ''; ?>
+                                                        </div>
+                                                    </div>
+                                                <?php else : ?>
+                                                    <div class="col-md-6">
+                                                        <div class="input-group my-colorpicker2 form-group" data-id="<?php echo $optionValueId; ?>">
+                                                            <?php echo form_input("option_values[old][$optionId][$optionValueId]", $option_value['option_value'], array('class' => 'form-control', 'placeholder' => "Enter Option Value")); ?>
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text"><i class="fas fa-square fa-square_<?php echo $optionValueId; ?>" style="color: <?php echo $option_value['option_value']; ?>;"></i></span>
+                                                            </div>
+                                                            <?php echo isset($field) && $field === 'option_values' ? $errors : ''; ?>
+                                                        </div>
+                                                    </div>
+                                                <?php endif; ?>
+                                                <div class="col-md-4">
+                                                    <button type="button" class="btn btn-danger" onclick="removeOptionRow(<?php echo $optionValueId ?>, 1)">
+                                                            <i class="fa fa-trash"></i>
+                                                    </button>
+                                                    <?php if ($vkey == 0) : ?>
+                                                        <!-- <button type="button" class="btn btn-info add-option" onclick="optionValuesBtn(this,<?php echo $optionId ?>, <?php echo $optionId ?>, '<?php $optionType ?>')">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button> -->
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
-                                        <?php endif; ?>
-                                        <div class="row" id="options_values_<?php echo $optionValueId; ?>">
+                                            <?php $optionValuesCounter = $optionValueId; ?>
+                                        <?php endforeach; ?>
+                                    <?php else : ?>
+                                        <div class="row" id="options_values_1">
+                                            <div class="col-md-12">
+                                                <?php echo form_label('Option Values: <span class="text-red">*</span>', 'option_values', ['class' => 'control-label']); ?>
+                                                <?php echo isset($field) && $field === 'option_values' ? $errors : ''; ?>
+                                            </div>
                                             <?php if ($optionName != 'COLOR') : ?>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <?php echo form_input("option_values[old][$optionId][$optionValueId]", $option_value['option_value'], array('class' => 'form-control', 'placeholder' => "Enter Option Value")); ?>
+                                                        <?php echo form_input("option_values[new][$optionId][]", null, array('class' => 'form-control', 'placeholder' => "Enter Option Value")); ?>
                                                         <?php echo isset($field) && $field === 'option_values' ? $errors : ''; ?>
                                                     </div>
                                                 </div>
                                             <?php else : ?>
                                                 <div class="col-md-6">
-                                                    <div class="input-group my-colorpicker2 form-group" data-id="<?php echo $optionValueId; ?>">
-                                                        <?php echo form_input("option_values[old][$optionId][$optionValueId]", $option_value->option_value, array('class' => 'form-control', 'placeholder' => "Enter Option Value")); ?>
+                                                    <div class="input-group my-colorpicker2 form-group" data-id="1">
+                                                        <?php echo form_input("option_values[new][$optionId][]", null, array('class' => 'form-control', 'placeholder' => "Enter Option Value", 'data-id' => 1)); ?>
                                                         <div class="input-group-append">
-                                                            <span class="input-group-text"><i class="fas fa-square fa-square_<?php echo $optionValueId; ?>" style="color: <?php echo $option_value->option_value; ?>;"></i></span>
+                                                            <span class="input-group-text"><i class="fas fa-square fa-square_1"></i></span>
                                                         </div>
                                                         <?php echo isset($field) && $field === 'option_values' ? $errors : ''; ?>
                                                     </div>
                                                 </div>
                                             <?php endif; ?>
                                             <div class="col-md-4">
-                                                <button type="button" class="btn btn-danger" onclick="removeOptionRow(<?php echo $optionValueId ?>, 1)">
-                                                        <i class="fa fa-trash"></i>
-                                                 </button>
-                                                <button type="button" class="btn btn-info add-option" onclick="optionValuesBtn(<?php echo $optionId ?>, <?php echo $optionId ?>, '<?php $optionName ?>')">
+                                                <button type="button" class="btn btn-danger" onclick="removeOptionRow(<?php echo $optionId ?>, 1)">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-info add-option" onclick="optionValuesBtn(this,<?php echo $optionId ?>, <?php echo $optionId ?>, '<?php echo $optionName ?>')">
                                                     <i class="fa fa-plus"></i>
                                                 </button>
                                             </div>
                                         </div>
-                                        <?php $optionValuesCounter = $optionValueId; ?>
-                                    <?php endforeach; ?>
-                                <?php else : ?>
-                                    <div class="row" id="options_values_1">
-                                        <div class="col-md-12">
-                                            <?php echo form_label('Option Values: <span class="text-red">*</span>', 'option_values', ['class' => 'control-label']); ?>
-                                            <?php echo isset($field) && $field === 'option_values' ? $errors : ''; ?>
-                                        </div>
-                                        <?php if ($optionName != 'COLOR') : ?>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <?php echo form_input("option_values[new][$optionId][]", null, array('class' => 'form-control', 'placeholder' => "Enter Option Value")); ?>
-                                                    <?php echo isset($field) && $field === 'option_values' ? $errors : ''; ?>
-                                                </div>
-                                            </div>
-                                        <?php else : ?>
-                                            <div class="col-md-6">
-                                                <div class="input-group my-colorpicker2 form-group" data-id="1">
-                                                    <?php echo form_input("option_values[new][$optionId][]", null, array('class' => 'form-control', 'placeholder' => "Enter Option Value", 'data-id' => 1)); ?>
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text"><i class="fas fa-square fa-square_1"></i></span>
-                                                    </div>
-                                                    <?php echo isset($field) && $field === 'option_values' ? $errors : ''; ?>
-                                                </div>
-                                            </div>
-                                        <?php endif; ?>
-                                        <div class="col-md-4">
-                                            <button type="button" class="btn btn-danger" onclick="removeOptionRow(<?php echo $optionId ?>, 1)">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-info add-option" onclick="optionValuesBtn(<?php echo $optionId ?>, <?php echo $optionId ?>, '<?php echo $optionName ?>')">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
+                                        <?php $optionValuesCounter = $optionId; ?>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-info add-option" onclick="optionValuesBtn(this,<?php echo $optionId ?>, <?php echo $optionId ?>, '<?php $optionType ?>')">
+                                            <i class="fa fa-plus"></i> Add New Values
+                                        </button>
                                     </div>
-                                    <?php $optionValuesCounter = $optionId; ?>
-                                <?php endif; ?>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -121,7 +131,7 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <?php echo form_label('Option Type :<span class="text-red">*</span>', 'option_type', ['class' => 'control-label', 'is_required' => true]); ?>
-                                        <?php echo form_dropdown('options[new][1][type]', $optionsType,null, ['class' => 'form-control select2', 'style' => 'width:100%']); ?>
+                                        <?php echo form_dropdown('options[new][1][type]', $optionsType,null, ['class' => 'form-control select2', 'style' => 'width:100%', 'onChange' => "updateOptions(this, 1)"]); ?>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -130,24 +140,33 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 border-left" id="extraValuesOption_1_1">
-                            <div class='row'>
-                                <div class="col-md-6">
-                                    <?php echo form_label('Option Values: <span class="text-red">*</span>', 'option_values', ['class' => 'control-label']); ?>
-                                </div>
-                            </div>
-                            <div class="row" id="options_values_1">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <?php echo form_input("option_values[new][1][]", null, array('class' => 'form-control', 'placeholder' => "Enter Option Value")); ?>
+                        <div class="col-md-6 border-left">
+                            <div id="extraValuesOption_1_1">
+                                <div class='row'>
+                                    <div class="col-md-6">
+                                        <?php echo form_label('Option Values: <span class="text-red">*</span>', 'option_values', ['class' => 'control-label']); ?>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                   <button type="button" class="btn btn-danger" onclick="removeOptionRow(1, 1)">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-info add-option" onclick="optionValuesBtn(1, 1)">
-                                        <i class="fa fa-plus"></i>
+                                <div class="row" id="options_values_1">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <?php echo form_input("option_values[new][1][]", null, array('class' => 'form-control', 'placeholder' => "Enter Option Value")); ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-danger" onclick="removeOptionRow(1, 1)">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                        <!-- <button type="button" class="btn btn-info add-option" onclick="optionValuesBtn(this,1, 1)">
+                                            <i class="fa fa-plus"></i>
+                                        </button> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-info add-option" onclick="optionValuesBtn(this,1, 1)">
+                                        <i class="fa fa-plus"></i> Add New Values
                                     </button>
                                 </div>
                             </div>
@@ -156,8 +175,10 @@
                 </div>
             <?php endif; ?>
             <div id="extraOption"></div>
-            <div>
-                <button type="button" class="btn btn-info" id="optionBtn"><i class="fa fa-plus"></i> Add New Option</button>
+            <div class="row">
+                <div class="col-12">
+                    <button type="button" class="btn btn-info" id="optionBtn"><i class="fa fa-plus"></i> Add New Option</button>
+                </div>
             </div>
         </div>
     </div>
@@ -165,8 +186,6 @@
 
 <script type="text/javascript">
 var optionName = <?php echo $optionValuesCounter ?>;
-
-console.log(optionName);
 
 $('#optionBtn').on('click', function(){
     optionName = optionName + 1;
@@ -183,9 +202,9 @@ $('#optionBtn').on('click', function(){
                         '<div class="col-md-5">'+
                             '<label class="control-label" for="options">Option Type :<span class="text-red">*</span></label>'+
                             '<div class="form-group">' +
-                                '<select name="' + name + '" class="form-control select2" style="width:100%">'+
-                                    '<option value="color">Color</option>'+
+                                '<select name="' + name + '" class="form-control select2" onChange="updateOptions(this,'+optionName+')" style="width:100%">'+
                                     '<option value="select">Select</option>'+
+                                    '<option value="color">Color</option>'+
                                     '<option value="checkbox">Checkbox</option>'+
                                     '<option value="radio">Radio Button</option>'+
                                 '</select>' +
@@ -203,22 +222,31 @@ $('#optionBtn').on('click', function(){
                     '</div>'+
                 '</div>'+
 
-                '<div class="col-md-6 border-left" id="extraValuesOption_'+optionName+'_'+optionName+'">'+
-                    '<div class="row">'+
-                        '<div class="col-md-6">'+
-                            '<label class="control-label" for="option_values">Option Values :<span class="text-red">*</span></label>'+
-                        '</div>'+
-                    '</div>'+
-                    '<div class="row" id="options_values_'+optionName+'">'+
-                        '<div class="col-md-6">'+
-                            '<div class="form-group">'+
-                                '<input type="text" name="option_values[new]['+optionName+'][]" class="form-control" placeholder="Enter Option Value">'+
+                '<div class="col-md-6 border-left">'+
+                    '<div id="extraValuesOption_'+optionName+'_'+optionName+'">'+
+                        '<div class="row">'+
+                            '<div class="col-md-6">'+
+                                '<label class="control-label" for="option_values">Option Values :<span class="text-red">*</span></label>'+
                             '</div>'+
                         '</div>'+
-                        '<div class="col-md-6">'+
-                            '<button type="button" class="btn btn-danger mr-1" onClick="removeOptionRow('+optionName+', 1)"><i class="fa fa-trash"></i></button>'+
-                            '<button type="button" class="btn btn-info add-option" onclick="optionValuesBtn('+optionName+', '+optionName+')"><i class="fa fa-plus"></i> </button>'+
-                        '</div>'+                    
+                        '<div class="row" id="options_values_'+optionName+'">'+
+                            '<div class="col-md-6">'+
+                                '<div class="form-group">'+
+                                    '<input type="text" name="option_values[new]['+optionName+'][]" class="form-control" placeholder="Enter Option Value">'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="col-md-6">'+
+                                '<button type="button" class="btn btn-danger mr-1" onClick="removeOptionRow('+optionName+', 1)"><i class="fa fa-trash"></i></button>'+
+                                // '<button type="button" class="btn btn-info add-option" onclick="optionValuesBtn(this,'+optionName+', '+optionName+')"><i class="fa fa-plus"></i> </button>'+
+                            '</div>'+                    
+                        '</div>'+
+                    '</div>'+
+                    '<div class="row">'+
+                        '<div class="col-12">'+
+                            '<button type="button" class="btn btn-info add-option" onclick="optionValuesBtn(this,'+optionName+', '+optionName+')">'+
+                                '<i class="fa fa-plus"></i> Add New Values'+
+                            '</button>'+
+                        '</div>'+
                     '</div>'+
                 '</div>'+
             '</div>'+
@@ -227,12 +255,12 @@ $('#optionBtn').on('click', function(){
     $('.select2').select2();
 });
 
-function optionValuesBtn(option_value_number, option_number, option_name) {
+function optionValuesBtn(button, option_value_number, option_number, option_type) {
     optionName = optionName + 1;
-
+    var data = $(button).closest('.product-attribute').find('select').val();
     var className = '';
-    if(option_name=='COLOR'){
-        var className = 'input-group my-colorpicker2 ';
+    if(option_type=='color' || data=='color'){
+        var className = 'input-group my-colorpicker2';
     }
 
     var exOptionContent = `
@@ -240,7 +268,7 @@ function optionValuesBtn(option_value_number, option_number, option_name) {
         <div class="col-md-6">
             <div class="${className} form-group" data-id="${optionName}">
                 <input type="text" name="option_values[new][${option_value_number}][]" class="form-control" placeholder="Enter Option Value" data-id="${optionName}">
-                ${option_name == 'COLOR' ? `
+                ${option_type == 'color' || data=='color' ? `
                 <div class="input-group-append">
                     <span class="input-group-text"><i class="fas fa-square fa-square_${optionName}"></i></span>
                 </div>` : ''}
@@ -400,4 +428,37 @@ function removeAdditionalProductImg(img_name, image_id, product_id){
         }
     });
 }
+
+function updateOptions(select, optionId){
+    var selectedOptions = $(select).val();
+    console.log(selectedOptions);
+    console.log(optionId);
+    var className = '';
+    var colorElement = '';
+    if(selectedOptions == 'color'){     
+        className = 'input-group my-colorpicker2';
+        colorElement = '<div class="input-group-append"><span class="input-group-text"><i class="fas fa-square fa-square_'+optionName+'"></i></span></div>';
+    }
+
+    var data = '<div class="row">'+
+                    '<div class="col-md-6">'+
+                        '<label class="control-label" for="option_values">Option Values :<span class="text-red">*</span></label>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="row">'+
+                    '<div class="col-md-6">'+
+                        '<div class="'+className+' form-group" data-id="'+optionName+'" id="options_values_'+optionName+'">'+
+                            '<input type="text" name="option_values[new]['+optionName+'][]" data-id="'+optionName+'" class="form-control" placeholder="Enter Option Value">'+colorElement+
+                        '</div>'+
+                    '</div>'+
+                    '<div class="col-md-6">'+
+                        '<button type="button" class="btn btn-danger mr-1" onClick="removeOptionRow('+optionId+', 1)"><i class="fa fa-trash"></i></button>'+
+                        //'<button type="button" class="btn btn-info add-option" onclick="optionValuesBtn(this,'+optionId+', '+optionId+')"><i class="fa fa-plus"></i> </button>'+
+                    '</div>'+                    
+                '</div>';
+    $('#extraValuesOption_'+optionId+'_'+optionId).empty().append(data);
+    console.log(data);
+    $('.my-colorpicker2').colorpicker();
+}
+
 </script>
