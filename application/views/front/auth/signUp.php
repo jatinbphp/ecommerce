@@ -154,7 +154,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label for="consentCheckbox">
@@ -165,7 +165,7 @@
                                     </div>
 
                                 </div>
-                            </div>
+                            </div> -->
 
                             <?php
                                 echo form_submit(array(
@@ -251,9 +251,9 @@ function toggleConfirmPasswordVisibility() {
                         minlength: 10,
                         maxlength: 12
                 },
-                consentCheckbox:{
-                    required: true,
-                }
+                // consentCheckbox:{
+                //     required: true,
+                // }
             },
             messages: {
                  fname: "Please enter your first name",
@@ -281,21 +281,12 @@ function toggleConfirmPasswordVisibility() {
                 countryCode: {
                     required: "Please select country code",
                 },
-                consentCheckbox:{
-                    required: "Please agree to receive SMS messages for login verification purposes.",
-                }
+                // consentCheckbox:{
+                //     required: "Please agree to receive SMS messages for login verification purposes.",
+                // }
             },
             errorPlacement: function(error, element) {
-
-                if (element.attr('name') === 'consentCheckbox') {
-
-                    error.insertAfter("#agreeConsent").css('color', 'red');     
-                }
-                else
-                {
-                    error.insertAfter(element).css('color', 'red');     
-                }
-               
+                error.insertAfter(element).css('color', 'red');
             }
         });
     

@@ -18,6 +18,7 @@ class AuthController extends MY_Controller {
 
     public function optCheckView()
     {
+        $this->userRedirectIfOtpNotSent();
         $this->load->view('front/auth/otpCheck');
     }
 
@@ -100,10 +101,62 @@ class AuthController extends MY_Controller {
             $token = md5(uniqid(rand(), true)).$getUsrId;
             $this->user_model->saveResetToken($email, $token);
             $reset_link = base_url('setNewPassword/' . $token);
-            $this->email->from('ecommerce@info.com', 'Support');
+            $this->email->from('noreply@gorentonline.com', 'Support');
             $this->email->to($email);
             $this->email->subject('Password Reset Request');
-            $message = "<p>Click this link to reset your password: <a href='$reset_link'>$reset_link</a></p>";
+
+            $message = "<!DOCTYPE html>
+                        <html lang='en'>
+                        <head>
+                            <meta charset='UTF-8'>
+                            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                            <title>Forgot Password Email</title>
+                            <style>
+                                body {
+                                    font-family: Arial, sans-serif;
+                                    background-color: lightgrey;
+                                    margin: 0;
+                                    padding: 0;
+                                }
+                                header {
+                                    background-color: lightgrey;
+                                    color: white;
+                                    padding: 20px;
+                                    text-align: center;
+                                }
+                                main {
+                                    padding: 20px;
+                                }
+                                p {
+                                    margin-bottom: 10px;
+                                }
+                                a {
+                                    color: black;
+                                    text-decoration: none;
+                                }
+                                .logo {
+                                    display: block;
+                                    margin: 0 auto;
+                                    max-width: 200px;
+                                }
+                        </style>
+                    </head>
+                <body>
+                <header>
+                    <img src='".base_url('images/logo.png')."' class='company-logo mx-auto d-block' alt='Company Logo'>
+                </header>
+                <main>
+                    <p>Dear User,</p>
+                    <p>We received a request to reset your password.</p>
+                    <p>To proceed with resetting your password, please click the following link:</p>
+                    <p><a href='".$reset_link."'>Reset Password</a></p>
+                    <p>If you didn't initiate this request, you can safely ignore this email.</p>
+                    <p>Thank you!</p>
+                </main>
+                </body></html>";
+
+
+            //$message = "<p>Click this link to reset your password: <a href='$reset_link'>$reset_link</a></p>";
             $this->email->message($message);
             if ($this->email->send()) {
                 $this->session->set_flashdata('success_message', 'An email has been sent to your email address with instructions on how to reset your password.');
@@ -181,16 +234,84 @@ class AuthController extends MY_Controller {
         if ($user) {
             $this->session->set_userdata('user_data', $user);
             $this->session->set_userdata('user_email', $email);
+            $this->session->set_userdata('otp_sent', 'true');
             $this->user_model->resetLoginAttempts($email);
 
             $getOtpCode = $this->generateOTP();
-
             $this->db->where('id', $user->id);
             $this->db->update('users', array('otp_code' =>$getOtpCode));
+
+            $this->sendUserOtpCodeEmail($email,$user,$getOtpCode);
+
             redirect('otpCheck');
         } else {
              $this->incrementLoginAttempts($email);
              redirect('signIn');
+        }
+    }
+
+    public function sendUserOtpCodeEmail($email,$user,$otpCode)
+    {
+        $this->email->from('noreply@gorentonline.com', 'Support');
+        $this->email->to($email);
+        $this->email->subject('Your One-Time Password (OTP) for Verification');
+
+        $message = "<!DOCTYPE html>
+        <html lang='en'>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <title>OTP Email</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f4;
+                    margin: 0;
+                    padding: 0;
+                }
+                header {
+                    background-color: lightgrey;
+                    color: white;
+                    padding: 20px;
+                    text-align: center;
+                }
+                main {
+                    padding: 20px;
+                }
+                p {
+                    margin-bottom: 10px;
+                }
+                strong {
+                    color: black;
+                }
+                .logo {
+                    display: block;
+                    margin: 0 auto;
+                    max-width: 200px;
+                }
+            </style>
+        </head>
+        <body>
+            <header>
+                <img src=\"<?php echo base_url('images/logo.png')?>\" class='company-logo mx-auto d-block' alt='Company Logo'>
+            </header>
+            <main>
+                <p>Dear User,</p>
+                <p>Your One-Time Password (OTP) is: <strong>".$otpCode."</strong></p>
+                <p>Please use this OTP to complete your verification process.</p>
+                <p>If you didn't request this OTP, please ignore this email.</p>
+                <p>Thank you!</p>
+            </main>
+        </body>
+        </html>";
+
+        $this->email->message($message);
+        if ($this->email->send()) {
+            $this->session->set_flashdata('success_message', 'Your One-Time Password (OTP) has been sent to your <strong>'.$email.'</strong> email address . Please check your email for OTP');
+            redirect(base_url('otpCheck'));
+        } else {
+            $this->session->set_flashdata('error', $this->email->print_debugger());
+            redirect(base_url('otpCheck'));
         }
     }
 
@@ -244,7 +365,7 @@ class AuthController extends MY_Controller {
         if ($user) {
             $stored_otp = $user->otp_code;
 
-            if ($otp_entered == $stored_otp || $otp_entered == '123456') {
+            if ($otp_entered == $stored_otp) {
                 $this->session->set_flashdata('success', 'OTP verified successfully. User authenticated.');
                 $this->user_model->resetOtp($user->id);
 
@@ -259,6 +380,8 @@ class AuthController extends MY_Controller {
                     'login_attempts' => $user->login_attempts,
                     'logged_in' => true
                 );
+
+                $this->session->set_userdata('userId', $user->id);
 
                 $this->session->set_userdata($userdata);
                 redirect(base_url());
