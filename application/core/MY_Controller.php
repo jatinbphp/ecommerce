@@ -125,6 +125,29 @@ class MY_Controller extends CI_Controller
         return $button;
     }
 
+    // public function addToGuestCart()
+    // {
+    //     //$this->session->unset_userdata('guestCart');
+    //     $cart = $this->session->userdata('guestCart');
+        
+    //     if ($cart) {
+    //         $cart[] = $guestCartData;
+    //     } else {
+    //         $cart = array($guestCartData);
+    //     }
+
+    //     $this->session->set_userdata('guestCart', $cart);
+
+    //     if ($this->session->has_userdata('guestCart')) {
+    //         $guestCart = $this->session->userdata('guestCart');
+    //         $cartCounter = count($guestCart);
+    //     }
+    //     else
+    //     {
+    //         //
+    //     }
+    // }
+
 
     // public function uploadFile($data)
     // {

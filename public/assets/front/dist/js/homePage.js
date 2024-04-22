@@ -35,3 +35,51 @@ function getProducts(categoryId){
         }
     });
 }
+
+function prodAddToCart()
+{
+    var formData = $('#addToCartDataFrm').serialize();
+     $.ajax({
+        url: "cart/add-product-to-cart",
+        method: 'POST',
+        data: formData,
+        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+        success: function(response) {
+
+            $(".user-cart-counter").html(response);
+            $('#quickviewMdl').modal('hide');
+                
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error('AJAX Error:', textStatus, errorThrown);
+        }
+    });
+
+}
+
+function deleteCartItem(cartId) {
+    
+        $.ajax({
+        url: "cart/delete-user-item",
+        method: 'POST',
+        data: {
+            cartId: cartId 
+        },
+        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+        success: function(response) {
+
+            $("#usrCartDataMenu").html(response.cartView);
+            $(".user-cart-counter").html(response.cartCounter);
+                
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error('AJAX Error:', textStatus, errorThrown);
+        }
+    });
+}
+
+
+
+
+
+
