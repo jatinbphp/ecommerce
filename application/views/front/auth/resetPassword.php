@@ -63,7 +63,7 @@
                             <div class="position-relative">
                                 <?php echo form_input(array('type' => 'password', 'class' => 'form-control', 'name' => 'password', 'id' => 'password', 'required' => 'required', 'placeholder' => 'Enter new password')); ?>
                                 <span class="eye-icon" onclick="togglePasswordVisibility()">
-                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                    <i class="fa fa-eye pt-1" aria-hidden="true"></i>
                                 </span>
                             </div>
                         </div>
@@ -72,7 +72,7 @@
                             <div class="position-relative">
                                 <?php echo form_input(array('type' => 'password','class' => 'form-control', 'name' => 'confirm_password', 'id' => 'confirm_password', 'required' => 'required' , 'placeholder' => 'Enter new password again')); ?>
                                 <span class="confirm-eye-icon" onclick="toggleConfirmPasswordVisibility()">
-                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                    <i class="fa fa-eye pt-1" aria-hidden="true"></i>
                                 </span>
                             </div>
 
