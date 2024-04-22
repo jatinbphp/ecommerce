@@ -73,19 +73,19 @@ class MY_Controller extends CI_Controller
         }
     }
 
-<<<<<<< HEAD
     public function checkUserLoggedIn() {
         $CI =& get_instance();
         if (!$CI->session->userdata('logged_in')) {
             redirect('signIn'); 
-=======
+        }
+    }
+    
     public function userRedirectIfOtpNotSent(){
 
         $CI =& get_instance();
         $getSessionVar = $CI->session->userdata('otp_sent');
         if (!isset($getSessionVar)) {
             redirect(base_url());
->>>>>>> 52ae750bbbd6fb900d1d53df7166521aaaf5e5d0
             exit;
         }
     }
