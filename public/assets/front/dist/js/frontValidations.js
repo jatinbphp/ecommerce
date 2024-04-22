@@ -67,19 +67,7 @@ $(document).ready(function() {
             }
         });
     });
-});
 
-function SnackbarAlert(msg) {
-    Snackbar.show({
-        text: msg,
-        pos: 'top-right',
-        showAction: false,
-        actionText: "Dismiss",
-        duration: 3000,
-        textColor: '#fff',
-        backgroundColor: '#151515'
-    });
-}
     var frontordersTable = $('#frontordersTable').DataTable({
         "processing": true,
         "serverSide": true,
@@ -132,10 +120,7 @@ function SnackbarAlert(msg) {
         });
     });
 
-
     //Delete product wishlist
-
-
     $(document).on('click', '.remove-item-wishlist', function(e) {
         e.preventDefault();
         var $this = $(this);
@@ -176,3 +161,15 @@ function SnackbarAlert(msg) {
         });
     });
 });
+
+function SnackbarAlert(msg) {
+    Snackbar.show({
+        text: msg,
+        pos: 'top-right',
+        showAction: false,
+        actionText: "Dismiss",
+        duration: 3000,
+        textColor: '#fff',
+        backgroundColor: '#151515'
+    });
+}
