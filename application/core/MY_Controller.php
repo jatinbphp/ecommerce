@@ -8,11 +8,12 @@ class MY_Controller extends CI_Controller
 
 	public function frontRenderTemplate($page = null, $data = array())
 	{   
+
         $data['footer_data'] = $this->getFooterData();
 		$this->load->view('front/Layout/header',$data);
 		$this->load->view($page, $data);
 		$this->load->view('front/Layout/footer',$data);
-		$this->load->view('front/Layout/models',$data);
+        $this->load->view('front/Layout/models',$data);
 	}
 
     public function getFooterData(){
@@ -72,6 +73,14 @@ class MY_Controller extends CI_Controller
         }
     }
 
+    public function checkUserLoggedIn() {
+        $CI =& get_instance();
+        if (!$CI->session->userdata('logged_in')) {
+            redirect('signIn'); 
+            exit;
+        }
+    }
+
 	public function getAdminData($email) {
         $CI =& get_instance();
         $adminData = $CI->user_model->getAdminData($email);
@@ -115,26 +124,7 @@ class MY_Controller extends CI_Controller
         return $button;
     }
 
-
-    // public function uploadFile($data)
-    // {
-    //     $config['upload_path'] = './uploads/'; // Set the upload directory
-    //     $config['allowed_types'] = 'gif|jpg|png'; // Set allowed file types
-    //     $config['max_size'] = 1024 * 5; // Set max file size in KB
-
-    //     $this->load->library('upload', $config);
-
-    //     if (!$this->upload->do_upload('image')) {
-    //         // If file upload failed, return an error
-    //         $error = array('error' => $this->upload->display_errors());
-    //         echo json_encode($error);
-    //     } else {
-    //         // If file upload success, return the uploaded file path
-    //         $data = array('upload_data' => $this->upload->data());
-    //         $uploaded_path = 'uploads/' . $data['upload_data']['file_name'];
-            
-    //         // Save the uploaded path to database
-    //         $this->File_model->saveFilePath($uploaded_path);
-    //     }
-    // }
+    protected function isLoggedIn() {
+        return $this->session->userdata('user_data') && $this->session->userdata('logged_in');
+    }
 }
