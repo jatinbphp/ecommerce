@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="" dir="ltr">
 <head>
-
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,11 +9,11 @@
     <title>Ecommerce</title>
     <link rel="shortcut icon" href="<?php echo base_url('images/favicon.png') ?>" type="image/x-icon" />
     <link href="<?php echo base_url('css/styles.css'); ?>" rel="stylesheet">
+    <script type="text/javascript">const baseUrl = "<?php echo base_url(); ?>";</script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
     <link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/select2/select2.min.css') ?>">
     <!-- <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet"> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script> 
 </head>
     <body>
         <div id="main-wrapper">
@@ -117,7 +115,7 @@
                                 <?php endif; ?>
                                 <li>
                                     <a href="javaScript:;" onclick="openCart()">
-                                    <i class="lni lni-shopping-basket"></i><span class="dn-counter">3</span>
+                                        <i class="lni lni-shopping-basket"></i><span class="dn-counter user-cart-counter"><?php echo (isset($usrCartCounter) && $usrCartCounter > 0) ? $usrCartCounter :  0; ?></span>
                                     </a>
                                 </li>
                             </ul>

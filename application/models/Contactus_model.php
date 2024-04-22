@@ -1,5 +1,10 @@
 <?php 
 
+/**
+ * Contactus_model Class
+ *
+ * This class serves as the model for handling contact us related data.
+ */
 class Contactus_model extends CI_Model
 {   
     public $table = "contact_us";
@@ -10,6 +15,12 @@ class Contactus_model extends CI_Model
 		parent::__construct();
 	}
 
+    /**
+     * Get the details of a specific banner if $bannerId is provided, otherwise, get all banners' details.
+    *
+    * @param int|null $bannerId
+    * @return array
+    */
 	public function getDetails($bannerId = null) {
 		if($bannerId) {
 			$sql = "SELECT * FROM $this->table WHERE id = ?";
@@ -22,6 +33,12 @@ class Contactus_model extends CI_Model
 		return $query->result_array();
 	}
 
+    /**
+     * Create a new record in the database table with the given data.
+    *
+    * @param mixed $data The data to be inserted into the table.
+    * @return bool True if the record was successfully created, false otherwise.
+    */
 	public function create($data = ''){
 		if($data) {
 			$create = $this->db->insert($this->table, $data);
@@ -29,6 +46,12 @@ class Contactus_model extends CI_Model
 		}
 	}
 
+    /**
+     * Delete a record from the database based on the given ID.
+     *
+     * @param int $id The ID of the record to delete
+     * @return bool True if the record was successfully deleted, false otherwise
+     */
     public function delete($id)
     {
         $this->db->where('id', $id);
@@ -36,6 +59,13 @@ class Contactus_model extends CI_Model
         return ($delete == true) ? true : false;
     }
 
+    /**
+     * Constructs and prepares a query based on the provided search and order parameters.
+    * 
+    * This method constructs a query using the specified select column and table, and applies search and order conditions based on the POST data received.
+    * 
+    * @return void
+    */
 	public function make_query()
     {
         $this->db->select($this->select_column);
@@ -53,6 +83,14 @@ class Contactus_model extends CI_Model
         }        
     }
 
+    /**
+     * Generate data for DataTables.
+     *
+     * This method prepares and executes a query based on the DataTables request parameters.
+     * It limits the number of results based on the length and start parameters from the request.
+     *
+     * @return array The result data for DataTables.
+     */
     public function make_datatables()
     {
         $this->make_query();
@@ -65,6 +103,11 @@ class Contactus_model extends CI_Model
         return $query->result();
     }
 
+    /**
+     * Retrieves and returns the number of rows from the filtered data based on the query.
+     *
+     * @return int The number of rows in the filtered data
+     */
     public function get_filtered_data()
     {
         $this->make_query();
@@ -72,6 +115,11 @@ class Contactus_model extends CI_Model
         return $query->num_rows();
     }
 
+    /**
+     * Retrieves all data from the specified table.
+     *
+     * @return int The total count of rows in the table.
+     */
     public function get_all_data()
     {
         $this->db->select("*");

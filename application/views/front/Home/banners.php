@@ -1,6 +1,12 @@
 <?php if(isset($banner_data) && $banner_data): ?>
     <div class="home-slider margin-bottom-0">
         <?php foreach ($banner_data as $data) : ?>
+            <?php 
+                $image = ($data['image']) ? $data['image'] : ''; 
+                if(empty($image) || !file_exists($image)){
+                    continue;
+                }
+            ?>
             <div class="item" data-overlay="3" style="background-image: url('<?php echo base_url(($data['image']) ? $data['image'] : '') ?>');">
                 <div class="container">
                     <div class="row">

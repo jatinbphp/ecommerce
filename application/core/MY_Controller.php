@@ -27,7 +27,7 @@ class MY_Controller extends CI_Controller
             foreach ($footerMenuCategoriesIds as $categoryId) {
                 $categoryData = $this->Categories_model->getDetails($categoryId);
                 if ($categoryData) {
-                    $footerMenuCategoriesNames[] = $categoryData['full_name'];
+                    $footerMenuCategoriesNames[] = $this->Categories_model->getFullPathName($categoryId);
                 }
             }
     
@@ -36,7 +36,7 @@ class MY_Controller extends CI_Controller
             foreach ($headerMenuCategoriesIds as $categoryId) {
                 $headerCategoryData = $this->Categories_model->getDetails($categoryId);
                 if ($headerCategoryData) {
-                    $headerMenuCategoriesNames[] = $headerCategoryData['full_name'];
+                    $headerMenuCategoriesNames[] = $this->Categories_model->getFullPathName($categoryId);
                 }
             }
             return [
@@ -73,10 +73,19 @@ class MY_Controller extends CI_Controller
         }
     }
 
+<<<<<<< HEAD
     public function checkUserLoggedIn() {
         $CI =& get_instance();
         if (!$CI->session->userdata('logged_in')) {
             redirect('signIn'); 
+=======
+    public function userRedirectIfOtpNotSent(){
+
+        $CI =& get_instance();
+        $getSessionVar = $CI->session->userdata('otp_sent');
+        if (!isset($getSessionVar)) {
+            redirect(base_url());
+>>>>>>> 52ae750bbbd6fb900d1d53df7166521aaaf5e5d0
             exit;
         }
     }
@@ -127,4 +136,27 @@ class MY_Controller extends CI_Controller
     protected function isLoggedIn() {
         return $this->session->userdata('user_data') && $this->session->userdata('logged_in');
     }
+
+    // public function addToGuestCart()
+    // {
+    //     //$this->session->unset_userdata('guestCart');
+    //     $cart = $this->session->userdata('guestCart');
+        
+    //     if ($cart) {
+    //         $cart[] = $guestCartData;
+    //     } else {
+    //         $cart = array($guestCartData);
+    //     }
+
+    //     $this->session->set_userdata('guestCart', $cart);
+
+    //     if ($this->session->has_userdata('guestCart')) {
+    //         $guestCart = $this->session->userdata('guestCart');
+    //         $cartCounter = count($guestCart);
+    //     }
+    //     else
+    //     {
+    //         //
+    //     }
+    // }
 }

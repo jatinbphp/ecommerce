@@ -26,6 +26,13 @@
                         OTP Verification
                     </div>
                     <div class="card-body">
+
+                        <?php if ($this->session->flashdata('success_message')): ?>
+                            <div class="alert alert-success">
+                                <?php echo $this->session->flashdata('success_message'); ?>
+                            </div>
+                        <?php endif; ?>
+                        
                         <?php echo form_open('verifyOtp'); ?>
                             <?php if ($this->session->flashdata('error')) { ?>
                                 <div class="alert alert-danger" role="alert">
@@ -34,9 +41,6 @@
                             <?php } ?>
                             <div class="form-group">
                                 <?php echo form_label('Enter OTP <span class="text-danger">*</span>', 'otp'); ?>
-                                    <div class="alert alert-warning" role="alert">
-                                        Please Enter Test OTP : 123456
-                                    </div>
                                 <?php echo form_input(array('type' => 'text', 'class' => 'form-control', 'id' => 'otp', 'name' => 'otp', 'maxlength' => '6', 'required' => 'required')); ?>
                             </div>
                             <?php echo form_submit(array('class' => 'btn btn-primary', 'value' => 'Verify OTP')); ?>

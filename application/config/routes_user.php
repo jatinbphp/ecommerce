@@ -18,7 +18,6 @@ $route['forgotPassword'] = 'front/auth/AuthController/forgotPassword';
 $route['sendforgotPasswordLink'] = 'front/auth/AuthController/sendForgotPasswordMail';
 $route['setNewPassword/(:any)'] = 'front/auth/AuthController/setNewPassword/$1';
 $route['updateNewPassword'] = 'front/auth/AuthController/updateNewPassword';
-
 $route['profile-info'] = 'front/MyProfileController/edit';
 $route['profile-address'] = 'HomeController/profile_address';
 $route['profile-add-address'] = 'front/MyProfileController/add_address';
@@ -32,3 +31,10 @@ $route['my-orders'] = 'front/OrderController/index';
 $route['order-details/(:any)'] = 'front/OrderController/orderDetails/$1';
 $route['my-wishlist'] = 'front/WishlistController/index';
 $route['my-wishlist-remove/(:num)'] = 'front/WishlistController/removeItems/$1';
+$route['payment'] = 'front/PaymentController';
+$route['payment/process-payment'] = 'front/PaymentController/processPayment';
+$route['products/get_products'] = 'front/ProductController/getProducts';
+$route['cart/add-product-to-cart'] = 'front/CartController/addToCartProduct';
+$route['cart/get-user-cart'] = 'front/CartController/getUserCartData';
+$route['cart/delete-user-item'] = 'front/CartController/deleteUserCartItem';
+

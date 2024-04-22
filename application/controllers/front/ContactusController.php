@@ -1,13 +1,21 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/* This class extends the MY_Controller class and likely handles contact us functionality. */
 class ContactusController extends MY_Controller {
 
+	/**
+	 * The above PHP function is a constructor that loads the Contactus_model in the parent class.
+	 */
 	public function __construct() {
         parent::__construct();
         $this->load->model('Contactus_model');
     }
 
+	/**
+	 * The index function loads settings data from the database and renders a contact us template for the
+	 * front end.
+	 */
 	public function index() {
 		$this->load->model('Settings_model');
 		$settingsData = $this->Settings_model->getSettingsById(1);
@@ -15,7 +23,12 @@ class ContactusController extends MY_Controller {
         $this->frontRenderTemplate('front/Contact/contactUs', $data);
     }
 
-    public function sendMessage() {
+    /**
+	 * The function `sendMessage` validates and processes a contact form submission, storing the data
+	 * in the database and displaying success or error messages accordingly.
+	 * 
+	 */
+	public function sendMessage() {
     	$this->form_validation->set_rules('name', 'Name', 'required');
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 		$this->form_validation->set_rules('subject', 'Subject', 'required');

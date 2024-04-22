@@ -1,5 +1,12 @@
 <?php 
 
+/**
+ * Categories_model Class
+ *
+ * This class serves as the model for handling categories in the application.
+ * It extends the CI_Model class provided by CodeIgniter, which gives it access to various
+ * database methods for interacting with the categories table in the database.
+ */
 class Categories_model extends CI_Model
 {   
     public $table = "categories";
@@ -11,17 +18,36 @@ class Categories_model extends CI_Model
 		parent::__construct();
 	}
 
+ /**
+  * Constants representing the status of an entity as active or inactive.
+  * 
+  * STATUS_ACTIVE: Represents the active status.
+  * STATUS_INACTIVE: Represents the inactive status.
+  * STATUS_ACTIVE_TEXT: Textual representation of the active status.
+  * STATUS_INACTIVE_TEXT: Textual representation of the inactive status.
+  */
 	const STATUS_ACTIVE        = 'active';
     const STATUS_INACTIVE      = 'inactive';
     const STATUS_ACTIVE_TEXT   = "Active";
     const STATUS_INACTIVE_TEXT = "In Active";
 
+    /**
+     * Array mapping of status codes to their corresponding text values.
+     *
+     * @var array
+     */
     public static $status = [
         self::STATUS_ACTIVE   => self::STATUS_ACTIVE_TEXT,
         self::STATUS_INACTIVE => self::STATUS_INACTIVE_TEXT,
     ];
 
 
+    /**
+     * Get the details of the item with the specified category ID, or return all items if no category ID is provided.
+    *
+    * @param int|null $categoryId
+    * @return array
+    */
 	public function getDetails($categoryId = null) {
 		if($categoryId) {
 			$sql = "SELECT * FROM $this->table WHERE id = ?";
@@ -34,6 +60,12 @@ class Categories_model extends CI_Model
 		return $query->result_array();
 	}
 
+ /**
+  * Create a new record in the database table with the given data.
+  *
+  * @param array $data
+  * @return int The ID of the newly created record, or 0 if creation fails or no data is provided.
+  */
 	public function create($data = []){
 		if($data) {
 			$create = $this->db->insert($this->table, $data);
@@ -46,12 +78,25 @@ class Categories_model extends CI_Model
 		return 0;
 	}
 
+ /**
+  * Edit a record in the database table with the provided data and ID.
+  *
+  * @param array $data The data to be updated in the record.
+  * @param int|null $id The ID of the record to be updated.
+  * @return bool Returns true if the record was successfully updated, false otherwise.
+  */
 	public function edit($data = array(), $id = null){
 		$this->db->where('id', $id);
 		$update = $this->db->update($this->table, $data);
 		return ($update == true) ? true : false;	
 	}
 
+ /**
+  * Delete a record from the database based on the given ID.
+  *
+  * @param int $id The ID of the record to be deleted
+  * @return bool True if the record was successfully deleted, false otherwise
+  */
 	public function delete($id)
 	{
 		$this->db->where('id', $id);
@@ -59,6 +104,10 @@ class Categories_model extends CI_Model
 		return ($delete == true) ? true : false;
 	}
 
+    /**
+     * Constructs and prepares a query based on the provided parameters for data retrieval.
+     * This method sets the select columns, order by clause, and conditions based on search criteria.
+     */
     public function make_query()
     {
         $this->db->select($this->select_column);
@@ -77,6 +126,12 @@ class Categories_model extends CI_Model
         }        
     }
 
+    /**
+     * Generate data for DataTables.
+     * Executes a query based on DataTables parameters and returns the result set.
+     *
+     * @return array Result set for DataTables
+     */
     public function make_datatables()
     {
         $this->make_query();
@@ -89,6 +144,11 @@ class Categories_model extends CI_Model
         return $query->result();
     }
 
+    /**
+     * Retrieves and returns the number of rows from the filtered data based on the constructed query.
+     *
+     * @return int The number of rows in the result set
+     */
     public function get_filtered_data()
     {
         $this->make_query();
@@ -96,6 +156,11 @@ class Categories_model extends CI_Model
         return $query->num_rows();
     }
 
+    /**
+     * Retrieves all data from the specified table.
+     *
+     * @return int The total count of rows in the table.
+     */
     public function get_all_data()
     {
         $this->db->select("*");
@@ -103,6 +168,12 @@ class Categories_model extends CI_Model
         return $this->db->count_all_results();
     }
 
+    /**
+     * Retrieves an array of categories with their IDs as keys and full path names as values.
+     *
+     * @param bool $isDefaultOptions Determines whether to include a default option in the array.
+     * @return array An array of categories with IDs as keys and full path names as values.
+     */
     public function getCategoryArray($isDefaultOptions=true) {
     	$this->db->select('id, name, full_path');
     	$this->db->order_by('full_path', 'asc');
@@ -123,6 +194,12 @@ class Categories_model extends CI_Model
         return $categories;
     }
 
+ /**
+  * Retrieves all categories that have the specified ID in their full_path field.
+  *
+  * @param int $id The ID to search for in the full_path field
+  * @return array An array of categories that match the criteria, or an empty array if no matches are found
+  */
 	public function getAllCategoriesHavingCurrentId($id){
 		if(!$id){
 			return [];
@@ -140,6 +217,14 @@ class Categories_model extends CI_Model
 	}
 
 
+ /**
+  * Get the full path name of a category based on its category ID.
+  *
+  * This method recursively fetches the parent categories to construct the full path name.
+  *
+  * @param int $categoryId The ID of the category
+  * @return string The full path name of the category
+  */
 	public function getFullPathName($categoryId) {
         if (!$categoryId) {
             return '';
@@ -159,6 +244,12 @@ class Categories_model extends CI_Model
         return $parentFullPath ? $parentFullPath . ' -> ' . $category['name'] : $category['name'];
     }
 
+    /**
+     * Get the full path ID of a category by recursively traversing its parent categories.
+     *
+     * @param int $categoryId The ID of the category
+     * @return string The full path ID of the category
+     */
     public function getFullPathId($categoryId) {
         if (!$categoryId) {
             return '';
@@ -178,6 +269,12 @@ class Categories_model extends CI_Model
         return $parentFullPath ? $parentFullPath . ',' . $category['id'] : $category['id'];
     }
 
+    /**
+     * Update the full path of categories based on the provided category ID.
+     *
+     * @param int $categoryId
+     * @return $this
+     */
     public function updateCategoryFullPath($categoryId){
     	if(!$categoryId){
     		return $this;
@@ -204,6 +301,15 @@ class Categories_model extends CI_Model
         return $this->db->get_where($this->table, ['parent_category_id' => $categoryId])->result_array();
     }
 
+    /**
+     * Get an array of categories excluding subcategories for a given category ID.
+     *
+     * This method queries the database to retrieve categories that do not have the given category ID in their full path.
+     * It then constructs an array with category IDs as keys and full path names as values.
+     *
+     * @param int $categoryId The ID of the category to exclude subcategories from
+     * @return array An array of categories with IDs as keys and full path names as values
+     */
     public function getCategoryArrayExceptSub($categoryId){
     	$this->db->select('id, name, full_path');
     	$this->db->where("FIND_IN_SET($categoryId, full_path) = 0");
@@ -220,4 +326,26 @@ class Categories_model extends CI_Model
         
         return $categories;
     }
+
+    
+    /**
+     * Retrieves categories with a high number of associated products from the database.
+     * 
+     * This method constructs a SQL query to select categories along with the count of products in each category.
+     * It then joins the 'categories' table with the 'products' table based on the category_id foreign key.
+     * The result is grouped by category ID and ordered by the product count in descending order.
+     * Finally, it limits the result set to the top 4 categories with the highest product counts.
+     * 
+     * @return array An array of category data with the product count for each category.
+     */
+    public function getCategoriesWithManyProducts() {
+        $this->db->select('categories.*, COUNT(products.id) as product_count');
+        $this->db->from('categories');
+        $this->db->join('products', 'categories.id = products.category_id', 'left');
+        $this->db->group_by('categories.id');
+        //$this->db->order_by('categories.name', 'asc');
+        $this->db->order_by('product_count', 'DESC');
+        $this->db->limit(4);
+        return $this->db->get()->result_array();
+    }   
 }

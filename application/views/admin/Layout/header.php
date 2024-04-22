@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/summernote/summernote-bs4.min.css') ?>">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/ladda/ladda-themeless.min.css') ?>">
+	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') ?>">
 	<style type="text/css">
 		.imagePreview{
 			width:100%;
@@ -126,6 +127,12 @@
                         <a href="<?php echo base_url('admin/contact-us'); ?>" id="contactUsManagement" class="nav-link">
                             <i class="nav-icon fa fa-envelope"></i>
                             <p>Contact Us</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo base_url('admin/subscription-plan'); ?>" id="subscriptionPlan" class="nav-link">
+                            <i class="nav-icon fa fa-calendar-check"></i>
+                            <p>Subscription Plans</p>
                         </a>
                     </li>
 				</ul>

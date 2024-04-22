@@ -31,7 +31,7 @@
                     <?php endif; ?>
                     <div class="card card-info card-outline">
                         <div class="card-header">
-                            <h3 class="card-title">Edit <?php echo $page_title ?></h3>
+                            <h3 class="card-title">Edit <?php echo $form_title ?></h3>
                         </div>
                         <?php echo form_open_multipart("admin/products/edit/" . $product_data['id'], ['id' => 'productFormEdit']); ?>
                             <div class="card-body">
