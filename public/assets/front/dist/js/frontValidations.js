@@ -37,6 +37,49 @@ $(document).ready(function() {
         }
     });
 
+    // Snackbar for wishlist Product
+    $(document).on('click', '.snackbar-wishlist', function(event) {
+        event.preventDefault();
+        var id = $(this).attr("data-id");
+        var self = $(this);
+
+        $.ajax({
+            url:"products/add_to_faviourits",
+            type: "POST",
+            data: {
+                'id': id,
+            },
+            success: function(data) {
+                if(data){
+                    $('.wishlist-counter').text(data.total);
+                    var msg = '';
+                    if(data.type == 1){
+                        self.addClass('active');
+                        msg = 'Your product was added to wishlist successfully!';
+                    } else {
+                        self.removeClass('active');
+                        msg = 'Your product was removed from the wishlist successfully!';
+                    }
+                    SnackbarAlert(msg);
+                } else {
+                    SnackbarAlert("To add this product to your favorites, please log in to your account!");
+                }
+            }
+        });
+    });
+});
+
+function SnackbarAlert(msg) {
+    Snackbar.show({
+        text: msg,
+        pos: 'top-right',
+        showAction: false,
+        actionText: "Dismiss",
+        duration: 3000,
+        textColor: '#fff',
+        backgroundColor: '#151515'
+    });
+}
     var frontordersTable = $('#frontordersTable').DataTable({
         "processing": true,
         "serverSide": true,

@@ -89,7 +89,7 @@
                     <div class="col-xl-3 col-lg-4 col-md-6 col-6">
                         <div class="product_grid card b-0">
                             <div class="badge bg-info text-white position-absolute ft-regular ab-left text-upper">New</div>
-                            <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
+                            <button class="btn btn_love position-absolute ab-right snackbar-wishlist" data-id="<?php echo $value['id'] ?>"><i class="far fa-heart"></i></button> 
                             <div class="card-body p-0">
                                 <div class="shop_thumb position-relative">
                                     <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url($value['image'] ?? ''); ?>" alt="..."></a>

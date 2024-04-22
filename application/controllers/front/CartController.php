@@ -1,7 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * CartController class extends MY_Controller.
+ * This class is responsible for handling cart-related operations.
+ */
 class CartController extends MY_Controller {
+ /**
+  * Constructor for the Cart class.
+  * Initializes the parent class and loads the Cart_model.
+  */
 	public function __construct() {
         parent::__construct();
         $this->load->model('Cart_model');
