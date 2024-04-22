@@ -111,7 +111,7 @@
                                 <?php endif; ?>
                                 <li>
                                     <a href="javaScript:;" onclick="openCart()">
-                                    <i class="lni lni-shopping-basket"></i><span class="dn-counter">3</span>
+                                        <i class="lni lni-shopping-basket"></i><span class="dn-counter user-cart-counter"><?php echo (isset($usrCartCounter) && $usrCartCounter > 0) ? $usrCartCounter :  0; ?></span>
                                     </a>
                                 </li>
                             </ul>

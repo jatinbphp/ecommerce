@@ -21,4 +21,7 @@ $route['updateNewPassword'] = 'front/auth/AuthController/updateNewPassword';
 $route['payment'] = 'front/PaymentController';
 $route['payment/process-payment'] = 'front/PaymentController/processPayment';
 $route['products/get_products'] = 'front/ProductController/getProducts';
+$route['cart/add-product-to-cart'] = 'front/CartController/addToCartProduct';
+$route['cart/get-user-cart'] = 'front/CartController/getUserCartData';
+$route['cart/delete-user-item'] = 'front/CartController/deleteUserCartItem';
 

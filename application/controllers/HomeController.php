@@ -17,6 +17,7 @@ class HomeController extends MY_Controller {
         $this->load->model('Banner_model');
         $this->load->model('Product_model');
         $this->load->model('Categories_model');
+        $this->load->model('Cart_model');
     }
 
     /**
@@ -27,6 +28,7 @@ class HomeController extends MY_Controller {
         $data['banner_data']     = $this->Banner_model->getActiveBammerData();
         $data['latest_products'] = $this->Product_model->getLatestProducts();
         $data['categories']      = $this->Categories_model->getCategoriesWithManyProducts();
+        $data['usrCartCounter'] = $this->Cart_model->getUserCartCounter();
         $this->frontRenderTemplate('front/Home/homePage', $data);
     }
 
