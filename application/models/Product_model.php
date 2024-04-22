@@ -157,6 +157,37 @@ class Product_model extends CI_Model
         return $this->db->count_all_results();
     }
 
+    public function getProductsByIds($product_ids) {
+        if(empty($product_ids)){
+            return [];
+        }
+
+        $this->db->select('products.*, product_images.image');
+        $this->db->from('products');
+        $this->db->join('product_images', 'products.id = product_images.product_id', 'left');
+        $this->db->where_in('products.id', $product_ids);
+        $this->db->group_by('products.id');
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            $products_with_images = [];
+            foreach ($query->result() as $row) {
+                $product_data = (array)$row;
+                $product_id = $product_data['id'];
+                unset($product_data['image']);
+                if (!isset($products_with_images[$product_id])) {
+                    $products_with_images[$product_id] = [
+                        'product_details' => $product_data,
+                        'image' => []
+                    ];
+                }
+                $products_with_images[$product_id]['image'][] = $row->image;
+            }
+            return $products_with_images;
+        }
+        return [];
+    }
+    
     /**
      * Retrieves the latest active products along with their images.
      *

@@ -70,4 +70,12 @@ class HomeController extends MY_Controller {
         $this->frontRenderTemplate('front/PrivecyPolicy/privecyPolicyPage',['privecy_data' => $data]);
     }
 
+    public function profile_info() {
+        $this->frontRenderTemplate('front/myAccount/profile-info');
+    }
+
+    public function profile_address() {
+        $this->frontRenderTemplate('front/myAccount/address/index');
+    }
+
 }

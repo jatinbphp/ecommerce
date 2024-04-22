@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="format-detection" content="telephone=no"/>
-        <title>Ecommerce</title>
-        <link rel="shortcut icon" href="<?php echo base_url('images/favicon.png') ?>" type="image/x-icon" />
-        <link href="<?php echo base_url('css/styles.css'); ?>" rel="stylesheet">
-        <script type="text/javascript">const baseUrl = "<?php echo base_url(); ?>";</script>
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no"/>
+    <title>Ecommerce</title>
+    <link rel="shortcut icon" href="<?php echo base_url('images/favicon.png') ?>" type="image/x-icon" />
+    <link href="<?php echo base_url('css/styles.css'); ?>" rel="stylesheet">
+    <script type="text/javascript">const baseUrl = "<?php echo base_url(); ?>";</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/select2/select2.min.css') ?>">
+    <!-- <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet"> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script> 
+</head>
     <body>
         <div id="main-wrapper">
             <div class="header header-light">
@@ -85,7 +89,7 @@
                                         
                                         <?php if ($this->session->userdata('logged_in')): ?>
                                             <li>
-                                                <a href="javascript:void(0);" class="dropdown-item medium text-medium">My Account</a>
+                                             <a href="<?php echo base_url('profile-info'); ?>" class="dropdown-item medium text-medium">My Account</a>
                                             </li>
                                             <li>
                                                 <a href="javascript:void(0);" class="dropdown-item medium text-medium">My Orders</a>
@@ -120,3 +124,7 @@
                 </div>
             </div>
         </div>
+
+       
+        
+
