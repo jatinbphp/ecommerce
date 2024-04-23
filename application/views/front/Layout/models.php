@@ -80,11 +80,9 @@
         <script src="<?php echo base_url('js/custom.js'); ?>"></script>
         <script src="<?php echo base_url('js/jquery.validate.min.js'); ?>"></script>
         <script src="<?php echo base_url('public/assets/front/dist/js/frontValidations.js'); ?>"></script>
-<<<<<<< HEAD
         <script src="<?php echo base_url('public/assets/front/dist/js/common.js'); ?>"></script>
         <script src="<?php echo base_url('public/assets/front/dist/js/home.js'); ?>"></script>
         <script src="<?php echo base_url('public/assets/front/dist/js/shop.js'); ?>"></script>
-=======
         <script src="<?php echo base_url('public/assets/admin/plugins/datatables/jquery.dataTables.min.js') ?>"></script>
         <script src="<?php echo base_url('public/assets/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>"></script>
         <script src="<?php echo base_url('public/assets/admin/plugins/datatables-responsive/js/dataTables.responsive.min.js') ?>"></script>
@@ -93,7 +91,6 @@
 
         <!-- all the script for home page -->
         <script src="<?php echo base_url('public/assets/front/dist/js/homePage.js'); ?>"></script>
->>>>>>> ccd5f5dbf3961a5caa220af00a012b833ffbe9ab
 
         <script>
             function openWishlist() {
