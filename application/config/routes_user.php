@@ -18,8 +18,12 @@ $route['forgotPassword'] = 'front/auth/AuthController/forgotPassword';
 $route['sendforgotPasswordLink'] = 'front/auth/AuthController/sendForgotPasswordMail';
 $route['setNewPassword/(:any)'] = 'front/auth/AuthController/setNewPassword/$1';
 $route['updateNewPassword'] = 'front/auth/AuthController/updateNewPassword';
+
 $route['products'] = 'front/ProductController/index';
 $route['products/show/(:num)'] = 'front/ProductController/show/$1';
+$route['products/(:num)/details'] = 'front/ProductController/details/$1';
+
+
 $route['payment'] = 'front/PaymentController';
 $route['payment/process-payment'] = 'front/PaymentController/processPayment';
 

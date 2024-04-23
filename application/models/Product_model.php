@@ -53,6 +53,13 @@ class Product_model extends CI_Model
     /*product quantity*/
     public static $quantity = [1, 2, 3, 5, 6, 7, 8, 9, 10];
 
+    /*product type*/
+    public static $type = [
+        'new'   => '<span class="badge bg-info text-white position-absolute ft-regular ab-left text-upper test">New</span>',
+        'sale'  => '<span class="badge bg-success text-white position-absolute ft-regular ab-left text-upper">sale</span>',
+        'hot'   => '<span class="badge bg-danger text-white position-absolute ft-regular ab-left text-upper">hot</span>'
+    ];
+
 
     /**
     * Get the details of a product by its ID or return all products if no ID is provided.
@@ -205,8 +212,8 @@ class Product_model extends CI_Model
      * @param int $categoryId The ID of the category to filter by. Defaults to 0.
      * @return array An array of filtered products with additional image information.
      */
-    public function getFilteredProducts($categoryId=0){
-        $this->db->select('products.*, product_images.image as image');
+    public function filter_products($categoryId=0){
+        $this->db->select('products.*, GROUP_CONCAT(product_images.image) as images');
         $this->db->from($this->table);
         $this->db->join('product_images', 'products.id = product_images.product_id', 'left');
         $this->db->where('products.status', self::STATUS_ACTIVE);
@@ -223,7 +230,7 @@ class Product_model extends CI_Model
     }
 
     public function show($productId) {
-        $this->db->select('products.*, GROUP_CONCAT(product_images.image) as images, categories.full_name AS category_name');
+        $this->db->select('products.*, GROUP_CONCAT(product_images.image) as images, categories.name AS category_name');
         $this->db->from($this->table);
         $this->db->join('product_images', 'products.id = product_images.product_id', 'left');
         $this->db->join('categories', 'products.category_id = categories.id', 'left');
@@ -234,62 +241,4 @@ class Product_model extends CI_Model
         return $query->row_array();  
     }
 
-    public function product_sizes($productId){
-        $query = $this->db
-        ->select('products_options_values.id, products_options_values.option_value')
-        ->from('products_options')
-        ->join('products_options_values', 'products_options.id = products_options_values.option_id')
-        ->where('products_options.option_name', 'SIZE')
-        ->where('products_options.product_id', $productId)
-        ->group_by('products_options_values.id') // Group by option_value ID
-        ->order_by('products_options_values.option_value')
-        ->get();
-
-        $sizes = [];
-        if ($query->num_rows() > 0) {
-            foreach ($query->result_array() as $row) {
-                $sizes[$row['id']] = $row['option_value'];
-            }
-        }
-
-        return $sizes;
-    }
-
-    public function product_colors($productId){
-        $query = $this->db
-        ->select('products_options_values.id, products_options_values.option_value')
-        ->from('products_options')
-        ->join('products_options_values', 'products_options.id = products_options_values.option_id')
-        ->where('products_options.option_name', 'COLOR')
-        ->where('products_options.product_id', $productId)
-        ->group_by('products_options_values.id') // Group by option_value ID
-        ->order_by('products_options_values.option_value')
-        ->get();
-
-        $colors = [];
-        if ($query->num_rows() > 0) {
-            foreach ($query->result_array() as $row) {
-                $colors[$row['id']] = $row['option_value'];
-            }
-        }
-
-        return $colors;
-    }
-
-    // public function all_products($limit = null){
-    //     $this->db->select('products.*, GROUP_CONCAT(product_images.image) as images');
-    //     $this->db->from($this->table);
-    //     $this->db->join('product_images', 'products.id = product_images.product_id', 'left');
-    //     $this->db->where('products.status', self::STATUS_ACTIVE);
-        
-    //     if ($categoryId) {
-    //         $this->db->where('products.category_id', $categoryId);
-    //     }
-
-    //     $this->db->group_by('products.id'); // Group by product ID to aggregate images
-    //     $this->db->order_by('products.created_at', 'DESC');
-    //     $limit ? $this->db->limit($limit) : null
-    //     $query = $this->db->get();
-    //     return $query->result_array();
-    // }
 }

@@ -6,8 +6,9 @@
                 <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
                 <div class="card-body p-0">
                     <div class="shop_thumb position-relative">
-                        <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url($value['image'] ?? ''); ?>" alt="..."></a>
-                        <div class="edlio"><a href="#" data-toggle="modal" data-target="#quickview" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
+                        <?php $images = isset($value['images']) && is_string($value['images']) ? explode(",", $value['images']) : []; ?>
+                        <a class="card-img-top d-block overflow-hidden" href="javascript:void(0);"><img class="card-img-top" src="<?php echo base_url($images[0] ?? ''); ?>" alt="..."></a>
+                        <div class="edlio"><a href="#" onclick="handleQuickView(event)" data-id="<?= $value['id'] ?>" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
                     </div>
                 </div>
                 <div class="card-footers b-0 pt-3 px-2 bg-white d-flex align-items-start justify-content-center">
@@ -21,4 +22,10 @@
             </div>
         </div>
     <?php endforeach ?>
+ <?php else: ?>
+    <div class="row align-items-center rows-products grid">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-12">
+            <p class="text-center">No records found.</p>
+        </div>
+    </div>
 <?php endif ?>

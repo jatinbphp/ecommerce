@@ -8,27 +8,43 @@ function setTab(event){
 	getProducts(categoryId);
 }
 
-$(window).on("load", function() {
-  	var categoryId = $('ul#product-categories').find('.active').attr("data-id");
-    if (categoryId) {
-        getProducts(categoryId);
-    }
-});
-
 function getProducts(categoryId){
 	$.ajax({
-        url: "products/get_products", 
+        url: "products", 
         method: 'GET',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
         	categoryId: categoryId 
     	},
         success: function(response) {
-            if (response.success) {
+            if (response.status) {
             	$('#category-section').html(response.html);
         	} else {
             	console.error('Error loading view:', response);
         	}
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error('AJAX Error:', textStatus, errorThrown);
+        }
+    });
+}
+
+function handleQuickView(event){
+    event.preventDefault();
+    var productId = event.target.getAttribute('data-id');
+    if(!productId) return false;
+    $.ajax({
+        url: "products/show/" + productId, 
+        method: 'GET',
+        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+        success: function(response) {
+            if (response.status) {
+                $('.modal-body, #quickviewbody').html(response.html);
+                initSlickSlider();
+                $('#quickview').modal('show');
+            } else {
+                console.error('Error loading view:', response);
+            }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error('AJAX Error:', textStatus, errorThrown);

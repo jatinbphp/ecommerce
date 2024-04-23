@@ -27,7 +27,7 @@ class ProductController extends MY_Controller
 	}
 
 	/**
-	 * Render the index template for the Product controller in the admin panel.
+	* Render the index template for the Product controller in the admin panel.
 	*
 	* @return void
 	*/
@@ -36,7 +36,7 @@ class ProductController extends MY_Controller
 	}
 
 	/**
-	 * Validates and creates a new product based on the form input.
+	* Validates and creates a new product based on the form input.
 	* If validation fails, it reloads the create form with error messages.
 	* If creation is successful, it redirects to the edit page of the newly created product.
 	*
@@ -482,7 +482,7 @@ class ProductController extends MY_Controller
        	$data['product'] = $product;
        	$data['product_image'] = $productImage;
        	$data['product_options'] = $this->ProductOptions_model->getOptionsWithValues($id);
-        $html = $this->load->view('admin/Product/view', $data, true);
+        $html = $this->load->view('admin/Product/product', $data, true);
         echo $html;
     }
 }
