@@ -212,7 +212,6 @@
             <a id="back2Top" class="top-scroll" title="Back to top" href="#"><i class="ti-arrow-up"></i></a>
         </div>
 
-        <script src="<?php echo base_url('public/assets/admin/plugins/jquery/jquery.min.js') ?>"></script>
         <script src="<?php echo base_url('js/popper.min.js'); ?>"></script>
         <script src="<?php echo base_url('js/bootstrap.min.js'); ?>"></script>
         <script src="<?php echo base_url('js/ion.rangeSlider.min.js'); ?>"></script>

@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
     <link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/select2/select2.min.css') ?>">
     <!-- <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet"> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <script src="<?php echo base_url('public/assets/admin/plugins/jquery/jquery.min.js') ?>"></script>
 </head>
     <body>
         <div id="main-wrapper">
@@ -91,10 +92,10 @@
                                              <a href="<?php echo base_url('profile-info'); ?>" class="dropdown-item medium text-medium">My Account</a>
                                             </li>
                                             <li>
-                                                <a href="javascript:void(0);" class="dropdown-item medium text-medium">My Orders</a>
+                                                <a href="<?php echo base_url('my-orders'); ?>" class="dropdown-item medium text-medium">My Orders</a>
                                             </li>
                                             <li>
-                                                <a href="javascript:void(0);" class="dropdown-item medium text-medium">My Wishlist</a>
+                                                <a href="<?php echo base_url('my-wishlist'); ?>" class="dropdown-item medium text-medium">My Wishlist</a>
                                             </li>
                                             <li>
                                                 <a href="logout" class="dropdown-item medium text-medium">Log Out</a>

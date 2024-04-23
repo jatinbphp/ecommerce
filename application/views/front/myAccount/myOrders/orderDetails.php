@@ -65,40 +65,26 @@
                                 <?php if(!empty($orderItems)): ?>
                                     <?php foreach ($orderItems as $item): ?>
                                         <tr>
-                                        <td>
-                                            <div class="single_rev_caption d-flex align-items-start">
-                                                <div class="single_capt_left pr-2">
-                                                    <?php
-                                                    
-                                                    if (!empty($item->product_id)) {
-                                                      
-                                                        $product_images = $this->ProductImage_model->getImagesByProductId($item->product_id);
-                                                        
-                                                       
-                                                        if (!empty($product_images)) {
-                                                         
-                                                            echo '<img src="' . base_url($product_images[0]->image) . '" alt="Product Image" width="50px">';
-                                                        } else {
-                                                          
-                                                            echo '<img src="' . base_url('path/to/default-image.jpg') . '" alt="Default Image" width="50px">';
-                                                        }
-                                                    } else {
-                                                   
-                                                        echo '<img src="' . base_url('path/to/default-image.jpg') . '" alt="Default Image" width="50px">';
-                                                    }
-                                                    ?>
+                                            <td>
+                                                <div class="single_rev_caption d-flex align-items-start">
+                                                    <div class="single_capt_left pr-2">
+                                                        <?php if (!empty($item->product_id)): ?>
+                                                            <?php $product_images = $this->ProductImage_model->getDetails($item->product_id); ?>
+                                                            <?php if (!empty($product_images)): ?>
+                                                                <?php $product_images = current($product_images); ?>
+                                                                <img class="card-img-top" src="<?php echo base_url(($product_images['image'] ?? '')); ?>" alt="Product Image">
+                                                            <?php else: ?>
+                                                                <img src="<?php echo base_url('public/assets/admin/dist/img/no-image.png'); ?>" alt="Banner Image" style="border: 1px solid #ccc;margin-top: 5px;padding: 20px;" width="150" id="Product Image">
+                                                            <?php endif ?>
+                                                        <?php endif ?>
+                                                    </div>
+                                                    <div class="single_capt_right">
+                                                        <h4 class="product_title fs-sm ft-medium mb-1 lh-1">
+                                                            <?php echo $item->product_name; ?>
+                                                        </h4>
+                                                    </div>
                                                 </div>
-                                                <div class="single_capt_right">
-                                                  
-                                                    <h4 class="product_title fs-sm ft-medium mb-1 lh-1">
-                                                        <?php echo $item->product_name; ?>
-                                                    </h4>
-                                                  
-                                                </div>
-                                            </div>
-                                        </td>
-
-                                            <!-- Display SKU, Quantity, Unit Price, and Total -->
+                                            </td>
                                             <td><?php echo $item->product_sku; ?></td>
                                             <td><?php echo $item->product_qty; ?></td>
                                             <td class="text-right">$<?php echo number_format($item->product_price, 2); ?></td>
@@ -182,3 +168,8 @@
         </div>
     </section>
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#myorderlist").addClass('active');
+    });
+</script>

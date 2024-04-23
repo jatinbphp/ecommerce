@@ -5,9 +5,9 @@
                 <div class="col-xl-12 col-lg-12 col-md-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="<?php echo site_url(''); ?>">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?php echo site_url(''); ?>">Home</a></li>
                             <li class="breadcrumb-item"><a href="<?php echo site_url('profile-info'); ?>">My Account</a></li>
-                            <li class="breadcrumb-item"><a href="#"><?php echo $title; ?></a></li>
+                            <li class="breadcrumb-item"><?php echo $title; ?></li>
                         </ol>
                     </nav>
                 </div>
@@ -44,3 +44,8 @@
         </div>
     </section>
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#addresses").addClass('active');
+    });
+</script>

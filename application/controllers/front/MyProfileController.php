@@ -241,7 +241,7 @@ class MyProfileController extends MY_Controller {
         $this->form_validation->set_rules('password_confirmation', 'Password Confirmation', 'required|matches[password]');
     
         if ($this->form_validation->run() == FALSE) {
-            $data['title'] = "password";
+            $data['title'] = "Password";
             $this->frontRenderTemplate('front/myAccount/password/edit', $data);
             return $this;
         }

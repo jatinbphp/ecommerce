@@ -60,17 +60,6 @@ class ProductImage_model extends CI_Model
         $delete = $this->db->delete($this->table);
         return ($delete == true) ? true : false;
     }
-
-    public function getImagesByProductId($product_id) {
-        $this->db->where('product_id', $product_id);
-        $query = $this->db->get('product_images');
-
-        if ($query->num_rows() > 0) {
-            return $query->result();
-        } else {
-            return null;
-        }
-    }
     
     /**
      * Delete product images associated with the given product ID from the database and file system.
