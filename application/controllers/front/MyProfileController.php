@@ -38,7 +38,7 @@ class MyProfileController extends MY_Controller {
         $this->form_validation->set_rules('first_name', 'First Name', 'required');
         $this->form_validation->set_rules('last_name', 'Last Name', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-        $this->form_validation->set_rules('phone', 'Phone Number', 'required');
+        $this->form_validation->set_rules('phone', 'Phone Number', 'required|numeric|min_length[10]|max_length[10]');
         
         $userData = $this->session->userdata();
         $userId   = $this->session->userdata('userId');
@@ -77,10 +77,10 @@ class MyProfileController extends MY_Controller {
 
         $this->User_model->edit($data, $userId);
 
-        $updatedUserData = (object) $this->User_model->getUserData($userId);
+        $updatedUserData = $this->User_model->getUserData($userId);
         unset($updatedUserData['password']);
 	    $updatedUserData['logged_in'] = 'true';
-        $this->session->set_userdata('user_data', $updatedUserData);
+        $this->session->set_userdata($updatedUserData);
         $this->session->set_flashdata('success', 'Profile updated successfully.');
 
         redirect('profile-info', 'refresh');
@@ -100,7 +100,7 @@ class MyProfileController extends MY_Controller {
         $this->form_validation->set_rules('first_name', 'First Name', 'required');
         $this->form_validation->set_rules('last_name', ' Last Name', 'required');
         $this->form_validation->set_rules('address_line1', 'Address', 'required');
-        $this->form_validation->set_rules('mobile_phone', 'Mobile Number', 'required|numeric|min_length[10]');
+        $this->form_validation->set_rules('mobile_phone', 'Mobile Number', 'required|numeric|min_length[10]|max_length[10]');
         $this->form_validation->set_rules('country', 'Country', 'required');
         $this->form_validation->set_rules('state', 'State', 'required');
         $this->form_validation->set_rules('city', 'City', 'required');
@@ -170,7 +170,7 @@ class MyProfileController extends MY_Controller {
         $this->form_validation->set_rules('first_name', 'First Name', 'required');
         $this->form_validation->set_rules('last_name', ' Last Name', 'required');
         $this->form_validation->set_rules('address_line1', 'Address', 'required');
-        $this->form_validation->set_rules('mobile_phone', 'Mobile Number', 'required|numeric|min_length[10]');
+        $this->form_validation->set_rules('mobile_phone', 'Mobile Number', 'required|numeric|min_length[10]|max_length[10]');
         $this->form_validation->set_rules('country', 'Country', 'required');
         $this->form_validation->set_rules('state', 'State', 'required');
         $this->form_validation->set_rules('city', 'City', 'required');

@@ -72,9 +72,9 @@
                                                             <?php $product_images = $this->ProductImage_model->getDetails($item->product_id); ?>
                                                             <?php if (!empty($product_images)): ?>
                                                                 <?php $product_images = current($product_images); ?>
-                                                                <img class="card-img-top" src="<?php echo base_url(($product_images['image'] ?? '')); ?>" alt="Product Image">
+                                                                <img class="card-img-top" src="<?php echo base_url(($product_images['image'] ?? '')); ?>" alt="Product Image" style="width:50px">
                                                             <?php else: ?>
-                                                                <img src="<?php echo base_url('public/assets/admin/dist/img/no-image.png'); ?>" alt="Banner Image" style="border: 1px solid #ccc;margin-top: 5px;padding: 20px;" width="150" id="Product Image">
+                                                                <img src="<?php echo base_url('public/assets/admin/dist/img/no-image.png'); ?>" alt="Banner Image" style="border: 1px solid #ccc;margin-top: 5px;padding: 20px;" width="50px" id="Product Image">
                                                             <?php endif ?>
                                                         <?php endif ?>
                                                     </div>
