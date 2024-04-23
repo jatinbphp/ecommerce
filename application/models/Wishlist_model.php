@@ -58,7 +58,7 @@ class Wishlist_model extends CI_Model
 
         $this->db->select('product_id');
         $this->db->from($this->table);
-        $this->db->where('user_id', $user_id);
+        $this->db->where('user_id', $userId);
         $query = $this->db->get();
 
         if ($query->num_rows() > 0) {
