@@ -94,4 +94,3 @@ function deleteCartItem(cartId) {
 
 
 
->>>>>>> ccd5f5dbf3961a5caa220af00a012b833ffbe9ab:public/assets/front/dist/js/homePage.js
