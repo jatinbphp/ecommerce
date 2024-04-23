@@ -34,7 +34,6 @@ class ContactusController extends MY_Controller {
 		$this->form_validation->set_rules('subject', 'Subject', 'required');
 		$this->form_validation->set_rules('message', 'Message', 'required');
 
-
 		if ($this->form_validation->run() == FALSE) {
 			$this->frontRenderTemplate('front/Contact/contactUs');
 			return $this;

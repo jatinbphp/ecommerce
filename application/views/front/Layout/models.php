@@ -7,9 +7,8 @@
                             <span class="ti-close"></span>
                             </button>
                         </div>
-                        <div class="modal-body" id="quickviewbody">
-                            <!-- dynamic loading quick view content with ajax -->
-                        </div>
+                        <div class="modal-body" id="quickviewbody"></div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -50,133 +49,25 @@
                         <h4 class="cart_heading fs-md ft-medium mb-0">Saved Products</h4>
                         <button onclick="closeWishlist()" class="close_slide"><i class="ti-close"></i></button>
                     </div>
-                    <div class="right-ch-sideBar">
-                        <div class="cart_select_items py-2">
-                            <div class="d-flex align-items-center justify-content-between br-bottom px-3 py-3">
-                                <div class="cart_single d-flex align-items-center">
-                                    <div class="cart_selected_single_thumb">
-                                        <a href="javaScript:;"><img src="<?php echo base_url('images/4.jpg')?>" width="60" class="img-fluid" alt="" /></a>
-                                    </div>
-                                    <div class="cart_single_caption pl-2">
-                                        <h4 class="product_title fs-sm ft-medium mb-0 lh-1">Women Striped Shirt Dress</h4>
-                                        <p class="mb-2"><span class="text-dark ft-medium small">36</span>, <span class="text-dark small">Red</span></p>
-                                        <h4 class="fs-md ft-medium mb-0 lh-1">$129</h4>
-                                    </div>
-                                </div>
-                                <div class="fls_last"><button class="close_slide gray"><i class="ti-close"></i></button></div>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-between br-bottom px-3 py-3">
-                                <div class="cart_single d-flex align-items-center">
-                                    <div class="cart_selected_single_thumb">
-                                        <a href="javaScript:;"><img src="<?php echo base_url('images/7.jpg')?>" width="60" class="img-fluid" alt="" /></a>
-                                    </div>
-                                    <div class="cart_single_caption pl-2">
-                                        <h4 class="product_title fs-sm ft-medium mb-0 lh-1">Girls Floral Print Jumpsuit</h4>
-                                        <p class="mb-2"><span class="text-dark ft-medium small">36</span>, <span class="text-dark small">Red</span></p>
-                                        <h4 class="fs-md ft-medium mb-0 lh-1">$129</h4>
-                                    </div>
-                                </div>
-                                <div class="fls_last"><button class="close_slide gray"><i class="ti-close"></i></button></div>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-between px-3 py-3">
-                                <div class="cart_single d-flex align-items-center">
-                                    <div class="cart_selected_single_thumb">
-                                        <a href="javaScript:;"><img src="<?php echo base_url('images/8.jpg')?>" width="60" class="img-fluid" alt="" /></a>
-                                    </div>
-                                    <div class="cart_single_caption pl-2">
-                                        <h4 class="product_title fs-sm ft-medium mb-0 lh-1">Girls Solid A-Line Dress</h4>
-                                        <p class="mb-2"><span class="text-dark ft-medium small">30</span>, <span class="text-dark small">Blue</span></p>
-                                        <h4 class="fs-md ft-medium mb-0 lh-1">$100</h4>
-                                    </div>
-                                </div>
-                                <div class="fls_last"><button class="close_slide gray"><i class="ti-close"></i></button></div>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between br-top br-bottom px-3 py-3">
-                            <h6 class="mb-0">Subtotal</h6>
-                            <h3 class="mb-0 ft-medium">$417</h3>
-                        </div>
-                        <div class="cart_action px-3 py-3">
-                            <div class="form-group">
-                                <button type="button" class="btn d-block full-width btn-dark">Move To Cart</button>
-                            </div>
-                            <div class="form-group">
-                                <button type="button" class="btn d-block full-width btn-dark-light">Edit or View</button>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="userWishlist"></div>
                 </div>
             </div>
 
-            <!-- Cart -->
+            <!-- Cart Start -->
             <div class="w3-ch-sideBar w3-bar-block w3-card-2 w3-animate-right" style="display:none;right:0;" id="Cart">
                 <div class="rightMenu-scroll">
                     <div class="d-flex align-items-center justify-content-between slide-head py-3 px-3">
-                        <h4 class="cart_heading fs-md ft-medium mb-0">Products List</h4>
+                        <h4 class="cart_heading fs-md ft-medium mb-0">Cart</h4>
                         <button onclick="closeCart()" class="close_slide"><i class="ti-close"></i></button>
                     </div>
-                    <div class="right-ch-sideBar">
-                        <div class="cart_select_items py-2">
-                            <div class="d-flex align-items-center justify-content-between br-bottom px-3 py-3">
-                                <div class="cart_single d-flex align-items-center">
-                                    <div class="cart_selected_single_thumb">
-                                        <a href="javaScript:;"><img src="<?php echo base_url('images/4.jpg')?>" width="60" class="img-fluid" alt="" /></a>
-                                    </div>
-                                    <div class="cart_single_caption pl-2">
-                                        <h4 class="product_title fs-sm ft-medium mb-0 lh-1">Women Striped Shirt Dress</h4>
-                                        <p class="mb-2"><span class="text-dark ft-medium small">36</span>, <span class="text-dark small">Red</span></p>
-                                        <h4 class="fs-md ft-medium mb-0 lh-1">$129</h4>
-                                    </div>
-                                </div>
-                                <div class="fls_last"><button class="close_slide gray"><i class="ti-close"></i></button></div>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-between br-bottom px-3 py-3">
-                                <div class="cart_single d-flex align-items-center">
-                                    <div class="cart_selected_single_thumb">
-                                        <a href="javaScript:;"><img src="<?php echo base_url('images/7.jpg')?>" width="60" class="img-fluid" alt="" /></a>
-                                    </div>
-                                    <div class="cart_single_caption pl-2">
-                                        <h4 class="product_title fs-sm ft-medium mb-0 lh-1">Girls Floral Print Jumpsuit</h4>
-                                        <p class="mb-2"><span class="text-dark ft-medium small">36</span>, <span class="text-dark small">Red</span></p>
-                                        <h4 class="fs-md ft-medium mb-0 lh-1">$129</h4>
-                                    </div>
-                                </div>
-                                <div class="fls_last"><button class="close_slide gray"><i class="ti-close"></i></button></div>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-between px-3 py-3">
-                                <div class="cart_single d-flex align-items-center">
-                                    <div class="cart_selected_single_thumb">
-                                        <a href="javaScript:;"><img src="<?php echo base_url('images/8.jpg')?>" width="60" class="img-fluid" alt="" /></a>
-                                    </div>
-                                    <div class="cart_single_caption pl-2">
-                                        <h4 class="product_title fs-sm ft-medium mb-0 lh-1">Girls Solid A-Line Dress</h4>
-                                        <p class="mb-2"><span class="text-dark ft-medium small">30</span>, <span class="text-dark small">Blue</span></p>
-                                        <h4 class="fs-md ft-medium mb-0 lh-1">$100</h4>
-                                    </div>
-                                </div>
-                                <div class="fls_last"><button class="close_slide gray"><i class="ti-close"></i></button></div>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between br-top br-bottom px-3 py-3">
-                            <h6 class="mb-0">Subtotal</h6>
-                            <h3 class="mb-0 ft-medium">$1023</h3>
-                        </div>
-                        <div class="cart_action px-3 py-3">
-                            <div class="form-group">
-                                <button type="button" class="btn d-block full-width btn-dark">Checkout Now</button>
-                            </div>
-                            <div class="form-group">
-                                <button type="button" class="btn d-block full-width btn-dark-light">Edit or View</button>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="usrCartDataMenu"></div>
                 </div>
             </div>
-
+            <!-- Cart End -->
+            
             <a id="back2Top" class="top-scroll" title="Back to top" href="#"><i class="ti-arrow-up"></i></a>
         </div>
 
-        <script src="<?php echo base_url('js/jquery.min.js'); ?>"></script>
         <script src="<?php echo base_url('js/popper.min.js'); ?>"></script>
         <script src="<?php echo base_url('js/bootstrap.min.js'); ?>"></script>
         <script src="<?php echo base_url('js/ion.rangeSlider.min.js'); ?>"></script>
@@ -189,13 +80,37 @@
         <script src="<?php echo base_url('js/custom.js'); ?>"></script>
         <script src="<?php echo base_url('js/jquery.validate.min.js'); ?>"></script>
         <script src="<?php echo base_url('public/assets/front/dist/js/frontValidations.js'); ?>"></script>
+<<<<<<< HEAD
         <script src="<?php echo base_url('public/assets/front/dist/js/common.js'); ?>"></script>
         <script src="<?php echo base_url('public/assets/front/dist/js/home.js'); ?>"></script>
         <script src="<?php echo base_url('public/assets/front/dist/js/shop.js'); ?>"></script>
+=======
+        <script src="<?php echo base_url('public/assets/admin/plugins/datatables/jquery.dataTables.min.js') ?>"></script>
+        <script src="<?php echo base_url('public/assets/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>"></script>
+        <script src="<?php echo base_url('public/assets/admin/plugins/datatables-responsive/js/dataTables.responsive.min.js') ?>"></script>
+        <script src="<?php echo base_url('public/assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
+        <script src="<?php echo base_url('public/assets/admin/plugins/select2/select2.full.min.js') ?>"></script>
+
+        <!-- all the script for home page -->
+        <script src="<?php echo base_url('public/assets/front/dist/js/homePage.js'); ?>"></script>
+>>>>>>> ccd5f5dbf3961a5caa220af00a012b833ffbe9ab
 
         <script>
             function openWishlist() {
+                //userWishlist
             	document.getElementById("Wishlist").style.display = "block";
+                $.ajax({
+                    url: "wishlist-data", 
+                    method: 'GET',
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                    success: function(response) {
+                        $("#userWishlist").html(response.wishlistHtml);
+                        $(".user-cart-counter").html(response.cartCounter);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('AJAX Error:', textStatus, errorThrown);
+                    }
+                });
             }
             function closeWishlist() {
             	document.getElementById("Wishlist").style.display = "none";
@@ -204,6 +119,21 @@
         <script>
             function openCart() {
             	document.getElementById("Cart").style.display = "block";
+
+                $.ajax({
+                    url: "cart/get-user-cart", 
+                    method: 'GET',
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                    success: function(response) {
+                        $("#usrCartDataMenu").html(response.cartView);
+                        $(".user-cart-counter").html(response.cartCounter);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('AJAX Error:', textStatus, errorThrown);
+                    }
+                });
+
+
             }
             function closeCart() {
             	document.getElementById("Cart").style.display = "none";

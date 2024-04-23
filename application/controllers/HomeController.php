@@ -17,6 +17,8 @@ class HomeController extends MY_Controller {
         $this->load->model('Banner_model');
         $this->load->model('Product_model');
         $this->load->model('Categories_model');
+        $this->load->model('Cart_model');
+        $this->load->model('Wishlist_model');
     }
 
     /**
@@ -29,6 +31,9 @@ class HomeController extends MY_Controller {
         $data['categories']            = $this->Categories_model->getCategoriesWithManyProducts();
         $data['categorized_products']  = isset($data['categories'][0]['id']) ? $this->Product_model->filter_products($data['categories'][0]['id']) : null;
         $data['type']                  = $this->Product_model::$type;
+        $data['wishlistProductId']     = $this->Wishlist_model->getWishlistProductIds();
+        $data['categories']            = $this->Categories_model->getCategoriesWithManyProducts();
+        $data['usrCartCounter']        = $this->Cart_model->getUserCartCounter();
         $this->frontRenderTemplate('front/Home/homePage', $data);
     }
 
@@ -68,6 +73,14 @@ class HomeController extends MY_Controller {
         $query = $this->db->query($sql);
         $data = $query->row_array();
         $this->frontRenderTemplate('front/PrivecyPolicy/privecyPolicyPage',['privecy_data' => $data]);
+    }
+
+    public function profile_info() {
+        $this->frontRenderTemplate('front/myAccount/profile-info');
+    }
+
+    public function profile_address() {
+        $this->frontRenderTemplate('front/myAccount/address/index');
     }
 
 }

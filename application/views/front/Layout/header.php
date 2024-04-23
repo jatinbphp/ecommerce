@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="format-detection" content="telephone=no"/>
-        <title>Ecommerce</title>
-        <link rel="shortcut icon" href="<?php echo base_url('images/favicon.png') ?>" type="image/x-icon" />
-        <link href="<?php echo base_url('css/styles.css'); ?>" rel="stylesheet">
-        <script type="text/javascript">const baseUrl = "<?php echo base_url(); ?>";</script>
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no"/>
+    <title>Ecommerce</title>
+    <link rel="shortcut icon" href="<?php echo base_url('images/favicon.png') ?>" type="image/x-icon" />
+    <link href="<?php echo base_url('css/styles.css'); ?>" rel="stylesheet">
+    <script type="text/javascript">const baseUrl = "<?php echo base_url(); ?>";</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/select2/select2.min.css') ?>">
+    <!-- <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet"> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <script src="<?php echo base_url('public/assets/admin/plugins/jquery/jquery.min.js') ?>"></script>
+</head>
     <body>
         <div id="main-wrapper">
             <div class="header header-light">
@@ -35,7 +40,7 @@
                                     </li>
                                     <li>
                                         <a href="javaScript:;" onclick="openWishlist()">
-                                        <i class="lni lni-heart"></i><span class="dn-counter">2</span>
+                                        <i class="lni lni-heart"></i><span class="dn-counter wishlist-counter">2</span>
                                         </a>
                                     </li>
                                     <li>
@@ -82,16 +87,15 @@
                                         <i class="lni lni-user"></i>
                                     </a>
                                     <ul class="dropdown-menu popup-content link">
-                                        
                                         <?php if ($this->session->userdata('logged_in')): ?>
                                             <li>
-                                                <a href="javascript:void(0);" class="dropdown-item medium text-medium">My Account</a>
+                                             <a href="<?php echo base_url('profile-info'); ?>" class="dropdown-item medium text-medium">My Account</a>
                                             </li>
                                             <li>
-                                                <a href="javascript:void(0);" class="dropdown-item medium text-medium">My Orders</a>
+                                                <a href="<?php echo base_url('my-orders'); ?>" class="dropdown-item medium text-medium">My Orders</a>
                                             </li>
                                             <li>
-                                                <a href="javascript:void(0);" class="dropdown-item medium text-medium">My Wishlist</a>
+                                                <a href="<?php echo base_url('my-wishlist'); ?>" class="dropdown-item medium text-medium">My Wishlist</a>
                                             </li>
                                             <li>
                                                 <a href="logout" class="dropdown-item medium text-medium">Log Out</a>
@@ -105,13 +109,13 @@
                                 <?php if ($this->session->userdata('logged_in')): ?>
                                     <li>
                                         <a href="javaScript:;" onclick="openWishlist()">
-                                        <i class="lni lni-heart"></i><span class="dn-counter">2</span>
+                                        <i class="lni lni-heart"></i><span class="dn-counter wishlist-counter">2</span>
                                         </a>
                                     </li>
                                 <?php endif; ?>
                                 <li>
                                     <a href="javaScript:;" onclick="openCart()">
-                                    <i class="lni lni-shopping-basket"></i><span class="dn-counter">3</span>
+                                        <i class="lni lni-shopping-basket"></i><span class="dn-counter user-cart-counter"><?php echo (isset($usrCartCounter) && $usrCartCounter > 0) ? $usrCartCounter :  0; ?></span>
                                     </a>
                                 </li>
                             </ul>
@@ -120,3 +124,7 @@
                 </div>
             </div>
         </div>
+
+       
+        
+

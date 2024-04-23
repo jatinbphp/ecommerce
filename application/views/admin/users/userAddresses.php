@@ -22,8 +22,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <?php echo form_label('Title :', 'title_'.$key, array('class' => 'control-label')); ?>
-                                <span class="text-red">*</span>
-                                <?php echo form_input(array('class' => 'form-control chk-required', 'placeholder' => 'Enter Title', 'id' => 'title_'.$key, 'name' => 'addresses[existing]['.$val['id'].'][title]', 'type' => 'text', 'value' => $val['title'])); ?>
+                                <?php echo form_input(array('class' => 'form-control', 'placeholder' => 'Enter Title', 'id' => 'title_'.$key, 'name' => 'addresses[existing]['.$val['id'].'][title]', 'type' => 'text', 'value' => $val['title'])); ?>
                             </div>
                         </div>
                         <div class="col-md-3">

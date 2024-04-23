@@ -106,7 +106,7 @@
                                     ));
                                     ?>
                                     <span class="eye-icon" onclick="togglePasswordVisibility()">
-                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                        <i class="fa fa-eye pt-1" aria-hidden="true"></i>
                                     </span>
                                 </div>
                             </div>
@@ -126,7 +126,7 @@
                                     ));
                                     ?>
                                     <span class="confirm-eye-icon" onclick="toggleConfirmPasswordVisibility()">
-                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                        <i class="fa fa-eye pt-1" aria-hidden="true"></i>
                                     </span>
                                 </div>
                             </div>

@@ -251,7 +251,7 @@ class AuthController extends MY_Controller {
         $password = $this->input->post('password');
         $user = $this->user_model->authenticate($email, $password, 2);
         if ($user) {
-            $this->session->set_userdata('user_data', $user);
+            //$this->session->set_userdata('user_data', $user);
             $this->session->set_userdata('user_email', $email);
             $this->session->set_userdata('otp_sent', 'true');
             $this->user_model->resetLoginAttempts($email);
@@ -382,7 +382,6 @@ class AuthController extends MY_Controller {
                 );
 
                 $this->session->set_userdata('userId', $user->id);
-
                 $this->session->set_userdata($userdata);
                 redirect(base_url());
             } else {

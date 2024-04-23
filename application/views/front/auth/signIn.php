@@ -58,7 +58,7 @@
                             <div class="position-relative">
                                 <?php echo form_input(array('type' => 'password', 'class' => 'form-control', 'id' => 'password', 'name' => 'password', 'required' => 'required', 'placeholder' => 'Enter your password')); ?>
                                 <span class="eye-icon" onclick="togglePasswordVisibility()">
-                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                    <i class="fa fa-eye pt-1" aria-hidden="true"></i>
                                 </span>
                             </div>
                         </div>

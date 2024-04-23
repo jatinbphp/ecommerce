@@ -60,7 +60,7 @@ class ProductImage_model extends CI_Model
         $delete = $this->db->delete($this->table);
         return ($delete == true) ? true : false;
     }
-
+    
     /**
      * Delete product images associated with the given product ID from the database and file system.
      *

@@ -5166,3 +5166,5 @@ img {max-width: 100%;}
     }
     .rows-products.list .product_grid .card-footer .btn {padding: 10px 20px;font-size: 15px;}
 }
+.dataTables_length, .dataTables_filter{display: none;}
+#frontordersTable thead{display: none;}
