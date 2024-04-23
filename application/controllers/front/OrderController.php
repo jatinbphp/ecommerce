@@ -1,8 +1,18 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Class OrderController
+ *
+ * This class extends the MY_Controller class and serves as the controller for handling orders.
+ */
 class OrderController extends MY_Controller {
 
+    /**
+     * Constructor for the class. 
+    * Initializes the parent class and loads necessary models for further operations.
+    * Checks if the user is logged in before proceeding.
+    */
 	public function __construct() {
         parent::__construct();
         $this->checkUserLoggedIn();
@@ -13,11 +23,23 @@ class OrderController extends MY_Controller {
         $this->load->model('ProductImage_model');
     }
 
+    /**
+     * Renders the 'My Orders' page with the specified title.
+     *
+     * @return void
+     */
     public function index() {
         $data['title']= "My Orders";
         $this->frontRenderTemplate('front/myAccount/myOrders/orders', $data);
     }
         
+    /**
+     * Fetches orders data including user information and order items.
+     * Retrieves orders data from the Order_model, user data from the User_model,
+     * and order items data from the Order_items_model.
+     * Constructs an array of order data including order ID, user information, and order items.
+     * Returns the data in JSON format with draw, recordsTotal, recordsFiltered, and data fields.
+     */
     public function fetchOrders()
     {
         $data    = [];
@@ -47,6 +69,12 @@ class OrderController extends MY_Controller {
 		echo json_encode($output);
     }
 
+    /**
+     * Retrieve and display the details of a specific order.
+     *
+     * @param int $id The ID of the order to retrieve details for
+     * @return void
+     */
     public function orderDetails($id)
     {
         $data['title']= "My Orders";

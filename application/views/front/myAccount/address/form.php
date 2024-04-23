@@ -1,6 +1,4 @@
 <div class="row mb-2">
-    <input type="hidden" name="id" value="<?php echo !empty($userDataArray['id'])?$userDataArray['id']:"" ?>">
-    <input type="hidden" name="ids" value="<?php echo !empty($userAddresses['id'])?$userAddresses['id']:""?>">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="form-group">
             <label for="title" class="text-dark ft-medium">Title: </label>

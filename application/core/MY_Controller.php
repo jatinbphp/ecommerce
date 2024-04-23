@@ -133,10 +133,6 @@ class MY_Controller extends CI_Controller
         return $button;
     }
 
-    protected function isLoggedIn() {
-        return $this->session->userdata('user_data') && $this->session->userdata('logged_in');
-    }
-
     // public function addToGuestCart()
     // {
     //     //$this->session->unset_userdata('guestCart');

@@ -44,7 +44,7 @@ $(document).ready(function() {
         var self = $(this);
 
         $.ajax({
-            url:"products/add_to_faviourits",
+            url:"wishlist/add_to_faviourits",
             type: "POST",
             data: {
                 'id': id,
@@ -106,11 +106,14 @@ $(document).ready(function() {
                     url: "addresses/delete/" + id,
                     type: "DELETE",
                     headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
-                    success: function(data) {
+                    success: function(response) {
                         swal("Deleted", "Your data successfully deleted!", "success");
-                        setTimeout(function() {
-                            window.location.reload();
-                        }, 2000);
+                        if (response.success) {
+                            $('#address-box-'+id).remove();
+                            swal("Success!", "Item removed from wishlist successfully.", "success");
+                        } else {
+                            swal("Error", "Failed to remove item from wishlist.", "error");
+                        }
                     }
                 });
 
@@ -125,7 +128,7 @@ $(document).ready(function() {
         e.preventDefault();
         var $this = $(this);
         var itemId = $this.data('id');
-        console.log(itemId);
+        
         swal({
             title: "Are you sure?",
             text: "You want to remove this item from your wishlist?",

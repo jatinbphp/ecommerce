@@ -11,17 +11,12 @@
                         ?>
                     </p>
                     <h4 class="product_title fs-sm ft-medium mb-1 lh-1">
-                    <?php echo isset($user['first_name']) ? $user['first_name'] : ''; ?>
+                        <?php echo isset($user['first_name']) ? $user['first_name'] : ''; ?>
                     </h4>
-                    <p class="mb-2">
-                    <span class="text-dark medium">
-                    No. of Products: <?php echo $orderItems; ?>
-                    </span>
-                </p>
-                    
-                <h4 class="fs-sm ft-bold mb-0 lh-1">
-                    <span class="text-muted">Total:</span> <?php echo '$' . number_format($total_amount, 2); ?>
-                </h4>
+                    <p class="mb-2"><span class="text-dark medium">No. of Products: <?php echo $orderItems; ?></span></p>   
+                    <h4 class="fs-sm ft-bold mb-0 lh-1">
+                        <span class="text-muted">Total:</span> <?php echo '$' . number_format($total_amount, 2); ?>
+                    </h4>
                 </div>
             </div>
         </div>
@@ -38,9 +33,8 @@
             </h6>
         </div>
         <div class="col-xl-1 col-lg-1 col-md-1 col-6">
-        <a href="<?php echo base_url('order-details/'.$id); ?>" class="btn btn-sm btn-primary rounded" title="Order Details"><i class="lni lni-eye"></i></a>
+            <a href="<?php echo base_url('order-details/'.$id); ?>" class="btn btn-sm btn-primary rounded" title="Order Details"><i class="lni lni-eye"></i></a>
+        </div>
     </div>
-    </div>
-    
 </div>
 

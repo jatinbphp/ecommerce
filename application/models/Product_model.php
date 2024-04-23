@@ -157,6 +157,12 @@ class Product_model extends CI_Model
         return $this->db->count_all_results();
     }
 
+    /**
+     * Retrieves products along with their images based on the provided product IDs.
+     *
+     * @param array $product_ids An array containing the IDs of the products to retrieve.
+     * @return array An array of products with their corresponding images.
+     */
     public function getProductsByIds($product_ids) {
         if(empty($product_ids)){
             return [];
@@ -166,7 +172,7 @@ class Product_model extends CI_Model
         $this->db->from('products');
         $this->db->join('product_images', 'products.id = product_images.product_id', 'left');
         $this->db->where_in('products.id', $product_ids);
-        $this->db->group_by('products.id');
+        $this->db->group_by('products.id, product_images.image');
         $query = $this->db->get();
 
         if ($query->num_rows() > 0) {

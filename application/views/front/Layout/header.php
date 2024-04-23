@@ -86,7 +86,6 @@
                                         <i class="lni lni-user"></i>
                                     </a>
                                     <ul class="dropdown-menu popup-content link">
-                                        
                                         <?php if ($this->session->userdata('logged_in')): ?>
                                             <li>
                                              <a href="<?php echo base_url('profile-info'); ?>" class="dropdown-item medium text-medium">My Account</a>

@@ -30,7 +30,7 @@
             <div class="row align-items-start justify-content-between">
                 <?php $this->load->view('front/myAccount/common-file'); ?>
                 <div class="col-12 col-md-12 col-lg-8 col-xl-8">
-                    <form action="<?php echo site_url('profile-update-data/' . $userAddresses['id']); ?>" method="post" enctype="multipart/form-data">
+                    <form action="<?php echo site_url('profile-update-data/' . ($userAddresses['id'] ?? 0)); ?>" method="post" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-12 col-lg-12 col-xl-12 col-md-12 mb-3">
                                 <h4 class="ft-medium fs-lg">Edit Address</h4>

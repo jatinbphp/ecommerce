@@ -1,5 +1,3 @@
-
-
 <div class="col-12 col-md-12 col-lg-4 col-xl-4 text-center miliods">
     <div class="d-block border rounded mfliud-bot">
         <div class="dashboard_author">

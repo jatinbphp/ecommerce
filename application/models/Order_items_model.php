@@ -8,12 +8,9 @@ class Order_items_model extends CI_Model
 	    parent::__construct();
 	}
     
-
     public function getOrderItemsByOrderId($orderId) {
         $this->db->where('order_id', $orderId);
         $query = $this->db->get($this->table);
         return $query->result();
     }
-
-   
 }

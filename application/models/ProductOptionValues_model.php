@@ -83,9 +83,3 @@ class ProductOptionValues_model extends CI_Model
         return $this->db->affected_rows() > 0;
     }
 }
-    /**
-     * Delete product options from the database for a given product ID.
-     *
-     * @param int $productId The ID of the product whose options need to be deleted.
-     * @return bool Returns true if any rows were affected by the deletion, false otherwise.
-     */

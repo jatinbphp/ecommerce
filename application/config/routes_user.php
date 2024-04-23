@@ -31,11 +31,12 @@ $route['my-orders'] = 'front/OrderController/index';
 $route['order-details/(:any)'] = 'front/OrderController/orderDetails/$1';
 $route['my-wishlist'] = 'front/WishlistController/index';
 $route['my-wishlist-remove/(:num)'] = 'front/WishlistController/removeItems/$1';
+$route['wishlist-data'] = 'front/WishlistController/getUserWishlistData';
+$route['wishlist/add_to_faviourits'] = 'front/WishlistController/addToFaviourits';
 $route['payment'] = 'front/PaymentController';
 $route['payment/process-payment'] = 'front/PaymentController/processPayment';
 $route['products/get_products'] = 'front/ProductController/getProducts';
 $route['cart/add-product-to-cart'] = 'front/CartController/addToCartProduct';
 $route['cart/get-user-cart'] = 'front/CartController/getUserCartData';
 $route['cart/delete-user-item'] = 'front/CartController/deleteUserCartItem';
-$route['products/add_to_faviourits'] = 'front/ProductController/addToFaviourits';
 
