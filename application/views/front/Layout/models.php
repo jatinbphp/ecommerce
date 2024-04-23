@@ -88,10 +88,6 @@
         <script src="<?php echo base_url('public/assets/admin/plugins/datatables-responsive/js/dataTables.responsive.min.js') ?>"></script>
         <script src="<?php echo base_url('public/assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
         <script src="<?php echo base_url('public/assets/admin/plugins/select2/select2.full.min.js') ?>"></script>
-
-        <!-- all the script for home page -->
-        <script src="<?php echo base_url('public/assets/front/dist/js/homePage.js'); ?>"></script>
-
         <script>
             function openWishlist() {
                 //userWishlist
