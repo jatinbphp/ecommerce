@@ -8,7 +8,8 @@ class MY_Controller extends CI_Controller
 
 	public function frontRenderTemplate($page = null, $data = array())
 	{   
-
+        $this->load->model('Wishlist_model');
+        $data['wishlistProductId'] = $this->Wishlist_model->getWishlistProductIds();
         $data['footer_data'] = $this->getFooterData();
 		$this->load->view('front/Layout/header',$data);
 		$this->load->view($page, $data);

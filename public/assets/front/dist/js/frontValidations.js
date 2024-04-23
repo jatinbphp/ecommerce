@@ -87,7 +87,6 @@ $(document).ready(function() {
     $('.addresses-page').on('click', '.deleteRecord', function (event) {
         event.preventDefault();
         var id = $(this).attr("data-id");
-        console.log(id);
         swal({
             title: "Are you sure?",
             text: "You want to delete this record?",
@@ -148,6 +147,9 @@ $(document).ready(function() {
                     success: function(response) {
                         if (response.success) {
                             $this.closest('.product_grid').remove();
+                            console.log(response);
+                            console.log(response.totalCount);
+                            $('.wishlist-counter').text(response.totalCount);
                             swal("Success!", "Item removed from wishlist successfully.", "success");
                            
                         } else {

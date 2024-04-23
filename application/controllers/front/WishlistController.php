@@ -49,7 +49,8 @@ class WishlistController extends MY_Controller {
         $deleted = $this->Wishlist_model->deleteFromWishlist($id);
         header('Content-Type: application/json');
         if ($deleted) {
-            echo json_encode(['success' => true]);
+            $wishlistItems = $this->Wishlist_model->getWishlistItems($this->session->userdata('userId'));
+            echo json_encode(['success' => true, 'totalCount' => count($wishlistItems)]);
         } else {
             echo json_encode(['success' => false]);
         }

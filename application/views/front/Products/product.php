@@ -1,7 +1,8 @@
 <div class="col-xl-3 col-lg-4 col-md-6 col-6">
     <div class="product_grid card b-0">
         <div><?= $type[$value['type']] ?? "" ?></div>
-        <button class="btn btn_love position-absolute ab-right snackbar-wishlist"><i class="far fa-heart"></i></button> 
+        <button class="btn btn_love position-absolute ab-right snackbar-wishlist" data-id="<?= ($value['id'] ?? "") ?>"><i class="far fa-heart"></i></button> 
+        <button class="btn btn_love position-absolute ab-right snackbar-wishlist <?php echo (in_array(($value['id'] ?? ""), $wishlistProductId)) ? 'active' : ''; ?>" data-id="<?= ($value['id'] ?? "") ?>"><i class="far fa-heart"></i></button> 
         <div class="card-body p-0">
             <div class="shop_thumb position-relative">
                 <?php $images = isset($value['images']) && is_string($value['images']) ? explode(",", $value['images']) : []; ?>

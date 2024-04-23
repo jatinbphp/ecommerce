@@ -17,6 +17,7 @@ class ProductController extends MY_Controller {
         $this->load->model('Product_model');
         $this->load->model('ProductOptions_model');
         $this->load->model('Categories_model');
+        $this->load->model('Wishlist_model');
     }
 
     /**
@@ -30,6 +31,7 @@ class ProductController extends MY_Controller {
     public function index(){
         $categoryId = $this->input->get('categoryId');
         $data['products'] = $this->Product_model->filter_products($categoryId);
+        $data['wishlistProductId']     = $this->Wishlist_model->getWishlistProductIds();
         $content = $this->load->view('front/Products/filter', $data, TRUE);
         $response = [
             'status'   => !empty($data['products']) ? true : false,

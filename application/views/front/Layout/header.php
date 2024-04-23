@@ -40,7 +40,7 @@
                                     </li>
                                     <li>
                                         <a href="javaScript:;" onclick="openWishlist()">
-                                        <i class="lni lni-heart"></i><span class="dn-counter wishlist-counter">2</span>
+                                        <i class="lni lni-heart"></i><span class="dn-counter wishlist-counter"><?php echo ($totalWish) ?></span>
                                         </a>
                                     </li>
                                     <li>
@@ -109,7 +109,7 @@
                                 <?php if ($this->session->userdata('logged_in')): ?>
                                     <li>
                                         <a href="javaScript:;" onclick="openWishlist()">
-                                        <i class="lni lni-heart"></i><span class="dn-counter wishlist-counter">2</span>
+                                        <i class="lni lni-heart"></i><span class="dn-counter wishlist-counter"><?php echo isset($wishlistProductId) ? count($wishlistProductId) :  0; ?></span>
                                         </a>
                                     </li>
                                 <?php endif; ?>

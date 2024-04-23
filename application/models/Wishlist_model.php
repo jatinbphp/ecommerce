@@ -62,7 +62,11 @@ class Wishlist_model extends CI_Model
         $query = $this->db->get();
 
         if ($query->num_rows() > 0) {
-            return $query->result_array();
+            $results = [];
+            foreach ($query->result() as $row) {
+                $results[] = $row->product_id;
+            }
+            return $results;
         } else {
             return [];
         }
