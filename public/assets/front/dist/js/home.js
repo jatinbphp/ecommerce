@@ -8,23 +8,16 @@ function setTab(event){
 	getProducts(categoryId);
 }
 
-$(window).on("load", function() {
-  	var categoryId = $('ul#product-categories').find('.active').attr("data-id");
-    if (categoryId) {
-        getProducts(categoryId);
-    }
-});
-
 function getProducts(categoryId){
 	$.ajax({
-        url: "products/get_products", 
+        url: "products", 
         method: 'GET',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
         	categoryId: categoryId 
     	},
         success: function(response) {
-            if (response.success) {
+            if (response.status) {
             	$('#category-section').html(response.html);
         	} else {
             	console.error('Error loading view:', response);
@@ -32,6 +25,26 @@ function getProducts(categoryId){
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error('AJAX Error:', textStatus, errorThrown);
+        }
+    });
+}
+
+function handleQuickView(event){
+    event.preventDefault();
+    var productId = event.target.getAttribute('data-id');
+    if(!productId) return false;
+    $.ajax({
+        url: "products/show/" + productId, 
+        method: 'GET',
+        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+        success: function(response) {
+            if (response.status) {
+                $('.modal-body, #quickviewbody').html(response.html);
+                initSlickSlider();
+                $('#quickview').modal('show');
+            } else {
+                console.error('Error loading view:', response);
+            }
         }
     });
 }
@@ -45,7 +58,6 @@ function prodAddToCart()
         data: formData,
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         success: function(response) {
-
             $(".user-cart-counter").html(response);
             $('#quickviewMdl').modal('hide');
                 
@@ -54,7 +66,6 @@ function prodAddToCart()
             console.error('AJAX Error:', textStatus, errorThrown);
         }
     });
-
 }
 
 function deleteCartItem(cartId) {
@@ -83,3 +94,4 @@ function deleteCartItem(cartId) {
 
 
 
+>>>>>>> ccd5f5dbf3961a5caa220af00a012b833ffbe9ab:public/assets/front/dist/js/homePage.js

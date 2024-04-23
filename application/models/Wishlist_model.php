@@ -26,7 +26,7 @@ class Wishlist_model extends CI_Model
      */
     public function getWishlistItems($user_id) {
         $this->db->select('*');
-        $this->db->from('wishlists');
+        $this->db->from($this->table);
         $this->db->where('user_id', $user_id);
         $query = $this->db->get();
         
@@ -45,7 +45,26 @@ class Wishlist_model extends CI_Model
     public function deleteFromWishlist($id)
     {
         $this->db->where('product_id', $id);
-        $deleted = $this->db->delete('wishlists');
+        $deleted = $this->db->delete($this->table);
         return $deleted;
+    }
+
+    public function getWishlistProductIds(){
+        $userId = $this->session->userdata('userId');
+        
+        if(!$userId){
+            return [];
+        }
+
+        $this->db->select('product_id');
+        $this->db->from($this->table);
+        $this->db->where('user_id', $userId);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return [];
+        }
     }
 }
