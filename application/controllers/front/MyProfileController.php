@@ -189,7 +189,7 @@ class MyProfileController extends MY_Controller {
 
         $userId = $this->session->userdata('userId');
         $data = [
-            'user_id' => $this->input->post('id'),
+            'user_id' => $userId,
             'title' =>  !empty($this->input->post('title')) ? $this->input->post('title') : "",
             'first_name' => $this->input->post('first_name'),
             'last_name' => $this->input->post('last_name'),
@@ -204,7 +204,7 @@ class MyProfileController extends MY_Controller {
             'additional_information' => !empty($this->input->post('additional_information')) ? $this->input->post('additional_information') : "",
         ];
 
-        $this->User_address_model->update_address($userId, $data);
+        $this->User_address_model->update_address($address_id, $data);
         $this->session->set_flashdata('success', 'Address updated successfully.');
         redirect('profile-address', 'refresh');
     }
