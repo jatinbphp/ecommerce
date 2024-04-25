@@ -42,7 +42,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>INV-<?php echo date('Y', strtotime($order->created_at)); ?>-<?php echo $order->id; ?></td>
+                                    <td>#<?php echo $order->id; ?></td>
                                     <td><?php echo isset($user['first_name']) ? $user['first_name'] : ''; ?> (<?php echo isset($user['email']) ? $user['email'] : ''; ?>)</td>
                                     <td><?php echo $order->created_at; ?></td>
                                     <td><span class="ft-medium small text-primary bg-light-primary rounded px-3 py-1"><?php echo $order->status; ?></span></td>
@@ -82,6 +82,19 @@
                                                         <h4 class="product_title fs-sm ft-medium mb-1 lh-1">
                                                             <?php echo $item->product_name; ?>
                                                         </h4>
+                                                        <p class="m-0">
+                                                            <?php
+                                                                $orderProductId = $item->id;
+                                                                $optins =$returnArray = array_filter($orderAttributes, function($item) use($orderProductId) {
+                                                                    return $item->order_product_id == $orderProductId;
+                                                                });
+                                                            ?>
+                                                            <?php if(!empty($optins)): ?>
+                                                                <?php foreach ($optins as $optionData): ?>
+                                                                    <span class="text-dark medium"><?php echo ($optionData->name ?? '');?> : <?php echo preg_match('/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', ($optionData->value ?? '')) ? '<i class="fas fa-square" style="color: '.($optionData->value ?? '').'"></i>' : ($optionData->value ?? ''); ?></span></br>
+                                                                <?php endforeach; ?>
+                                                            <?php endif; ?>
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </td>

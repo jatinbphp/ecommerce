@@ -1,4 +1,5 @@
 
+<?php print_r($created_at); ?>
 <div class="container">
     <div class="row align-items-center justify-content-start m-0 py-2">
         <div class="col-xl-4 col-lg-4 col-md-4 col-12">
@@ -6,8 +7,7 @@
                 <div class="cart_single_caption">
                     <p class="mb-0">
                         <?php 
-                            $year = date('Y', strtotime($created_at));
-                            echo "- " . $year . " - " . $id; 
+                            echo "#" . $id; 
                         ?>
                     </p>
                     <h4 class="product_title fs-sm ft-medium mb-1 lh-1">
@@ -29,7 +29,7 @@
         <div class="col-xl-3 col-lg-3 col-md-4 col-6">
             <p class="mb-1 p-0"><span class="text-muted">Order date by:</span></p>
             <h6 class="mb-0 ft-medium fs-sm">
-                <?php echo date('d, F Y', strtotime($created_at)); ?>
+                <?php echo date('d, F Y', strtotime(($created_at ?? 0))); ?>
             </h6>
         </div>
         <div class="col-xl-1 col-lg-1 col-md-1 col-6">

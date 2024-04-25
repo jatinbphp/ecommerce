@@ -52,7 +52,6 @@ class ProductController extends MY_Controller {
 
     public function details($id) {
         $data = $this->product_data($id);
-        //echo "<pre>";print_r($data);exit();
         $this->frontRenderTemplate('front/Products/details', $data);
     }
 

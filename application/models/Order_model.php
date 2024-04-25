@@ -28,6 +28,12 @@ class Order_model extends CI_Model
         }
         return 0;
 	}
+
+    public function edit($data = array(), $id = null){
+		$this->db->where('id', $id);
+		$update = $this->db->update($this->table, $data);
+		return ($update == true) ? true : false;	
+	}
     
     /**
      * Generates a DataTables response by executing the query and applying limit and start parameters.

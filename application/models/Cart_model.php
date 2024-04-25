@@ -99,24 +99,16 @@ class Cart_model extends CI_Model
 	{
 
 		$userId = $this->session->userdata('userId');
-
-		if(isset($userId) && $userId != '')
-		{
+		if(!empty($userId)){
 	    	$this->db->where('id', $cartId);
 	    	$this->db->delete($this->table);
-	    	 return $this->db->affected_rows() > 0;
+	    	return $this->db->affected_rows() > 0;
     	}
-    	else
-		{
-			//remove for guest user
-		}
-
 	}
 
 	public function getUserCartCounter()
 	{
 		$userId = $this->session->userdata('userId');
-
 		if(isset($userId) && $userId != '')
 		{
 			$this->db->select('COUNT(*) as count');
@@ -129,12 +121,13 @@ class Cart_model extends CI_Model
 	        return $cartCount;
 
 		}
-		else
-		{
-			//guest user condition
-		}
+	}
 
-
+	public function deleteByUserId($userId)
+	{
+		$this->db->where('user_id', $userId);
+		$delete = $this->db->delete($this->table);
+		return ($delete == true) ? true : false;
 	}
 
 }
