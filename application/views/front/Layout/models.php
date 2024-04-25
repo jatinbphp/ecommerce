@@ -87,14 +87,13 @@
         <script src="<?php echo base_url('public/assets/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>"></script>
         <script src="<?php echo base_url('public/assets/admin/plugins/datatables-responsive/js/dataTables.responsive.min.js') ?>"></script>
         <script src="<?php echo base_url('public/assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
-        <script src="<?php echo base_url('public/assets/admin/plugins/select2/select2.full.min.js') ?>"></script>
         <script>
             function openWishlist() {
                 //userWishlist
             	document.getElementById("Wishlist").style.display = "block";
                 $.ajax({
                     url: "wishlist-data", 
-                    method: 'GET',
+                    type: 'GET',
                     headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
                     success: function(response) {
                         $("#userWishlist").html(response.wishlistHtml);
@@ -112,10 +111,13 @@
         <script>
             function openCart() {
             	document.getElementById("Cart").style.display = "block";
+                var cartDataFromLocalStorage = localStorage.getItem('cartData');
+                console.log(cartDataFromLocalStorage);
 
                 $.ajax({
-                    url: "cart/get-user-cart", 
-                    method: 'GET',
+                    url: baseUrl+"cart/get-user-cart", 
+                    type: 'POST',
+                    data: { cartData: cartDataFromLocalStorage },
                     headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
                     success: function(response) {
                         $("#usrCartDataMenu").html(response.cartView);
@@ -125,8 +127,6 @@
                         console.error('AJAX Error:', textStatus, errorThrown);
                     }
                 });
-
-
             }
             function closeCart() {
             	document.getElementById("Cart").style.display = "none";
@@ -139,6 +139,6 @@
             function closeSearch() {
             	document.getElementById("Search").style.display = "none";
             }
-        </script>	
+        </script>
     </body>
 </html>

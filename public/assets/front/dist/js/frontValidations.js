@@ -41,10 +41,12 @@ $(document).ready(function() {
     $(document).on('click', '.snackbar-wishlist', function(event) {
         event.preventDefault();
         var id = $(this).attr("data-id");
-        var self = $(this);
+        if(!id){
+            return;
+        }
 
         $.ajax({
-            url:"wishlist/add_to_faviourits",
+            url: baseUrl+"wishlist/add_to_faviourits",
             type: "POST",
             data: {
                 'id': id,
@@ -54,12 +56,11 @@ $(document).ready(function() {
                     $('.wishlist-counter').text(data.total);
                     var msg = '';
                     if(data.type == 1){
-                        self.addClass('active');
                         msg = 'Your product was added to wishlist successfully!';
                     } else {
-                        self.removeClass('active');
                         msg = 'Your product was removed from the wishlist successfully!';
                     }
+                    updateWishlistClass(data.type, id);
                     SnackbarAlert(msg);
                 } else {
                     SnackbarAlert("To add this product to your favorites, please log in to your account!");
@@ -147,8 +148,6 @@ $(document).ready(function() {
                     success: function(response) {
                         if (response.success) {
                             $this.closest('.product_grid').remove();
-                            console.log(response);
-                            console.log(response.totalCount);
                             $('.wishlist-counter').text(response.totalCount);
                             swal("Success!", "Item removed from wishlist successfully.", "success");
                            
@@ -176,5 +175,18 @@ function SnackbarAlert(msg) {
         duration: 3000,
         textColor: '#fff',
         backgroundColor: '#151515'
+    });
+}
+
+function updateWishlistClass(type, id){
+    $('.snackbar-wishlist').each(function() {
+        var dataId = $(this).data('id');
+        if (dataId == id) {
+            if(type == 1){
+                $(this).addClass('active-wishlist');
+            }else{
+                $(this).removeClass('active-wishlist');
+            }
+        }
     });
 }

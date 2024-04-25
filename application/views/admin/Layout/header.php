@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/fontawesome-free/css/all.min.css'); ?>">
 	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/dist/css/adminlte.min.css'); ?>">
-    	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/select2/select2.min.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/select2/select2.min.css') ?>">
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/dist/css/custom.css'); ?>">
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">

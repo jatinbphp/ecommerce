@@ -69,7 +69,7 @@
                     <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                         <div class="reviews_info">
                             <div class="single_rev d-flex align-items-start br-bottom py-3">
-                                <div class="single_rev_thumb"><img src="images/team-1.jpg" class="img-fluid circle" width="90" alt="" /></div>
+                                <div class="single_rev_thumb"><img src="<?php echo base_url('images/team-1.jpg') ?>" class="img-fluid circle" width="90" alt="" /></div>
                                 <div class="single_rev_caption d-flex align-items-start pl-3">
                                     <div class="single_capt_left">
                                         <h5 class="mb-0 fs-md ft-medium lh-1">Daniel Rajdesh</h5>
@@ -89,7 +89,7 @@
                             </div>
                             <!-- Single Review -->
                             <div class="single_rev d-flex align-items-start br-bottom py-3">
-                                <div class="single_rev_thumb"><img src="images/team-2.jpg" class="img-fluid circle" width="90" alt="" /></div>
+                                <div class="single_rev_thumb"><img src="<?php echo base_url('images/team-2.jpg') ?>" class="img-fluid circle" width="90" alt="" /></div>
                                 <div class="single_rev_caption d-flex align-items-start pl-3">
                                     <div class="single_capt_left">
                                         <h5 class="mb-0 fs-md ft-medium lh-1">Seema Gupta</h5>
@@ -109,7 +109,7 @@
                             </div>
                             <!-- Single Review -->
                             <div class="single_rev d-flex align-items-start br-bottom py-3">
-                                <div class="single_rev_thumb"><img src="images/team-3.jpg" class="img-fluid circle" width="90" alt="" /></div>
+                                <div class="single_rev_thumb"><img src="<?php echo base_url('images/team-3.jpg') ?>" class="img-fluid circle" width="90" alt="" /></div>
                                 <div class="single_rev_caption d-flex align-items-start pl-3">
                                     <div class="single_capt_left">
                                         <h5 class="mb-0 fs-md ft-medium lh-1">Mark Jugermi</h5>
@@ -129,7 +129,7 @@
                             </div>
                             <!-- Single Review -->
                             <div class="single_rev d-flex align-items-start py-3">
-                                <div class="single_rev_thumb"><img src="images/team-4.jpg" class="img-fluid circle" width="90" alt="" /></div>
+                                <div class="single_rev_thumb"><img src="<?php echo base_url('images/team-4.jpg') ?>" class="img-fluid circle" width="90" alt="" /></div>
                                 <div class="single_rev_caption d-flex align-items-start pl-3">
                                     <div class="single_capt_left">
                                         <h5 class="mb-0 fs-md ft-medium lh-1">Meena Rajpoot</h5>

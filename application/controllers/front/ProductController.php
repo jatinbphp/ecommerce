@@ -41,7 +41,7 @@ class ProductController extends MY_Controller {
         $this->output->set_content_type('application/json')->set_output(json_encode($response));
     }
 
-   public function show($id) {
+    public function show($id) {
         $data = $this->product_data($id);
         $response = [
             'status' => !empty($data['product']) ? true : false,
@@ -58,7 +58,9 @@ class ProductController extends MY_Controller {
 
     
     private function product_data($id) {
+        $this->load->model('Wishlist_model');
         $data['product'] = $this->Product_model->show($id);
+        $data['wishlistProductId'] = $this->Wishlist_model->getWishlistProductIds();
         if (!empty($data['product'])) {
             $data['product']['stock_status']    = $this->Product_model::$stock_status;
             $data['product']['quantity']        = $this->Product_model::$quantity;

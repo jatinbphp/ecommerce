@@ -43,7 +43,8 @@
                                 <?php echo form_label('Enter OTP <span class="text-danger">*</span>', 'otp'); ?>
                                 <?php echo form_input(array('type' => 'text', 'class' => 'form-control', 'id' => 'otp', 'name' => 'otp', 'maxlength' => '6', 'required' => 'required')); ?>
                             </div>
-                            <?php echo form_submit(array('class' => 'btn btn-primary', 'value' => 'Verify OTP')); ?>
+                            <?php echo form_input(['type' => 'hidden', 'id' => 'userCart', 'name' => 'cartData', 'value' => '',]);?>
+                            <?php echo form_submit(array('class' => 'btn btn-primary', 'value' => 'Verify OTP', 'onClick'=>'verifyOtp()')); ?>
                         <?php echo form_close(); ?>
                     </div>
                 </div>
@@ -53,6 +54,14 @@
     <script src="<?php echo base_url('js/jquery.min.js'); ?>"></script>
     <script src="<?php echo base_url('js/popper.min.js'); ?>"></script>
     <script src="<?php echo base_url('js/bootstrap.min.js'); ?>"></script>
-
+    <script>
+        function verifyOtp(){
+            var cartData = localStorage.getItem('cartData');
+            if(cartData){
+                $('#userCart').val(cartData);
+                localStorage.removeItem('cartData');
+            }
+        }
+    </script>
 </body>
 </html>

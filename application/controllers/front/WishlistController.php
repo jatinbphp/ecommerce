@@ -13,7 +13,6 @@ class WishlistController extends MY_Controller {
     */
 	public function __construct() {
         parent::__construct();
-        $this->checkUserLoggedIn();
         $this->load->model('Wishlist_model');
         $this->load->model('Product_model');
     }
@@ -64,8 +63,6 @@ class WishlistController extends MY_Controller {
      * @return void
      */
     public function getUserWishlistData(){
-        $this->checkUserLoggedIn();
-
         $user_id        = $this->session->userdata('userId');
         $wishlist_items = $this->Wishlist_model->getWishlistItems($user_id);
         $product_ids    = array_column($wishlist_items, 'product_id');
@@ -88,7 +85,6 @@ class WishlistController extends MY_Controller {
      */
     public function addToFaviourits(){
         $productId = $this->input->post('id');
-
         if(!$userId = $this->session->userdata('userId')){
             return '';
         }

@@ -383,8 +383,10 @@ class AuthController extends MY_Controller {
 
                 $this->session->set_userdata('userId', $user->id);
                 $this->session->set_userdata($userdata);
+                $this->manageCart($this->input->post('cartData'));
                 redirect(base_url());
             } else {
+                // $this->manageCart($this->input->post('cartData'));
                 $this->session->set_flashdata('error', 'Invalid OTP. Please try again.');
                 redirect('otpCheck');
             }
@@ -392,5 +394,53 @@ class AuthController extends MY_Controller {
             $this->session->set_flashdata('error', 'User not found.');
             redirect('otpCheck');
         }
+    }
+
+    public function manageCart($data) {
+        $cartData = $data ?? '';
+        $userCartData = json_decode($cartData, true) ?? [];
+
+        if(!$userCartData){
+            return $this;
+        }
+        
+        foreach($userCartData as $cartData){
+            $options = $cartData['options'] ?? [];
+            $productId = $cartData['product_id'] ?? 0;
+            $productQty = $cartData['quantity'] ?? 0;
+            $userId = $this->session->userdata('userId');
+            
+            if(empty($options) || empty($productId) || empty($productQty) || empty($userId)){
+                continue;
+            }
+
+            $this->db->select('*');
+            $this->db->from('carts');
+            $this->db->where('user_id', $userId);
+            $this->db->where('product_id', $productId);
+            $this->db->where('options', json_encode($options));
+            $this->db->limit(1);
+            $query = $this->db->get();
+            $cartRows = $query->row();
+            $cart = $query->num_rows();
+            if($cart == 0){
+                $cartData = [
+                    'user_id' => $userId,
+                    'options' => json_encode($options),
+                    'product_id' => $productId,
+                    'quantity' => $productQty
+                ];
+                $this->load->model('Cart_model');
+                $this->Cart_model->create($cartData);
+            } else {
+                $newQuantity = $cartRows->quantity + $productQty;
+                $this->db->where('user_id', $userId);
+                $this->db->where('product_id', $productId);
+                $this->db->where('options', json_encode($options));
+                $this->db->update('carts', array('quantity' => $newQuantity));
+            }
+    
+        }
+        return $this;
     }
 }

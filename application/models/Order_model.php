@@ -16,6 +16,18 @@ class Order_model extends CI_Model
     public function __construct(){
 	    parent::__construct();
 	}
+
+    public function create($data = ''){
+		if($data) {
+            $create = $this->db->insert($this->table, $data);
+            if ($create) {
+                return $this->db->insert_id();
+            } else {
+                return 0;
+            }
+        }
+        return 0;
+	}
     
     /**
      * Generates a DataTables response by executing the query and applying limit and start parameters.

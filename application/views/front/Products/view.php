@@ -39,35 +39,40 @@
                 <div class="prt_03 mb-3">
                     <?= substr($product['description'], 0, 300) . (strlen($product['description']) > 300 ? '...' : '')?>
                 </div>
-
+                <?php echo form_open('cart/add-product-to-cart', ['method' => 'post', 'id' => 'addProductToCartFormDetails']); ?>
+                <?php echo form_hidden('product_id', $product['id']); ?>
                 <?php if(isset($product['options']) && !empty($product['options'])): ?>
                     <?php foreach($product['options'] as $option): ?>
                         <div class="prt_04 mb-4">
-                            <p class="d-flex align-items-center mb-0 text-dark ft-medium text-capitalize"><?= $option['option_type'] ?? "-" ?>:</p>
-                            <div class="text-left pb-0 pt-2">
+                            <p class="d-flex align-items-center mb-0 text-dark ft-medium text-capitalize"><?= $option['option_name'] ?? "-" ?>:</p>
+                            <div class="pb-0 pt-2">
+                                <?php if(isset($option['option_type']) && $option['option_type'] == "select"): ?>
+                                    <select id="<?= $option['id'] ?>" name="options[<?= ($option['id'] ?? '') ?>]" class="form-control" style="width:100px">
+                                <?php endif ?>
                                 <?php if(isset($option['option_values']) && !empty($option['option_values'])): ?>
                                     <?php foreach($option['option_values'] as $optionKey => $optionValue): ?>
-                                        <!-- size -->
                                         <?php if(isset($option['option_type']) && $option['option_type'] == "color"): ?>
                                             <div class="form-check form-option form-check-inline mb-1">
-                                                <input class="form-check-input" type="radio" name="<?= $option['option_type'] ?>[<?= $optionKey ?? null ?>]" value="<?= $optionValue['option_id'] ?? null ?>" id="<?= $option['option_type'] ?>-<?= $optionKey ?>">
+                                                <input class="form-check-input" <?= ($optionKey === 0) ? 'checked' : '' ?> type="radio" name="options[<?= ($option['id'] ?? '') ?>]" value="<?= $optionValue['id'] ?? null ?>" id="<?= $option['option_type'] ?>-<?= $optionKey ?>">
                                                 <label class="form-option-label rounded-circle" for="<?= $option['option_type'] ?>-<?= $optionKey ?>">
                                                     <span class="form-option-color rounded-circle" style="background-color: <?= $optionValue['option_value'] ?? null ?>;"></span>
                                                 </label>
                                             </div>
                                         <?php endif ?>
-                                        <!-- end size -->
-
-                                        <!-- for color -->
-                                        <?php if(isset($option['option_type']) && $option['option_type'] == "size"): ?>
+                                        <?php if(isset($option['option_type']) && $option['option_type'] == "select"): ?>
+                                            <option value="<?= $optionValue['id'] ?? null ?>" <?= ($optionKey === 0) ? 'selected' : '' ?>><?= $optionValue['option_value'] ?></option>
+                                        <?php endif ?>
+                                        <?php if(isset($option['option_type']) && $option['option_type'] == "radio"): ?>
                                             <div class="form-check size-option form-option form-check-inline mb-2">
-                                                <input class="form-check-input" type="radio" name="<?= $option['option_type'] ?>[<?= $optionKey ?? null ?>]" value="<?= $optionValue['option_id'] ?? null ?>" id="<?= $option['option_type'] ?>-<?= $optionKey ?>">
+                                                <input class="form-check-input" type="radio" <?= ($optionKey === 0) ? 'checked' : '' ?> name="options[<?= ($option['id'] ?? '') ?>]" value="<?= $optionValue['id'] ?? null ?>" id="<?= $option['option_type'] ?>-<?= $optionKey ?>">
                                                 <label class="form-option-label" for="<?= $option['option_type'] ?>-<?= $optionKey ?>"><?= $optionValue['option_value'] ?></label>
                                             </div>
                                         <?php endif ?>
-                                        <!-- end color -->
                                     <?php endforeach ?>
                                 <?php endif ?>
+                            <?php if(isset($option['option_type']) && $option['option_type'] == "select"): ?>
+                                </select>
+                            <?php endif ?>
                             </div>
                         </div>
                     <?php endforeach ?>
@@ -87,18 +92,20 @@
                         </div>
                         <div class="col-12 col-lg">
                             <!-- Submit -->
-                            <button type="submit" class="btn btn-block custom-height bg-dark mb-2">
+                            <button type="submit" class="btn btn-block custom-height bg-dark mb-2" id="add_to_cartproduct">
                                 <i class="lni lni-shopping-basket mr-2"></i>Add to Cart 
                             </button>
                         </div>
                         <div class="col-12 col-lg-auto">
                             <!-- Wishlist -->
-                            <button class="btn custom-height btn-default btn-block mb-2 text-dark" data-toggle="button">
+                            <button class="btn custom-height btn-default btn-block mb-2 text-dark snackbar-wishlist <?php echo (in_array(($product['id'] ?? ''), ($wishlistProductId ?? []))) ? 'active-wishlist' : ''; ?>" data-id="<?php echo ($product['id'] ?? 0) ?>" data-toggle="button">
                             <i class="lni lni-heart mr-2"></i>Wishlist
                             </button>
                         </div>
+
                     </div>
                 </div>
+                <?php echo form_close(); ?>
                 <div class="prt_06">
                     <p class="mb-0 d-flex align-items-center">
                         <span class="mr-4">Share:</span>

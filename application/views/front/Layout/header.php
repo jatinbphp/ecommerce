@@ -40,7 +40,7 @@
                                     </li>
                                     <li>
                                         <a href="javaScript:;" onclick="openWishlist()">
-                                        <i class="lni lni-heart"></i><span class="dn-counter wishlist-counter"><?php echo ($totalWish) ?></span>
+                                        <i class="lni lni-heart"></i><span class="dn-counter wishlist-counter">0</span>
                                         </a>
                                     </li>
                                     <li>
@@ -117,6 +117,12 @@
                                     <a href="javaScript:;" onclick="openCart()">
                                         <i class="lni lni-shopping-basket"></i><span class="dn-counter user-cart-counter"><?php echo (isset($usrCartCounter) && $usrCartCounter > 0) ? $usrCartCounter :  0; ?></span>
                                     </a>
+                                    <?php if (!$this->session->userdata('logged_in')): ?>
+                                        <script>
+                                            var data =  localStorage.getItem('cartData');
+                                            $('.user-cart-counter').text(JSON.parse(data).length);
+                                        </script>    
+                                    <?php endif  ?>
                                 </li>
                             </ul>
                         </div>

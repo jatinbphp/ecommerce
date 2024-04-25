@@ -2989,6 +2989,83 @@ li.login-attri .account-drop a {
     background: #009acd;
 }
 
+#payaccordion article {
+    border: 1px solid #eaeff5;
+    padding: 1em
+}
+
+#payaccordion input[type="radio"] {
+    appearance: none;
+    position: fixed;
+    top: -100vh;
+    left: -100vh
+}
+
+#payaccordion input[type="radio"]~div {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .5s
+}
+
+#payaccordion input[type="radio"]:checked~div {
+    max-height: inherit
+}
+
+#payaccordion input[type="radio"] {
+    position: absolute;
+    opacity: 0
+}
+
+#payaccordion .article-lable {
+    display: block;
+    cursor: pointer;
+    padding-left: 30px;
+    position: relative
+}
+
+#payaccordion .article-lable::before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: #edeef3;
+    border-radius: 50%;
+    border: none;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #fff;
+    transition: all ease .4s
+}
+
+#payaccordion input[type="radio"]:checked+.article-lable::before {
+    content: "\e64c";
+    font-family: 'themify';
+    background: #009acd
+}
+
+#payaccordion [type="radio"]:checked+label:after,
+#payaccordion [type="radio"]:not(:checked)+label:after {
+    background: none !important
+}
+
+#payaccordion article label, #payaccordion article label h5 {
+    margin: 0;
+}
+
+.bg-dark #payaccordion .panel.panel-default {
+    background: transparent;
+}
+.bg-dark #payaccordion .article-lable::before {
+    background: rgba(255, 255, 255, .3);
+}
+.bg-dark #payaccordion .panel-default .panel-body {
+    color: #ffffff;
+}
+
 /*----------------- Price Range --------------------*/
 .irs-min, .irs-max {
     display: none;
@@ -5168,3 +5245,6 @@ img {max-width: 100%;}
 }
 .dataTables_length, .dataTables_filter{display: none;}
 #frontordersTable thead{display: none;}
+.snackbar-wishlist.active-wishlist {
+    background-color: rgba(0, 156, 207, .5);
+}

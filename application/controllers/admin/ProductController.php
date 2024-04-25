@@ -452,7 +452,6 @@ class ProductController extends MY_Controller
     	return [
 			'select'   => 'Select',
     		'color'    => 'Color',
-            'checkbox' =>'Checkbox',
             'radio'    => 'Radio Button',
     	];
     }

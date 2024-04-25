@@ -49,28 +49,70 @@ function handleQuickView(event){
     });
 }
 
-function prodAddToCart()
-{
-    var formData = $('#addToCartDataFrm').serialize();
-     $.ajax({
-        url: "cart/add-product-to-cart",
-        method: 'POST',
-        data: formData,
-        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
-        success: function(response) {
-            $(".user-cart-counter").html(response);
-            $('#quickviewMdl').modal('hide');
-                
+$(document).on("click", "#add_to_cartproduct", function(e) {
+    e.preventDefault();
+    var form = $(this).closest("form");
+    var form_type = $(this).attr('data-type');
+
+    $.ajax({
+        url: form.attr("action"),
+        type: 'POST',
+        data: form.serialize(),
+        success: function(response){
+            if(response.type == 2){
+                var msg = 'Something went wrong.';
+                SnackbarAlert(msg);
+                return;
+            }
+            if(response.type == 3 && response.addCartData){
+                var existingCartData = localStorage.getItem('cartData') ? JSON.parse(localStorage.getItem('cartData')) : [];
+                var foundIndex = existingCartData.findIndex(function(item) {
+                    return item.product_id === response.addCartData.product_id && 
+                        JSON.stringify(item.options) === JSON.stringify(response.addCartData.options);
+                });
+
+                if (foundIndex !== -1) {
+                    if ('quantity' in existingCartData[foundIndex] && 'quantity' in response.addCartData) {
+                        var existingQuantity = parseInt(existingCartData[foundIndex].quantity);
+                        var newQuantity = parseInt(response.addCartData.quantity);
+
+                        if (!isNaN(existingQuantity) && !isNaN(newQuantity)) {
+                            existingCartData[foundIndex].quantity = (existingQuantity + newQuantity);
+                        } 
+                    }
+                } else {
+                    existingCartData.push(response.addCartData);
+                }
+                localStorage.setItem('cartData', JSON.stringify(existingCartData));
+                var data = localStorage.getItem('cartData');
+                $('.user-cart-counter').text(JSON.parse(data).length);
+            } else {
+                $('.user-cart-counter').text(response.cartCounter)
+            }
+            $('#quickview').modal('hide');
+            SnackbarAlert('Your product was added to cart successfully!');
+            
         },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.error('AJAX Error:', textStatus, errorThrown);
+        error: function(xhr, status, error){
+            SnackbarAlert(error);
         }
     });
-}
+});
 
-function deleteCartItem(cartId) {
-    
-        $.ajax({
+function deleteCartItem(cartId, button) {
+    if(cartId == 0){
+        var productId = $(button).attr('data-productId');
+        var existingCartData = localStorage.getItem('cartData') ? JSON.parse(localStorage.getItem('cartData')) : [];
+        var filteredCartData = existingCartData.filter(function(item) {
+            return item.product_id !== productId;
+        });
+        localStorage.setItem('cartData', JSON.stringify(filteredCartData));
+        var data =  localStorage.getItem('cartData');
+        $('.user-cart-counter').text(JSON.parse(data).length);
+        openCart();
+        return;
+    }
+    $.ajax({
         url: "cart/delete-user-item",
         method: 'POST',
         data: {
@@ -78,10 +120,8 @@ function deleteCartItem(cartId) {
         },
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         success: function(response) {
-
             $("#usrCartDataMenu").html(response.cartView);
             $(".user-cart-counter").html(response.cartCounter);
-                
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error('AJAX Error:', textStatus, errorThrown);
