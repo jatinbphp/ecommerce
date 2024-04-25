@@ -112,7 +112,6 @@
             function openCart() {
             	document.getElementById("Cart").style.display = "block";
                 var cartDataFromLocalStorage = localStorage.getItem('cartData');
-                console.log(cartDataFromLocalStorage);
 
                 $.ajax({
                     url: baseUrl+"cart/get-user-cart", 

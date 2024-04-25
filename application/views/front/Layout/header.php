@@ -119,8 +119,10 @@
                                     </a>
                                     <?php if (!$this->session->userdata('logged_in')): ?>
                                         <script>
-                                            var data =  localStorage.getItem('cartData');
-                                            $('.user-cart-counter').text(JSON.parse(data).length);
+                                            var data = localStorage.getItem('cartData');
+                                            if(data){
+                                                $('.user-cart-counter').text(JSON.parse(data).length);    
+                                            }
                                         </script>    
                                     <?php endif  ?>
                                 </li>
