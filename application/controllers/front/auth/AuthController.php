@@ -23,14 +23,14 @@ class AuthController extends MY_Controller {
     public function index() {
         $this->userRedirectIfLoggedIn();
         $countryCode = $this->countries_model->getCountryData();
-        $this->load->view('front/auth/signUp',['countryCode' => $countryCode]); 
+        $this->frontRenderTemplate('front/auth/signUp',['countryCode' => $countryCode]);
     }
 
     //This function is use for display otp Page
     public function optCheckView()
     {
         $this->userRedirectIfOtpNotSent();
-        $this->load->view('front/auth/otpCheck');
+        $this->frontRenderTemplate('front/auth/otpCheck');
     }
 
     /**
@@ -38,7 +38,7 @@ class AuthController extends MY_Controller {
      */
     public function logIn() {
         $this->userRedirectIfLoggedIn();
-        $this->load->view('front/auth/signIn'); 
+        $this->frontRenderTemplate('front/auth/signIn');
     }
 
     /**
@@ -60,7 +60,7 @@ class AuthController extends MY_Controller {
      * Display the forgot password form.
      */
     public function forgotPassword(){
-        $this->load->view('front/auth/forgotPassword'); 
+        $this->frontRenderTemplate('front/auth/forgotPassword'); 
     }
 
     /**
@@ -102,7 +102,7 @@ class AuthController extends MY_Controller {
         {
             $password = $this->input->post('password');
             if ($this->user_model->updatePasswordByResetToken($getTokenVal, $password)) {
-                $this->session->set_flashdata('success_message', 'Your password has been reset successfully. You can now log in with your new password');
+                $this->session->set_flashdata('success', 'Your password has been reset successfully. You can now log in with your new password');
                 redirect(base_url('signIn'));
             } 
             else
@@ -152,7 +152,7 @@ class AuthController extends MY_Controller {
             //$message = "<p>Click this link to reset your password: <a href='$reset_link'>$reset_link</a></p>";
             $this->email->message($message);
             if ($this->email->send()) {
-                $this->session->set_flashdata('success_message', "Instructions for resetting your password have been emailed to <strong>".$email."</strong>");
+                $this->session->set_flashdata('success', "Instructions for resetting your password have been emailed to <strong>".$email."</strong>");
                 redirect(base_url('forgotPassword'));
             } else {
                 $this->session->set_flashdata('error', $this->email->print_debugger());
@@ -187,7 +187,8 @@ class AuthController extends MY_Controller {
         $this->form_validation->set_rules('countryCode', 'Country Code', 'required');
 
         if ($this->form_validation->run() == FALSE) {
-            $this->load->view('front/auth/signUp');
+            $countryCode = $this->countries_model->getCountryData();
+            $this->frontRenderTemplate('front/auth/signUp',['countryCode' => $countryCode]);
         }
         else {
 
@@ -205,7 +206,7 @@ class AuthController extends MY_Controller {
             );
 
              if ($this->user_model->register_user($data)) {
-                $this->session->set_flashdata('success_message', 'You are successfully registered');
+                $this->session->set_flashdata('success', 'You are successfully registered');
                 $this->user_model->resetLoginAttempts($this->input->post('email'));
 
                 $getOtpCode = $this->generateOTP();
@@ -286,7 +287,7 @@ class AuthController extends MY_Controller {
 
         $this->email->message($message);
         if ($this->email->send()) {
-            $this->session->set_flashdata('success_message', 'Your One-Time Password (OTP) has been emailed to <strong>'.$email.'</strong>');
+            $this->session->set_flashdata('success', 'Your One-Time Password (OTP) has been emailed to <strong>'.$email.'</strong>');
             redirect(base_url('otpCheck'));
         } else {
             $this->session->set_flashdata('error', 'OTP email is not sent due to :'.$this->email->print_debugger()." So please signIn again.");

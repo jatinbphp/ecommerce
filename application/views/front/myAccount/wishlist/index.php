@@ -1,32 +1,8 @@
 <div id="main-wrapper">
-    <div class="gray py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="<?php echo site_url(''); ?>">Home</a></li>
-                            <li class="breadcrumb-item"><a href="<?php echo site_url('profile-info'); ?>">My Account</a></li>
-                            <li class="breadcrumb-item"><?php echo $title; ?></li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php $this->load->view('Breadcrumb',['current' => $title, 'middle' => ['my_account' => 'profile-info']]); ?>
     <section class="middle">
         <div class="container">
-            <?php if($this->session->flashdata('success')): ?>
-                <div class="alert alert-success alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <?php echo $this->session->flashdata('success'); ?>
-                </div>
-            <?php elseif($this->session->flashdata('error')): ?>
-                <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <?php echo $this->session->flashdata('error'); ?>
-                </div>
-            <?php endif; ?>
+            <?php $this->load->view('SessionMessages'); ?>
             <div class="row align-items-start justify-content-between">
                 <?php $this->load->view('front/myAccount/common-file'); ?>
                 <?php if (!empty($wishlists)): ?>

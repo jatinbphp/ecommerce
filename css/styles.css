@@ -5248,3 +5248,17 @@ img {max-width: 100%;}
 .snackbar-wishlist.active-wishlist {
     background-color: rgba(0, 156, 207, .5);
 }
+
+.eye-icon, .confirm-eye-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    pointer-events: auto;
+    color:gray;
+}
+
+.confirm-eye-icon i {
+    pointer-events: none;
+}

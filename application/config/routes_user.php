@@ -46,5 +46,6 @@ $route['cart/get-user-cart'] = 'front/CartController/getUserCartData';
 $route['cart/delete-user-item'] = 'front/CartController/deleteUserCartItem';
 $route['checkout'] = 'front/CheckoutController';
 $route['checkout/order/place'] = 'front/CheckoutController/orderPlace';
+$route['reviews/add-review'] = 'front/ReviewsController/addReview';
 
 

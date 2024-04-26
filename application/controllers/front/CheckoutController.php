@@ -20,7 +20,13 @@ class CheckoutController extends MY_Controller {
     public function index() {
         $userId = $this->session->userdata('userId');
         $this->data['user_addresses'] = $this->User_address_model->getUserAddresses($userId);
-        $this->data['cart_products'] = $this->Cart_model->getUsrCartData($userId);
+        $cartProducts = $this->Cart_model->getUsrCartData($userId);
+        if(!$userId){
+            $cartData = $this->input->post('cartData') ?? '';
+            $userCartData = json_decode($cartData, true) ?? [];
+            $cartProducts = $this->Cart_model->getGuestUserCartData($userCartData);
+        }
+        $this->data['cart_products'] = $cartProducts;
         $this->frontRenderTemplate('front/Checkout/userCheckout', $this->data);
     }
 
@@ -28,6 +34,12 @@ class CheckoutController extends MY_Controller {
         $orderData = $this->input->post();
         $userId = $this->session->userdata('userId');
         $orderProducts = $this->Cart_model->getUsrCartData($userId);
+        if(!$userId){
+            $userId = 0;
+            $cartData = $this->input->post('cartData') ?? '';
+            $userCartData = json_decode($cartData, true) ?? [];
+            $orderProducts = $this->Cart_model->getGuestUserCartData($userCartData);
+        }
         
         if(empty($orderProducts)){
             $this->session->set_flashdata('error', 'Something went wrong. Please try again!');
@@ -58,15 +70,16 @@ class CheckoutController extends MY_Controller {
                 'pincode'       => $orderData['pincode'] ?? '',
                 'additional_information' => $orderData['additional_information'] ?? '',
             ];
-
-            $newAddress = $this->User_address_model->createByUser($addressData);
-            $orderInputs['address_id'] = $newAddress;
+            if($userId){
+                $newAddress = $this->User_address_model->createByUser($addressData);
+                $orderInputs['address_id'] = $newAddress;
+            }
+            $orderInputs['address_info'] = json_encode($addressData);
         }
         
         $order = $this->Order_model->create($orderInputs);
 
         $orderTotal = 0;
-
         foreach ($orderProducts as $key => $data) {
             $productData = $data['cart_data']['productData'] ?? [];
             $productId = ($productData['product_id'] ?? 0);
@@ -111,7 +124,7 @@ class CheckoutController extends MY_Controller {
 
         $address = $this->User_address_model->getAddressDetails($addressId);
 
-        if($address){
+        if($address && $userId){
             $newOrderData['address_info'] = json_encode($address);
         }
         $newOrderData['total_amount'] = $orderTotal;

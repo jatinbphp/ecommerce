@@ -1,5 +1,3 @@
-
-<?php print_r($created_at); ?>
 <div class="container">
     <div class="row align-items-center justify-content-start m-0 py-2">
         <div class="col-xl-4 col-lg-4 col-md-4 col-12">

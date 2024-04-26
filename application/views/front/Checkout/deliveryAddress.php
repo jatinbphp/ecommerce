@@ -53,7 +53,7 @@
                 <?php endif; ?>
 
                 <article class="panel panel-default border">
-                    <input id="address_new" type="radio" name="address_id" value="0">
+                    <input id="address_new" <?php echo (empty($user_addresses) ? 'checked' : '') ?> type="radio" name="address_id" value="0">
                     <label class="article-lable" for="address_new">
                         <h5>Add a New Address</h5>
                     </label>
