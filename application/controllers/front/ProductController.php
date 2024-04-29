@@ -18,6 +18,7 @@ class ProductController extends MY_Controller {
         $this->load->model('ProductOptions_model');
         $this->load->model('Categories_model');
         $this->load->model('Wishlist_model');
+        $this->load->model('ProductOptions_model');
     }
 
     /**
@@ -29,10 +30,14 @@ class ProductController extends MY_Controller {
      * @return void
      */
     public function index(){
-        $categoryId = $this->input->get('categoryId');
-        $data['products'] = $this->Product_model->filter_products($categoryId);
-        $data['wishlistProductId']     = $this->Wishlist_model->getWishlistProductIds();
-        $content = $this->load->view('front/Products/filter', $data, TRUE);
+        $input                      = $this->input->get(NULL, TRUE);
+        $decoded_input              = !empty($input) ? json_decode(json_encode($input), true) : [];
+        $filtered_input             = !empty($decoded_input) ? array_values(array_filter($decoded_input)) : [];
+        $products_options_value_ids = !empty($filtered_input) ? array_merge(...array_values($filtered_input)) : [];
+        $categoryId                 = $this->input->get('categoryId');
+        $data['products']           = $this->Product_model->filter_products($categoryId, $products_options_value_ids);
+        $data['wishlistProductId']  = $this->Wishlist_model->getWishlistProductIds();
+        $content                    = $this->load->view('front/Products/filter', $data, TRUE);
         $response = [
             'status'   => !empty($data['products']) ? true : false,
             'html'     => $content
@@ -52,7 +57,6 @@ class ProductController extends MY_Controller {
 
     public function details($id) {
         $data = $this->product_data($id);
-        //echo "<pre>";print_r($data);exit();
         $this->frontRenderTemplate('front/Products/details', $data);
     }
 
@@ -68,5 +72,15 @@ class ProductController extends MY_Controller {
         }
 
         return $data;
+    }
+
+    public function options(){
+        $option_names = $this->ProductOptions_model->getUniqueOptionNames();
+        $response = [
+            'status' => !empty($option_names) ? true : false,
+            'data'   => $option_names
+        ];
+
+        $this->output->set_content_type('application/json')->set_output(json_encode($response));
     }
 }
