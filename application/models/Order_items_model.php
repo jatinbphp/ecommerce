@@ -7,6 +7,18 @@ class Order_items_model extends CI_Model
     public function __construct(){
 	    parent::__construct();
 	}
+
+    public function create($data = ''){
+		if($data) {
+            $create = $this->db->insert($this->table, $data);
+            if ($create) {
+                return $this->db->insert_id();
+            } else {
+                return 0;
+            }
+        }
+        return 0;
+	}
     
     public function getOrderItemsByOrderId($orderId) {
         $this->db->where('order_id', $orderId);

@@ -91,51 +91,7 @@ class CartController extends MY_Controller {
         else{
             $cartData = $this->input->post('cartData') ?? '';
             $userCartData = json_decode($cartData, true) ?? [];
-            $cartProducts = [];
-            if($userCartData && count($userCartData)){
-                foreach ($userCartData as $key => $cartData) {
-                    $productId = $cartData['product_id'] ?? 0;
-                    if(!$productId){
-                        continue;
-                    }
-
-                    $this->db->select('products.*,product_images.image as image');
-                    $this->db->from('products');
-                    $this->db->join('product_images', 'products.id = product_images.product_id', 'left');
-                    $this->db->where('products.id', $productId);
-                    $this->db->where('products.status', 'active');
-                    $query = $this->db->get();
-                    $productData = $query->result_array();
-
-                    foreach ($productData as $row) {
-                        $row['quantity'] = ($cartData['quantity'] ?? 0);
-                        if(isset($cartData['options']) && count($cartData['options'])){
-                            $optionArray = [];
-                            foreach($cartData['options'] as $optKey => $optval){
-                                $this->db->select('*');
-                                $this->db->from('products_options');
-                                $this->db->where('id', $optKey);
-                                $query = $this->db->get();
-                                $product_option = $query->row();
-    
-    
-                                $this->db->select('*');
-                                $this->db->from('products_options_values');
-                                $this->db->where('id', $optval);
-                                $query = $this->db->get();
-                                $product_option_value = $query->row();
-    
-                                
-                                if ($product_option && $product_option_value) {
-                                    $optionArray[$product_option->option_name] = $product_option_value->option_value;
-                                }
-    
-                            }
-                        }
-                        $cartProducts[$key]['cart_data'] = ['productData' => $row,'productOptions' => $optionArray];
-                    }
-                }
-            }
+            $cartProducts = $this->Cart_model->getGuestUserCartData($userCartData);
 
             $viewData = $this->load->view('front/Cart/userCartView',['cartData' => $cartProducts],true);
             $cartCounter = count($userCartData);

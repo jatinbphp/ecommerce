@@ -19,6 +19,8 @@ class ProductController extends MY_Controller {
         $this->load->model('Categories_model');
         $this->load->model('Wishlist_model');
         $this->load->model('ProductOptions_model');
+        $this->load->model('Reviews_model');
+        $this->load->model('User_model');
     }
 
     /**
@@ -65,6 +67,11 @@ class ProductController extends MY_Controller {
         $this->load->model('Wishlist_model');
         $data['product'] = $this->Product_model->show($id);
         $data['wishlistProductId'] = $this->Wishlist_model->getWishlistProductIds();
+        $data['reviews'] = $this->Reviews_model->getDetailsBasedOnProductId($id);
+        if($userId   = $this->session->userdata('userId')){
+            $user = $this->User_model->getUserData($userId);
+            $data['userImage'] = $user['image'];
+        }
         if (!empty($data['product'])) {
             $data['product']['stock_status']    = $this->Product_model::$stock_status;
             $data['product']['quantity']        = $this->Product_model::$quantity;

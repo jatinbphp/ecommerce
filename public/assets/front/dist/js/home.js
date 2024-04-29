@@ -85,7 +85,9 @@ $(document).on("click", "#add_to_cartproduct", function(e) {
                 }
                 localStorage.setItem('cartData', JSON.stringify(existingCartData));
                 var data = localStorage.getItem('cartData');
-                $('.user-cart-counter').text(JSON.parse(data).length);
+                if(data){
+                    $('.user-cart-counter').text(JSON.parse(data).length);
+                }
             } else {
                 $('.user-cart-counter').text(response.cartCounter)
             }
@@ -108,7 +110,9 @@ function deleteCartItem(cartId, button) {
         });
         localStorage.setItem('cartData', JSON.stringify(filteredCartData));
         var data =  localStorage.getItem('cartData');
-        $('.user-cart-counter').text(JSON.parse(data).length);
+        if(data){
+            $('.user-cart-counter').text(JSON.parse(data).length);
+        }
         openCart();
         return;
     }

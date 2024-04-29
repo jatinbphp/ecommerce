@@ -1,7 +1,4 @@
-<?php
-$subTotal = 0;
-?>
-<?php //echo "<pre>"; print_r($cart_products); echo "</pre>";  ?>
+<?php $subTotal = 0; ?>
 <div class="d-block mb-3">
     <h5 class="mb-4">Order Items (<?= count($cart_products) ?>)</h5>
     <ul class="list-group list-group-sm list-group-flush-y list-group-flush-x mb-4">

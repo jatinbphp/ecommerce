@@ -18,9 +18,9 @@
         <div class="card">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
-                <?php if ($this->session->flashdata('success_message')): ?>
+                <?php if ($this->session->flashdata('success')): ?>
                     <div class="alert alert-success">
-                        <?php echo $this->session->flashdata('success_message'); ?>
+                        <?php echo $this->session->flashdata('success'); ?>
                     </div>
                 <?php endif; ?>
                 <?php if ($this->session->flashdata('error')) : ?>

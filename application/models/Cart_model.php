@@ -95,28 +95,71 @@ class Cart_model extends CI_Model
 	    return $cartProducts;
 	}
 
+	public function getGuestUserCartData($userCartData) {
+		if(!$userCartData || !count($userCartData)){
+			return [];
+		}
+		$cartProducts = [];
+		foreach ($userCartData as $key => $cartData) {
+			$productId = $cartData['product_id'] ?? 0;
+			if(!$productId){
+				continue;
+			}
+			
+			$this->db->select('products.*, products.id as product_id, product_images.image as image');
+			$this->db->from('products');
+			$this->db->join('product_images', 'products.id = product_images.product_id', 'left');
+			$this->db->where('products.id', $productId);
+			$this->db->where('products.status', 'active');
+			$query = $this->db->get();
+			$productData = $query->result_array();
+
+			foreach ($productData as $row) {
+				$row['quantity'] = ($cartData['quantity'] ?? 0);
+				$row['options'] = (json_encode($cartData['options']) ?? '');
+				if(isset($cartData['options']) && count($cartData['options'])){
+					$optionArray = [];
+					foreach($cartData['options'] as $optKey => $optval){
+						$this->db->select('*');
+						$this->db->from('products_options');
+						$this->db->where('id', $optKey);
+						$query = $this->db->get();
+						$product_option = $query->row();
+
+
+						$this->db->select('*');
+						$this->db->from('products_options_values');
+						$this->db->where('id', $optval);
+						$query = $this->db->get();
+						$product_option_value = $query->row();
+
+						
+						if ($product_option && $product_option_value) {
+							$optionArray[$product_option->option_name] = $product_option_value->option_value;
+						}
+
+					}
+				}
+				$cartProducts[$key]['cart_data'] = ['productData' => $row,'productOptions' => $optionArray];
+			}
+		}
+		return $cartProducts;
+	}
+
 	public function deleteCartItem($cartId)
 	{
 
 		$userId = $this->session->userdata('userId');
-
-		if(isset($userId) && $userId != '')
-		{
+		if(!empty($userId)){
 	    	$this->db->where('id', $cartId);
 	    	$this->db->delete($this->table);
-	    	 return $this->db->affected_rows() > 0;
+	    	return $this->db->affected_rows() > 0;
     	}
-    	else
-		{
-			//remove for guest user
-		}
-
 	}
 
 	public function getUserCartCounter()
 	{
 		$userId = $this->session->userdata('userId');
-
 		if(isset($userId) && $userId != '')
 		{
 			$this->db->select('COUNT(*) as count');
@@ -129,12 +172,13 @@ class Cart_model extends CI_Model
 	        return $cartCount;
 
 		}
-		else
-		{
-			//guest user condition
-		}
+	}
 
-
+	public function deleteByUserId($userId)
+	{
+		$this->db->where('user_id', $userId);
+		$delete = $this->db->delete($this->table);
+		return ($delete == true) ? true : false;
 	}
 
 }
