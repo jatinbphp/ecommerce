@@ -42,7 +42,7 @@
     </div>
 <?php endif ?>
 <div class="reviews_rate">
-    <?php echo form_open_multipart('add-product-review', ['id' => 'reviewForm', 'class' => 'form-horizontal row']); ?>
+    <?php echo form_open_multipart(base_url('add-review'), ['id' => 'reviewForm', 'class' => 'form-horizontal row']); ?>
         <?php echo form_hidden('product_id', ($product['id'] ?? 0)); ?>
 
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">

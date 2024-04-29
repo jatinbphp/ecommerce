@@ -207,10 +207,7 @@ $(document).ready(function() {
             type: 'POST',
             data: formData,
             success: function(response) {
-                console.log(response);
-                console.log(response.html);
                 if(response.success){
-                    console.log(111);
                     $('#reviewForm')[0].reset();
                     $('#product-reviews').html(response.html);
                 }

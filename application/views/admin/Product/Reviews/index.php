@@ -32,22 +32,15 @@
                     <div class="card card-info card-outline">
                         <div class="card-header">
                             <h3 class="card-title w-100">
-                                Manage <?php echo $page_title ?>
-                                <a href="<?php echo base_url('admin/products/create') ?>" class="btn btn-sm btn-primary float-right"> <i class="fa fa-plus"></i> Add New</a>
+                                <?php echo $page_title ?> of <b><?php echo $product_name; ?></b>
                             </h3>
                         </div>
                         <div class="card-body">
-                            <table id="productsTable" class="table table-bordered table-striped">
+                            <table id="reviewsTable" data-product-id="<?php echo $productId; ?>" class="table table-bordered table-striped">
                                 <thead>
-                                <tr>
-                                    <th style="width:9%">#</th>
-                                    <th>Product Name</th>
-                                    <th style="width:9%">Sku</th>
-                                    <th style="width:9%">Price</th>
-                                    <th style="width:9%">Status</th>
-                                    <th style="width:15%">Date Created</th>
-                                    <th style="width:17%">Action</th>
-                                </tr>
+                                    <tr>
+                                        <th>Review Information</th>
+                                    </tr>
                                 </thead>
                             </table>
                         </div>

@@ -9,6 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class ProductController extends MY_Controller
 {
 	protected $_data = [];
+	protected static $product_id = 0;
 	
 	/**
 	 * Constructor method for the ProductsController class.
@@ -24,6 +25,7 @@ class ProductController extends MY_Controller
 		$this->load->model('ProductImage_model');
 		$this->load->model('ProductOptions_model');
 		$this->load->model('ProductOptionValues_model');
+		$this->load->model('Reviews_model');
 	}
 
 	/**
@@ -428,8 +430,11 @@ class ProductController extends MY_Controller
 			$productData[] = $row->price;
 			$productData[] = $this->getStatusButton($row->id, $row->status, 'products');
 			$productData[] = $row->created_at;
-			$productData[] = '<a href="' . base_url('admin/products/edit/' . $row->id) . '" class="btn btn-sm btn-info"  style="margin-right:5px;"><i class="fa fa-edit"></i></a><a href="javascript:void(0);" class="btn btn-sm btn-danger deleteRecord" style="margin-right:5px;" data-id="' . $row->id . '" data-controller="products" data-title="products"><i class="fa fa-trash"></i></a><a href="javascript:void(0)" title="View Product" data-id="'. $row->id .'" class="btn btn-sm btn-warning tip  view-info" data-title="Product Details" data-url="'.base_url('admin/products/show/' . $row->id).'">
-            	<i class="fa fa-eye"></i></a>';
+			$productData[] = '<a href="' . base_url('admin/products/edit/' . $row->id) . '" class="btn btn-sm btn-info"  style="margin-right:5px;"><i class="fa fa-edit"></i></a>
+			<a href="javascript:void(0);" class="btn btn-sm btn-danger deleteRecord" style="margin-right:5px;" data-id="' . $row->id . '" data-controller="products" data-title="products"><i class="fa fa-trash"></i></a>
+			<a href="javascript:void(0)" title="View Product" data-id="'. $row->id .'" class="btn btn-sm btn-warning tip  view-info" style="margin-right:5px;" data-title="Product Details" data-url="'.base_url('admin/products/show/' . $row->id).'"><i class="fa fa-eye"></i></a>
+	        <a href="'. base_url('admin/products/reviews/' . $row->id). '" title="Product Reviews" class="btn btn-sm btn-secondary tip"><i class="fa fa-star"></i></a>
+    </div>';
 
 			$data[] = $productData;
 		}
@@ -484,4 +489,34 @@ class ProductController extends MY_Controller
         $html = $this->load->view('admin/Product/product', $data, true);
         echo $html;
     }
+
+	public function productReviews($id){
+		$product = $this->Product_model->getDetails($id);
+		$data['page_title'] = 'Reviews';
+		$data['productId'] = $id;
+		$data['product_name'] = $product['product_name'] ?? '';
+		$this->adminRenderTemplate('admin/Product/Reviews/index', $data);
+	}
+
+	public function fetchReviews($id)
+	{
+		$id = ($id) ?? 0;
+		$data    = [];
+		$allData = $this->Reviews_model->make_datatables($id);
+
+		foreach ($allData as $row) {
+			$reviewData = [];
+			$reviewData[] = $this->load->view('admin/Product/Reviews/ReviewInfo', $row, true);
+			
+			$data[] = $reviewData;
+		}
+
+		$output = [
+			"draw"            => intval($_POST["draw"]),
+			"recordsTotal"    => $this->Reviews_model->get_all_data($id),
+			"recordsFiltered" => $this->Reviews_model->get_filtered_data($id),
+			"data"            => $data,
+		];
+		echo json_encode($output);
+	}
 }

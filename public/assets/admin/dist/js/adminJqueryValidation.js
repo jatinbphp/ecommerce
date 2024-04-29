@@ -4,7 +4,7 @@ $(document).ready(function() {
         "serverSide": true,
         "order":[],
         "ajax":{
-            url:"categories/fetch_categories",
+            url:baseUrl+"admin/categories/fetch_categories",
             type:"POST",
         },
         "columnDefs": [{
@@ -19,7 +19,7 @@ $(document).ready(function() {
         "order":[],
         "ajax":{
 
-            url:"users/fetch_users",
+            url:baseUrl+"admin/users/fetch_users",
             type:"POST"
         },
         "columnDefs": [{
@@ -33,7 +33,7 @@ $(document).ready(function() {
         "serverSide": true,
         "order":[],
         "ajax":{
-            url:"banners/fetch_banners",
+            url:baseUrl+"admin/banners/fetch_banners",
             type:"POST",
         },
         "columnDefs": [{
@@ -47,7 +47,7 @@ $(document).ready(function() {
         "serverSide": true,
         "order":[],
         "ajax":{
-            url:"contemt-management/fetch_content",
+            url:baseUrl+"admin/contemt-management/fetch_content",
             type:"POST",
         },
         "columnDefs": [{
@@ -62,7 +62,7 @@ $(document).ready(function() {
         "serverSide": true,
         "order":[],
         "ajax":{
-            url:"contact-us/fetch_contactus",
+            url:baseUrl+"admin/contact-us/fetch_contactus",
             type:"POST",
         },
         "columnDefs": [{
@@ -77,7 +77,7 @@ $(document).ready(function() {
         "serverSide": true,
         "order":[],
         "ajax":{
-            url:"products/fetch_products",
+            url:baseUrl+"admin/products/fetch_products",
             type:"POST",
         },
         "columnDefs": [{
@@ -91,11 +91,26 @@ $(document).ready(function() {
         "serverSide": true,
         "order":[],
         "ajax":{
-            url:"subscription-plan/fetch_subscription_plan",
+            url:baseUrl+"admin/subscription-plan/fetch_subscription_plan",
             type:"POST",
         },
         "columnDefs": [{
             "targets":[5],
+            "orderable": false
+        }]
+    });
+
+    var productId = $('#reviewsTable').attr('data-product-id'); 
+    var reviews = $('#reviewsTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "order":[],
+        "ajax":{
+            url:baseUrl+"admin/products/fetch_reviews/"+productId,
+            type:"POST",
+        },
+        "columnDefs": [{
+            "targets":[0],
             "orderable": false
         }]
     });
@@ -242,7 +257,7 @@ $(document).ready(function() {
         return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/.test(value);
         }, "Your password must contain at least one lowercase letter, one uppercase letter, and one digit");
 
-  $("#user_create_form").validate(
+    $("#user_create_form").validate(
     {   
         rules: {
             email: {
@@ -313,7 +328,7 @@ $(document).ready(function() {
     });
 
 
-  function addNewAddress() {
+    function addNewAddress() {
              addressCounter++;
         var newAddress = $('#addressTemplate').clone();
         newAddress.removeAttr('id'); // Remove ID attribute to avoid duplicates
@@ -750,5 +765,13 @@ $(document).ready(function() {
         submitHandler: function(form){
             form.submit();
         }
+    });
+    
+    $("#reviewsTable").on('click', '.show-more-reviews', function(event) {
+        event.preventDefault();
+        console.log('calles');
+        var desc = $(this).attr('data-description');
+        $('#reviewDescbody').html(desc);
+        $('#reviewDesc').modal('show');
     });
 });
