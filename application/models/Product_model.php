@@ -249,14 +249,19 @@ class Product_model extends CI_Model
      * @param int $categoryId The ID of the category to filter by. Defaults to 0.
      * @return array An array of filtered products with additional image information.
      */
-    public function filter_products($categoryId=0){
+    public function filter_products($categoryId=0, $products_options_value_ids = []){
         $this->db->select('products.*, GROUP_CONCAT(product_images.image) as images');
         $this->db->from($this->table);
         $this->db->join('product_images', 'products.id = product_images.product_id', 'left');
+        $this->db->join('products_options_values', 'products.id = products_options_values.product_id', 'left');
         $this->db->where('products.status', self::STATUS_ACTIVE);
         
         if ($categoryId) {
             $this->db->where('products.category_id', $categoryId);
+        }
+
+        if(!empty($products_options_value_ids)){
+            $this->db->where_in('products_options_values.id', $products_options_value_ids);
         }
 
         $this->db->group_by('products.id'); // Group by product ID to aggregate images

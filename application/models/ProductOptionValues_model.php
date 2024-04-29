@@ -90,4 +90,29 @@ class ProductOptionValues_model extends CI_Model
         
         return $this->db->affected_rows() > 0;
     }
+
+
+    public function filterProductOptions($product_id = null, $option_ids = [], $option_value = null){
+        $this->db->select('products_options_values.*, COUNT(products.id) as product_count');
+        $this->db->from($this->table);
+        $this->db->join('products', 'products_options_values.product_id = products.id', 'left');
+        $this->db->group_by('products_options_values.id');
+        $this->db->where('products_options_values.status', 'active'); 
+        
+        if($product_id){
+            $this->db->where('products_options_values.product_id', $product_id);
+        }
+
+        if(!empty($option_id)){
+            $this->db->where('products_options_values.option_id', $option_id);
+        }
+
+        if($option_value){
+            $this->db->where('products_options_values.option_value', $option_value);
+        }
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
 }

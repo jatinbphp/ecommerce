@@ -9,7 +9,6 @@ $route['verifyOtp'] = 'front/auth/AuthController/verifyOTP';
 $route['logout'] = 'front/auth/AuthController/logout';
 $route['check-email'] = 'front/auth/AuthController/check_email_exists';
 $route['about-us'] = 'HomeController/aboutUs';
-$route['shop'] = 'HomeController/shopPage';
 $route['contact'] = 'front/ContactusController';
 $route['contact/send_message'] = 'front/ContactusController/sendMessage';
 $route['terms-conditions'] = 'HomeController/termaConditions';
@@ -18,9 +17,12 @@ $route['forgotPassword'] = 'front/auth/AuthController/forgotPassword';
 $route['sendforgotPasswordLink'] = 'front/auth/AuthController/sendForgotPasswordMail';
 $route['setNewPassword/(:any)'] = 'front/auth/AuthController/setNewPassword/$1';
 $route['updateNewPassword'] = 'front/auth/AuthController/updateNewPassword';
+
 $route['products'] = 'front/ProductController/index';
 $route['products/show/(:num)'] = 'front/ProductController/show/$1';
 $route['products/(:num)/details'] = 'front/ProductController/details/$1';
+$route['products/options'] = 'front/ProductController/options';
+
 $route['payment'] = 'front/PaymentController';
 $route['payment/process-payment'] = 'front/PaymentController/processPayment';
 $route['profile-info'] = 'front/MyProfileController/edit';
@@ -46,6 +48,5 @@ $route['cart/get-user-cart'] = 'front/CartController/getUserCartData';
 $route['cart/delete-user-item'] = 'front/CartController/deleteUserCartItem';
 $route['checkout'] = 'front/CheckoutController';
 $route['checkout/order/place'] = 'front/CheckoutController/orderPlace';
+$route['shop'] = 'front/ShopController/index';
 $route['reviews/add-review'] = 'front/ReviewsController/addReview';
-
-

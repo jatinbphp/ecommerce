@@ -347,5 +347,34 @@ class Categories_model extends CI_Model
         $this->db->order_by('product_count', 'DESC');
         $this->db->limit(4);
         return $this->db->get()->result_array();
+    }
+
+   
+    public function get_categories_recursive($parent_id = 0) {
+        $this->db->select('categories.id, categories.parent_category_id, categories.name, COUNT(products.id) as product_count');
+        $this->db->from($this->table);
+        $this->db->join('products', 'categories.id = products.category_id', 'left');
+        $this->db->group_by('categories.id');
+        $this->db->where('categories.parent_category_id', $parent_id);
+        $query = $this->db->get();
+        $result = $query->result_array();
+
+        $categories = [];
+
+        foreach ($result as $key => $value) {
+            $categories[$key] = $value;
+            $sub_categories = $this->get_categories_recursive($value['id']);
+            if (!empty($sub_categories)) {
+                $categories[$key]['sub_category'] = $sub_categories;
+
+            }
+
+            if (empty($sub_categories)) {
+                $categories[$key]['sub_category'] = [];
+
+            }
+        }
+
+        return $categories;
     }   
 }
