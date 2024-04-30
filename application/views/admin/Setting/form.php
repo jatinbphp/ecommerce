@@ -108,7 +108,7 @@
                             <div class="col-md-12">
                                 <div class="form-group <?php echo form_error('header_menu_categories') ? 'has-error' : ''; ?>">
                                     <label for="header_menu_categories">Which Categories menu do you want to display in header menu? :</label>
-                                    <select name="header_menu_categories[]" class="form-control select2 w-100" id="header_menu_categories" multiple data-placeholder="Please Select" data-maximum-selection-length="2">
+                                    <select name="header_menu_categories[]" class="form-control select2 w-100" id="header_menu_categories" multiple data-placeholder="Please Select">
                                         <?php foreach ($categories_data as $id => $category): ?>
                                             <?php $selected = (in_array($id, $selected_header_categories)) ? 'selected' : ''; ?>
                                                 <option value="<?php echo $id; ?>" <?php echo $selected; ?>><?php echo $category; ?></option>
