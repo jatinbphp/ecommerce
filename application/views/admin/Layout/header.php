@@ -17,6 +17,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/ladda/ladda-themeless.min.css') ?>">
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') ?>">
+	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/daterangepicker/daterangepicker.css') ?>">
+	
 	<style type="text/css">
 		.imagePreview{
 			width:100%;
@@ -135,6 +137,29 @@
                             <p>Subscription Plans</p>
                         </a>
                     </li>
+					<li class="nav-item has-treeview" id='reportTreeview' style="border-bottom: 1px solid #4f5962; margin-bottom: 4.5%;">
+		                <a href="#" class="nav-link">
+							<i class="nav-icon fa fa-flag"></i>
+								<p>
+									Reports
+									<i class="fas fa-angle-left right"></i>
+								</p>
+		                </a>
+		                <ul class="nav nav-treeview">
+		                    <li class="nav-item active">
+								<a href="<?php echo site_url('admin/reports/user_report'); ?>" class="nav-link" id="userReport">
+										<i class="fas fa-file-alt nav-icon"></i>
+										<p>User Orders Report</p>
+									</a>
+		                    </li>
+		                    <li class="nav-item">
+								<a href="<?php echo site_url('admin/reports/sales_report'); ?>" class="nav-link" id="salesReport">
+										<i class="fas fa-chart-line nav-icon"></i>
+										<p>Sales Report</p>
+									</a>
+		                    </li>
+		                </ul>
+		            </li>
 				</ul>
 			</nav>
 		</div>

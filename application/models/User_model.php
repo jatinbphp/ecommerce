@@ -436,5 +436,23 @@ class User_model extends CI_Model
 		$delete = $this->db->delete($this->table);
 		return ($delete == true) ? true : false;
 	}
+
+  /**
+ * Retrieve all user first names and their corresponding IDs from the database.
+ * 
+ * @return array An array containing user IDs and first names.
+ */
+  public function getAllFirstNames()
+  {
+      $this->db->select('id, first_name');
+      $query = $this->db->get($this->table);
+
+      if ($query->num_rows() > 0) {
+          return $query->result_array();
+      } else {
+          return [];
+      }
+  }
+
 }
 

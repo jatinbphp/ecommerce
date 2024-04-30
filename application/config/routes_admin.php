@@ -48,3 +48,8 @@ $route['admin/subscription-plan/create'] = 'admin/SubscriptionPlanController/cre
 $route['admin/subscription-plan/edit/(:num)'] = 'admin/SubscriptionPlanController/edit/$1';
 $route['admin/subscription-plan/delete/(:num)'] = 'admin/SubscriptionPlanController/delete/$1';
 $route['admin/subscription-plan/fetch_subscription_plan'] = 'admin/SubscriptionPlanController/fetchSubscriptionPlan';
+/*Reports*/
+$route['admin/reports/user_report'] = 'admin/ReportController/indexUserOrders';
+$route['admin/reports/fetch_user_report'] = 'admin/ReportController/fetchUserReport';
+$route['admin/reports/sales_report'] = 'admin/ReportController/indexSalesOrders';
+$route['admin/reports/fetch_sales_report'] = 'admin/ReportController/fetchSalesReport';
