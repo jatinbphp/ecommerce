@@ -840,7 +840,6 @@ $(document).ready(function() {
             form.submit();
         }
     });
-<<<<<<< HEAD
 
     $('#clear-filter').click(function() {
         var dataType = $(this).data('type');
