@@ -50,3 +50,4 @@ $route['checkout'] = 'front/CheckoutController';
 $route['checkout/order/place'] = 'front/CheckoutController/orderPlace';
 $route['shop'] = 'front/ShopController/index';
 $route['reviews/add-review'] = 'front/ReviewsController/addReview';
+$route['shop/categories/(:any)'] = 'front/ShopController/categoryFilter/$1';

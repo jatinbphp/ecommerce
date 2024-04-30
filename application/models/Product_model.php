@@ -55,7 +55,7 @@ class Product_model extends CI_Model
 
     /*product type*/
     public static $type = [
-        'new'   => '<span class="badge bg-info text-white position-absolute ft-regular ab-left text-upper test">New</span>',
+        'new'   => '<span class="badge bg-info text-white position-absolute ft-regular ab-left text-upper">New</span>',
         'sale'  => '<span class="badge bg-success text-white position-absolute ft-regular ab-left text-upper">sale</span>',
         'hot'   => '<span class="badge bg-danger text-white position-absolute ft-regular ab-left text-upper">hot</span>'
     ];
@@ -249,7 +249,7 @@ class Product_model extends CI_Model
      * @param int $categoryId The ID of the category to filter by. Defaults to 0.
      * @return array An array of filtered products with additional image information.
      */
-    public function filter_products($categoryId=0, $products_options_value_ids = []){
+    public function filter_products($categoryId=[], $products_options_value_ids = [], $priceRange = [], $sort=1){
         $this->db->select('products.*, GROUP_CONCAT(product_images.image) as images');
         $this->db->from($this->table);
         $this->db->join('product_images', 'products.id = product_images.product_id', 'left');
@@ -257,17 +257,27 @@ class Product_model extends CI_Model
         $this->db->where('products.status', self::STATUS_ACTIVE);
         
         if ($categoryId) {
-            $this->db->where('products.category_id', $categoryId);
+            $this->db->where_in('products.category_id', $categoryId);
         }
 
         if(!empty($products_options_value_ids)){
             $this->db->where_in('products_options_values.id', $products_options_value_ids);
         }
 
+        if($priceRange && count($priceRange) == 2){
+            $this->db->where('products.price BETWEEN '.$priceRange[0].' AND '.$priceRange[1]);
+        }
+
         $this->db->group_by('products.id'); // Group by product ID to aggregate images
-        $this->db->order_by('products.created_at', 'DESC');
-        $this->db->limit(8);
+        if($sort == 2){
+            $this->db->order_by('products.price', 'ASC');
+        } elseif($sort == 3){
+            $this->db->order_by('products.price', 'DESC');
+        } else {
+            $this->db->order_by('products.created_at', 'DESC');
+        }
         $query = $this->db->get();
+        
         return $query->result_array();
     }
 

@@ -107,6 +107,7 @@
         <script src="<?php echo base_url('public/assets/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>"></script>
         <script src="<?php echo base_url('public/assets/admin/plugins/datatables-responsive/js/dataTables.responsive.min.js') ?>"></script>
         <script src="<?php echo base_url('public/assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
+
         <script>
             function openWishlist() {
                 //userWishlist
@@ -158,6 +159,24 @@
             function closeSearch() {
             	document.getElementById("Search").style.display = "none";
             }
+        </script>
+        <script>
+            $('.filter_wraps .single_fitres a').on('click',function(e) {
+                if($(this).hasClass('list')) {
+                    $('.filter_wraps .single_fitres a.list').addClass('active');
+                    $('.filter_wraps .single_fitres a.grid').removeClass('active');
+                    $('.rows-products').removeClass('grid').addClass('list');
+                    $('.rows-products .col-6').removeClass('col-xl-4 col-lg-4 col-md-6 col-6').addClass('col-12');
+                    $('.product_grid .card-footer .text-left .d-none').removeClass('d-none').addClass('d-block');
+                }
+                else if ($(this).hasClass('grid')) {
+                    $('.filter_wraps .single_fitres a.grid').addClass('active');
+                    $('.filter_wraps .single_fitres a.list').removeClass('active');
+                    $('.rows-products').removeClass('list').addClass('grid');
+                    $('.rows-products .col-12').removeClass('col-12').addClass('col-xl-4 col-lg-4 col-md-6 col-6');
+                    $('.product_grid .card-footer .text-left .d-block').removeClass('d-block').addClass('d-none');
+                }
+            });
         </script>
     </body>
 </html>

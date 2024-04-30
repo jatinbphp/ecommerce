@@ -86,7 +86,9 @@
         <div class="row align-items-center rows-products">
             <?php if(isset($latest_products) && !empty($latest_products)): ?>
                 <?php foreach($latest_products as $key => $value): ?>
-                    <?php $this->load->view('front/Products/product', array('value' => $value));  ?>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-6">
+                        <?php $this->load->view('front/Products/product', array('value' => $value));  ?>
+                    </div>
                 <?php endforeach ?>
             <?php else: ?>
                 <div class="row align-items-center rows-products grid">
@@ -145,7 +147,9 @@
                             <div class="row rows-products" id="category-section">
                                 <?php if(isset($categorized_products) && !empty($categorized_products)): ?>
                                     <?php foreach($categorized_products as $key => $value): ?>
-                                        <?php $this->load->view('front/Products/product', array('value' => $value));  ?>
+                                        <div class="col-xl-3 col-lg-4 col-md-6 col-6">
+                                            <?php $this->load->view('front/Products/product', array('value' => $value));  ?>
+                                        </div>
                                     <?php endforeach ?>
                                 <?php else: ?>
                                     <div class="row align-items-center rows-products grid">

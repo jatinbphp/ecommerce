@@ -21,14 +21,18 @@
                 <div class="prt_02 mb-2">
                     <h2 class="ft-bold mb-1"><?= $product['product_name'] ?? "" ?></h2>
                     <div class="text-left">
-                        <div class="star-rating align-items-center d-flex justify-content-left mb-1 p-0">
-                            <i class="fas fa-star filled"></i>
-                            <i class="fas fa-star filled"></i>
-                            <i class="fas fa-star filled"></i>
-                            <i class="fas fa-star filled"></i>
-                            <i class="fas fa-star"></i>
-                            <span class="small">(412 Reviews)</span>
-                        </div>
+                    <?php 
+                        $productId = ($product['id'] ?? 0);
+                        $productReview = ($productWiseReviews[$productId] ?? []);
+                        $avgReview = ($productReview['avg_rating_count'] ?? 0);
+                        $totalReview = ($productReview['total_reviews'] ?? 0);
+                    ?>
+                    <div class="star-rating align-items-center d-flex justify-content-left mb-1 p-0">
+                        <?php for($i=1 ; $i<=5; $i++): ?>
+                            <i class="fas fa-star <?php echo ($i<=$avgReview) ? 'filled' : ''; ?>"></i>
+                        <?php endfor ?>
+                        <span class="small">(<?php echo $totalReview; ?> Reviews)</span>
+                    </div>
                         <div class="elis_rty">
                             <span class="ft-medium text-muted line-through fs-md mr-2">$<?= number_format(($product['price'] * 2), 2) ?></span>
                             <span class="ft-bold theme-cl fs-lg mr-2">$<?= number_format(($product['price']), 2) ?></span>

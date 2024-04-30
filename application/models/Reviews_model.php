@@ -93,4 +93,25 @@ class Reviews_model extends CI_Model
         return $this->db->count_all_results();
     }
 
+    public function getProductWiseReviewData(){
+        $this->db->select('product_id, SUM(rating) as total_rating_count, AVG(rating) as avg_rating_count, count(id) as total_reviews');
+        $this->db->from($this->table);
+        $this->db->group_by('product_id');
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            $productWiseReviewData = [];
+            foreach($query->result_array() as $data){
+                $productId = $data['product_id'] ?? '';
+                if(!$productId){
+                    continue;
+                }
+                $productWiseReviewData[$productId] = $data;
+            }
+            return $productWiseReviewData;
+        }
+
+        return [];
+    }
+
 }

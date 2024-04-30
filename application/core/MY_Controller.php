@@ -27,19 +27,29 @@ class MY_Controller extends CI_Controller
         if ($settingsData) {
             $footerMenuCategoriesIds = explode(',', $settingsData['footer_menu_categories']);
             $footerMenuCategoriesNames = [];
-            foreach ($footerMenuCategoriesIds as $categoryId) {
-                $categoryData = $this->Categories_model->getDetails($categoryId);
-                if ($categoryData) {
-                    $footerMenuCategoriesNames[] = $this->Categories_model->getFullPathName($categoryId);
+            if($footerMenuCategoriesIds && count($footerMenuCategoriesIds)){
+                foreach ($footerMenuCategoriesIds as $categoryId) {
+                    if(!$categoryId){
+                        continue;
+                    }
+                    $categoryData = $this->Categories_model->getDetails($categoryId);
+                    if ($categoryData) {
+                        $footerMenuCategoriesNames[$categoryId] = $this->Categories_model->getFullPathName($categoryId);
+                    }
                 }
             }
     
             $headerMenuCategoriesIds = explode(',', $settingsData['header_menu_categories']);
             $headerMenuCategoriesNames = [];
-            foreach ($headerMenuCategoriesIds as $categoryId) {
-                $headerCategoryData = $this->Categories_model->getDetails($categoryId);
-                if ($headerCategoryData) {
-                    $headerMenuCategoriesNames[] = $this->Categories_model->getFullPathName($categoryId);
+            if($headerMenuCategoriesIds && count($headerMenuCategoriesIds)){
+                foreach ($headerMenuCategoriesIds as $categoryId) {
+                    if(!$categoryId){
+                        continue;
+                    }
+                    $headerCategoryData = $this->Categories_model->getDetails($categoryId);
+                    if ($headerCategoryData) {
+                        $headerMenuCategoriesNames[$categoryId] = $this->Categories_model->getFullPathName($categoryId);
+                    }
                 }
             }
             return [

@@ -10,7 +10,7 @@ function setTab(event){
 
 function getProducts(categoryId){
 	$.ajax({
-        url: "products", 
+        url: baseUrl+"products", 
         method: 'GET',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {

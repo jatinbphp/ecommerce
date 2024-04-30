@@ -1,23 +1,23 @@
 var filter = {};
 
-$( document ).ready(function() {
-   $.ajax({
-      url: "products/options",
-      method: 'GET',
-      headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
-      success: function(response) {
-         if (!response.status) return false;
-         $.each(response.data, function(index, value) {
-            filter[value] = null;
-         });
-      },
+// $( document ).ready(function() {
+//    $.ajax({
+//       url: baseUrl+"products/options",
+//       method: 'GET',
+//       headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+//       success: function(response) {
+//          if (!response.status) return false;
+//          $.each(response.data, function(index, value) {
+//             filter[value] = null;
+//          });
+//          handleFilter();
+//       },
 
-      error: function(jqXHR, textStatus, errorThrown) {
-         console.error('AJAX Error:', textStatus, errorThrown);
-      }
-   });
-}); 
-
+//       error: function(jqXHR, textStatus, errorThrown) {
+//          console.error('AJAX Error:', textStatus, errorThrown);
+//       }
+//    });
+// });
 
 function setOption(event, optionName){
    filter[optionName] = filter[optionName] || [];
@@ -25,33 +25,39 @@ function setOption(event, optionName){
    $(".option-" + optionName).each(function () {
       if ($(this).is(":checked")) {
          filter[optionName].push(Number($(this).val()));
-         console.log(filter);
       }
    });
-
+   if(optionName == 'priceRange'){
+      var slider = $('#rangeSlider').data("ionRangeSlider");
+      filter[optionName].push(Number(slider.result.from));
+      filter[optionName].push(Number(slider.result.to));
+   }
    handleFilter();
 }
 
+$('#sort-filters').change(function(){
+   handleFilter();
+});
 
-function handleFilter(event){
+
+function handleFilter(){
+   filter['sort'] = $('#sort-filters').val();
+   var filterCategory = $('#shop-categories').attr('data-filter-category-id');
+   if(filterCategory){
+      filter['categoryId'] = [Number(filterCategory)];
+   }
    $.ajax({
-      url: "products",
+      url: baseUrl+"products",
       method: 'GET',
       headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
       data: filter,
       success: function(response) {
-         if (!response.status) return false;
-         //var products = JSON.parse(JSON.stringify(response.products.data));
-         //var totalCount = products.length; 
-         //$('#items-found').text(totalCount); 
-         //response.is_last ? $("#load-more-btn").addClass('d-none') : $("#load-more-btn").removeClass('d-none');
          $('.rows-products').html(response.html);
+         $('#filterCount').html($(".product_grid").length);
       },
       error: function(jqXHR, textStatus, errorThrown) {
          console.error('AJAX Error:', textStatus, errorThrown);
       }
    });
 }
-
-
 

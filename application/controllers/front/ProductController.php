@@ -34,11 +34,18 @@ class ProductController extends MY_Controller {
     public function index(){
         $input                      = $this->input->get(NULL, TRUE);
         $decoded_input              = !empty($input) ? json_decode(json_encode($input), true) : [];
+        unset($decoded_input['categoryId']);
+        unset($decoded_input['priceRange']);
+        unset($decoded_input['sort']);
         $filtered_input             = !empty($decoded_input) ? array_values(array_filter($decoded_input)) : [];
         $products_options_value_ids = !empty($filtered_input) ? array_merge(...array_values($filtered_input)) : [];
         $categoryId                 = $this->input->get('categoryId');
-        $data['products']           = $this->Product_model->filter_products($categoryId, $products_options_value_ids);
+        $priceRange                 = $this->input->get('priceRange');
+        $sort                       = $this->input->get('sort');
+        $data['products']           = $this->Product_model->filter_products($categoryId, $products_options_value_ids, $priceRange, $sort);
         $data['wishlistProductId']  = $this->Wishlist_model->getWishlistProductIds();
+        $data['type']               = $this->Product_model::$type;
+        $data['productWiseReviews'] = $this->Reviews_model->getProductWiseReviewData();
         $content                    = $this->load->view('front/Products/filter', $data, TRUE);
         $response = [
             'status'   => !empty($data['products']) ? true : false,
@@ -68,6 +75,7 @@ class ProductController extends MY_Controller {
         $data['product'] = $this->Product_model->show($id);
         $data['wishlistProductId'] = $this->Wishlist_model->getWishlistProductIds();
         $data['reviews'] = $this->Reviews_model->getDetailsBasedOnProductId($id);
+        $data['productWiseReviews']    = $this->Reviews_model->getProductWiseReviewData();
         if($userId   = $this->session->userdata('userId')){
             $user = $this->User_model->getUserData($userId);
             $data['userImage'] = $user['image'];

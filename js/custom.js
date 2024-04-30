@@ -163,10 +163,10 @@ $(function() {
 	// Range Slider Script
 	$(".js-range-slider").ionRangeSlider({
 		type: "double",
-		min: 0,
-		max: 1000,
+		min: 1,
+		max: 10000,
 		from:100,
-		to:750,
+		to:7500,
 		grid: true
 	});
 	

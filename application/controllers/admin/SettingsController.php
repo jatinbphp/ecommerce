@@ -78,14 +78,15 @@ class SettingsController extends MY_Controller
             'linkedin_url' => $this->input->post('linkedin_url'),
 		];
 
+        $data['header_menu_categories'] = $data['footer_menu_categories'] = '';
         if(!empty($this->input->post('header_menu_categories')))
         {
-            $data['header_menu_categories']= implode(',', $this->input->post('header_menu_categories'));
+            $data['header_menu_categories'] = implode(',', $this->input->post('header_menu_categories'));
         }
 
         if(!empty($this->input->post('footer_menu_categories')))
         {
-            $data['footer_menu_categories']= implode(',', $this->input->post('footer_menu_categories'));
+            $data['footer_menu_categories'] = implode(',', $this->input->post('footer_menu_categories'));
         }
 
         $this->Settings_model->update(1, $data);

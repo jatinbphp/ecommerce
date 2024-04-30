@@ -17,7 +17,7 @@ class ShopController extends MY_Controller {
 
     public function index(){
         $data['categories'] = $this->product_categories();
-        $data['options'] = $this->product_options();
+        $data['options']    = $this->product_options();
         $this->frontRenderTemplate('front/Shop/shop', $data);
     }
 
@@ -38,16 +38,24 @@ class ShopController extends MY_Controller {
             $option_names_array[$name] = $this->ProductOptions_model->getOptionsByName($name);
         }
 
+        if(empty($option_names_array)){
+            return [];
+        }
+       
         $option_values = [];
         if(!empty($option_names_array)){
-            foreach($option_names as $name){
-                if(isset($option_names_array[$name])){
-                    $option_ids = $option_names_array[$name];
-                    $option_values[$name] = $this->ProductOptionValues_model->filterProductOptions('', $option_ids, '');
-                }
+            foreach($option_names_array as $name => $data){
+                $option_values[$name] = $this->ProductOptionValues_model->filterProductOptions($data);
             }
         }
-
+       
         return $option_values;
+    }
+
+    public function categoryFilter($id){
+        $data['categories'] = $this->product_categories();
+        $data['options']    = $this->product_options();
+        $data['categoryId'] = $id;
+        $this->frontRenderTemplate('front/Shop/shop', $data);
     }
 }
