@@ -54,7 +54,6 @@
                         <div class="nav-menus-wrapper" style="transition-property: none;">
                             <ul class="nav-menu">
                                 <li><a href="<?php echo base_url(); ?>">Home</a></li>
-                                <li><a href="<?php echo base_url('about-us'); ?>">About Us</a></li>
                                 <li><a href="<?php echo base_url('shop'); ?>">Shop</a></li>
                                 <?php if (isset($footer_data['headerMenuCategoriesNames']) && is_array($footer_data['headerMenuCategoriesNames']) && count($footer_data['headerMenuCategoriesNames'])): ?>
                                     <li>
@@ -66,6 +65,7 @@
                                         </ul>
                                     </li>
                                 <?php endif; ?>
+                                <li><a href="<?php echo base_url('about-us'); ?>">About Us</a></li>
                                 <li><a href="contact">Contact Us</a></li>
                             </ul>
                             <ul class="nav-menu nav-menu-social align-to-right">

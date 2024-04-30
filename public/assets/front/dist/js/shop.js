@@ -43,7 +43,7 @@ $('#sort-filters').change(function(){
 function handleFilter(){
    filter['sort'] = $('#sort-filters').val();
    var filterCategory = $('#shop-categories').attr('data-filter-category-id');
-   if(filterCategory){
+   if(filterCategory && filterCategory != 0){
       filter['categoryId'] = [Number(filterCategory)];
    }
    $.ajax({
