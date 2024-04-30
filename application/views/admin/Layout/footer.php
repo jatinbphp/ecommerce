@@ -19,6 +19,8 @@
 <script src="<?php echo base_url('public/assets/admin/dist/js/adminJqueryValidation.js?time='.time()) ?>"></script>
 <script src="<?php echo base_url('public/assets/admin/plugins/select2/select2.full.min.js') ?>"></script>
 <script src="<?php echo base_url('public/assets/admin/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js') ?>"></script>
+<script src="<?php echo base_url('public/assets/admin/plugins/moment/moment.min.js') ?>"></script>
+<script src="<?php echo base_url('public/assets/admin/plugins/daterangepicker/daterangepicker.js') ?>"></script>
 <script type="text/javascript">
 	function AjaxUploadImage(obj,id){
         var file = obj.files[0];
@@ -77,6 +79,19 @@
                 }
             });
         });
+      
+        $('#daterange').daterangepicker({
+            opens: 'left',
+            locale: {
+                format: 'YYYY/MM/DD'
+            },
+            autoUpdateInput: false
+        });
+
+        $('#daterange').on('apply.daterangepicker', function(event, picker) {
+            $(this).val(picker.startDate.format('YYYY/MM/DD') + ' - ' + picker.endDate.format('YYYY/MM/DD'));
+        });
+
 </script>
 <script type="text/javascript">
 	$(function () {
