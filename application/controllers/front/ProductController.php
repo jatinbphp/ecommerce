@@ -18,6 +18,9 @@ class ProductController extends MY_Controller {
         $this->load->model('ProductOptions_model');
         $this->load->model('Categories_model');
         $this->load->model('Wishlist_model');
+        $this->load->model('ProductOptions_model');
+        $this->load->model('Reviews_model');
+        $this->load->model('User_model');
     }
 
     /**
@@ -29,10 +32,21 @@ class ProductController extends MY_Controller {
      * @return void
      */
     public function index(){
-        $categoryId = $this->input->get('categoryId');
-        $data['products'] = $this->Product_model->filter_products($categoryId);
-        $data['wishlistProductId']     = $this->Wishlist_model->getWishlistProductIds();
-        $content = $this->load->view('front/Products/filter', $data, TRUE);
+        $input                      = $this->input->get(NULL, TRUE);
+        $decoded_input              = !empty($input) ? json_decode(json_encode($input), true) : [];
+        unset($decoded_input['categoryId']);
+        unset($decoded_input['priceRange']);
+        unset($decoded_input['sort']);
+        $filtered_input             = !empty($decoded_input) ? array_values(array_filter($decoded_input)) : [];
+        $products_options_value_ids = !empty($filtered_input) ? array_merge(...array_values($filtered_input)) : [];
+        $categoryId                 = $this->input->get('categoryId');
+        $priceRange                 = $this->input->get('priceRange');
+        $sort                       = $this->input->get('sort');
+        $data['products']           = $this->Product_model->filter_products($categoryId, $products_options_value_ids, $priceRange, $sort);
+        $data['wishlistProductId']  = $this->Wishlist_model->getWishlistProductIds();
+        $data['type']               = $this->Product_model::$type;
+        $data['productWiseReviews'] = $this->Reviews_model->getProductWiseReviewData();
+        $content                    = $this->load->view('front/Products/filter', $data, TRUE);
         $response = [
             'status'   => !empty($data['products']) ? true : false,
             'html'     => $content
@@ -41,7 +55,7 @@ class ProductController extends MY_Controller {
         $this->output->set_content_type('application/json')->set_output(json_encode($response));
     }
 
-   public function show($id) {
+    public function show($id) {
         $data = $this->product_data($id);
         $response = [
             'status' => !empty($data['product']) ? true : false,
@@ -52,13 +66,20 @@ class ProductController extends MY_Controller {
 
     public function details($id) {
         $data = $this->product_data($id);
-        //echo "<pre>";print_r($data);exit();
         $this->frontRenderTemplate('front/Products/details', $data);
     }
 
     
     private function product_data($id) {
+        $this->load->model('Wishlist_model');
         $data['product'] = $this->Product_model->show($id);
+        $data['wishlistProductId'] = $this->Wishlist_model->getWishlistProductIds();
+        $data['reviews'] = $this->Reviews_model->getDetailsBasedOnProductId($id);
+        $data['productWiseReviews']    = $this->Reviews_model->getProductWiseReviewData();
+        if($userId   = $this->session->userdata('userId')){
+            $user = $this->User_model->getUserData($userId);
+            $data['userImage'] = $user['image'];
+        }
         if (!empty($data['product'])) {
             $data['product']['stock_status']    = $this->Product_model::$stock_status;
             $data['product']['quantity']        = $this->Product_model::$quantity;
@@ -66,5 +87,15 @@ class ProductController extends MY_Controller {
         }
 
         return $data;
+    }
+
+    public function options(){
+        $option_names = $this->ProductOptions_model->getUniqueOptionNames();
+        $response = [
+            'status' => !empty($option_names) ? true : false,
+            'data'   => $option_names
+        ];
+
+        $this->output->set_content_type('application/json')->set_output(json_encode($response));
     }
 }

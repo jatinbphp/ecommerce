@@ -20,6 +20,7 @@ class OrderController extends MY_Controller {
         $this->load->model('User_model');
         $this->load->model('User_address_model');
         $this->load->model('Order_items_model');
+        $this->load->model('Order_options_model');
         $this->load->model('ProductImage_model');
     }
 
@@ -82,11 +83,13 @@ class OrderController extends MY_Controller {
         $order      = $this->Order_model->getOrderById($id);
         $user       = $this->User_model->getUserData($order->user_id);
         $orderItems = $this->Order_items_model->getOrderItemsByOrderId($id);
+        $orderAttributes = $this->Order_options_model->getOrderItemsByOrderId($id);
         $address    = $this->User_address_model->getAddressDetails($order->address_id);
          
         $data['order']      = $order;
         $data['user']       = $user;
         $data['orderItems'] = $orderItems;
+        $data['orderAttributes'] = $orderAttributes;
         $data['address']    = $address;
 
         $this->frontRenderTemplate('front/myAccount/myOrders/orderDetails', $data);

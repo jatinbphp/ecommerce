@@ -17,7 +17,7 @@ class HomeController extends MY_Controller {
         $this->load->model('Banner_model');
         $this->load->model('Product_model');
         $this->load->model('Categories_model');
-        $this->load->model('Cart_model');
+        $this->load->model('Reviews_model');
     }
 
     /**
@@ -31,7 +31,7 @@ class HomeController extends MY_Controller {
         $data['categorized_products']  = isset($data['categories'][0]['id']) ? $this->Product_model->filter_products($data['categories'][0]['id']) : null;
         $data['type']                  = $this->Product_model::$type;
         $data['categories']            = $this->Categories_model->getCategoriesWithManyProducts();
-        $data['usrCartCounter']        = $this->Cart_model->getUserCartCounter();
+        $data['productWiseReviews']    = $this->Reviews_model->getProductWiseReviewData();
         $this->frontRenderTemplate('front/Home/homePage', $data);
     }
 

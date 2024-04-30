@@ -40,8 +40,8 @@
                         <h4 class="widget_title">Shop</h4>
                         <ul class="footer-menu">
                             <?php if (isset($footer_data['footerMenuCategoriesNames']) && is_array($footer_data['footerMenuCategoriesNames'])): ?>
-                                <?php foreach ($footer_data['footerMenuCategoriesNames'] as $categoryName): ?>
-                                    <li><a href="javaScript:;"><?php echo $categoryName; ?></a></li>
+                                <?php foreach ($footer_data['footerMenuCategoriesNames'] as $key => $categoryName): ?>
+                                    <li><a href="<?php echo base_url("shop/categories/$key") ?>" data-categoryId="<?php echo $key ?>"><?php echo $categoryName; ?></a></li>
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </ul>
@@ -119,10 +119,4 @@
             $('#DisplayImage').attr('width', '150');
         }
     }
-    </script>
- 
-    <script type="text/javascript">
-	
 </script>
-
-

@@ -86,7 +86,9 @@
         <div class="row align-items-center rows-products">
             <?php if(isset($latest_products) && !empty($latest_products)): ?>
                 <?php foreach($latest_products as $key => $value): ?>
-                    <?php $this->load->view('front/Products/product', array('value' => $value));  ?>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-6">
+                        <?php $this->load->view('front/Products/product', array('value' => $value));  ?>
+                    </div>
                 <?php endforeach ?>
             <?php else: ?>
                 <div class="row align-items-center rows-products grid">
@@ -97,13 +99,15 @@
             <?php endif ?>
         </div>
 
-        <div class="row justify-content-center">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                <div class="position-relative text-center">
-                    <a href="<?php echo base_url('shop'); ?>" class="btn stretched-link borders">Explore More<i class="lni lni-arrow-right ml-2"></i></a>
+        <?php if(isset($latest_products) && !empty($latest_products)): ?>
+            <div class="row justify-content-center">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="position-relative text-center">
+                        <a href="<?php echo base_url('shop'); ?>" class="btn stretched-link borders">Explore More<i class="lni lni-arrow-right ml-2"></i></a>
+                    </div>
                 </div>
             </div>
-        </div>
+        <?php endif ?>
     </div>
 </section>
 
@@ -143,7 +147,9 @@
                             <div class="row rows-products" id="category-section">
                                 <?php if(isset($categorized_products) && !empty($categorized_products)): ?>
                                     <?php foreach($categorized_products as $key => $value): ?>
-                                        <?php $this->load->view('front/Products/product', array('value' => $value));  ?>
+                                        <div class="col-xl-3 col-lg-4 col-md-6 col-6">
+                                            <?php $this->load->view('front/Products/product', array('value' => $value));  ?>
+                                        </div>
                                     <?php endforeach ?>
                                 <?php else: ?>
                                     <div class="row align-items-center rows-products grid">

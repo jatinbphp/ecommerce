@@ -40,12 +40,12 @@
                                     </li>
                                     <li>
                                         <a href="javaScript:;" onclick="openWishlist()">
-                                        <i class="lni lni-heart"></i><span class="dn-counter wishlist-counter"><?php echo ($totalWish) ?></span>
+                                        <i class="lni lni-heart"></i><span class="dn-counter wishlist-counter">0</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="javaScript:;" onclick="openCart()">
-                                        <i class="lni lni-shopping-basket"></i><span class="dn-counter">0</span>
+                                        <i class="lni lni-shopping-basket"></i><span class="dn-counter user-cart-counter">0</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -55,25 +55,17 @@
                             <ul class="nav-menu">
                                 <li><a href="<?php echo base_url(); ?>">Home</a></li>
                                 <li><a href="<?php echo base_url('about-us'); ?>">About Us</a></li>
-                                <li>
-                                    <a href="javascript:void(0);">Shop</a>
-                                    <ul class="nav-dropdown nav-submenu">
-                                        <?php if (isset($footer_data['headerMenuCategoriesNames']) && is_array($footer_data['headerMenuCategoriesNames'])): ?>
-                                            <?php foreach ($footer_data['headerMenuCategoriesNames'] as $categoryName): ?>
-                                                <li><a href="javaScript:;"><?php echo $categoryName; ?></a></li>
+                                <li><a href="<?php echo base_url('shop'); ?>">Shop</a></li>
+                                <?php if (isset($footer_data['headerMenuCategoriesNames']) && is_array($footer_data['headerMenuCategoriesNames']) && count($footer_data['headerMenuCategoriesNames'])): ?>
+                                    <li>
+                                        <a href="javascript:void(0);">Trendings</a>
+                                        <ul class="nav-dropdown nav-submenu">
+                                            <?php foreach ($footer_data['headerMenuCategoriesNames'] as $key => $categoryName): ?>
+                                                <li><a href="<?php echo base_url("shop/categories/$key") ?>" data-categoryId="<?php echo $key ?>"><?php echo $categoryName; ?></a></li>
                                             <?php endforeach; ?>
-                                        <?php endif; ?>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">Clothing</a>
-                                    <ul class="nav-dropdown nav-submenu">
-                                        <li><a href="#">Female</a></li>
-                                        <li><a href="#">Male</a></li>
-                                        <li><a href="#">Kids</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="<?php echo base_url('shop'); ?>">Accessories</a></li>
+                                        </ul>
+                                    </li>
+                                <?php endif; ?>
                                 <li><a href="contact">Contact Us</a></li>
                             </ul>
                             <ul class="nav-menu nav-menu-social align-to-right">
@@ -117,6 +109,14 @@
                                     <a href="javaScript:;" onclick="openCart()">
                                         <i class="lni lni-shopping-basket"></i><span class="dn-counter user-cart-counter"><?php echo (isset($usrCartCounter) && $usrCartCounter > 0) ? $usrCartCounter :  0; ?></span>
                                     </a>
+                                    <?php if (!$this->session->userdata('logged_in')): ?>
+                                        <script>
+                                            var data = localStorage.getItem('cartData');
+                                            if(data){
+                                                $('.user-cart-counter').text(JSON.parse(data).length);    
+                                            }
+                                        </script>    
+                                    <?php endif  ?>
                                 </li>
                             </ul>
                         </div>

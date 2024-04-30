@@ -205,7 +205,6 @@ $('#optionBtn').on('click', function(){
                                 '<select name="' + name + '" class="form-control select2" onChange="updateOptions(this,'+optionName+')" style="width:100%">'+
                                     '<option value="select">Select</option>'+
                                     '<option value="color">Color</option>'+
-                                    '<option value="checkbox">Checkbox</option>'+
                                     '<option value="radio">Radio Button</option>'+
                                 '</select>' +
                             '</div>' +
@@ -457,7 +456,6 @@ function updateOptions(select, optionId){
                     '</div>'+                    
                 '</div>';
     $('#extraValuesOption_'+optionId+'_'+optionId).empty().append(data);
-    console.log(data);
     $('.my-colorpicker2').colorpicker();
 }
 

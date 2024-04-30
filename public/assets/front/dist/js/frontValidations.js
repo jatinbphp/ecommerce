@@ -41,10 +41,12 @@ $(document).ready(function() {
     $(document).on('click', '.snackbar-wishlist', function(event) {
         event.preventDefault();
         var id = $(this).attr("data-id");
-        var self = $(this);
+        if(!id){
+            return;
+        }
 
         $.ajax({
-            url:"wishlist/add_to_faviourits",
+            url: baseUrl+"wishlist/add_to_faviourits",
             type: "POST",
             data: {
                 'id': id,
@@ -54,12 +56,11 @@ $(document).ready(function() {
                     $('.wishlist-counter').text(data.total);
                     var msg = '';
                     if(data.type == 1){
-                        self.addClass('active');
                         msg = 'Your product was added to wishlist successfully!';
                     } else {
-                        self.removeClass('active');
                         msg = 'Your product was removed from the wishlist successfully!';
                     }
+                    updateWishlistClass(data.type, id);
                     SnackbarAlert(msg);
                 } else {
                     SnackbarAlert("To add this product to your favorites, please log in to your account!");
@@ -102,14 +103,12 @@ $(document).ready(function() {
             if (isConfirm) {
                 $.ajax({
                     url: "<?php echo site_url('addresses/delete/'); ?>" + id,
-                    url: "addresses/delete/" + id,
                     type: "DELETE",
                     headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
                     success: function(response) {
-                        swal("Deleted", "Your data successfully deleted!", "success");
                         if (response.success) {
                             $('#address-box-'+id).remove();
-                            swal("Success!", "Item removed from wishlist successfully.", "success");
+                            swal("Success!", "Address removed successfully.", "success");
                         } else {
                             swal("Error", "Failed to remove item from wishlist.", "error");
                         }
@@ -147,8 +146,6 @@ $(document).ready(function() {
                     success: function(response) {
                         if (response.success) {
                             $this.closest('.product_grid').remove();
-                            console.log(response);
-                            console.log(response.totalCount);
                             $('.wishlist-counter').text(response.totalCount);
                             swal("Success!", "Item removed from wishlist successfully.", "success");
                            
@@ -165,7 +162,65 @@ $(document).ready(function() {
             }
         });
     });
+
+    $('.show-more-reviews').click(function(){
+        var desc = $(this).attr('data-description');
+        $('#reviewDescbody').html(desc);
+        $('#reviewDesc').modal('show');
+    });
+
+    $('#reviewForm').submit(function(e) {
+        e.preventDefault(); 
+        var formData = $(this).serialize();
+        var full_name = $('#reviewForm #full_name').val();
+        var email_address = $('#reviewForm #email_address').val();
+        var description = $('#reviewForm #description').val();
+
+        $('.full_name-text').text('');
+        $('.email_address-text').text('');
+        $('.description-text').text('');
+
+        if (!full_name) {
+            $('.full_name-text').text('Full name field is required.');
+            $('#full_name').focus();
+            return false;
+        }
+
+        if (!email_address) {
+            $('.email_address-text').text('Email address field is required.');
+            $('#email_address').focus();
+            return false;
+        } else if (!isValidEmail(email_address)) {
+            $('.email_address-text').text('Please enter a valid email address.');
+            $('#email_address').focus();
+            return false;
+        }
+
+        if (!description) {
+            $('.description-text').text('Description field is required.');
+            $('#description').focus();
+            return false;
+        }
+
+        $.ajax({
+            url: baseUrl+'reviews/add-review',
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                if(response.success){
+                    $('#reviewForm')[0].reset();
+                    $('#product-reviews').html(response.html);
+                }
+                SnackbarAlert(response.message);
+            }
+        });
+    });
 });
+
+function isValidEmail(email) {
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
 
 function SnackbarAlert(msg) {
     Snackbar.show({
@@ -176,5 +231,18 @@ function SnackbarAlert(msg) {
         duration: 3000,
         textColor: '#fff',
         backgroundColor: '#151515'
+    });
+}
+
+function updateWishlistClass(type, id){
+    $('.snackbar-wishlist').each(function() {
+        var dataId = $(this).data('id');
+        if (dataId == id) {
+            if(type == 1){
+                $(this).addClass('active-wishlist');
+            }else{
+                $(this).removeClass('active-wishlist');
+            }
+        }
     });
 }

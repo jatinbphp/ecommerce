@@ -13,6 +13,26 @@
                 </div>
             </div>
 
+            <!-- Review Desc Modal -->
+            <div class="modal fade" id="reviewDesc" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Review Description</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body card card-info card-outline">
+                            <div id="reviewDescbody"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Search -->
             <div class="w3-ch-sideBar w3-bar-block w3-card-2 w3-animate-right" style="display:none;right:0;" id="Search">
                 <div class="rightMenu-scroll">
@@ -87,14 +107,14 @@
         <script src="<?php echo base_url('public/assets/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>"></script>
         <script src="<?php echo base_url('public/assets/admin/plugins/datatables-responsive/js/dataTables.responsive.min.js') ?>"></script>
         <script src="<?php echo base_url('public/assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
-        <script src="<?php echo base_url('public/assets/admin/plugins/select2/select2.full.min.js') ?>"></script>
+
         <script>
             function openWishlist() {
                 //userWishlist
             	document.getElementById("Wishlist").style.display = "block";
                 $.ajax({
                     url: "wishlist-data", 
-                    method: 'GET',
+                    type: 'GET',
                     headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
                     success: function(response) {
                         $("#userWishlist").html(response.wishlistHtml);
@@ -112,10 +132,12 @@
         <script>
             function openCart() {
             	document.getElementById("Cart").style.display = "block";
+                var cartDataFromLocalStorage = localStorage.getItem('cartData');
 
                 $.ajax({
-                    url: "cart/get-user-cart", 
-                    method: 'GET',
+                    url: baseUrl+"cart/get-user-cart", 
+                    type: 'POST',
+                    data: { cartData: cartDataFromLocalStorage },
                     headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
                     success: function(response) {
                         $("#usrCartDataMenu").html(response.cartView);
@@ -125,8 +147,6 @@
                         console.error('AJAX Error:', textStatus, errorThrown);
                     }
                 });
-
-
             }
             function closeCart() {
             	document.getElementById("Cart").style.display = "none";
@@ -139,6 +159,24 @@
             function closeSearch() {
             	document.getElementById("Search").style.display = "none";
             }
-        </script>	
+        </script>
+        <script>
+            $('.filter_wraps .single_fitres a').on('click',function(e) {
+                if($(this).hasClass('list')) {
+                    $('.filter_wraps .single_fitres a.list').addClass('active');
+                    $('.filter_wraps .single_fitres a.grid').removeClass('active');
+                    $('.rows-products').removeClass('grid').addClass('list');
+                    $('.rows-products .col-6').removeClass('col-xl-4 col-lg-4 col-md-6 col-6').addClass('col-12');
+                    $('.product_grid .card-footer .text-left .d-none').removeClass('d-none').addClass('d-block');
+                }
+                else if ($(this).hasClass('grid')) {
+                    $('.filter_wraps .single_fitres a.grid').addClass('active');
+                    $('.filter_wraps .single_fitres a.list').removeClass('active');
+                    $('.rows-products').removeClass('list').addClass('grid');
+                    $('.rows-products .col-12').removeClass('col-12').addClass('col-xl-4 col-lg-4 col-md-6 col-6');
+                    $('.product_grid .card-footer .text-left .d-block').removeClass('d-block').addClass('d-none');
+                }
+            });
+        </script>
     </body>
 </html>

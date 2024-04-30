@@ -1269,6 +1269,56 @@ outline:none;
     -webkit-transform: scale(1);
     transform: scale(1);
 }
+/*----------- Custom Checkbox Button ------------*/
+.custom-options-checkbox [type="checkbox"]:checked,
+.custom-options-checkbox [type="checkbox"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+}
+.custom-options-checkbox [type="checkbox"]:checked + label,
+.custom-options-checkbox [type="checkbox"]:not(:checked) + label
+{
+    position: relative;
+    padding-left: 28px;
+    cursor: pointer;
+    line-height: 20px;
+    display: inline-block;
+}
+.custom-options-checkbox [type="checkbox"]:checked + label:before,
+.custom-options-checkbox [type="checkbox"]:not(:checked) + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    background: #fff;
+}
+.custom-options-checkbox [type="checkbox"]:checked + label:after,
+.custom-options-checkbox [type="checkbox"]:not(:checked) + label:after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background:rgba(21,21,21,1);
+    position: absolute;
+    top:3px;
+    left:3px;
+    border-radius: 100%;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+.custom-options-checkbox [type="checkbox"]:not(:checked) + label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+.custom-options-checkbox [type="checkbox"]:checked + label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
 /*------------- GLobal Settings: Bootstrap 4 hack --------------*/
 .card-columns {
   -webkit-column-gap: 30px;
@@ -2987,6 +3037,83 @@ li.login-attri .account-drop a {
     content: "\e64c";
     font-family: 'themify';
     background: #009acd;
+}
+
+#payaccordion article {
+    border: 1px solid #eaeff5;
+    padding: 1em
+}
+
+#payaccordion input[type="radio"] {
+    appearance: none;
+    position: fixed;
+    top: -100vh;
+    left: -100vh
+}
+
+#payaccordion input[type="radio"]~div {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .5s
+}
+
+#payaccordion input[type="radio"]:checked~div {
+    max-height: inherit
+}
+
+#payaccordion input[type="radio"] {
+    position: absolute;
+    opacity: 0
+}
+
+#payaccordion .article-lable {
+    display: block;
+    cursor: pointer;
+    padding-left: 30px;
+    position: relative
+}
+
+#payaccordion .article-lable::before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: #edeef3;
+    border-radius: 50%;
+    border: none;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #fff;
+    transition: all ease .4s
+}
+
+#payaccordion input[type="radio"]:checked+.article-lable::before {
+    content: "\e64c";
+    font-family: 'themify';
+    background: #009acd
+}
+
+#payaccordion [type="radio"]:checked+label:after,
+#payaccordion [type="radio"]:not(:checked)+label:after {
+    background: none !important
+}
+
+#payaccordion article label, #payaccordion article label h5 {
+    margin: 0;
+}
+
+.bg-dark #payaccordion .panel.panel-default {
+    background: transparent;
+}
+.bg-dark #payaccordion .article-lable::before {
+    background: rgba(255, 255, 255, .3);
+}
+.bg-dark #payaccordion .panel-default .panel-body {
+    color: #ffffff;
 }
 
 /*----------------- Price Range --------------------*/
@@ -5168,3 +5295,60 @@ img {max-width: 100%;}
 }
 .dataTables_length, .dataTables_filter{display: none;}
 #frontordersTable thead{display: none;}
+.snackbar-wishlist.active-wishlist {
+    background-color: rgba(0, 156, 207, .5);
+}
+
+.eye-icon, .confirm-eye-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    pointer-events: auto;
+    color:gray;
+}
+
+.confirm-eye-icon i {
+    pointer-events: none;
+}
+
+.single_filter_card .count {
+    float: right;
+    margin-right: 30px;
+}
+.widget-boxed-body .inner_widget_link ul {
+    padding: 0 0 0 10px;
+}
+.category-list .checkbox-custom-label { 
+    display: inline-block;
+    width: auto;
+    margin-top: 0;
+    margin-right: 0;
+}
+.single_filter_card h5 {
+    margin: 0;
+    font-weight: 400;
+    font-size: 15px;
+    min-width: calc(100% - 30px);
+    display: inline-block;
+    position: relative;
+}
+.checkbox-custom + .checkbox-custom-label:before {
+    margin-right: 5px;
+}
+.single_filter_card .card-body {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.single_filter_card .single_filter_card {
+    padding-bottom: 0;
+}
+.single_filter_card h5 a .accordion-indicator {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.inner_widget_link label span {
+    color: #252525;
+}

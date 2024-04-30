@@ -46,7 +46,7 @@
                                     <th style="width:9%">Price</th>
                                     <th style="width:9%">Status</th>
                                     <th style="width:15%">Date Created</th>
-                                    <th style="width:12%">Action</th>
+                                    <th style="width:17%">Action</th>
                                 </tr>
                                 </thead>
                             </table>

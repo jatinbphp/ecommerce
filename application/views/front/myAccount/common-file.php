@@ -8,7 +8,7 @@
                 <li><a href="<?php echo base_url('profile-info'); ?>" class="nav-link" id="profileinfo"><i class="lni lni-user mr-2"></i>Profile Info</a></li>
                 <li><a href="<?php echo base_url('profile-address'); ?>" class="nav-link" id="addresses"><i class="lni lni-map-marker mr-2"></i>Addresses</a></li>
                 <li><a href="<?php echo base_url('change-password'); ?>" class="nav-link" id="changepassword"><i class="lni lni-lock mr-2"></i>Change Password</a></li>
-                <li><a href="logout"><i class="lni lni-power-switch mr-2" class="nav-link"></i>Log Out</a></li>
+                <li><a href="<?php echo base_url('logout'); ?>"><i class="lni lni-power-switch mr-2" class="nav-link"></i>Log Out</a></li>
             </ul>
         </div>
     </div>

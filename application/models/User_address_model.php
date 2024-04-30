@@ -20,9 +20,15 @@ class User_address_model extends CI_Model
   * @return bool Returns true if the record was successfully created, false otherwise.
   */
 	public function createByUser($data) {    
-        $create = $this->db->insert($this->table, $data);
-        return ($create) ? true : false;
-        
+        if($data) {
+            $create = $this->db->insert($this->table, $data);
+            if ($create) {
+                return $this->db->insert_id();
+            } else {
+                return 0;
+            }
+        }
+        return 0;
     }
 
     public function insert($data)

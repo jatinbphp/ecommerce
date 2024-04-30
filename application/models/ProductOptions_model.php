@@ -23,7 +23,7 @@ class ProductOptions_model extends CI_Model
     * @return array
     */
 	public function getDetails($optionId = null, $productId = null) {
-        if($productId) {
+        if($productId && $optionId) {
             $sql = "SELECT * FROM $this->table WHERE product_id = ? AND id = ?";
             $query = $this->db->query($sql, [$productId, $optionId]);
             return $query->row_array();
@@ -32,6 +32,14 @@ class ProductOptions_model extends CI_Model
         $sql = "SELECT * FROM $this->table ORDER BY id DESC";
         $query = $this->db->query($sql);
         return $query->result_array();
+    }
+
+    public function getOption($optionId = null) {
+        if(!$optionId){
+            return [];
+        }
+        $sql = "SELECT * FROM $this->table WHERE id = ?";
+        return $this->db->query($sql, [$optionId])->row_array();
     }
 
     /**
@@ -113,4 +121,25 @@ class ProductOptions_model extends CI_Model
         
         return $this->db->affected_rows() > 0;
     }
+
+    public function getUniqueOptionNames(){
+        $this->db->select('LOWER(option_name) AS option_name', false); 
+        $this->db->from($this->table);
+        $this->db->where('status', 'active'); 
+        $this->db->group_by('LOWER(option_name)'); 
+        $query = $this->db->get();
+        $names = array_column($query->result_array(), 'option_name');
+        return $names;
+    }
+
+    public function getOptionsByName($option_name){
+        $this->db->select('id');
+        $this->db->from($this->table);
+        $this->db->where('status', 'active'); 
+        $this->db->where("LOWER(option_name)", strtolower($option_name)); 
+        $query = $this->db->get();
+        $ids = array_column($query->result_array(), 'id');
+        return $ids;
+    }
+
 }

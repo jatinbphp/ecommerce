@@ -13,7 +13,7 @@ class ProductOptionValues_model extends CI_Model
 	}
 
 	public function getDetails($optionValueId = null, $optionId = null, $productId = null) {
-        if($productId) {
+        if($productId && $optionValueId && $optionId) {
             $sql = "SELECT * FROM $this->table WHERE option_id = ? AND product_id = ? AND id = ?";
             $query = $this->db->query($sql, [$optionId, $productId, $optionValueId]);
             return $query->row_array();
@@ -22,6 +22,14 @@ class ProductOptionValues_model extends CI_Model
         $sql = "SELECT * FROM $this->table ORDER BY id DESC";
         $query = $this->db->query($sql);
         return $query->result_array();
+    }
+
+    public function getOptionValue($optionValueId = null) {
+        if(!$optionValueId){
+            return [];
+        }
+        $sql = "SELECT * FROM $this->table WHERE id = ?";
+        return $this->db->query($sql, [$optionValueId])->row_array();
     }
 
     /**
@@ -81,5 +89,22 @@ class ProductOptionValues_model extends CI_Model
         $this->db->delete($this->table);
         
         return $this->db->affected_rows() > 0;
+    }
+
+
+    public function filterProductOptions($option_ids = []){
+        $this->db->select('products_options_values.*, COUNT(products.id) as product_count');
+        $this->db->from($this->table);
+        $this->db->join('products', 'products_options_values.product_id = products.id', 'left');
+        $this->db->group_by('products_options_values.id');
+        $this->db->where('products_options_values.status', 'active'); 
+
+        if(!empty($option_ids)){
+            $this->db->where_in('products_options_values.option_id', $option_ids);
+        }
+
+        $query = $this->db->get();
+
+        return $query->result_array();
     }
 }

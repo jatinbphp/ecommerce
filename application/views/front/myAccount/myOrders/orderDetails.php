@@ -1,32 +1,8 @@
 <div id="main-wrapper">
-    <div class="gray py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="<?php echo site_url(''); ?>">Home</a></li>
-                            <li class="breadcrumb-item"><a href="<?php echo site_url('profile-info'); ?>">My Account</a></li>
-                            <li class="breadcrumb-item"><a href="#"><?php echo $title; ?></a></li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php $this->load->view('Breadcrumb',['current' => $title, 'middle' => ['my_account' => 'profile-info']]); ?>
     <section class="middle">
         <div class="container">
-            <?php if($this->session->flashdata('success')): ?>
-                <div class="alert alert-success alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <?php echo $this->session->flashdata('success'); ?>
-                </div>
-            <?php elseif($this->session->flashdata('error')): ?>
-                <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <?php echo $this->session->flashdata('error'); ?>
-                </div>
-            <?php endif; ?>
+            <?php $this->load->view('SessionMessages'); ?>
             <div class="row align-items-start justify-content-between">
                 <?php $this->load->view('front/myAccount/common-file'); ?>
                 <div class="col-12 col-md-12 col-lg-8 col-xl-8">
@@ -42,7 +18,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>INV-<?php echo date('Y', strtotime($order->created_at)); ?>-<?php echo $order->id; ?></td>
+                                    <td>#<?php echo $order->id; ?></td>
                                     <td><?php echo isset($user['first_name']) ? $user['first_name'] : ''; ?> (<?php echo isset($user['email']) ? $user['email'] : ''; ?>)</td>
                                     <td><?php echo $order->created_at; ?></td>
                                     <td><span class="ft-medium small text-primary bg-light-primary rounded px-3 py-1"><?php echo $order->status; ?></span></td>
@@ -82,6 +58,19 @@
                                                         <h4 class="product_title fs-sm ft-medium mb-1 lh-1">
                                                             <?php echo $item->product_name; ?>
                                                         </h4>
+                                                        <?php
+                                                            $orderProductId = $item->id;
+                                                            $optins =$returnArray = array_filter($orderAttributes, function($item) use($orderProductId) {
+                                                                return $item->order_product_id == $orderProductId;
+                                                            });
+                                                        ?>
+                                                        <?php if(!empty($optins)): ?>
+                                                            <?php foreach ($optins as $optionData): ?>
+                                                                <p class="m-0 mb-1 lh-1">
+                                                                    <span class="text-dark medium"><?php echo ($optionData->name ?? '');?> : <?php echo preg_match('/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', ($optionData->value ?? '')) ? '<i class="fas fa-square" style="color: '.($optionData->value ?? '').'"></i>' : ($optionData->value ?? ''); ?></span>
+                                                                </p>
+                                                            <?php endforeach; ?>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>
                                             </td>
