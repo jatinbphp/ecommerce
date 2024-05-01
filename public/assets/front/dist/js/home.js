@@ -110,8 +110,8 @@ function deleteCartItem(cartId, button) {
         confirmButtonColor: '#DD6B55',
         confirmButtonText: 'Yes, Delete',
         cancelButtonText: 'No, cancel',
-        closeOnConfirm: false,
-        closeOnCancel: false
+        closeOnConfirm: true,
+        closeOnCancel: true
     },
     function(isConfirm) {
         if (isConfirm) {
@@ -126,26 +126,24 @@ function deleteCartItem(cartId, button) {
                 if(data){
                     $('.user-cart-counter').text(JSON.parse(data).length);
                 }
-                openCart();
-                return;
+            } else {
+                $.ajax({
+                    url: baseUrl+"cart/delete-user-item",
+                    method: 'POST',
+                    data: {
+                        cartId: cartId 
+                    },
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                    success: function(response) {
+                        // $("#usrCartDataMenu").html(response.cartView);
+                        $(".user-cart-counter").html(response.cartCounter);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('AJAX Error:', textStatus, errorThrown);
+                    }
+                });
             }
-            $.ajax({
-                url: baseUrl+"cart/delete-user-item",
-                method: 'POST',
-                data: {
-                    cartId: cartId 
-                },
-                headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
-                success: function(response) {
-                    // $("#usrCartDataMenu").html(response.cartView);
-                    $(".user-cart-counter").html(response.cartCounter);
-                    openCart();
-                    return;
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error('AJAX Error:', textStatus, errorThrown);
-                }
-            });
+            openCart();
         } else {
             swal("Cancelled", "Your Data is Safe.", "error");
         }
