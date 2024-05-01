@@ -293,4 +293,25 @@ class Product_model extends CI_Model
         return $query->row_array();  
     }
 
+    /**
+     * Retrieves the count of active products.
+     *
+     * This function queries the database to count the number of products
+     * that are currently marked as 'active'.
+     *
+     * @return int The count of active products.
+     */
+    public function getCountOfActiveProducts()
+    {
+        $this->db->select('COUNT(*) as count');
+        $this->db->where('status', 'active');
+        $query = $this->db->get($this->table);
+
+        if ($query->num_rows() > 0) {
+            $result = $query->row_array();
+            return $result['count'];
+        } else {
+            return 0;
+        }
+    }
 }

@@ -223,4 +223,10 @@ class Order_model extends CI_Model
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
+
+    public function getAllOrders(){
+        $sql = "SELECT * FROM $this->table ORDER BY id DESC";
+		$query = $this->db->query($sql);
+		return $query->result();
+    }
 }

@@ -21,6 +21,8 @@
 <script src="<?php echo base_url('public/assets/admin/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js') ?>"></script>
 <script src="<?php echo base_url('public/assets/admin/plugins/moment/moment.min.js') ?>"></script>
 <script src="<?php echo base_url('public/assets/admin/plugins/daterangepicker/daterangepicker.js') ?>"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script type="text/javascript">
 	function AjaxUploadImage(obj,id){
         var file = obj.files[0];

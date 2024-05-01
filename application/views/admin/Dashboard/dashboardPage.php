@@ -24,7 +24,7 @@
                             </span>
 						<div class="info-box-content">
 							<span class="info-box-text">Total Users</span>
-							<span class="info-box-number">123</span>
+							<span class="info-box-number"><?php echo isset($totalUsers) ? count($totalUsers) : ''; ?></span>
 						</div>
 					</div>
 				</div>
@@ -35,7 +35,7 @@
                             </span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Total Products</span>
-                                <span class="info-box-number">20</span>
+                                <span class="info-box-number"><?php echo isset($totalProducts) ? $totalProducts : ''; ?></span>
                             </div>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                             </span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Total Orders</span>
-                                <span class="info-box-number">250</span>
+                                <span class="info-box-number"><?php echo isset($totalOrders) ? count($totalOrders) : ''; ?></span>
                             </div>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                             </span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Total Sales</span>
-                                <span class="info-box-number">1,20,225</span>
+                                <span class="info-box-number">$<?php echo isset($totalSales) ? number_format($totalSales, 2) : ''; ?></span>
                             </div>
                         </div>
                     </div>
@@ -151,16 +151,11 @@ $(document).ready(function() {
 
 	    return monthName;
 	}
-
-	var monthlyOrderAmounts = [
-	    {"month":"2023-10","total_amount":0},
-	    {"month":"2023-11","total_amount":0},
-	    {"month":"2023-12","total_amount":0},
-	    {"month":"2024-01","total_amount":0},
-	    {"month":"2024-02","total_amount":0},
-	    {"month":"2024-03","total_amount":20948},
-	    {"month":"2024-04","total_amount":0}
-	];
+    <?php
+    $monthlyOrderAmounts = $this->data['totalMonthlySales'];
+    $monthlyOrderAmountsJson = json_encode($monthlyOrderAmounts);
+    ?>
+    var monthlyOrderAmounts = <?php echo $monthlyOrderAmountsJson; ?>;
 
 	var chartData = monthlyOrderAmounts.reduce(function(acc, item) {
 	    acc.labels.push(getMonthName(item.month));
@@ -207,7 +202,12 @@ $(document).ready(function() {
 	// ---------------------total orders-----------------------
 	var labelsOrders = [];
 	var dataOrders = [];
-	var order_date = [{"order_date":"1 Apr","num_orders":5},{"order_date":"2 Apr","num_orders":2},{"order_date":"3 Apr","num_orders":0},{"order_date":"4 Apr","num_orders":6},{"order_date":"5 Apr","num_orders":12},{"order_date":"6 Apr","num_orders":8},{"order_date":"7 Apr","num_orders":2},{"order_date":"8 Apr","num_orders":1}];
+	<?php
+    $totalOrdersData = $this->data['totalOrdersData'];
+    $order_date = json_encode($totalOrdersData);
+    ?>
+	var order_date = <?php echo $order_date; ?>;
+	console.log(order_date);
 
 	order_date.forEach(function(item) {
 	    labelsOrders.push(item.order_date);
