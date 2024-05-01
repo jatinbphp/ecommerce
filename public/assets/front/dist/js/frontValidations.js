@@ -74,7 +74,7 @@ $(document).ready(function() {
         "serverSide": true,
         "order":[],
         "ajax":{
-            url:"fetch_orders",
+            url: baseUrl+"fetch_orders",
             type:"POST",
         },
         "columnDefs": [{
@@ -102,7 +102,7 @@ $(document).ready(function() {
         function(isConfirm) {
             if (isConfirm) {
                 $.ajax({
-                    url: "<?php echo site_url('addresses/delete/'); ?>" + id,
+                    url: baseUrl+"addresses/delete/" + id,
                     type: "DELETE",
                     headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
                     success: function(response) {
@@ -141,7 +141,7 @@ $(document).ready(function() {
         function(isConfirm) {
             if (isConfirm) {
                 $.ajax({
-                    url: "my-wishlist-remove/" + itemId,
+                    url: baseUrl + "my-wishlist-remove/" + itemId,
                     type: 'DELETE',
                     success: function(response) {
                         if (response.success) {
