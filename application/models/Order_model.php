@@ -199,5 +199,10 @@ class Order_model extends CI_Model
         self::STATUS_TYPE_COMPLETE => 'Complete',
         self::STATUS_TYPE_CANCEL => 'Cancel',
     ];
-    
+
+    public function getAllOrders(){
+        $sql = "SELECT * FROM $this->table ORDER BY id DESC";
+		$query = $this->db->query($sql);
+		return $query->result();
+    }
 }
