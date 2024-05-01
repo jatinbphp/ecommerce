@@ -87,8 +87,7 @@ class CartController extends MY_Controller {
                 'cartView' => $viewData,
                 'cartCounter' => $cartCounter
             ];
-        }
-        else{
+        } else{
             $cartData = $this->input->post('cartData') ?? '';
             $userCartData = json_decode($cartData, true) ?? [];
             $cartProducts = $this->Cart_model->getGuestUserCartData($userCartData);
@@ -132,8 +131,7 @@ class CartController extends MY_Controller {
 
         if(isset($cartId))
         {
-            $getDelCnt = $this->Cart_model->deleteCartItem($cartId);
-
+            $this->Cart_model->deleteCartItem($cartId);
             return $this->getUserCartData();
         }
         

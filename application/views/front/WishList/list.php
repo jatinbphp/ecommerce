@@ -5,7 +5,7 @@
                 <div class="d-flex align-items-center justify-content-between br-bottom px-3 py-3 product_grid">
                     <div class="cart_single d-flex align-items-center">
                         <div class="cart_selected_single_thumb">
-                            <a href="javaScript:;"><img src="<?php echo base_url(isset($wishlist['image']) && $wishlist['image'] && count($wishlist['image']) && current($wishlist['image']) ? current($wishlist['image']) : 'images/default-image.png')?>" width="60" class="img-fluid" alt="" /></a>
+                            <a target="blank" href="<?php echo base_url('products/' . ($wishlist['product_details']['id'] ?? 0) . '/details') ?>"><img src="<?php echo base_url(isset($wishlist['image']) && $wishlist['image'] && count($wishlist['image']) && current($wishlist['image']) ? current($wishlist['image']) : 'images/default-image.png')?>" width="60" class="img-fluid" alt="" /></a>
                         </div>
                         <div class="cart_single_caption pl-2">
                             <h4 class="product_title fs-sm ft-medium mb-0 lh-1"><?php echo isset($wishlist['product_details']['product_name']) ? $wishlist['product_details']['product_name'] : '' ?></h4>

@@ -33,7 +33,7 @@
                                         <h4 class="fs-md ft-medium mb-0 lh-1"><?php echo number_format($subTotal, 2); ?></h4>
                                     </div>
                                 </div>
-                                <div class="fls_last"><button class="close_slide gray" data-productId="<?php echo ($cartVal['cart_data']['productData']['id'] ?? 0) ?>" onclick="deleteCartItem(<?php echo ($cartVal['cart_data']['productData']['cartId'] ?? 0); ?>,this)"><i class="ti-close"></i></button>
+                                <div class="fls_last"><button type="button" class="close_slide gray" data-productId="<?php echo ($cartVal['cart_data']['productData']['id'] ?? 0) ?>" onclick="deleteCartItem(<?php echo ($cartVal['cart_data']['productData']['cartId'] ?? 0); ?>,this)"><i class="ti-close"></i></button>
                                 </div>
                             </div>
                         <?php endif ?>                    

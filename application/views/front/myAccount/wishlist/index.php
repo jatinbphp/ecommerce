@@ -16,7 +16,7 @@
                                         </button>
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" >
+                                                <a class="card-img-top d-block overflow-hidden" target="blank" href="<?php echo base_url('products/' . ($wishlist_item['product_details']['id'] ?? 0) . '/details') ?>">
                                                     <img class="card-img-top" src="<?php echo base_url(($wishlist_item['image'][0] ?? '')); ?>" alt="Product Image">
                                                 </a>
                                             </div>

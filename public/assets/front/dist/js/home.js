@@ -117,15 +117,17 @@ function deleteCartItem(cartId, button) {
         return;
     }
     $.ajax({
-        url: "cart/delete-user-item",
+        url: baseUrl+"cart/delete-user-item",
         method: 'POST',
         data: {
             cartId: cartId 
         },
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         success: function(response) {
-            $("#usrCartDataMenu").html(response.cartView);
+            // $("#usrCartDataMenu").html(response.cartView);
             $(".user-cart-counter").html(response.cartCounter);
+            openCart();
+            return;
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error('AJAX Error:', textStatus, errorThrown);
