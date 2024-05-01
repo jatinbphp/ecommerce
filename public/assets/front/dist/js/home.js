@@ -102,35 +102,52 @@ $(document).on("click", "#add_to_cartproduct", function(e) {
 });
 
 function deleteCartItem(cartId, button) {
-    if(cartId == 0){
-        var productId = $(button).attr('data-productId');
-        var existingCartData = localStorage.getItem('cartData') ? JSON.parse(localStorage.getItem('cartData')) : [];
-        var filteredCartData = existingCartData.filter(function(item) {
-            return item.product_id !== productId;
-        });
-        localStorage.setItem('cartData', JSON.stringify(filteredCartData));
-        var data =  localStorage.getItem('cartData');
-        if(data){
-            $('.user-cart-counter').text(JSON.parse(data).length);
-        }
-        openCart();
-        return;
-    }
-    $.ajax({
-        url: baseUrl+"cart/delete-user-item",
-        method: 'POST',
-        data: {
-            cartId: cartId 
-        },
-        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
-        success: function(response) {
-            // $("#usrCartDataMenu").html(response.cartView);
-            $(".user-cart-counter").html(response.cartCounter);
-            openCart();
-            return;
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.error('AJAX Error:', textStatus, errorThrown);
+    swal({
+        title: "Are you sure?",
+        text: "You want to delete Cart item ?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'Yes, Delete',
+        cancelButtonText: 'No, cancel',
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+    function(isConfirm) {
+        if (isConfirm) {
+            if(cartId == 0){
+                var productId = $(button).attr('data-productId');
+                var existingCartData = localStorage.getItem('cartData') ? JSON.parse(localStorage.getItem('cartData')) : [];
+                var filteredCartData = existingCartData.filter(function(item) {
+                    return item.product_id !== productId;
+                });
+                localStorage.setItem('cartData', JSON.stringify(filteredCartData));
+                var data =  localStorage.getItem('cartData');
+                if(data){
+                    $('.user-cart-counter').text(JSON.parse(data).length);
+                }
+                openCart();
+                return;
+            }
+            $.ajax({
+                url: baseUrl+"cart/delete-user-item",
+                method: 'POST',
+                data: {
+                    cartId: cartId 
+                },
+                headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                success: function(response) {
+                    // $("#usrCartDataMenu").html(response.cartView);
+                    $(".user-cart-counter").html(response.cartCounter);
+                    openCart();
+                    return;
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX Error:', textStatus, errorThrown);
+                }
+            });
+        } else {
+            swal("Cancelled", "Your Data is Safe.", "error");
         }
     });
 }
