@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no"/>
     <title>Ecommerce</title>
-    <link rel="shortcut icon" href="<?php echo base_url('images/favicon.png') ?>" type="image/x-icon" />
+    <link rel="shortcut icon" href="<?php echo base_url('images/favicon.ico') ?>" type="image/x-icon" />
     <link href="<?php echo base_url('css/styles.css'); ?>" rel="stylesheet">
     <script type="text/javascript">const baseUrl = "<?php echo base_url(); ?>";</script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">

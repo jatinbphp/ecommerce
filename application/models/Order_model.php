@@ -200,4 +200,27 @@ class Order_model extends CI_Model
         self::STATUS_TYPE_CANCEL => 'Cancel',
     ];
     
+    public function getOrdersDataWithUser($limit=1)
+    {
+        return $this->db
+            ->select('orders.*, CONCAT(users.first_name, " ", users.last_name, " (", users.email, ")") AS user_name')
+            ->from($this->table)
+            ->join('users', 'orders.user_id = users.id')
+            ->order_by('orders.id', 'DESC')
+            ->limit($limit)
+            ->get()
+            ->result();
+    }
+
+    public function getDetails($orderId = null) {
+		if($orderId) {
+			$sql = "SELECT * FROM $this->table WHERE id = ?";
+			$query = $this->db->query($sql, array($orderId));
+			return $query->row_array();
+		}
+
+		$sql = "SELECT * FROM $this->table ORDER BY id DESC";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
 }

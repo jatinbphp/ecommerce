@@ -65,7 +65,7 @@ class CartController extends MY_Controller {
             'options' => $options,
             'quantity' => $productQty
         ];
-
+        
         $data['type'] = 3;
         $data['addCartData'] = $addCartData;
 

@@ -25,4 +25,10 @@ class Order_items_model extends CI_Model
         $query = $this->db->get($this->table);
         return $query->result();
     }
+
+    public function getOrderItemsByOrderIdArray($orderId) {
+        $this->db->where('order_id', $orderId);
+        $query = $this->db->get($this->table);
+		return $query->result_array();
+    }
 }

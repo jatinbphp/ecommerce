@@ -189,6 +189,31 @@ $(document).ready(function() {
         }]
     });
 
+    var orders_table = $('#ordersDasboardTable').DataTable({
+        'processing': true,
+        'serverSide': true,
+        "ajax":{
+            url:baseUrl+"admin/dashboard/fetch-orders",
+            type:"POST",
+        },
+        'searching': false, // Hide search box
+        'paging': false, // Hide pagination
+        'info': false, // Hide information about number of records
+        'columns': [
+            { data: 'id', width: '10%', name: 'id'},
+            { data: 'order_id', name: 'order_id'},
+            { data: 'user_name', name: 'user_name'},
+            { data: 'total_amount', name: 'total_amount', class: 'text-right'},
+            { data: 'status', "width": "12%", name: 'status'},
+            { data: 'created_at', "width": "15%", name: 'created_at'},
+            { data: 'action', "width": "5%", name: 'action'},
+        ],
+        "columnDefs": [
+            { "orderable": false, "targets": "_all" } // Disable sorting only for the first column
+        ],
+        "order": []
+    });
+
     $("#categories_form_add").validate(
     {                
         rules:
@@ -279,7 +304,7 @@ $(document).ready(function() {
         });
     });
 
-    $("#banerTable, #usersTable, #contentTable, #contactUsTable, #CategoriesTable, #productsTable").on('click', '.view-info', function(event) {
+    $("#banerTable, #usersTable, #contentTable, #contactUsTable, #CategoriesTable, #productsTable, #ordersDasboardTable").on('click', '.view-info', function(event) {
         var title = $(this).attr('data-title');
         var url = $(this).attr('data-url');
         $.ajax({

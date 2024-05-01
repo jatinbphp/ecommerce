@@ -486,7 +486,7 @@ class ProductController extends MY_Controller
        	$data['product'] = $product;
        	$data['product_image'] = $productImage;
        	$data['product_options'] = $this->ProductOptions_model->getOptionsWithValues($id);
-        $html = $this->load->view('admin/Product/product', $data, true);
+        $html = $this->load->view('admin/Product/view', $data, true);
         echo $html;
     }
 

@@ -23,5 +23,12 @@ class Order_options_model extends CI_Model
         $this->db->where('order_id', $orderId);
         $query = $this->db->get($this->table);
         return $query->result();
+    }    
+    
+    public function getOrderItemsOptionsByOrderIdAndProductId($orderId, $productId) {
+        $this->db->where('order_id', $orderId);
+        $this->db->where('order_product_id', $productId);
+        $query = $this->db->get($this->table);
+        return $query->result_array();
     }
 }
