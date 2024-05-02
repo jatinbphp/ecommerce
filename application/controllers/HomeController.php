@@ -30,7 +30,6 @@ class HomeController extends MY_Controller {
         $data['categories']            = $this->Categories_model->getCategoriesWithManyProducts();
         $data['categorized_products']  = isset($data['categories'][0]['id']) ? $this->Product_model->filter_products($data['categories'][0]['id']) : null;
         $data['type']                  = $this->Product_model::$type;
-        $data['categories']            = $this->Categories_model->getCategoriesWithManyProducts();
         $data['productWiseReviews']    = $this->Reviews_model->getProductWiseReviewData();
         $this->frontRenderTemplate('front/Home/homePage', $data);
     }

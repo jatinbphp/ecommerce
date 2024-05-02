@@ -133,7 +133,7 @@
         <div class="row">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                 <ul class="nav nav-tabs b-0 d-flex align-items-center justify-content-center simple_tab_links mb-4" id="product-categories" role="tablist">
-                    <?php if(isset($categories) && !empty($categories)): ?>
+                <?php if(isset($categories) && !empty($categories)): ?>
                         <?php foreach($categories as $key => $value): ?>
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link <?= $key == 0 ? 'active' : ''; ?>" onClick="setTab(event)" href="#" id="<?= str_replace(' ', '-', strtolower($value['name'])) ?>" data-id="<?= $value['id'] ?>" aria-selected="false"><?= ucwords($value['name']) ?></a>
@@ -147,7 +147,7 @@
                             <div class="row rows-products" id="category-section">
                                 <?php if(isset($categorized_products) && !empty($categorized_products)): ?>
                                     <?php foreach($categorized_products as $key => $value): ?>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-6">
+                                        <div class="col-xl-4 col-lg-4 col-md-6 col-6">
                                             <?php $this->load->view('front/Products/product', array('value' => $value));  ?>
                                         </div>
                                     <?php endforeach ?>
