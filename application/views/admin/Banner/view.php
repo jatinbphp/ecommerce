@@ -13,7 +13,7 @@
                             <td>
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <?php $image = (isset($banner['image']) && file_exists($banner['image'])) ? $banner['image'] : 'public/assets/admin/dist/img/no-image.png'  ?>
+                                        <?php $image = (isset($banner['image']) && file_exists($banner['image'])) ? $banner['image'] : 'images/default-image.png'  ?>
                                         <img src="<?php echo base_url($image) ?>" style="width:100%"/>
                                     </div>
                                 </div>

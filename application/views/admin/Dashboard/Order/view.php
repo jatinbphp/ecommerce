@@ -45,7 +45,7 @@
                                                             <?php if(isset($item['product']['image']) && file_exists($item['product']['image'])):?>
                                                                 <img src="<?= base_url($item['product']['image']) ?>" alt="..." width="50px">
                                                             <?php else: ?>
-                                                                <img src="<?= base_url('assets/website/images/default-image.png') ?>" alt="..." width="50px">
+                                                                <img src="<?= base_url('images/default-image.png') ?>" alt="..." width="50px">
                                                             <?php endif ?>
                                                         </div>
 

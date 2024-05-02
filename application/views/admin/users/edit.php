@@ -148,7 +148,7 @@
                                                                 <?php if(!empty($user['image']) && file_exists($user['image'])): ?>
                                                                     <img src="<?php echo base_url($user['image']); ?>" alt="User Image" style="border: 1px solid #ccc; margin-top: 5px;" width="150" id="DisplayImage">
                                                                 <?php else: ?>
-                                                                    <img src="<?php echo base_url('public/assets/admin/dist/img/no-image.png'); ?>" alt="User Image" style="border: 1px solid #ccc; margin-top: 5px; padding: 20px;" width="150" id="DisplayImage">
+                                                                    <img src="<?php echo base_url('images/default-image.png'); ?>" alt="User Image" style="border: 1px solid #ccc; margin-top: 5px; padding: 20px;" width="150" id="DisplayImage">
                                                                 <?php endif; ?>
                                                             </div>
                                                         </div>

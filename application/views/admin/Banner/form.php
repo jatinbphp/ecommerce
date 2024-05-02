@@ -34,7 +34,7 @@
                     <?php if(!empty($banner_data['image']) && file_exists($banner_data['image'])): ?>
                         <img src="<?php echo base_url($banner_data['image']); ?>" alt="Banner Image" style="border: 1px solid #ccc;margin-top: 5px;" width="150" id="DisplayImage">
                     <?php else: ?>
-                        <img src="<?php echo base_url('public/assets/admin/dist/img/no-image.png'); ?>" alt="Banner Image" style="border: 1px solid #ccc;margin-top: 5px;padding: 20px;" width="150" id="DisplayImage">
+                        <img src="<?php echo base_url('images/default-image.png'); ?>" alt="Banner Image" style="border: 1px solid #ccc;margin-top: 5px;padding: 20px;" width="150" id="DisplayImage">
                     <?php endif; ?>
                 </div>
             </div>

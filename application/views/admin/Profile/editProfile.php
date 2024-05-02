@@ -70,7 +70,7 @@
                                                 <?php if(!empty($userData['image']) && file_exists($userData['image'])): ?>
                                                     <img src="<?php echo base_url($userData['image']); ?>" alt="User Image" style="border: 1px solid #ccc; margin-top: 5px;" width="150" id="DisplayImage">
                                                 <?php else: ?>
-                                                    <img src="<?php echo base_url('public/assets/admin/dist/img/no-image.png'); ?>" alt="User Image" style="border: 1px solid #ccc; margin-top: 5px; padding: 20px;" width="150" id="DisplayImage">
+                                                    <img src="<?php echo base_url('images/default-image.png'); ?>" alt="User Image" style="border: 1px solid #ccc; margin-top: 5px; padding: 20px;" width="150" id="DisplayImage">
                                                 <?php endif; ?>
                                             </div>
                                             <?php echo form_error('image', '<span class="help-block text-danger">', '</span>'); ?>

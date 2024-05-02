@@ -13,7 +13,7 @@
                             <td>
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <?php $image = (isset($categoryData['image']) && file_exists($categoryData['image'])) ? $categoryData['image'] : 'public/assets/admin/dist/img/no-image.png'  ?>
+                                        <?php $image = (isset($categoryData['image']) && file_exists($categoryData['image'])) ? $categoryData['image'] : 'images/default-image.png'  ?>
                                         <img src="<?php echo base_url($image) ?>" style="width:100%"/>
                                     </div>
                                 </div>

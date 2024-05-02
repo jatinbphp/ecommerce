@@ -13,7 +13,8 @@
                             <div class="d-flex align-items-center justify-content-between br-bottom px-3 py-3">
                                 <div class="cart_single d-flex align-items-center">
                                     <div class="cart_selected_single_thumb">
-                                        <a href="javaScript:;"><img src="<?php echo base_url(($cartVal['cart_data']['productData']['image'] ?? 'images/default-image.png')); ?>" width="60" class="img-fluid" alt="" /></a>
+                                        <?php $image = (isset($cartVal['cart_data']['productData']['image']) && file_exists($cartVal['cart_data']['productData']['image']) ? $cartVal['cart_data']['productData']['image'] : 'images/default-image.png') ?>
+                                        <a href="javaScript:;"><img src="<?php echo base_url($image); ?>" width="60" class="img-fluid" alt="" /></a>
                                     </div>
                                     <div class="cart_single_caption pl-2">
                                         <h4 class="product_title fs-sm ft-medium mb-0 lh-1"><?php echo $cartVal['cart_data']['productData']['product_name']; ?></h4>

@@ -5,6 +5,7 @@ class Cart_model extends CI_Model
     public $select_column = ['id','order_id','user_id','product_id','quantity','options','options_text','created_at','updated_at'];
 
     public function __construct(){
+		$this->load->model('ProductImage_model');
 		parent::__construct();
 	}
 
@@ -35,16 +36,15 @@ class Cart_model extends CI_Model
 
         $result = $query->row();
         $cartCount = $result->count;
-        return $cartCount;
+        return $cartCount;	
 	}
 
 	public function getUsrCartData($userId)
 	{
 		$cartProducts = [];
-        $this->db->select($this->table.'.id as cartId,'.$this->table.'.*, products.*,product_images.image as image');
+        $this->db->select($this->table.'.id as cartId,'.$this->table.'.*,  products.*');
         $this->db->from($this->table);
         $this->db->join('products', 'products.id = carts.product_id');
-        $this->db->join('product_images', 'products.id = product_images.product_id', 'left');
         $this->db->where('carts.user_id', $userId);
         $this->db->where('products.status', self::STATUS_ACTIVE);
         $this->db->order_by('carts.created_at', 'DESC');
@@ -87,6 +87,9 @@ class Cart_model extends CI_Model
 						}
     				}
         		}
+				$productImages = $this->ProductImage_model->getDetails($row['id']);
+				$firstProductImage = current($productImages);
+				$row['image'] = ($firstProductImage['image'] ?? '');
 
         		$cartProducts[$key]['cart_data'] = ['productData' => $row,'productOptions' => $optionArray];
         	}
@@ -106,9 +109,8 @@ class Cart_model extends CI_Model
 				continue;
 			}
 			
-			$this->db->select('products.*, products.id as product_id, product_images.image as image');
+			$this->db->select('products.*, products.id as product_id');
 			$this->db->from('products');
-			$this->db->join('product_images', 'products.id = product_images.product_id', 'left');
 			$this->db->where('products.id', $productId);
 			$this->db->where('products.status', 'active');
 			$query = $this->db->get();
@@ -140,9 +142,13 @@ class Cart_model extends CI_Model
 
 					}
 				}
+				$productImages = $this->ProductImage_model->getDetails($row['id']);
+				$firstProductImage = current($productImages);
+				$row['image'] = ($firstProductImage['image'] ?? '');
 				$cartProducts[$key]['cart_data'] = ['productData' => $row,'productOptions' => $optionArray];
 			}
 		}
+
 		return $cartProducts;
 	}
 

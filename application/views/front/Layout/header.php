@@ -93,7 +93,7 @@
                                                 <a href="<?php echo base_url('my-wishlist'); ?>" class="dropdown-item medium text-medium">My Wishlist</a>
                                             </li>
                                             <li>
-                                                <a href="logout" class="dropdown-item medium text-medium">Log Out</a>
+                                                <a href="<?php echo base_url('logout'); ?>" class="dropdown-item medium text-medium">Log Out</a>
                                             </li>
                                             
                                          <?php else: ?>

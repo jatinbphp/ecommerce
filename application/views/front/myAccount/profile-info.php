@@ -42,9 +42,9 @@
                                 <label class="text-dark ft-medium">Image:</label><br>
                                 <input type="file" name="image" onchange="AjaxUploadImage(this)">
                                 <?php if(isset($userDataArray['image']) && !empty($userDataArray['image']) && file_exists($userDataArray['image'])): ?>
-                                    <img src="<?php echo !empty($userDataArray['image']) && file_exists($userDataArray['image']) ? base_url($userDataArray['image']) : base_url('public/assets/admin/dist/img/no-image.png'); ?>" alt="User Image" style="border: 1px solid #ccc; margin-top: 5px;" width="150" id="DisplayImage">
+                                    <img src="<?php echo !empty($userDataArray['image']) && file_exists($userDataArray['image']) ? base_url($userDataArray['image']) : base_url('images/default-image.png'); ?>" alt="User Image" style="border: 1px solid #ccc; margin-top: 5px;" width="150" id="DisplayImage">
                                 <?php else: ?>
-                                    <img src="<?php echo base_url('public/assets/admin/dist/img/no-image.png'); ?>" alt="User Image" style="border: 1px solid #ccc; margin-top: 5px; padding: 20px;" width="150" id="DisplayImage">
+                                    <img src="<?php echo base_url('images/default-image.png'); ?>" alt="User Image" style="border: 1px solid #ccc; margin-top: 5px; padding: 20px;" width="150" id="DisplayImage">
                                 <?php endif; ?>
                             </div>
                         </div>

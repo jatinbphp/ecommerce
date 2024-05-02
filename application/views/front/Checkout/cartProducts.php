@@ -14,7 +14,7 @@
                                 <?php if(isset($productData['image']) && !empty($productData['image']) && file_exists($productData['image'])): ?>
                                     <img class="img-fluid" src="<?= base_url($productData['image']) ?>" alt="...">
                                 <?php else: ?>
-                                    <img class="img-fluid" src="<?= base_url('assets/website/images/default-image.png') ?>" alt="...">
+                                    <img class="img-fluid" src="<?= base_url('images/default-image.png') ?>" alt="...">
                                 <?php endif; ?>
                             </a>
                         </div>

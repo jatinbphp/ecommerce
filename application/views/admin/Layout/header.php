@@ -62,7 +62,7 @@
 		                    <?php if (isset($userData['image']) && file_exists($userData['image'])) : ?>
 		                        <img src=" <?php echo base_url($userData['image']) ?>" class="img-circle elevation-2" alt="User Image" style="width: 2.1rem; margin-right: 1.5%;">
 		                    <?php else : ?>
-		                        <img src="<?php echo base_url('public/assets/admin/dist/img/no-image.png') ?>" class="img-circle elevation-2" alt="User Image" style="width: 2.1rem; margin-right: 1.5%;">
+		                        <img src="<?php echo base_url('images/default-image.png') ?>" class="img-circle elevation-2" alt="User Image" style="width: 2.1rem; margin-right: 1.5%;">
 		                    <?php endif ?>
 		                    <p style="padding-right: 6.5%;">
 							<?php echo isset($userData['first_name']) ? ucfirst($userData['first_name']) : '1'; ?>
