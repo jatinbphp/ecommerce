@@ -51,7 +51,7 @@ class Product_model extends CI_Model
     ];
 
     /*product quantity*/
-    public static $quantity = [1, 2, 3, 5, 6, 7, 8, 9, 10];
+    public static $quantity = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     /*product type*/
     public static $type = [
