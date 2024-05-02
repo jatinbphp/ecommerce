@@ -2,7 +2,6 @@
     <?php $this->load->view('Breadcrumb',['current' => $title, 'middle' => ['my_account' => 'profile-info']]); ?>
     <section class="middle">
         <div class="container">
-            <?php $this->load->view('SessionMessages'); ?>
             <div class="row align-items-start justify-content-between">
                 <?php $this->load->view('front/myAccount/common-file'); ?>
                 <div class="col-12 col-md-12 col-lg-8 col-xl-8">

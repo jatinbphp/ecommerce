@@ -18,17 +18,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <?php if($this->session->flashdata('success')): ?>
-                        <div class="alert alert-success alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <?php echo $this->session->flashdata('success'); ?>
-                        </div>
-                    <?php elseif($this->session->flashdata('error')): ?>
-                        <div class="alert alert-danger alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <?php echo $this->session->flashdata('error'); ?>
-                        </div>
-                    <?php endif; ?>
+                    <?php $this->load->view('admin/SessionMessages'); ?>
                     <div class="card card-info card-outline">
                         <div class="card-header">
                             <h3 class="card-title">Edit <?php echo $page_title; ?></h3>
@@ -36,25 +26,18 @@
                         <div class="card-body">
                             <?php echo form_open_multipart("admin/profile/edit/{$userData['id']}", ['id' => 'bannerFormEdit']); ?>
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group <?php echo form_error('first_name') ? 'has-error' : ''; ?>">
                                             <?php echo form_label('First Name <span class="text-danger">*</span>', 'first_name'); ?>
                                             <?php echo form_input(['name' => 'first_name', 'id' => 'first_name', 'class' => 'form-control', 'placeholder' => 'Enter First Name','value' => isset($userData['first_name']) ? $userData['first_name'] : '']); ?>
                                             <?php echo form_error('first_name', '<span class="help-block text-danger">', '</span>'); ?>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group <?php echo form_error('last_name') ? 'has-error' : ''; ?>">
                                             <?php echo form_label('Last Name <span class="text-danger">*</span>', 'name'); ?>
                                             <?php echo form_input(['name' => 'last_name', 'id' => 'last_name', 'class' => 'form-control', 'placeholder' => 'Enter Last Name', 'value' => isset($userData['last_name']) ? $userData['last_name'] : '']); ?>
                                             <?php echo form_error('last_name', '<span class="help-block text-danger">', '</span>'); ?>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group <?php echo form_error('email') ? 'has-error' : ''; ?>">
-                                            <?php echo form_label('Email <span class="text-danger">*</span>', 'email'); ?>
-                                            <?php echo form_input(['name' => 'email', 'id' => 'email', 'class' => 'form-control', 'placeholder' => 'Enter Email Address', 'value' => isset($userData['email']) ? $userData['email'] : '']); ?>
-                                            <?php echo form_error('email', '<span class="help-block text-danger">', '</span>'); ?>
                                         </div>
                                     </div>
                                     <div class="col-md-12">

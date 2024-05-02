@@ -34,7 +34,6 @@ class ProfileController extends MY_Controller
 		if($id) {
 			$this->form_validation->set_rules('first_name', 'First Name', 'required');
 			$this->form_validation->set_rules('last_name', 'Last Name', 'required');
-			$this->form_validation->set_rules('email', 'Email', 'required');
 			$this->form_validation->set_rules('image', 'Image', 'callback_validate_image');
 
 			if ($this->form_validation->run() == FALSE) {

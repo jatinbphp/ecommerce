@@ -6,7 +6,7 @@
                     Forgot Password
                 </div>
                 <div class="card-body card-outline" style="max-width: 40rem; border-top: 3px solid #343a40;">
-                    <?php $this->load->view('SessionMessages'); ?>
+                    <?php $this->load->view('front/SessionMessages'); ?>
                     <?php echo form_open('sendforgotPasswordLink'); ?>
                         <div class="form-group">
                             <?php echo form_label('Email Address <span class="text-danger">*</span>', 'otp'); ?>
