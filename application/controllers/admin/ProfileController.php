@@ -65,7 +65,6 @@ class ProfileController extends MY_Controller
 			$data = [
 				'first_name' => $this->input->post('first_name'),
 				'last_name' => $this->input->post('last_name'),
-				'email' => $this->input->post('email'),
 			];
 
 			if(!empty($this->input->post('password'))){
@@ -97,7 +96,8 @@ class ProfileController extends MY_Controller
 				 * Sets a flash message 'success' with the message 'Profile has been updated successfully!' to the session.
 				 * Redirects to the 'admin/dashboard' page with a refresh.
 				 */
-				$adminData = $this->getAdminData($this->input->post('email'));
+				$userId = $this->session->get_userdata('id');
+				$adminData = $this->user_model->getAdminUserData($id);
 	            unset($adminData['password']);
 	            $adminData['admin_logged_in'] = 'true';
 	            $this->session->set_userdata($adminData);

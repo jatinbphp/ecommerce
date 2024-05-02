@@ -88,9 +88,9 @@
                             <?php foreach($options as $optionName => $optionValue): ?>
                                 <div class="single_search_boxed">
                                     <div class="widget-boxed-header">
-                                        <h4><a href="#<?= $optionName ?  preg_replace('/[^A-Za-z0-9]+/', '_', $optionName) : null ?>" data-toggle="collapse" class="collapsed" aria-expanded="false" role="button"><?= strtoupper($optionName) ?? "-" ?></a></h4>
+                                        <h4><a href="#<?= $optionName ?  preg_replace('/[^a-zA-Z0-9]+/', '_', $optionName) : null ?>" data-toggle="collapse" class="collapsed" aria-expanded="false" role="button"><?= strtoupper($optionName) ?? "-" ?></a></h4>
                                     </div>
-                                    <div class="widget-boxed-body collapse" id="<?= $optionName ?  preg_replace('/[^A-Za-z0-9]+/', '_', $optionName) : null ?>" data-parent="#<?= $optionName ?  preg_replace('/[^A-Za-z0-9]+/', '_', $optionName) : null ?>">
+                                    <div class="widget-boxed-body collapse" id="<?= $optionName ?  preg_replace('/[^a-zA-Z0-9]+/', '_', $optionName) : null ?>" data-parent="#<?= $optionName ?  preg_replace('/[^a-zA-Z0-9]+/', '_', $optionName) : null ?>">
                                         <div class="side-list no-border">
                                             <div class="single_filter_card">
                                                 <!-- <div class="card-body pt-0">
@@ -107,8 +107,8 @@
                                                                 <?php foreach($optionValue as $key => $value): ?>
                                                                     <?php if(isset($value['product_count']) && $value['product_count'] > 0): ?>
                                                                         <div class="form-check form-option form-check-inline mb-2 custom-options-checkbox">
-                                                                            <input onclick="setOption(event, '<?= addslashes($optionName ?? '') ?>')" value="<?= $value['id'] ?? null ?>" id="filter-<?= $optionName ?? '' ?>-<?= $key ?>" class="form-check-input option-<?= $optionName ?? '' ?>" name="<?= $optionName ?? '' ?>" type="checkbox">
-                                                                            <label class="form-option-label" for="filter-<?= $optionName ?? '' ?>-<?= $key ?>"><?php echo preg_match('/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', $value['option_value']) ? '<i class="fas fa-square" style="color: '.$value['option_value'].'"></i>' : $value['option_value']; ?></label>
+                                                                            <input onclick="setOption(event, '<?= $optionName ?  preg_replace('/[^a-zA-Z0-9]+/', '_', $optionName) : null ?>')" value="<?= $value['id'] ?? null ?>" id="filter-<?= $optionName ?  preg_replace('/[^a-zA-Z0-9]+/', '_', $optionName) : null ?>-<?= $key ?>" class="form-check-input option-<?= $optionName ?  preg_replace('/[^a-zA-Z0-9]+/', '_', $optionName) : null ?>" name="<?= $optionName ?? '' ?>" type="checkbox">
+                                                                            <label class="form-option-label" for="filter-<?= $optionName ?  preg_replace('/[^a-zA-Z0-9]+/', '_', $optionName) : null ?>-<?= $key ?>"><?php echo preg_match('/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', $value['option_value']) ? '<i class="fas fa-square" style="color: '.$value['option_value'].'"></i>' : $value['option_value']; ?></label>
                                                                         </div>
                                                                     <?php endif ?>
                                                                 <?php endforeach ?>

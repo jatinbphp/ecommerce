@@ -61,8 +61,8 @@
                                     <?php foreach($option['option_values'] as $optionKey => $optionValue): ?>
                                         <?php if(isset($option['option_type']) && $option['option_type'] == "color"): ?>
                                             <div class="form-check form-option form-check-inline mb-1">
-                                                <input class="form-check-input" <?= ($optionKey === 0) ? 'checked' : '' ?> type="radio" name="options[<?= ($option['id'] ?? '') ?>]" value="<?= $optionValue['id'] ?? null ?>" id="<?= $option['option_type'] ?>-<?= $optionKey ?>">
-                                                <label class="form-option-label rounded-circle" for="<?= $option['option_type'] ?>-<?= $optionKey ?>">
+                                                <input class="form-check-input" <?= ($optionKey === 0) ? 'checked' : '' ?> type="radio" name="options[<?= ($option['id'] ?? '') ?>]" value="<?= $optionValue['id'] ?? null ?>" id="<?= $option['option_type'] ?>-<?= $optionValue['id'] ?? '' ?>">
+                                                <label class="form-option-label rounded-circle" for="<?= $option['option_type'] ?>-<?= $optionValue['id'] ?? '' ?>">
                                                     <span class="form-option-color rounded-circle" style="background-color: <?= $optionValue['option_value'] ?? null ?>;"></span>
                                                 </label>
                                             </div>
@@ -72,8 +72,8 @@
                                         <?php endif ?>
                                         <?php if(isset($option['option_type']) && $option['option_type'] == "radio"): ?>
                                             <div class="form-check size-option form-option form-check-inline mb-2">
-                                                <input class="form-check-input" type="radio" <?= ($optionKey === 0) ? 'checked' : '' ?> name="options[<?= ($option['id'] ?? '') ?>]" value="<?= $optionValue['id'] ?? null ?>" id="<?= $option['option_type'] ?>-<?= $optionKey ?>">
-                                                <label class="form-option-label" for="<?= $option['option_type'] ?>-<?= $optionKey ?>"><?= $optionValue['option_value'] ?></label>
+                                                <input class="form-check-input" type="radio" <?= ($optionKey === 0) ? 'checked' : '' ?> name="options[<?= ($option['id'] ?? '') ?>]" value="<?= $optionValue['id'] ?? null ?>" id="<?= $option['option_type'] ?>-<?= $optionValue['id'] ?? '' ?>">
+                                                <label class="form-option-label" for="<?= $option['option_type'] ?>-<?= $optionValue['id'] ?? '' ?>"><?= $optionValue['option_value'] ?></label>
                                             </div>
                                         <?php endif ?>
                                     <?php endforeach ?>
