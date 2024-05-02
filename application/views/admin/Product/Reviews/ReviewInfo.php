@@ -3,7 +3,7 @@
     <?php if(isset($userImage) && file_exists($userImage) && isset($data['user_id']) && $this->session->userdata('userId') == $data['user_id']): ?>
         <img src="<?php echo base_url($userImage) ?>" class="img-fluid circle" style="width: 50px;" alt="" />
     <?php else: ?>
-        <img src="<?php echo base_url('uploads\users\user-default.png') ?>" class="img-fluid circle" style="width: 50px;" alt="">
+        <img src="<?php echo base_url('images\user-default.png') ?>" class="img-fluid circle" style="width: 50px;" alt="">
     <?php endif?>
     </div>
     <div class="col-md-11 pull-left"  style="float: left;">

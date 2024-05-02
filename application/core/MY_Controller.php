@@ -155,6 +155,10 @@ class MY_Controller extends CI_Controller
         $uniqueFilename = uniqid() . '_' . time() . '.' . $imageFileType;
         $targetFile = $targetDirectory . '/'. $uniqueFilename;
 
+        if (!file_exists($targetDirectory)) {
+            mkdir($targetDirectory, 0777, true);
+        }
+
         $isUpload = 0;
         $imageFileType = strtolower(pathinfo($targetFile,PATHINFO_EXTENSION));
         if(!isset($file["image"]["tmp_name"])){
@@ -183,6 +187,10 @@ class MY_Controller extends CI_Controller
 
         if(!isset($files['file']['name'])){
             return [];
+        }
+
+        if (!file_exists($targetDirectory)) {
+            mkdir($targetDirectory, 0777, true);
         }
     
         foreach ($files['file']['name'] as $key => $filename) {

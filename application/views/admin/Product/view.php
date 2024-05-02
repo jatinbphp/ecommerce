@@ -34,10 +34,11 @@
                                 <div class="row">
                                     <?php if(isset($product_image) && count($product_image)): ?>
                                         <?php foreach ($product_image as $data): ?>
-                                            <div class="col-md-2">
-                                                <?php $image = (isset($data['image']) && file_exists($data['image'])) ? $data['image'] : 'public/assets/admin/dist/img/no-image.png'  ?>
-                                                <img src="<?php echo base_url($image) ?>" style="width:100%"/>
-                                            </div>
+                                            <?php if(isset($data['image']) && file_exists($data['image'])): ?>
+                                                <div class="col-md-2">
+                                                    <img src="<?php echo base_url($data['image']) ?>" style="width:100%"/>
+                                                </div>
+                                            <?php endif ?>
                                         <?php endforeach ?>
                                     <?php endif ?>
                                 </div>
