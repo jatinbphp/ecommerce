@@ -8,7 +8,7 @@
                 </div>
             </div>
         </div>
-        <?php $this->load->view('SessionMessages'); ?>
+        <?php $this->load->view('front/SessionMessages'); ?>
         <?php echo form_open_multipart('checkout/order/place', ['id' => 'CheckoutForm', 'class' => 'form-horizontal']); ?>
             <div class="row justify-content-between">
                 <div class="col-12 col-lg-7 col-md-12">

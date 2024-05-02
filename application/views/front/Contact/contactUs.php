@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="col-xl-7 col-lg-8 col-md-12 col-sm-12">
-                <?php $this->load->view('SessionMessages'); ?>
+                <?php $this->load->view('front/SessionMessages'); ?>
                 <?php echo form_open('contact/send_message', ['class' => 'row', 'id' => 'sendMessage']);?>
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                         <div class="form-group">

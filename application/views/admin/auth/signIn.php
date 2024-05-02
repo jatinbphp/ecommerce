@@ -18,16 +18,7 @@
         <div class="card">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
-                <?php if ($this->session->flashdata('success')): ?>
-                    <div class="alert alert-success">
-                        <?php echo $this->session->flashdata('success'); ?>
-                    </div>
-                <?php endif; ?>
-                <?php if ($this->session->flashdata('error')) : ?>
-                        <div class="alert alert-danger" role="alert">
-                            <?php echo $this->session->flashdata('error'); ?>
-                        </div>
-                <?php endif ?>
+                <?php $this->load->view('admin/SessionMessages'); ?>
                 <?php echo form_open('admin/logIn'); ?>
                     <div class="form-group">
                         <?php echo form_input(['type' => 'email', 'class' => 'form-control', 'id' => 'email', 'name' => 'email', 'required' => 'required','placeholder' => 'Email']); ?>
