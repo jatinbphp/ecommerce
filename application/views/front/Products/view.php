@@ -5,7 +5,11 @@
                 <?php if(isset($product['images']) && is_string($product['images'])): ?>
                     <?php foreach(explode(",", $product['images']) as $imageKey => $imageValue): ?>
                         <div class="single_view_slide" id="quick-view-slider">
-                            <img src="<?php echo base_url($imageValue)?>" class="img-fluid" id="image-<?= $imageKey ?>" alt="" />
+                            <?php if(file_exists($imageValue)): ?>
+                                <img src="<?php echo base_url($imageValue)?>" class="img-fluid" id="image-<?= $imageKey ?>" alt="" />
+                            <?php else: ?>
+                                <img src="<?php echo base_url('images/default-image.png')?>" class="img-fluid" id="image-<?= $imageKey ?>" alt="" />
+                            <?php endif; ?>
                         </div>
                     <?php endforeach ?>
                 <?php else: ?>
@@ -47,7 +51,7 @@
                 <?php echo form_hidden('product_id', $product['id']); ?>
                 <?php if(isset($product['options']) && !empty($product['options'])): ?>
                     <?php foreach($product['options'] as $option): ?>
-                        <div class="prt_04 mb-4">
+                        <div class="prt_04">
                             <p class="d-flex align-items-center mb-0 text-dark ft-medium text-capitalize"><?= $option['option_name'] ?? "-" ?>:</p>
                             <div class="pb-0 pt-2">
                                 <?php if(isset($option['option_type']) && $option['option_type'] == "select"): ?>

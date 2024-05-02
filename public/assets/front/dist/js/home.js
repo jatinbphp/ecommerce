@@ -34,7 +34,7 @@ function handleQuickView(event){
     var productId = event.target.getAttribute('data-id');
     if(!productId) return false;
     $.ajax({
-        url: "products/show/" + productId, 
+        url: baseUrl+"products/show/" + productId, 
         method: 'GET',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         success: function(response) {
