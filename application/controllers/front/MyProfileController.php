@@ -60,7 +60,6 @@ class MyProfileController extends MY_Controller {
         $userData = $this->User_model->getUserData($userId);
 
         if ($imagePath = $this->uploadFile('uploads/users', $_FILES)) {
-            $uploadData = $this->upload->data();
             $data['image'] = $imagePath;
             if (!empty($userData['image']) && file_exists($userData['image'])) {
                 unlink($userData['image']);
