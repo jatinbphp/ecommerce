@@ -117,7 +117,7 @@ class UserController extends MY_Controller
 
 		$create = $this->user_model->addUserAndGetId($data);
 		if($create > 0) {
-			if ($path = $this->uploadAndgetPath()) {
+			if ($path = $this->uploadFile('uploads/users', $_FILES)) {
 		        $this->user_model->updateUserImage($create,$path);
 			}
 
@@ -128,39 +128,6 @@ class UserController extends MY_Controller
 			$this->session->set_flashdata('error', $this->lang->line('lang_error_occurred'));
 			redirect('admin/users/create', 'refresh');
 		}
-	}
-	/**
-	 * Uploads a file and returns the path of the uploaded file.
-	*
-	* This method checks if a file has been uploaded, initializes the upload library with specified configuration,
-	* uploads the file, and returns the path of the uploaded file if successful.
-	*
-	* @return string The path of the uploaded file, or an empty string if no file was uploaded or upload failed.
-	*/
-	public function uploadAndgetPath() {
-	    if (!empty($_FILES['userfile']['name'])) {
-	        $this->load->library('upload');
-
-	        $config['upload_path'] = 'uploads/users/';
-			$config['allowed_types'] = 'gif|jpg|jpeg|png';
-			$config['max_size'] = 106610;
-			$config['encrypt_name'] = TRUE; // Change to TRUE for security reasons
-
-	        $this->upload->initialize($config);
-
-	        if ($this->upload->do_upload('userfile')) {
-	            $uploadData = $this->upload->data();
-	            $imagePath = 'uploads/users/' . $uploadData['file_name'];
-
-	            return $imagePath;
-	        } else {
-	        	//echo $this->upload->display_errors();
-	        	//return $this->upload->display_errors();
-	            return '';
-	        }
-	    } else {
-	        return '';
-	    }
 	}
 	
 	/**
@@ -261,7 +228,7 @@ class UserController extends MY_Controller
 
 
 			//process images
-			if ($path = $this->uploadAndgetPath()) {
+			if ($path = $this->uploadFile('uploads/users', $_FILES)) {
 				$getUsrImg = $this->user_model->getUserData($id);
 				if(isset($getUsrImg['image']))
 				{

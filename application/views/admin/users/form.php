@@ -102,8 +102,8 @@
                             ?>
                             <div class="">
                                 <div class="fileError">
-                                    <?php echo form_upload('userfile', '', 'id="image" onchange="AjaxUploadImage(this)" accept="image/*"');
-                                    echo form_error('userfile', '<span class="help-block text-danger">', '</span>'); ?>
+                                    <?php echo form_upload('image', '', 'id="image" onchange="AjaxUploadImage(this)" accept="image/*"');
+                                    echo form_error('image', '<span class="help-block text-danger">', '</span>'); ?>
                                 </div>
                                 
                                 <?php if(!empty($userData['image']) && file_exists($userData['image'])): ?>

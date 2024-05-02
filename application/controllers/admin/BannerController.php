@@ -51,7 +51,7 @@ class BannerController extends MY_Controller
 			'subtitle' => $this->input->post('subtitle'),
 			'description' => $this->input->post('description'),
 			'status' => $this->input->post('status'),
-			'image' => $this->uploadAndgetPath(),
+			'image' => $this->uploadFile('uploads/banners', $_FILES),
 		];
 
 		$create = $this->Banner_model->create($data);
@@ -92,39 +92,6 @@ class BannerController extends MY_Controller
 	}
 
 	/**
-	 * The function `uploadAndgetPath` uploads an image file and returns the file path if successful, or
-	 * an empty string if there is an error or no file uploaded.
-	 * 
-	 * @return The function `uploadAndgetPath()` returns the image path if the file upload is successful,
-	 * otherwise it returns an empty string.
-	 */
-	public function uploadAndgetPath() {
-	    if (!empty($_FILES['image']['name'])) {
-	        $this->load->library('upload');
-
-	        $config['upload_path'] = 'uploads/banners/';
-			$config['allowed_types'] = 'gif|jpg|jpeg|png';
-			$config['max_size'] = 106610;
-			$config['encrypt_name'] = TRUE; // Change to TRUE for security reasons
-
-	        $this->upload->initialize($config);
-
-	        if ($this->upload->do_upload('image')) {
-	            $uploadData = $this->upload->data();
-	            $imagePath = 'uploads/banners/' . $uploadData['file_name'];
-
-	            return $imagePath;
-	        } else {
-	        	//echo $this->upload->display_errors();
-	        	//return $this->upload->display_errors();
-	            return '';
-	        }
-	    } else {
-	        return '';
-	    }
-	}
-
-	/**
 	 * The `edit` function in PHP is responsible for updating banner details, including validation, file
 	 * upload, and database update.
 	 * 
@@ -144,7 +111,7 @@ class BannerController extends MY_Controller
 					'status' => $this->input->post('status'),
 				];
 
-				if($path = $this->uploadAndgetPath()){
+				if($path = $this->uploadFile('uploads/banners', $_FILES)){
 					$data['image'] = $path;
 					$bannerDataRow = $this->Banner_model->getDetails($id);
 					if(isset($bannerDataRow['image'])){

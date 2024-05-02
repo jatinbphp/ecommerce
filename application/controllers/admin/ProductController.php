@@ -150,7 +150,7 @@ class ProductController extends MY_Controller
 				 *
 				 * @return array|null An array of image paths if images were uploaded, otherwise null.
 				 */
-				if($paths = $this->uploadImagesAndgetPath()){
+				if($paths = $this->uploadMultipleFiles('uploads/products', $_FILES)){
 					foreach ($paths as $path) {
 		                $this->ProductImage_model->create(
 		                	[
@@ -329,50 +329,6 @@ class ProductController extends MY_Controller
             }
         }
     }
-
-	/**
-	 * Uploads images and returns their file paths.
-	*
-	* This method uploads images from the 'file' input field, saves them in the 'uploads/products/' directory,
-	* and returns an array of file paths for the uploaded images.
-	*
-	* @return array An array of file paths for the uploaded images
-	*/
-	public function uploadImagesAndgetPath() {
-	    $imagePaths = [];
-
-	    if (!empty($_FILES['file']['name'][0])) {
-	        $this->load->library('upload');
-
-	        $config['upload_path'] = 'uploads/products/';
-	        $config['allowed_types'] = 'gif|jpg|jpeg|png';
-	        $config['max_size'] = 106610;
-	        $config['encrypt_name'] = TRUE;
-
-	        $this->upload->initialize($config);
-
-	        // Loop through each file in the array
-	        foreach ($_FILES['file']['name'] as $key => $value) {
-	            $_FILES['userfile']['name'] = $_FILES['file']['name'][$key];
-	            $_FILES['userfile']['type'] = $_FILES['file']['type'][$key];
-	            $_FILES['userfile']['tmp_name'] = $_FILES['file']['tmp_name'][$key];
-	            $_FILES['userfile']['error'] = $_FILES['file']['error'][$key];
-	            $_FILES['userfile']['size'] = $_FILES['file']['size'][$key];
-
-	            if ($this->upload->do_upload('userfile')) {
-	                $uploadData = $this->upload->data();
-	                $imagePath = 'uploads/products/' . $uploadData['file_name'];
-	                $imagePaths[] = $imagePath;
-	            } else {
-	                // Handle upload errors if needed
-	                //$error = $this->upload->display_errors();
-	                //echo $error;
-	            }
-	        }
-	    }
-
-	    return $imagePaths;
-	}
 
 	/**
 	 * Remove an image from the server and delete its record from the database.

@@ -146,26 +146,75 @@ class MY_Controller extends CI_Controller
         return $button;
     }
 
-    // public function addToGuestCart()
-    // {
-    //     //$this->session->unset_userdata('guestCart');
-    //     $cart = $this->session->userdata('guestCart');
+    public function uploadFile($targetDirectory, $file){
+        if(!isset($file['image']['name']) || empty($file['image']['name'])){
+            return '';
+        }
+
+        $imageFileType = strtolower(pathinfo($file["image"]["name"], PATHINFO_EXTENSION));
+        $uniqueFilename = uniqid() . '_' . time() . '.' . $imageFileType;
+        $targetFile = $targetDirectory . '/'. $uniqueFilename;
+
+        $isUpload = 0;
+        $imageFileType = strtolower(pathinfo($targetFile,PATHINFO_EXTENSION));
+        if(!isset($file["image"]["tmp_name"])){
+            return '';
+        }
+        $check = getimagesize($file["image"]["tmp_name"]);
         
-    //     if ($cart) {
-    //         $cart[] = $guestCartData;
-    //     } else {
-    //         $cart = array($guestCartData);
-    //     }
+        if($check !== false) {
+            $isUpload = 1;
+        }
 
-    //     $this->session->set_userdata('guestCart', $cart);
+        if(!in_array($imageFileType, ["jpg", "png", "jpeg", "gif"])) {
+            return '';
+        }
 
-    //     if ($this->session->has_userdata('guestCart')) {
-    //         $guestCart = $this->session->userdata('guestCart');
-    //         $cartCounter = count($guestCart);
-    //     }
-    //     else
-    //     {
-    //         //
-    //     }
-    // }
+        if($isUpload){
+            if (move_uploaded_file($file["image"]["tmp_name"], $targetFile)) {
+                return $targetFile;
+            }
+        }
+        return '';
+    }
+
+    public function uploadMultipleFiles($targetDirectory, $files) {
+        $uploadedFiles = [];
+
+        if(!isset($files['file']['name'])){
+            return [];
+        }
+    
+        foreach ($files['file']['name'] as $key => $filename) {
+            $imageFileType = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+            $uniqueFilename = uniqid() . '_' . time() . '.' . $imageFileType;
+            $targetFile = $targetDirectory . '/' . $uniqueFilename;
+    
+            $isUpload = 0;
+            $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+            if(!isset($files['file']['tmp_name'][$key])){
+                return [];
+            }
+
+            $check = getimagesize($files['file']['tmp_name'][$key]);
+            
+            if ($check !== false) {
+                $isUpload = 1;
+            }
+    
+            if (!in_array($imageFileType, ["jpg", "png", "jpeg", "gif"])) {
+                // If file type is not allowed, continue to the next file
+                continue;
+            }
+    
+            if ($isUpload) {
+                if (move_uploaded_file($files['file']['tmp_name'][$key], $targetFile)) {
+                    $uploadedFiles[] = $targetFile;
+                }
+            }
+        }
+    
+        return $uploadedFiles;
+    }
 }

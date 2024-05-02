@@ -151,7 +151,7 @@
                                                             <div class="">
                                                                 <div class="fileError">
                                                                     <?php echo form_open_multipart('', ['id' => 'image']); ?>
-                                                                        <input type="file" name="userfile" id="image" accept="image/*" onchange="AjaxUploadImage(this)">
+                                                                        <input type="file" name="image" id="image" accept="image/*" onchange="AjaxUploadImage(this)">
                                                                     <?php echo form_close(); ?>
                                                                 </div>
                                                                 

@@ -57,18 +57,10 @@ class MyProfileController extends MY_Controller {
             'phone' => $this->input->post('phone'),
         ];
 
-        $this->load->library('upload');
-        $config['upload_path'] = 'uploads/users/';
-        $config['allowed_types'] = 'gif|jpg|png';
-        $config['max_size'] = 2048;
-        $config['encrypt_name'] = FALSE;
-        $this->upload->initialize($config);
-
         $userData = $this->User_model->getUserData($userId);
 
-        if ($this->upload->do_upload('image')) {
+        if ($imagePath = $this->uploadFile('uploads/users', $_FILES)) {
             $uploadData = $this->upload->data();
-            $imagePath = 'uploads/users/' . $uploadData['file_name'];
             $data['image'] = $imagePath;
             if (!empty($userData['image']) && file_exists($userData['image'])) {
                 unlink($userData['image']);

@@ -77,7 +77,7 @@ class ProfileController extends MY_Controller
 			* Uploads a file and gets the file path. If successful, updates the 'image' key in the data array with the new path.
 			* If the user data row contains an 'image' key, the existing file is deleted before updating the path.
 			*/
-			if($path = $this->uploadAndgetPath()){
+			if($path = $this->uploadFile('uploads/users', $_FILES)){
 				$data['image'] = $path;
 				$userDataRow = $this->user_model->getAdminUserData($id);
 				if(isset($userDataRow['image'])){
@@ -136,36 +136,5 @@ class ProfileController extends MY_Controller
 	        }
 	    }
 	    return true;
-	}
-
-	/**
-	 * Uploads an image file and returns the path to the uploaded image.
-	*
-	* @return string The path to the uploaded image, or an empty string if upload fails or no file is selected.
-	*/
-	public function uploadAndgetPath() {
-	    if (!empty($_FILES['image']['name'])) {
-	        $this->load->library('upload');
-
-	        $config['upload_path'] = 'uploads/users/';
-			$config['allowed_types'] = 'jpg|jpeg|png';
-			$config['max_size'] = 106610;
-			$config['encrypt_name'] = TRUE; // Change to TRUE for security reasons
-
-	        $this->upload->initialize($config);
-
-	        if ($this->upload->do_upload('image')) {
-	            $uploadData = $this->upload->data();
-	            $imagePath = 'uploads/users/' . $uploadData['file_name'];
-
-	            return $imagePath;
-	        } else {
-	        	$this->upload->display_errors();
-	        	//return $this->upload->display_errors();
-	            return '';
-	        }
-	    } else {
-	        return '';
-	    }
 	}
 }

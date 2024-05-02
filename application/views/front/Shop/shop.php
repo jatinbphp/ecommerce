@@ -88,9 +88,9 @@
                             <?php foreach($options as $optionName => $optionValue): ?>
                                 <div class="single_search_boxed">
                                     <div class="widget-boxed-header">
-                                        <h4><a href="#<?= $optionName ?? null ?>" data-toggle="collapse" class="collapsed" aria-expanded="false" role="button"><?= strtoupper($optionName) ?? "-" ?></a></h4>
+                                        <h4><a href="#<?= $optionName ?  preg_replace('/[^A-Za-z0-9]+/', '_', $optionName) : null ?>" data-toggle="collapse" class="collapsed" aria-expanded="false" role="button"><?= strtoupper($optionName) ?? "-" ?></a></h4>
                                     </div>
-                                    <div class="widget-boxed-body collapse" id="<?= $optionName ?? null ?>" data-parent="#<?= $optionName ?? null ?>">
+                                    <div class="widget-boxed-body collapse" id="<?= $optionName ?  preg_replace('/[^A-Za-z0-9]+/', '_', $optionName) : null ?>" data-parent="#<?= $optionName ?  preg_replace('/[^A-Za-z0-9]+/', '_', $optionName) : null ?>">
                                         <div class="side-list no-border">
                                             <div class="single_filter_card">
                                                 <!-- <div class="card-body pt-0">

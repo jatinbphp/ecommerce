@@ -52,7 +52,7 @@ class CategoriesController extends MY_Controller
 		$data = [
 			'name' => $this->input->post('name'),
 			'status' => $this->input->post('status'),
-			'image' => $this->uploadAndgetPath(),
+			'image' => $this->uploadFile('uploads/categories', $_FILES),
 		];
 
 		if(!empty($this->input->post('parent_category_id'))){
@@ -111,39 +111,6 @@ class CategoriesController extends MY_Controller
 	}
 
 	/**
-	 * The function `uploadAndgetPath` uploads an image file to a specified directory and returns the path
-	 * to the uploaded image.
-	 * 
-	 * @return The function `uploadAndgetPath()` returns the path of the uploaded image file if the upload
-	 * is successful. If there is an error during the upload process, it returns an empty string.
-	 */
-	public function uploadAndgetPath() {
-	    if (!empty($_FILES['image']['name'])) {
-	        $this->load->library('upload');
-
-	        $config['upload_path'] = 'uploads/categories/';
-			$config['allowed_types'] = 'gif|jpg|jpeg|png';
-			$config['max_size'] = 106610;
-			$config['encrypt_name'] = TRUE; // Change to TRUE for security reasons
-
-	        $this->upload->initialize($config);
-
-	        if ($this->upload->do_upload('image')) {
-	            $uploadData = $this->upload->data();
-	            $imagePath = 'uploads/categories/' . $uploadData['file_name'];
-
-	            return $imagePath;
-	        } else {
-	        	//echo $this->upload->display_errors();
-	        	//return $this->upload->display_errors();
-	            return '';
-	        }
-	    } else {
-	        return '';
-	    }
-	}
-
-	/**
 	 * The function `edit` is used to update a category's details, including name, status, parent
 	 * category, and image, with validation and error handling.
 	 * 
@@ -168,7 +135,7 @@ class CategoriesController extends MY_Controller
 					$data['parent_category_id'] = 0;
 				}
 
-				if($path = $this->uploadAndgetPath()){
+				if($path = $this->uploadFile('uploads/categories', $_FILES)){
 					$data['image'] = $path;
 					$categoryRow = $this->Categories_model->getDetails($id);
 					if(isset($categoryRow['image'])){
