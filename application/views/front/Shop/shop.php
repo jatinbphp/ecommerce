@@ -79,7 +79,7 @@
                             <div class="widget-boxed-body collapse show" id="pricing" data-parent="#pricing">
                                 <div class="side-list no-border mb-4">
                                     <div class="rg-slider">
-                                        <input type="text" onChange="setOption(event, 'priceRange')" id='rangeSlider' class="js-range-slider" name="my_range" value="" />
+                                        <input type="text" onFinish="setOption(event, 'priceRange')" id='rangeSlider' class="js-range-slider" name="my_range" value="" />
                                     </div>
                                 </div>
                             </div>

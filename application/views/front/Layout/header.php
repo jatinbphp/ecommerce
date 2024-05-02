@@ -17,6 +17,9 @@
     <script src="<?php echo base_url('public/assets/admin/plugins/jquery/jquery.min.js') ?>"></script>
 </head>
     <body>
+  <div class="loader-bg d-none" id='loader'>
+    <span class="loader"></span>
+    </div>
         <div id="main-wrapper">
             <div class="header header-light">
                 <div class="container">

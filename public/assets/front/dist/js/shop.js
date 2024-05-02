@@ -46,6 +46,7 @@ function handleFilter(){
    if(filterCategory && filterCategory != 0){
       filter['categoryId'] = [Number(filterCategory)];
    }
+   $('#loader').removeClass('d-none');
    $.ajax({
       url: baseUrl+"products",
       method: 'GET',
@@ -54,10 +55,25 @@ function handleFilter(){
       success: function(response) {
          $('.rows-products').html(response.html);
          $('#filterCount').html($(".product_grid").length);
+         $('#loader').addClass('d-none');
       },
       error: function(jqXHR, textStatus, errorThrown) {
          console.error('AJAX Error:', textStatus, errorThrown);
+         $('#loader').addClass('d-none');
       }
    });
 }
+
+// Range Slider Script
+$(".js-range-slider").ionRangeSlider({
+   type: "double",
+   min: 1,
+   max: 10000,
+   from:100,
+   to:7500,
+   grid: true,
+   onFinish: function (data) {
+      setOption(event, 'priceRange')
+   },
+});
 

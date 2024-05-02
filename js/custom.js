@@ -159,16 +159,6 @@ $(function() {
 	
 	// Product Preview
 	$('.sp-wrap').smoothproducts();
-
-	// Range Slider Script
-	$(".js-range-slider").ionRangeSlider({
-		type: "double",
-		min: 1,
-		max: 10000,
-		from:100,
-		to:7500,
-		grid: true
-	});
 	
 	// Tooltip
 	$('[data-toggle="tooltip"]').tooltip();

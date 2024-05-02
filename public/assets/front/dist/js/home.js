@@ -9,6 +9,7 @@ function setTab(event){
 }
 
 function getProducts(categoryId){
+    $('#loader').removeClass('d-none');
 	$.ajax({
         url: baseUrl+"products", 
         method: 'GET',
@@ -17,14 +18,12 @@ function getProducts(categoryId){
         	categoryId: categoryId 
     	},
         success: function(response) {
-            if (response.status) {
-            	$('#category-section').html(response.html);
-        	} else {
-            	console.error('Error loading view:', response);
-        	}
+            $('#category-section').html(response.html);
+            $('#loader').addClass('d-none');
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error('AJAX Error:', textStatus, errorThrown);
+            $('#loader').addClass('d-none');
         }
     });
 }
