@@ -93,11 +93,17 @@ class ProductOptionValues_model extends CI_Model
 
 
     public function filterProductOptions($option_ids = []){
-        $this->db->select('products_options_values.*, COUNT(products.id) as product_count');
+        // $this->db->select('products_options_values.*, MAX(products_options_values.option_value) as product_count');
+        // $this->db->from($this->table);
+        // // $this->db->join('products', 'products_options_values.product_id = products.id', 'left');
+        // $this->db->group_by('products_options_values.option_value');
+        // $this->db->where('products_options_values.status', 'active'); 
+
+        $this->db->select('MIN(products_options_values.id) AS id, option_value,  COUNT(*) AS product_count');
         $this->db->from($this->table);
         $this->db->join('products', 'products_options_values.product_id = products.id', 'left');
-        $this->db->group_by('products_options_values.id');
-        $this->db->where('products_options_values.status', 'active'); 
+        $this->db->where('products.status', 'active');
+        $this->db->group_by('option_value');
 
         if(!empty($option_ids)){
             $this->db->where_in('products_options_values.option_id', $option_ids);

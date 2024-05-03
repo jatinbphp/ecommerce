@@ -314,4 +314,12 @@ class Product_model extends CI_Model
             return 0;
         }
     }
+
+    public function isSkuAvailable($sku) {
+        $this->db->select('sku');
+        $this->db->from($this->table);
+        $this->db->where('LOWER(sku)', strtolower($sku));
+        $query = $this->db->get();
+        return $query->num_rows() > 0;
+    }
 }

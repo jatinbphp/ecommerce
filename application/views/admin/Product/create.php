@@ -33,7 +33,8 @@
                                     echo form_submit([
                                         'name' => 'submit',
                                         'class' => 'btn btn-sm btn-info float-right',
-                                        'value' => 'Save'
+                                        'value' => 'Save',
+                                        'id' => 'productCreate'
                                     ]);
                                 ?>
                             </div>

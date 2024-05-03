@@ -33,7 +33,7 @@ class DashboardController extends MY_Controller {
   */
 	public function index() 
 	{
-		$this->data['totalUsers'] = $this->User_model->getAllFirstNames();
+		$this->data['totalUsers'] = $this->user_model->getAllFirstNames();
 		$this->data['totalProducts'] = $this->Product_model->getCountOfActiveProducts();
 		$this->data['totalOrders'] = $this->Order_model->getAllOrders();
 

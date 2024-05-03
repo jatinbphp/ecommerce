@@ -27,6 +27,7 @@ $route['admin/products/show/(:num)'] = 'admin/ProductController/show/$1';
 $route['admin/products/fetch_products'] = 'admin/ProductController/fetchProducts';
 $route['admin/products/delete/(:num)'] = 'admin/ProductController/delete/$1';
 $route['admin/products/show/(:num)'] = 'admin/ProductController/show/$1';
+$route['admin/products/checkSku'] = 'admin/ProductController/checkSku';
 $route['admin/products/reviews/(:num)'] = 'admin/ProductController/productReviews/$1';
 $route['admin/products/fetch_reviews/(:num)'] = 'admin/ProductController/fetchReviews/$1';
 $route['admin/banners'] = 'admin/BannerController';

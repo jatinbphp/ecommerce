@@ -21,8 +21,13 @@
                 <div class="col-md-4">
                     <div class="form-group <?php echo form_error('sku') ? 'has-error' : ''; ?>">
                         <?php echo form_label('SKU: <span class="text-danger">*</span>', 'sku', ['class' => 'control-label']); ?>
-                        <?php echo form_input(['name' => 'sku', 'value' => set_value('sku', isset($product_data['sku']) ? $product_data['sku'] : ''), 'class' => 'form-control', 'placeholder' => 'Enter SKU', 'id' => 'sku']); ?>
+                        <?php $data = ['name' => 'sku', 'id'=>'sku', 'value' => set_value('sku', isset($product_data['sku']) ? $product_data['sku'] : ''), 'class' => 'form-control', 'placeholder' => 'Enter SKU', 'id' => 'sku', 'data-check-url' => base_url('admin/products/checkSku')] ?>
+                        <?php if(isset($product_data['id'])): ?>
+                            <?php $data['disabled'] = 'disabled'; ?>    
+                        <?php endif ?>
+                        <?php echo form_input($data); ?>
                         <?php echo form_error('sku', '<p class="text-danger">', '</p>'); ?>
+                        <div id='skuMessage'></div>
                     </div>
                 </div>
                 <div class="col-md-12">

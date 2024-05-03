@@ -174,6 +174,15 @@ class CategoriesController extends MY_Controller
 	public function delete($id)
 	{
 		if($id) {
+
+			if ($this->isCategoryAssociatedWithProducts($id)) {
+				$data['success'] = 0;
+				$data['message'] = "Cannot remove category. It is associated with products.";
+				header('Content-Type: application/json');
+				echo json_encode($data);
+				return $this;
+			}
+
 			$categoryDataRow = $this->Categories_model->getDetails($id);
 			if(isset($categoryDataRow['image'])){
 				if (file_exists($categoryDataRow['image'])) {
@@ -193,17 +202,15 @@ class CategoriesController extends MY_Controller
 
 			$delete = $this->Categories_model->delete($id);
 			$this->Categories_model->updateCategoryFullPath($id);
-			if($delete == true) {
-				$this->session->set_flashdata('success', 'Category has been deleted successfully!');
-				redirect('admin/categories', 'refresh');
-			}
-			else {
-				$this->session->set_flashdata('error', 'Error occurred!!');
-				redirect('admin/categories', 'refresh');
-			}
-
+			echo 1;
 		}
 	}
+
+	public function isCategoryAssociatedWithProducts($categoryId) {
+        $this->db->where('category_id', $categoryId);
+        $query = $this->db->get('products');
+        return $query->num_rows() > 0;
+    }
 
 	/**
 	 * The fetchCategories function retrieves category data and formats it for display in a DataTable.

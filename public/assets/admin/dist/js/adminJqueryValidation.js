@@ -286,6 +286,10 @@ $(document).ready(function() {
                         } else if(controller == 'banners'){
                             banners.row('.selected').remove().draw(false);
                         } else if(controller == 'categories'){
+                            if(data.success == 0){
+                                swal("Warning", data.message, "warning");
+                                return;
+                            }
                             categories.row('.selected').remove().draw(false);
                         } else if(controller == 'contact-us'){
                             contactUs.row('.selected').remove().draw(false);
@@ -340,7 +344,6 @@ $(document).ready(function() {
             },
             success: function(data){
                 l.stop();
-                console.log(type);
                 if(type=='unassign'){
                     $('#assign_remove_'+id).hide();
                     $('#assign_add_'+id).show();
@@ -892,5 +895,25 @@ $(document).ready(function() {
         var desc = $(this).attr('data-description');
         $('#reviewDescbody').html(desc);
         $('#reviewDesc').modal('show');
+    });
+
+    $('#sku').keyup(function() {
+        var sku = $(this).val();
+        var url = $(this).attr('data-check-url');
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {sku: sku},
+            dataType: 'json',
+            success: function(response) {
+                if (response.unique) {
+                    $('#skuMessage').html('<span style="color: green;">SKU is available.</span>');
+                    $('#productCreate').prop('disabled', false);
+                } else {
+                    $('#skuMessage').html('<span style="color: red;">SKU already exists.</span>');
+                    $('#productCreate').prop('disabled', true);
+                }
+            }
+        });
     });
 });

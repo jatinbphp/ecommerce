@@ -11,7 +11,6 @@
     </div>
     <div class="card-footer b-0 p-0 pt-2 bg-white">
         <div class="d-flex align-items-start justify-content-between">
-            <?php if(isset($productWiseReviews) && count($productWiseReviews)): ?>
             <div class="text-left">
                 <?php 
                     $productId = ($value['id'] ?? 0);
@@ -26,7 +25,6 @@
                     <span class="small">(<?php echo $totalReview; ?> Reviews)</span>
                 </div>
             </div>
-            <?php endif ?>
         </div>
         <div class="text-left">
             <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);"><?= ucwords($value['product_name']) ?></a></h5>

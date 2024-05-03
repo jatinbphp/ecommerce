@@ -10,7 +10,7 @@
                         </tr>
                         <tr>
                             <th style="width: 25%;">Category</th>
-                            <td><?php echo isset($product['category_id']) ? $product['category_id'] : '' ?></td>
+                            <td><?php echo isset($categoryData['name']) ? $categoryData['name'] : '' ?></td>
                         </tr>
                         <tr>
                             <th style="width: 25%;">Product Name</th>

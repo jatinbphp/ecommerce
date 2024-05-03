@@ -47,7 +47,7 @@ class ProductController extends MY_Controller
 	public function create(){
 		$this->form_validation->set_rules('category_id', 'Category Id', 'required');
 		$this->form_validation->set_rules('product_name', 'Product Name', 'required');
-		$this->form_validation->set_rules('sku', 'sku', 'required');
+		$this->form_validation->set_rules('sku', 'sku', 'required|is_unique[products.sku]');
 		$this->form_validation->set_rules('description', 'Description', 'required');
 		$this->form_validation->set_rules('type', 'type', 'required');
 		$this->form_validation->set_rules('price', 'price', 'required|numeric');
@@ -98,7 +98,6 @@ class ProductController extends MY_Controller
 		if($id) {
 			$this->form_validation->set_rules('category_id', 'Category ID', 'required|numeric');
 			$this->form_validation->set_rules('product_name', 'Product Name', 'required');
-			$this->form_validation->set_rules('sku', 'SKU', 'required');
 			$this->form_validation->set_rules('description', 'Description', 'required');
 			$this->form_validation->set_rules('type', 'Type', 'required');
 			$this->form_validation->set_rules('price', 'Price', 'required|numeric');
@@ -438,6 +437,10 @@ class ProductController extends MY_Controller
      */
     public function show($id){
         $product = $this->Product_model->getDetails($id);
+		$data['categoryData'] = [];
+		if(isset($product['category_id']) && $product['category_id']){
+			$data['categoryData'] = $this->Categories_model->getDetails($product['category_id']);
+		}
         $productImage = $this->ProductImage_model->getDetails($id);
        	$data['product'] = $product;
        	$data['product_image'] = $productImage;
@@ -474,5 +477,15 @@ class ProductController extends MY_Controller
 			"data"            => $data,
 		];
 		echo json_encode($output);
+	}
+
+	public function checkSku() {
+		$sku = $this->input->post('sku');
+		$existingSku = $this->Product_model->isSkuAvailable($sku);
+
+		$response['unique'] = !$existingSku;
+
+		header('Content-Type: application/json');
+		echo json_encode($response);
 	}
 }

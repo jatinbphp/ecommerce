@@ -93,17 +93,14 @@
                                     <div class="widget-boxed-body collapse" id="<?= $optionName ?  preg_replace('/[^a-zA-Z0-9]+/', '_', $optionName) : null ?>" data-parent="#<?= $optionName ?  preg_replace('/[^a-zA-Z0-9]+/', '_', $optionName) : null ?>">
                                         <div class="side-list no-border">
                                             <div class="single_filter_card">
-                                                <!-- <div class="card-body pt-0">
-                                                    <div class="inner_widget_link">
-                                                        <ul class="no-ul-list">
-                                                            
-                                                        </ul>
-                                                    </div>
-                                                </div> -->
                                                 <div class="single_filter_card">
                                                     <div class="card-body pt-0">
                                                         <div class="text-left pb-0 pt-2">
                                                         <?php if(!empty($optionValue)): ?>
+                                                                <?php
+                                                                    $optionValuesColumn = array_column($optionValue, 'option_value');
+                                                                    array_multisort($optionValuesColumn, SORT_ASC, $optionValue);
+                                                                ?>
                                                                 <?php foreach($optionValue as $key => $value): ?>
                                                                     <?php if(isset($value['product_count']) && $value['product_count'] > 0): ?>
                                                                         <div class="form-check form-option form-check-inline mb-2 custom-options-checkbox">
