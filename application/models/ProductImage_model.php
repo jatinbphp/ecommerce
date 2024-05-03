@@ -20,7 +20,7 @@ class ProductImage_model extends CI_Model
   */
 	public function getDetails($productId = null) {
         if($productId) {
-            $sql = "SELECT * FROM $this->table WHERE product_id = ?";
+            $sql = "SELECT * FROM $this->table WHERE product_id = ? ORDER BY id DESC";
             $query = $this->db->query($sql, array($productId));
             return $query->result_array(); // Return multiple records
         }

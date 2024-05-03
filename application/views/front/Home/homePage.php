@@ -136,7 +136,7 @@
                 <?php if(isset($categories) && !empty($categories)): ?>
                         <?php foreach($categories as $key => $value): ?>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link <?= $key == 0 ? 'active' : ''; ?>" onClick="setTab(event)" href="#" id="<?= str_replace(' ', '-', strtolower($value['name'])) ?>" data-id="<?= $value['id'] ?>" aria-selected="false"><?= ucwords($value['name']) ?></a>
+                                <a class="nav-link <?= $key == 0 ? 'active' : ''; ?>" onClick="setTab(event)" href="#" id="<?= preg_replace('/[^a-zA-Z0-9]+/', '_', $value['name']) ?>" data-id="<?= $value['id'] ?>" aria-selected="false"><?= ucwords($value['name']) ?></a>
                             </li>
                         <?php endforeach ?>
                     <?php endif ?>
@@ -147,7 +147,7 @@
                             <div class="row rows-products" id="category-section">
                                 <?php if(isset($categorized_products) && !empty($categorized_products)): ?>
                                     <?php foreach($categorized_products as $key => $value): ?>
-                                        <div class="col-xl-4 col-lg-4 col-md-6 col-6">
+                                        <div class="col-xl-3 col-lg-4 col-md-6 col-6">
                                             <?php $this->load->view('front/Products/product', array('value' => $value));  ?>
                                         </div>
                                     <?php endforeach ?>

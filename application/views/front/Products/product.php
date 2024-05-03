@@ -3,9 +3,9 @@
     <button class="btn btn_love position-absolute ab-right snackbar-wishlist <?php echo (in_array(($value['id'] ?? ""), $wishlistProductId)) ? 'active-wishlist' : ''; ?>" data-id="<?= ($value['id'] ?? "") ?>"><i class="far fa-heart"></i></button> 
     <div class="card-body p-0">
         <div class="shop_thumb position-relative">
-            <?php $images = isset($value['images']) && is_string($value['images']) ? explode(",", $value['images']) : []; ?>
+            <?php $images = isset($value['images']) && is_array($value['images']) ? $value['images'] : []; ?>
             <?php $image = ((isset($images[0]) && file_exists($images[0])) ? $images[0] : 'images/default-image.png') ?>
-            <a class="card-img-top d-block overflow-hidden" target="blank" href="<?= base_url('products/' . $value['id'] . '/details') ?>"><img class="card-img-top" src="<?php echo base_url($image); ?>" alt="..."></a>
+            <a class="card-img-top d-block overflow-hidden" target="blank" href="<?= base_url('products/' . $value['id'] . '/details') ?>"><img class="card-img-top image-view" src="<?php echo base_url($image); ?>" alt="..."></a>
             <div class="edlio"><a href="#" onclick="handleQuickView(event)" data-id="<?= $value['id'] ?>" class="text-white product-hover-overlay bg-dark d-flex align-items-center justify-content-center fs-sm ft-medium"><i class="fas fa-eye mr-1"></i>Quick View</a></div>
         </div>
     </div>
@@ -36,3 +36,4 @@
         </div>
     </div>
 </div>
+

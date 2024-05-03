@@ -149,10 +149,8 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="row align-items-center rows-products grid">                
+                <div class="row rows-products grid">                
                 </div>
-
                 <!-- <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 text-center pt-4 pb-4">
                         <a href="#" class="btn stretched-link borders m-auto"><i class="lni lni-reload mr-2"></i>Load More</a>

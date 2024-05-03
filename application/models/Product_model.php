@@ -13,6 +13,7 @@ class Product_model extends CI_Model
     public $order_column = ['id', 'product_name', 'sku', 'price', 'status', 'created_at'];
 
 	public function __construct(){
+        $this->load->model('ProductImage_model');
 		parent::__construct();
 	}
 
@@ -232,15 +233,30 @@ class Product_model extends CI_Model
      * @return array An array of the latest active products with their images.
      */
     public function getLatestProducts(){
-        $this->db->select('products.*, GROUP_CONCAT(product_images.image) as images');
+        $this->db->select('products.*');
         $this->db->from($this->table);
-        $this->db->join('product_images', 'products.id = product_images.product_id', 'left');
         $this->db->where('products.status', self::STATUS_ACTIVE);
         $this->db->group_by('products.id'); // Group by product ID to aggregate images
         $this->db->order_by('products.created_at', 'DESC');
         $this->db->limit(8);
         $query = $this->db->get();
-        return $query->result_array();
+        $row = $query->result_array();
+        
+        if(!$row || !count($row)){
+            return [];
+        }
+
+        $rowData = [];
+        foreach($row as $data){
+            $id = ($data['id'] ?? 0);
+            if(!$id){
+                continue;
+            }
+
+            $data['images'] = array_column($this->ProductImage_model->getDetails($id), 'image');
+            $rowData[] = $data;
+        }
+        return $rowData;
     }
 
     /**
@@ -250,9 +266,8 @@ class Product_model extends CI_Model
      * @return array An array of filtered products with additional image information.
      */
     public function filter_products($categoryId=[], $products_options_value_ids = [], $priceRange = [], $sort=1){
-        $this->db->select('products.*, GROUP_CONCAT(product_images.image) as images');
+        $this->db->select('products.*');
         $this->db->from($this->table);
-        $this->db->join('product_images', 'products.id = product_images.product_id', 'left');
         $this->db->join('products_options_values', 'products.id = products_options_values.product_id', 'left');
         $this->db->where('products.status', self::STATUS_ACTIVE);
         
@@ -269,16 +284,33 @@ class Product_model extends CI_Model
         }
 
         $this->db->group_by('products.id'); // Group by product ID to aggregate images
+        
         if($sort == 2){
             $this->db->order_by('products.price', 'ASC');
         } elseif($sort == 3){
             $this->db->order_by('products.price', 'DESC');
         } else {
-            $this->db->order_by('products.created_at', 'DESC');
+            $this->db->order_by('products.id', 'DESC');
         }
         $query = $this->db->get();
+        $row = $query->result_array();
         
-        return $query->result_array();
+        if(!$row || !count($row)){
+            return [];
+        }
+
+        $rowData = [];
+        foreach($row as $data){
+            $id = ($data['id'] ?? 0);
+            if(!$id){
+                continue;
+            }
+
+            $data['images'] = array_column($this->ProductImage_model->getDetails($id), 'image');
+            $rowData[] = $data;
+        }
+
+        return $rowData;
     }
 
     public function show($productId) {

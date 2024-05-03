@@ -1,23 +1,30 @@
 <?php if(isset($product) && !empty($product)): ?>
+    <?php //print_r($product);?>
     <div class="quick_view_wrap">
         <div class="quick_view_thmb">
-            <div class="quick_view_slide">
-                <?php if(isset($product['images']) && is_string($product['images'])): ?>
-                    <?php foreach(explode(",", $product['images']) as $imageKey => $imageValue): ?>
-                        <div class="single_view_slide" id="quick-view-slider">
+            <?php $images = explode(",", ($product['images'] ?? '')); ?>
+            <?php if($images && count($images) > 1): ?>
+                <div class="quick_view_slide-<?php echo ($product['id'] ?? 0)  ?>">
+                    <?php foreach($images as $imageKey => $imageValue): ?>
+                        <div class="single_view_slide">
                             <?php if(file_exists($imageValue)): ?>
-                                <img src="<?php echo base_url($imageValue)?>" class="img-fluid" id="image-<?= $imageKey ?>" alt="" />
+                                <img src="<?php echo base_url($imageValue)?>" class="img-fluid image-view-slider" id="image-<?= $imageKey ?>" alt="" />
                             <?php else: ?>
-                                <img src="<?php echo base_url('images/default-image.png')?>" class="img-fluid" id="image-<?= $imageKey ?>" alt="" />
+                                <img src="<?php echo base_url('images/default-image.png')?>" class="img-fluid image-view-slider" id="image-<?= $imageKey ?>" alt="" />
                             <?php endif; ?>
                         </div>
                     <?php endforeach ?>
-                <?php else: ?>
-                    <div class="single_view_slide">
-                        <img src="<?= base_url('images/default-image.png')?>" class="img-fluid" alt="" />
-                    </div>
-                <?php endif ?>
-            </div>
+                </div>
+            <?php else: ?>
+                <div class="single_view_slide">
+                    <?php $image = ($images[0] ?? '') ?>
+                    <?php if(file_exists($image)): ?>
+                        <img src="<?php echo base_url($image)?>" class="img-fluid image-view-slider" alt="" />
+                    <?php else: ?>
+                        <img src="<?php echo base_url('images/default-image.png')?>" class="img-fluid image-view-slider" alt="" />
+                    <?php endif; ?>
+                </div>
+            <?php endif ?>
         </div>
         <div class="quick_view_capt">
             <div class="prd_details">

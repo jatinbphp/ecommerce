@@ -15,7 +15,9 @@ function getProducts(categoryId){
         method: 'GET',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
-        	categoryId: categoryId 
+            filter:{
+            	categoryId: categoryId
+            }
     	},
         success: function(response) {
             $('#category-section').html(response.html);
@@ -39,7 +41,7 @@ function handleQuickView(event){
         success: function(response) {
             if (response.status) {
                 $('.modal-body, #quickviewbody').html(response.html);
-                initSlickSlider();
+                initSlickSlider(productId);
                 $('#quickview').modal('show');
             } else {
                 console.error('Error loading view:', response);
@@ -149,8 +151,8 @@ function deleteCartItem(cartId, button) {
     });
 }
 
-function initSlickSlider() {
-    $('.quick_view_slide').slick({
+function initSlickSlider(productId) {
+    $('.quick_view_slide-'+productId).slick({
         slidesToShow: 1,
         arrows: true,
         dots: true,

@@ -51,11 +51,17 @@ function handleFilter(){
       url: baseUrl+"products",
       method: 'GET',
       headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
-      data: filter,
+      data: {
+         filter: filter,
+         viewType:'filter',
+      },
       success: function(response) {
          $('.rows-products').html(response.html);
          $('#filterCount').html($(".product_grid").length);
          $('#loader').addClass('d-none');
+         if($('.ti-view-list').parent('a').hasClass('active')){
+            $('.filters').removeClass().addClass('col-12 filters');
+         }
       },
       error: function(jqXHR, textStatus, errorThrown) {
          console.error('AJAX Error:', textStatus, errorThrown);
