@@ -81,7 +81,7 @@ class BannerController extends MY_Controller
 	        $this->form_validation->set_message('validate_image', 'The {field} field is required.');
 	        return false;
 	    } else {
-	        $allowed_types = ['jpeg', 'jpg', 'png'];
+	        $allowed_types = ['jpeg', 'jpg', 'png', 'webp'];
 	        $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
 	        if (!in_array(strtolower($ext), $allowed_types)) {
 	            $this->form_validation->set_message('validate_image', 'The {field} must be a valid JPEG, JPG, or PNG file.');
