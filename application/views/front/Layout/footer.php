@@ -100,8 +100,8 @@
       function AjaxUploadImage(obj,id){
         var file = obj.files[0];
         var imagefile = file.type;
-        var match = ["image/jpeg", "image/png", "image/jpg"];
-        if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2])))
+        var match = ["image/jpeg", "image/png", "image/jpg", 'image/webp'];
+        if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]) || (imagefile == match[3])))
         {
             $('#previewing'+URL).attr('src', 'noimage.png');
             alert("<p id='error'>Please Select A valid Image File</p>" + "<h4>Note</h4>" + "<span id='error_message'>Only jpeg, jpg and png Images type allowed</span>");
