@@ -1,5 +1,4 @@
 <?php if(isset($product) && !empty($product)): ?>
-    <?php //print_r($product);?>
     <div class="quick_view_wrap">
         <div class="quick_view_thmb">
             <?php $images = explode(",", ($product['images'] ?? '')); ?>
