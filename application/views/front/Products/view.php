@@ -3,7 +3,7 @@
         <div class="quick_view_thmb">
             <?php $images = explode(",", ($product['images'] ?? '')); ?>
             <?php if($images && count($images) > 1): ?>
-                <div class="quick_view_slide-<?php echo ($product['id'] ?? 0)  ?>">
+                <div class="quick_view_slide">
                     <?php foreach($images as $imageKey => $imageValue): ?>
                         <div class="single_view_slide">
                             <?php if(file_exists($imageValue)): ?>

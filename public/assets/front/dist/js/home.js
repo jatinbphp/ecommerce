@@ -41,7 +41,7 @@ function handleQuickView(event){
         success: function(response) {
             if (response.status) {
                 $('.modal-body, #quickviewbody').html(response.html);
-                initSlickSlider(productId);
+                initSlickSlider();
                 $('#quickview').modal('show');
             } else {
                 console.error('Error loading view:', response);
@@ -151,8 +151,8 @@ function deleteCartItem(cartId, button) {
     });
 }
 
-function initSlickSlider(productId) {
-    $('.quick_view_slide-'+productId).slick({
+function initSlickSlider() {
+    $('.quick_view_slide').slick({
         slidesToShow: 1,
         arrows: true,
         dots: true,
