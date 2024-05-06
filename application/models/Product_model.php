@@ -14,6 +14,8 @@ class Product_model extends CI_Model
 
 	public function __construct(){
         $this->load->model('ProductImage_model');
+        $this->load->model('ProductOptions_model');
+        $this->load->model('ProductOptionValues_model');
 		parent::__construct();
 	}
 
@@ -265,25 +267,38 @@ class Product_model extends CI_Model
      * @param int $categoryId The ID of the category to filter by. Defaults to 0.
      * @return array An array of filtered products with additional image information.
      */
-    public function filter_products($categoryId=[], $products_options_value_ids = [], $priceRange = [], $sort=1){
+    public function filter_products($filters){
+        $categoryId = $filters['categoryId'] ?? [];
+        $priceRange = $filters['priceRange'] ?? [];
+        $sort       = $filters['sort'] ?? 0;
+        unset($filters['categoryId']);
+        unset($filters['priceRange']);
+        unset($filters['sort']);
+      
+        $filterOptionsProductIds = $this->getFilteredProductIds($filters);
+       
         $this->db->select('products.*');
         $this->db->from($this->table);
-        $this->db->join('products_options_values', 'products.id = products_options_values.product_id', 'left');
+
+        if($filters && count($filters)){
+            if($filterOptionsProductIds && count($filterOptionsProductIds)){
+                $this->db->where_in('products.id', $filterOptionsProductIds);
+            } else {
+                $this->db->where('products.id', 0);
+            }
+        }
+        
         $this->db->where('products.status', self::STATUS_ACTIVE);
         
         if ($categoryId) {
             $this->db->where_in('products.category_id', $categoryId);
         }
 
-        if(!empty($products_options_value_ids)){
-            $this->db->where_in('products_options_values.id', $products_options_value_ids);
-        }
-
         if($priceRange && count($priceRange) == 2){
             $this->db->where('products.price BETWEEN '.$priceRange[0].' AND '.$priceRange[1]);
         }
 
-        $this->db->group_by('products.id'); // Group by product ID to aggregate images
+        $this->db->group_by('products.id');
         
         if($sort == 2){
             $this->db->order_by('products.price', 'ASC');
@@ -293,6 +308,7 @@ class Product_model extends CI_Model
             $this->db->order_by('products.id', 'DESC');
         }
         $query = $this->db->get();
+        
         $row = $query->result_array();
         
         if(!$row || !count($row)){
@@ -311,6 +327,51 @@ class Product_model extends CI_Model
         }
 
         return $rowData;
+    }
+
+    public function getFilteredProductIds($filters) {
+        if(!$filters){
+            return [];
+        }
+
+        $allProductsData = [];
+
+        foreach ($filters as $option => $values) {
+            $optionProductsData = [];
+        
+            $this->db->select('products.id');
+            $this->db->from('products');
+            $this->db->join('products_options', 'products.id = products_options.product_id', 'left');
+            $this->db->join('products_options_values', 'products_options.id = products_options_values.option_id', 'left');
+            $this->db->where('products.status', self::STATUS_ACTIVE);
+            $this->db->where('LOWER(products_options.option_name)', strtolower($option));
+        
+            $valueConditions = [];
+            
+            foreach ($values as $value) {
+                $valueConditions[] = "LOWER(products_options_values.option_value) = '" . strtolower($value) . "'";
+            }
+            $this->db->where('(' . implode(' OR ', $valueConditions) . ')');
+        
+            $query = $this->db->get();
+            $result = $query->result_array();
+        
+            foreach ($result as $row) {
+                $optionProductsData[] = $row['id'];
+            }
+        
+            $allProductsData[] = $optionProductsData;
+
+        }
+
+        $commonProductIds = array_reduce($allProductsData, function ($carry, $item) {
+            if ($carry === null) {
+                return $item;
+            }
+            return array_intersect($carry, $item);
+        });
+        
+        return $commonProductIds;
     }
 
     public function show($productId) {

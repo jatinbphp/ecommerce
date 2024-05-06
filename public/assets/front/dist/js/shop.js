@@ -24,7 +24,7 @@ function setOption(event, optionName){
    filter[optionName].length = 0;
    $(".option-" + optionName).each(function () {
       if ($(this).is(":checked")) {
-         filter[optionName].push(Number($(this).val()));
+         filter[optionName].push($(this).val());
       }
    });
    if(optionName == 'priceRange'){
@@ -43,6 +43,12 @@ $('#sort-filters').change(function(){
 function handleFilter(){
    filter['sort'] = $('#sort-filters').val();
    var filterCategory = $('#shop-categories').attr('data-filter-category-id');
+   var slider = $('#rangeSlider').data("ionRangeSlider");
+   if(slider){
+      filter['priceRange'] = [];
+      filter['priceRange'].push(Number(slider.result.from));
+      filter['priceRange'].push(Number(slider.result.to));
+   }
    if(filterCategory && filterCategory != 0){
       filter['categoryId'] = [Number(filterCategory)];
    }

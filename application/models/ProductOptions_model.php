@@ -141,5 +141,4 @@ class ProductOptions_model extends CI_Model
         $ids = array_column($query->result_array(), 'id');
         return $ids;
     }
-
 }

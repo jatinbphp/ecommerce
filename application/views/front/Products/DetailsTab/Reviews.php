@@ -7,7 +7,7 @@
                     <?php if(isset($userImage) && file_exists($userImage) && isset($data['user_id']) && $this->session->userdata('userId') == $data['user_id']): ?>
                         <img src="<?php echo base_url($userImage) ?>" class="img-fluid circle" style="width: 50px;" alt="" />
                     <?php else: ?>
-                        <img src="<?php echo base_url('uploads\users\user-default.png') ?>" class="img-fluid circle" style="width: 50px;" alt="">
+                        <img src="<?php echo base_url('images\user-default.png') ?>" class="img-fluid circle" style="width: 50px;" alt="">
                     <?php endif?>
                 </div>
                 <div class="single_rev_caption d-flex align-items-start pl-3">
@@ -42,7 +42,7 @@
     </div>
 <?php endif ?>
 <div class="reviews_rate">
-    <?php echo form_open_multipart(base_url('add-review'), ['id' => 'reviewForm', 'class' => 'form-horizontal row']); ?>
+    <?php echo form_open_multipart(base_url('reviews/add-review'), ['id' => 'reviewForm', 'class' => 'form-horizontal row']); ?>
         <?php echo form_hidden('product_id', ($product['id'] ?? 0)); ?>
 
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">

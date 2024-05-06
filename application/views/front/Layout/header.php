@@ -69,7 +69,7 @@
                                     </li>
                                 <?php endif; ?>
                                 <li><a href="<?php echo base_url('about-us'); ?>">About Us</a></li>
-                                <li><a href="contact">Contact Us</a></li>
+                                <li><a href="<?php echo base_url('contact'); ?>">Contact Us</a></li>
                             </ul>
                             <ul class="nav-menu nav-menu-social align-to-right">
                                 <li>

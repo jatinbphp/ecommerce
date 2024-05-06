@@ -170,7 +170,7 @@ class MY_Controller extends CI_Controller
             $isUpload = 1;
         }
 
-        if(!in_array($imageFileType, ["jpg", "png", "jpeg", "gif", 'webp'])) {
+        if(!in_array($imageFileType, ["jpg", "png", "jpeg", "gif", 'webp', 'avif'])) {
             return '';
         }
 
@@ -211,7 +211,7 @@ class MY_Controller extends CI_Controller
                 $isUpload = 1;
             }
     
-            if (!in_array($imageFileType, ["jpg", "png", "jpeg", "gif", "webp"])) {
+            if (!in_array($imageFileType, ["jpg", "png", "jpeg", "gif", "webp", 'avif'])) {
                 // If file type is not allowed, continue to the next file
                 continue;
             }

@@ -93,7 +93,7 @@
                 <?php endif ?>
 
                 <div class="prt_05 mb-4">
-                    <div class="form-row mb-7">
+                    <div class="form-row mb-7 mt-3">
                         <div class="col-12 col-lg-auto">
                             <!-- Quantity -->
                             <select name="quantity" class="mb-2 custom-select">
