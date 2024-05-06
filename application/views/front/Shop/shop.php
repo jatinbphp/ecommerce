@@ -36,42 +36,45 @@
             <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 p-xl-0">
                 <div class="search-sidebar sm-sidebar border">
                     <div class="search-sidebar-body">
-                        <div class="single_search_boxed d-none d-lg-block">
-                            <div class="widget-boxed-header px-3">
-                                <h4 class="mt-3">Categories</h4>
-                            </div>
-                            <div class="widget-boxed-body">
-                                <div class="side-list no-border">
-                                    <div class="filter-card" id="shop-categories" data-filter-category-id="<?php echo ($categoryId ?? 0) ?>">
-                                        <?php if(isset($categories) && !empty($categories)): ?>
-                                            <?php render_categories($categories); ?> 
-                                        <?php endif; ?> 
-
-                                        <?php
-                                            function render_categories($categories, $level = 0) {
-                                                foreach ($categories as $category) {
-                                                    echo '<div class="single_filter_card category-list">';
-                                                    echo '<input onclick="setOption(event, \'categoryId\')" value="'. ($category['id'] ?? 0) .'" id="filter-categoty-'.($category['id'] ?? 0).'" class="checkbox-custom option-categoryId" name="categoryId" type="checkbox">';
-                                                    echo '<label for="filter-categoty-'.($category['id'] ?? 0).'" class="checkbox-custom-label text-capitalize"></label><h5><a  href= '. (count(($category['sub_category'] ?? [])) != 0 ? '"#category_' . $category['id'] . '"' : '#') .' data-toggle="collapse" class="collapsed" aria-expanded="false" role="button">' . htmlspecialchars($category['name']) . (count(($category['sub_category'] ?? [])) != 0 ? '<i class="accordion-indicator ti-angle-down"></i>' : '') . '<span class="text-right count">'.($category['product_count'] ?? 0).'</span></a></h5>';
-                                                    echo '<div class="collapse" id="category_' . $category['id'] . '" data-parent="#category_' . $category['id'] . '">';
-                                                    echo '<div class="card-body">';
-                                                    echo '<div class="inner_widget_link">';
-                                                    echo '<ul>';
-                                                    if (isset($category['sub_category']) && !empty($category['sub_category'])) {
-                                                        render_categories($category['sub_category'], $level + 1); // Recursive call
+                        <?php if(!isset($categoryId)): ?>    
+                            <div class="single_search_boxed d-none d-lg-block">
+                                <div class="widget-boxed-header px-3">
+                                    <h4 class="mt-3">Categories</h4>
+                                </div>
+                                <div class="widget-boxed-body">
+                                    <div class="side-list no-border">
+                                        <div class="filter-card" id="shop-categories" data-filter-category-id="<?php echo ($categoryId ?? 0) ?>">
+                                            <?php
+                                                function render_categories($categories, $level = 0) {
+                                                    foreach ($categories as $category) {
+                                                        echo '<div class="single_filter_card category-list">';
+                                                        echo '<input onclick="setOption(event, \'categoryId\')" value="'. ($category['id'] ?? 0) .'" id="filter-categoty-'.($category['id'] ?? 0).'" class="checkbox-custom option-categoryId" name="categoryId" type="checkbox">';
+                                                        echo '<label for="filter-categoty-'.($category['id'] ?? 0).'" class="checkbox-custom-label text-capitalize"></label><h5><a  href= '. (count(($category['sub_category'] ?? [])) != 0 ? '"#category_' . $category['id'] . '"' : '#') .' data-toggle="collapse" class="collapsed" aria-expanded="false" role="button">' . htmlspecialchars($category['name']) . (count(($category['sub_category'] ?? [])) != 0 ? '<i class="accordion-indicator ti-angle-down"></i>' : '') . '<span class="text-right count">'.($category['product_count'] ?? 0).'</span></a></h5>';
+                                                        echo '<div class="collapse" id="category_' . $category['id'] . '" data-parent="#category_' . $category['id'] . '">';
+                                                        echo '<div class="card-body">';
+                                                        echo '<div class="inner_widget_link">';
+                                                        echo '<ul>';
+                                                        if (isset($category['sub_category']) && !empty($category['sub_category'])) {
+                                                            render_categories($category['sub_category'], $level + 1); // Recursive call
+                                                        }
+                                                        echo '</ul>';
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '</div>';
+                                                        echo '</div>';
                                                     }
-                                                    echo '</ul>';
-                                                    echo '</div>';
-                                                    echo '</div>';
-                                                    echo '</div>';
-                                                    echo '</div>';
                                                 }
-                                            }
-                                        ?> 
+                                            ?>
+                                            <?php if(isset($categories) && !empty($categories)): ?>
+                                                <?php render_categories($categories); ?> 
+                                            <?php endif; ?> 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        <?php else: ?>
+                            <div id="shop-categories" data-filter-category-id="<?php echo ($categoryId ?? 0) ?>"></div>
+                        <?php endif; ?>
                         <div class="single_search_boxed">
                             <div class="widget-boxed-header">
                                 <h4><a href="#pricing" data-toggle="collapse" aria-expanded="false" role="button">Pricing</a></h4>
