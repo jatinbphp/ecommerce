@@ -209,7 +209,7 @@ $(document).ready(function() {
             success: function(response) {
                 if(response.success){
                     $('#reviewForm')[0].reset();
-                    $('#product-reviews').html(response.html);
+                    $('#reviews_info').html(response.html);
                 }
                 SnackbarAlert(response.message);
             }

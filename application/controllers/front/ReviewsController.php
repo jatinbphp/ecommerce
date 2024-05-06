@@ -14,7 +14,7 @@ class ReviewsController extends MY_Controller {
 
         if($this->Reviews_model->create($input)){
             $reviewData = $this->Reviews_model->getDetailsBasedOnProductId($this->input->post('product_id'));
-            $data['html'] = $this->load->view('front/Products/DetailsTab/Reviews', ['reviews' => $reviewData], true);
+            $data['html'] = $this->load->view('front/Products/DetailsTab/ReviewsInfo', ['reviews' => $reviewData], true);
             $success = 1;
             $message = "Your review has been submitted successfully!";
         } else {
