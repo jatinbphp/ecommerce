@@ -86,7 +86,7 @@
         </div>
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
             <div class="form-group m-0">
-                <?php echo form_button(['type' => 'submit', 'content' => 'Submit Review <i class="lni lni-arrow-right"></i>', 'class' => 'btn btn-dark stretched-link hover-black', 'name' => 'submit']); ?>
+                <?php echo form_button(['type' => 'submit', 'content' => 'Submit Review <i class="lni lni-arrow-right"></i>', 'class' => 'btn btn-dark stretched-link hover-black']); ?>
             </div>
         </div>
     <?php echo form_close(); ?>

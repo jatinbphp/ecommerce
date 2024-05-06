@@ -28,7 +28,9 @@ class HomeController extends MY_Controller {
         $data['banner_data']           = $this->Banner_model->getActiveBammerData();
         $data['latest_products']       = $this->Product_model->getLatestProducts();
         $data['categories']            = $this->Categories_model->getCategoriesWithManyProducts();
-        $data['categorized_products']  = isset($data['categories'][0]['id']) ? $this->Product_model->filter_products($data['categories'][0]['id']) : null;
+        $firstCategory = current($data['categories']);
+        $filters['categoryId']         = isset($firstCategory['id']) ? $firstCategory['id'] : 0;
+        $data['categorized_products']  = $this->Product_model->filter_products($filters);
         $data['type']                  = $this->Product_model::$type;
         $data['productWiseReviews']    = $this->Reviews_model->getProductWiseReviewData();
         $this->frontRenderTemplate('front/Home/homePage', $data);
