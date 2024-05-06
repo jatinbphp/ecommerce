@@ -47,6 +47,15 @@ class ProductController extends MY_Controller {
         $this->output->set_content_type('application/json')->set_output(json_encode($response));
     }
 
+    /**
+     * Display the product details for the given ID.
+     *
+     * Retrieves product data based on the provided ID, checks if the product exists,
+     * generates HTML view for the product details, and outputs the response in JSON format.
+     *
+     * @param int $id The ID of the product to display
+     * @return void
+     */
     public function show($id) {
         $data = $this->product_data($id);
         $response = [
@@ -56,12 +65,24 @@ class ProductController extends MY_Controller {
         $this->output->set_content_type('application/json')->set_output(json_encode($response));
     }
 
+    /**
+     * Display the details of a product based on the provided ID.
+     *
+     * @param int $id The ID of the product
+     * @return void
+     */
     public function details($id) {
         $data = $this->product_data($id);
         $this->frontRenderTemplate('front/Products/details', $data);
     }
 
     
+    /**
+     * Retrieves and prepares data related to a product based on the provided ID.
+     *
+     * @param int $id The ID of the product
+     * @return array An array containing product information, wishlist product IDs, reviews, user image, stock status, quantity, and options
+     */
     private function product_data($id) {
         $this->load->model('Wishlist_model');
         $data['product'] = $this->Product_model->show($id);
@@ -81,6 +102,11 @@ class ProductController extends MY_Controller {
         return $data;
     }
 
+    /**
+     * Retrieve unique option names from the ProductOptions_model and return them as a JSON response.
+     *
+     * @return void
+     */
     public function options(){
         $option_names = $this->ProductOptions_model->getUniqueOptionNames();
         $response = [

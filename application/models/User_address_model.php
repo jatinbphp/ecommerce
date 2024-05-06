@@ -31,6 +31,12 @@ class User_address_model extends CI_Model
         return 0;
     }
 
+    /**
+     * Insert a new record into the database table with the provided data.
+     *
+     * @param array $data The data to be inserted
+     * @return int|bool The ID of the inserted record if successful, false otherwise
+     */
     public function insert($data)
     {
         $this->db->insert($this->table, $data);
@@ -41,12 +47,25 @@ class User_address_model extends CI_Model
         }
     }
 
+    /**
+     * Update the address of a user in the database.
+     *
+     * @param int $userId The ID of the user whose address is to be updated.
+     * @param array $data The data containing the new address information.
+     * @return void
+     */
     public function update_address($userId, $data)
     {
         $this->db->where('id', $userId);
         $this->db->update('user_addresses', $data);
     }
 
+    /**
+     * Get the details of a specific address based on the address ID.
+     *
+     * @param int $address_id The ID of the address to retrieve details for.
+     * @return array|null An associative array containing the details of the address, or null if not found.
+     */
     public function getAddressDetails($address_id)
     {
         return $this->db->get_where($this->table, array('id' => $address_id))->row_array();

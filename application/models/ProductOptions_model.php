@@ -115,6 +115,12 @@ class ProductOptions_model extends CI_Model
         return array_values($productOptions);
     }
 
+    /**
+     * Delete product options from the database for a given product ID.
+     *
+     * @param int $productId The ID of the product whose options need to be deleted.
+     * @return bool True if options were deleted, false otherwise.
+     */
     public function deleteProductOptions($productId) {
         $this->db->where('product_id', $productId);
         $this->db->delete($this->table);
@@ -122,6 +128,14 @@ class ProductOptions_model extends CI_Model
         return $this->db->affected_rows() > 0;
     }
 
+    /**
+     * Retrieves unique option names from the database table.
+     *
+     * This method selects unique option names from the database table where the status is 'active'.
+     * It groups the results by the lowercase option name and returns an array of unique option names.
+     *
+     * @return array An array of unique option names
+     */
     public function getUniqueOptionNames(){
         $this->db->select('LOWER(option_name) AS option_name', false); 
         $this->db->from($this->table);
@@ -132,6 +146,12 @@ class ProductOptions_model extends CI_Model
         return $names;
     }
 
+    /**
+     * Get the IDs of options from the database based on the option name.
+     *
+     * @param string $option_name The name of the option to search for.
+     * @return array An array of IDs corresponding to the options with the given name.
+     */
     public function getOptionsByName($option_name){
         $this->db->select('id');
         $this->db->from($this->table);

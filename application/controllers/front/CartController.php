@@ -73,6 +73,12 @@ class CartController extends MY_Controller {
             ->set_output(json_encode($data));
     }
 
+    /**
+     * Retrieves the user's cart data based on the user's session.
+     * If the user is logged in, it fetches the cart data from the database using the user ID.
+     * If the user is not logged in, it retrieves the cart data from the input post data.
+     * It then generates the cart view and cart counter, and returns them as a JSON response.
+     */
     public function getUserCartData()
     {
         $userId = $this->session->userdata('userId');
@@ -103,6 +109,14 @@ class CartController extends MY_Controller {
         echo json_encode($cartDataArr);
     }
 
+    /**
+     * Get the product-wise options from the provided data.
+     *
+     * This method organizes the given data into an array where each product ID is associated with its corresponding options and quantity.
+     *
+     * @param array $data The data containing information about products.
+     * @return array An array where each product ID is mapped to an array of options and quantity.
+     */
     public function getProductIdWiseOptions($data) {
         if(!$data){
             return [];
@@ -125,6 +139,12 @@ class CartController extends MY_Controller {
         return $productWiseData;
     }
 
+    /**
+     * Deletes a user's cart item based on the provided cart ID.
+     * Retrieves and returns the updated user cart data after deletion.
+     *
+     * @return mixed The updated user cart data
+     */
     public function deleteUserCartItem()
     {
         $cartId = $this->input->post('cartId');
@@ -136,6 +156,4 @@ class CartController extends MY_Controller {
         }
         
     }
-
-
 }

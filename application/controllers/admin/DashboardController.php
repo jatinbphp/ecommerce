@@ -85,6 +85,16 @@ class DashboardController extends MY_Controller {
         return $result;
     }
 
+	/**
+	 * Retrieves the total number of orders for each day in the past week.
+	*
+	* This method calculates the total number of orders for each day in the past week
+	* by querying the database for orders created within the last 7 days. It then formats
+	* the data and returns an array containing the order date and the number of orders
+	* for each day.
+	*
+	* @return array An array containing the order date and the number of orders for each day in the past week.
+	*/
 	public function getWeeklyTotalOrdersData() {
         $currentDate = date('Y-m-d');
 		$startDate = date('Y-m-d', strtotime('-7 days', strtotime($currentDate)));
@@ -113,6 +123,12 @@ class DashboardController extends MY_Controller {
         return $result;
 	}
 
+	/**
+	 * Fetches order data including user information, status, and actions for display.
+	* Retrieves orders data with associated user information and formats it for display.
+	* 
+	* @return void
+	*/
 	public function fetchOrderData() {
 		$orders = $this->Order_model->getOrdersDataWithUser(5);
 
@@ -132,6 +148,11 @@ class DashboardController extends MY_Controller {
 		echo json_encode(['data' => $data]);
 	}
 
+	/**
+	* generate action button for display.
+	* 
+	* @return string
+	*/
 	public function getActionData($id) {
 		return '<div class="btn-group btn-group-sm">
 				<a href="javascript:void(0)" title="View Order" data-id="'.$id.'" class="btn btn-sm btn-warning tip view-info" data-url="'.base_url("admin/dashboard/order/show/$id").'" data-title="Order Details">
@@ -140,6 +161,11 @@ class DashboardController extends MY_Controller {
 			</div>';
 	}
 
+	/**
+	 * Get the status data with corresponding HTML badge elements.
+	*
+	* @return array
+	*/
 	public function getStatusData(){
 		return [
 			'pending' => '<span class="badge badge-primary">Pending</span>',
@@ -149,6 +175,16 @@ class DashboardController extends MY_Controller {
 		]; 
 	}
 
+	/**
+	 * Display the order details for the given order ID.
+	*
+	* This method retrieves order details, status data, order data with items and options,
+	* and user data based on the provided order ID. It then loads the view 'admin/Dashboard/Order/view'
+	* with the collected data and returns the HTML content.
+	*
+	* @param int $id The ID of the order to display
+	* @return void
+	*/
 	public function showOrder($id) {
 		$orderData = $this->Order_model->getDetails($id);
 		$data['status'] = $this->getStatusData();
@@ -162,6 +198,12 @@ class DashboardController extends MY_Controller {
         echo $html;
 	}
 
+	/**
+	 * Retrieve order details along with items and options based on the provided order ID.
+	*
+	* @param int $id The ID of the order
+	* @return array An array containing order details, items, and options
+	*/
 	public function getOrderWithItemsAndOptions($id)
 	{
 		$order = $this->Order_model->getDetails($id);

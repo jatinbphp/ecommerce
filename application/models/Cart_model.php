@@ -1,9 +1,18 @@
 <?php
+/**
+ * Cart_model Class
+ *
+ * This class serves as the model for managing the cart data in the CodeIgniter application.
+ */
 class Cart_model extends CI_Model
 {   
     public $table = "carts";
     public $select_column = ['id','order_id','user_id','product_id','quantity','options','options_text','created_at','updated_at'];
 
+    /**
+     * Constructor method for the class.
+     * Loads the ProductImage_model and calls the parent constructor.
+     */
     public function __construct(){
 		$this->load->model('ProductImage_model');
 		parent::__construct();
@@ -20,6 +29,12 @@ class Cart_model extends CI_Model
     ];
 
 
+	/**
+	 * Create a new record in the database table with the given data.
+	*
+	* @param array $data The data to be inserted into the table.
+	* @return int The ID of the newly created record.
+	*/
 	public function create($data)
 	{
 		$this->db->insert($this->table, $data);
@@ -27,6 +42,12 @@ class Cart_model extends CI_Model
 	}
 
 
+	/**
+	 * Retrieves the count of items in the cart for a specific user.
+	*
+	* @param int $userId The ID of the user
+	* @return int The count of items in the cart for the specified user
+	*/
 	public function cartCounter($userId)
 	{
 		$this->db->select('COUNT(*) as count');
@@ -39,6 +60,12 @@ class Cart_model extends CI_Model
         return $cartCount;	
 	}
 
+ /**
+  * Retrieves the user's cart data based on the provided user ID.
+  *
+  * @param int $userId The ID of the user whose cart data is to be retrieved
+  * @return array An array containing the user's cart data
+  */
 	public function getUsrCartData($userId)
 	{
 		$cartProducts = [];
@@ -98,6 +125,12 @@ class Cart_model extends CI_Model
 	    return $cartProducts;
 	}
 
+	/**
+	 * Retrieves guest user cart data based on the provided user cart data.
+	*
+	* @param array $userCartData An array containing user cart data
+	* @return array An array containing guest user cart data
+	*/
 	public function getGuestUserCartData($userCartData) {
 		if(!$userCartData || !count($userCartData)){
 			return [];
@@ -152,9 +185,14 @@ class Cart_model extends CI_Model
 		return $cartProducts;
 	}
 
+	/**
+	 * Deletes a specific cart item from the database based on the provided cart ID.
+	*
+	* @param int $cartId The ID of the cart item to be deleted.
+	* @return bool Returns true if the cart item was successfully deleted, false otherwise.
+	*/
 	public function deleteCartItem($cartId)
 	{
-
 		$userId = $this->session->userdata('userId');
 		if(!empty($userId)){
 	    	$this->db->where('id', $cartId);
@@ -163,6 +201,14 @@ class Cart_model extends CI_Model
     	}
 	}
 
+	/**
+	 * Get the count of items in the user's cart.
+	*
+	* This method retrieves the user ID from the session data, queries the database to count the items in the user's cart,
+	* and returns the count.
+	*
+	* @return int|null The count of items in the user's cart, or null if the user ID is not set.
+	*/
 	public function getUserCartCounter()
 	{
 		$userId = $this->session->userdata('userId');
@@ -180,6 +226,12 @@ class Cart_model extends CI_Model
 		}
 	}
 
+	/**
+	 * Delete a record from the database table based on the user ID.
+	*
+	* @param int $userId
+	* @return bool
+	*/
 	public function deleteByUserId($userId)
 	{
 		$this->db->where('user_id', $userId);

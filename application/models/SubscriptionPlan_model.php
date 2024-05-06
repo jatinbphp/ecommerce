@@ -1,11 +1,19 @@
 <?php 
 
+/**
+ * This class represents the Subscription Plan model in the CodeIgniter application.
+ * It is responsible for handling database operations related to subscription plans.
+ */
 class SubscriptionPlan_model extends CI_Model
 {   
     public $table = "subscription_plans";
     public $select_column = ['*'];
     public $order_column = ['id', 'name', 'duration', 'description', 'status', 'created_at'];
 
+    /**
+     * Constructor for the class.
+    * Calls the constructor of the parent class.
+    */
 	public function __construct(){
 		parent::__construct();
 	}

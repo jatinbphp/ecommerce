@@ -74,10 +74,16 @@ class HomeController extends MY_Controller {
         $this->frontRenderTemplate('front/PrivecyPolicy/privecyPolicyPage',['privecy_data' => $data]);
     }
 
+    /**
+     * Render the profile information template for the user's account.
+     */
     public function profile_info() {
         $this->frontRenderTemplate('front/myAccount/profile-info');
     }
 
+    /**
+     * Render the profile address template for the user.
+     */
     public function profile_address() {
         $this->frontRenderTemplate('front/myAccount/address/index');
     }

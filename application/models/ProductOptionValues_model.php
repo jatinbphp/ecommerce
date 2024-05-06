@@ -12,6 +12,14 @@ class ProductOptionValues_model extends CI_Model
 		parent::__construct();
 	}
 
+ /**
+  * Get details from the database based on the provided parameters.
+  *
+  * @param int|null $optionValueId
+  * @param int|null $optionId
+  * @param int|null $productId
+  * @return array
+  */
 	public function getDetails($optionValueId = null, $optionId = null, $productId = null) {
         if($productId && $optionValueId && $optionId) {
             $sql = "SELECT * FROM $this->table WHERE option_id = ? AND product_id = ? AND id = ?";
@@ -24,6 +32,12 @@ class ProductOptionValues_model extends CI_Model
         return $query->result_array();
     }
 
+    /**
+     * Get the option value from the database based on the provided option value ID.
+     *
+     * @param int|null $optionValueId The ID of the option value to retrieve.
+     * @return array The option value data as an associative array.
+     */
     public function getOptionValue($optionValueId = null) {
         if(!$optionValueId){
             return [];
@@ -92,6 +106,16 @@ class ProductOptionValues_model extends CI_Model
     }
 
 
+    /**
+     * Filter product options based on the provided option IDs.
+     *
+     * This method retrieves product options from the database based on the provided option IDs.
+     * It selects the minimum ID, option value, and the count of products for each option value.
+     * Only options related to active products are considered.
+     *
+     * @param array $option_ids An array of option IDs to filter the product options by.
+     * @return array An array containing the filtered product options as result sets.
+     */
     public function filterProductOptions($option_ids = []){
         $this->db->select('MIN(products_options_values.id) AS id, option_value,  COUNT(*) AS product_count');
         $this->db->from($this->table);

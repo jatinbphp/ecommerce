@@ -17,6 +17,10 @@ class CheckoutController extends MY_Controller {
         $this->load->model('ProductOptionValues_model');
     }
 
+    /**
+     * Retrieves user addresses and cart products data to display on the checkout page.
+     * If the user is not logged in, it retrieves cart data from the guest user.
+     */
     public function index() {
         $userId = $this->session->userdata('userId');
         $this->data['user_addresses'] = $this->User_address_model->getUserAddresses($userId);
@@ -30,6 +34,14 @@ class CheckoutController extends MY_Controller {
         $this->frontRenderTemplate('front/Checkout/userCheckout', $this->data);
     }
 
+    /**
+     * Place an order with the provided order data.
+     * 
+     * This method processes the order placement by collecting necessary data, creating the order, 
+     * and saving order items and options. It also handles user and guest user scenarios for address information.
+     * 
+     * @return void
+     */
     public function orderPlace(){
         $orderData = $this->input->post();
         $userId = $this->session->userdata('userId');
@@ -137,6 +149,12 @@ class CheckoutController extends MY_Controller {
         $this->orderCompleted($order);
     }
 
+    /**
+     * Mark an order as completed and display the order completion page.
+     *
+     * @param int $orderId The ID of the order to mark as completed
+     * @return void
+     */
     public function orderCompleted($orderId){  
          
         $data['title'] = 'Order Completed';

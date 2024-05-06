@@ -49,6 +49,11 @@ class Wishlist_model extends CI_Model
         return $deleted;
     }
 
+    /**
+     * Get the list of product IDs in the wishlist for the current user.
+     *
+     * @return array
+     */
     public function getWishlistProductIds(){
         $userId = $this->session->userdata('userId');
         

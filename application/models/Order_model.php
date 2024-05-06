@@ -17,6 +17,12 @@ class Order_model extends CI_Model
 	    parent::__construct();
 	}
 
+    /**
+     * Create a new record in the database table with the provided data.
+     *
+     * @param mixed $data The data to be inserted into the table
+     * @return int The ID of the newly created record, or 0 if creation fails or no data is provided
+     */
     public function create($data = ''){
 		if($data) {
             $create = $this->db->insert($this->table, $data);
@@ -29,6 +35,13 @@ class Order_model extends CI_Model
         return 0;
 	}
 
+    /**
+     * Edit a record in the database table with the provided data and ID.
+     *
+     * @param array $data The data to be updated in the record.
+     * @param int|null $id The ID of the record to be updated.
+     * @return bool Returns true if the record was successfully updated, false otherwise.
+     */
     public function edit($data = array(), $id = null){
 		$this->db->where('id', $id);
 		$update = $this->db->update($this->table, $data);
@@ -200,6 +213,12 @@ class Order_model extends CI_Model
         self::STATUS_TYPE_CANCEL => 'Cancel',
     ];
     
+    /**
+     * Retrieve orders data along with user information from the database.
+     *
+     * @param int $limit The maximum number of records to retrieve (default is 1).
+     * @return array An array of orders data with user information.
+     */
     public function getOrdersDataWithUser($limit=1)
     {
         return $this->db
@@ -212,6 +231,12 @@ class Order_model extends CI_Model
             ->result();
     }
 
+    /**
+     * Get the details of the order with the specified order ID, or all orders if no order ID is provided.
+     *
+     * @param int|null $orderId
+     * @return array
+     */
     public function getDetails($orderId = null) {
 		if($orderId) {
 			$sql = "SELECT * FROM $this->table WHERE id = ?";
@@ -224,6 +249,11 @@ class Order_model extends CI_Model
 		return $query->result_array();
 	}
 
+    /**
+     * Retrieve all orders from the database table.
+     *
+     * @return array An array of all orders retrieved from the database.
+     */
     public function getAllOrders(){
         $sql = "SELECT * FROM $this->table ORDER BY id DESC";
 		$query = $this->db->query($sql);

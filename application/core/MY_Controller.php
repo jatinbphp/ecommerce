@@ -2,10 +2,20 @@
 
 class MY_Controller extends CI_Controller 
 {
+ /**
+  * Constructor for the class.
+  */
 	public function __construct() {
         parent::__construct();
     }
 
+ /**
+  * Renders the front-end template with header, specified page content, footer, and models.
+  *
+  * @param string|null $page
+  * @param array $data
+  * @return void
+  */
 	public function frontRenderTemplate($page = null, $data = array())
 	{   
         $this->load->model('Wishlist_model');
@@ -19,6 +29,15 @@ class MY_Controller extends CI_Controller
         $this->load->view('front/Layout/models',$data);
 	}
 
+    /**
+     * Retrieves footer data including header and footer menu categories names and settings data.
+     *
+     * Loads the Settings_model and Categories_model to fetch necessary data.
+     * Parses the footer menu categories and header menu categories from the settings data.
+     * Retrieves category details and full path names using Categories_model.
+     *
+     * @return array
+     */
     public function getFooterData(){
         $this->load->model('Settings_model');
         $this->load->model('Categories_model');
@@ -61,6 +80,13 @@ class MY_Controller extends CI_Controller
         return [];
     }
 
+    /**
+     * Render an admin template with header, specified page content, models, and footer.
+    *
+    * @param string|null $page The page content to render.
+    * @param array $data Additional data to pass to the views.
+    * @throws AdminNotLoggedInException If the admin is not logged in.
+    */
 	public function adminRenderTemplate($page = null, $data = array())
 	{
         $this->checkAdminLoggedIn();
@@ -70,6 +96,9 @@ class MY_Controller extends CI_Controller
 		$this->load->view('admin/Layout/footer',$data);
 	}
 
+    /**
+     * Redirects the user to the admin dashboard if the user is logged in as an admin.
+    */
 	public function adminRedirect() {
         $CI =& get_instance();
         if ($CI->session->userdata('admin_logged_in')) {
@@ -78,6 +107,9 @@ class MY_Controller extends CI_Controller
         }
     }
 
+    /**
+     * Redirect the user to the base URL if they are already logged in.
+    */
 	public function userRedirectIfLoggedIn() {
         $CI =& get_instance();
         if ($CI->session->userdata('logged_in')) {
@@ -86,6 +118,9 @@ class MY_Controller extends CI_Controller
         }
     }
 
+    /**
+     * Checks if a user is logged in. If not, redirects to the sign-in page.
+     */
     public function checkUserLoggedIn() {
         $CI =& get_instance();
         if (!$CI->session->userdata('logged_in')) {
@@ -93,6 +128,11 @@ class MY_Controller extends CI_Controller
         }
     }
     
+    /**
+     * Redirect the user to the base URL if OTP has not been sent.
+     * 
+     * This function checks if the 'otp_sent' session variable is set. If it is not set, the user is redirected to the base URL.
+     */
     public function userRedirectIfOtpNotSent(){
 
         $CI =& get_instance();
@@ -103,12 +143,21 @@ class MY_Controller extends CI_Controller
         }
     }
 
+    /**
+     * Retrieves the admin data for the given email address.
+    *
+    * @param string $email The email address of the admin
+    * @return mixed The admin data retrieved from the user model
+    */
 	public function getAdminData($email) {
         $CI =& get_instance();
         $adminData = $CI->user_model->getAdminData($email);
         return $adminData;
     }
 
+    /**
+     * Checks if the admin is logged in. If not, redirects to the admin login page.
+    */
 	public function checkAdminLoggedIn() {
         $CI =& get_instance();
         if (!$CI->session->userdata('admin_logged_in')) {
@@ -117,6 +166,14 @@ class MY_Controller extends CI_Controller
         }
     }
 
+    /**
+     * Generates a status button based on the provided parameters.
+     *
+     * @param int $id The ID of the item
+     * @param string $status The status of the item (active or inactive)
+     * @param string $tableName The name of the table
+     * @return string The HTML code for the status button
+     */
     public function getStatusButton($id, $status, $tableName){
         if(!$id || !$status || !$tableName){
             return '';
@@ -146,6 +203,13 @@ class MY_Controller extends CI_Controller
         return $button;
     }
 
+    /**
+     * Uploads a file to the specified target directory.
+     *
+     * @param string $targetDirectory The directory where the file will be uploaded.
+     * @param array $file The file data to be uploaded.
+     * @return string The path to the uploaded file, or an empty string if upload fails.
+     */
     public function uploadFile($targetDirectory, $file){
         if(!isset($file['image']['name']) || empty($file['image']['name'])){
             return '';
@@ -182,6 +246,13 @@ class MY_Controller extends CI_Controller
         return '';
     }
 
+    /**
+     * Uploads multiple files to the specified target directory.
+     *
+     * @param string $targetDirectory The directory where the files will be uploaded.
+     * @param array $files An array containing the files to be uploaded.
+     * @return array An array of the successfully uploaded file paths.
+     */
     public function uploadMultipleFiles($targetDirectory, $files) {
         $uploadedFiles = [];
 

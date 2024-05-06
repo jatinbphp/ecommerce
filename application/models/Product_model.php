@@ -329,6 +329,12 @@ class Product_model extends CI_Model
         return $rowData;
     }
 
+    /**
+     * Get filtered product IDs based on the provided filters.
+     *
+     * @param array $filters An array containing filters to apply.
+     * @return array An array of product IDs that match all the provided filters.
+     */
     public function getFilteredProductIds($filters) {
         if(!$filters){
             return [];
@@ -374,6 +380,12 @@ class Product_model extends CI_Model
         return $commonProductIds;
     }
 
+    /**
+     * Retrieves and returns detailed information about a specific product identified by its ID.
+     *
+     * @param int $productId The ID of the product to retrieve
+     * @return array|null An associative array containing the product details, including images and category name
+     */
     public function show($productId) {
         $this->db->select('products.*, GROUP_CONCAT(product_images.image) as images, categories.name AS category_name');
         $this->db->from($this->table);
@@ -408,6 +420,12 @@ class Product_model extends CI_Model
         }
     }
 
+    /**
+     * Check if a SKU is available in the database.
+     *
+     * @param string $sku The SKU to check availability for
+     * @return bool Returns true if the SKU is available, false otherwise
+     */
     public function isSkuAvailable($sku) {
         $this->db->select('sku');
         $this->db->from($this->table);
