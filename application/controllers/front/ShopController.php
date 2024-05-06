@@ -15,7 +15,6 @@ class ShopController extends MY_Controller {
         $this->load->model('Banner_model');
         $this->load->model('Product_model');
         $this->load->model('ProductOptions_model');
-        $this->load->model('Categories_model');
         $this->load->model('Wishlist_model');
         $this->load->model('Categories_model');
         $this->load->model('ProductOptions_model');
@@ -84,10 +83,10 @@ class ShopController extends MY_Controller {
      * @param int $id The ID of the category to filter by.
      * @return void
      */
-    public function categoryFilter($id){
+    public function categoryFilter($slug){
         $data['categories'] = $this->product_categories();
         $data['options']    = $this->product_options();
-        $data['categoryId'] = $id;
+        $data['categoryId'] = $this->Categories_model->getCategoryIdBasedOnSlug($slug);
         $this->frontRenderTemplate('front/Shop/shop', $data);
     }
 }

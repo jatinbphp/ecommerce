@@ -63,7 +63,7 @@
                                         <a href="javascript:void(0);">Trendings</a>
                                         <ul class="nav-dropdown nav-submenu">
                                             <?php foreach ($footer_data['headerMenuCategoriesNames'] as $key => $categoryName): ?>
-                                                <li><a href="<?php echo base_url("shop/categories/$key") ?>" data-categoryId="<?php echo $key ?>"><?php echo $categoryName; ?></a></li>
+                                                <li><a href="<?php echo base_url("shop/categories/$key") ?>"><?php echo $categoryName; ?></a></li>
                                             <?php endforeach; ?>
                                         </ul>
                                     </li>
