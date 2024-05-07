@@ -71,8 +71,9 @@ class ProductController extends MY_Controller {
      * @param int $id The ID of the product
      * @return void
      */
-    public function details($id) {
-        $data = $this->product_data($id);
+    public function details($slug) {
+        $productId = $this->Product_model->getProductIdBasedOnSlug($slug);
+        $data = $this->product_data($productId);
         $this->frontRenderTemplate('front/Products/details', $data);
     }
 

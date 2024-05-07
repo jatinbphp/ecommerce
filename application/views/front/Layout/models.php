@@ -113,7 +113,7 @@
                 //userWishlist
             	document.getElementById("Wishlist").style.display = "block";
                 $.ajax({
-                    url: "wishlist-data", 
+                    url: baseUrl+"wishlist-data", 
                     type: 'GET',
                     headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
                     success: function(response) {
