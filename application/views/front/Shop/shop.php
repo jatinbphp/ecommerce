@@ -33,6 +33,11 @@
 <section class="middle">
     <div class="container">
         <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 p-xl-0">
+                <h1 class='text-center d-none' id='search-text'></h1>
+            </div>
+        </div>        
+        <div class="row">
             <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 p-xl-0">
                 <div class="search-sidebar sm-sidebar border">
                     <div class="search-sidebar-body">
@@ -154,7 +159,7 @@
                 </div>
                 <div class="row rows-products grid">                
                 </div>
-                <!-- <div class="row">
+                            <!-- <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 text-center pt-4 pb-4">
                         <a href="#" class="btn stretched-link borders m-auto"><i class="lni lni-reload mr-2"></i>Load More</a>
                     </div>

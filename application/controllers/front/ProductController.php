@@ -33,7 +33,13 @@ class ProductController extends MY_Controller {
      */
     public function index(){
         $filters                    = $this->input->get('filter');
-        $data['products']           = $this->Product_model->filter_products($filters);
+        $keyword = $this->input->get('keyword');
+        if (!empty($keyword)) {
+            $data['products']       = $this->Product_model->search_products($keyword);
+        }
+        else{
+            $data['products']       = $this->Product_model->filter_products($filters);
+        }
         $data['wishlistProductId']  = $this->Wishlist_model->getWishlistProductIds();
         $data['type']               = $this->Product_model::$type;
         $data['productWiseReviews'] = $this->Reviews_model->getProductWiseReviewData();
@@ -44,7 +50,7 @@ class ProductController extends MY_Controller {
             'html'     => $content
         ];
 
-        $this->output->set_content_type('application/json')->set_output(json_encode($response));
+        return $this->output->set_content_type('application/json')->set_output(json_encode($response));
     }
 
     /**
