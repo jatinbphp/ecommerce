@@ -62,7 +62,11 @@ $(document).ready(function() {
                 'Showing ' + start + ' to ' + end +
                 ' of ' + totalEntries + ' entries'
             );
-        }
+        },
+        "columnDefs": [{
+            "targets":[5],
+            "orderable": false
+        }]
     });
     
     //sales report
@@ -191,12 +195,12 @@ $(document).ready(function() {
 
     var orders_table = $('#ordersDasboardTable').DataTable({
         'processing': true,
-        'serverSide': true,
+        'serverSide': false,
         "ajax":{
             url:baseUrl+"admin/dashboard/fetch-orders",
             type:"POST",
         },
-        'searching': false, // Hide search box
+        
         'paging': false, // Hide pagination
         'info': false, // Hide information about number of records
         'columns': [
@@ -308,7 +312,7 @@ $(document).ready(function() {
         });
     });
 
-    $("#banerTable, #usersTable, #contentTable, #contactUsTable, #CategoriesTable, #productsTable, #ordersDasboardTable").on('click', '.view-info', function(event) {
+    $("#banerTable, #usersTable, #contentTable, #contactUsTable, #CategoriesTable, #productsTable, #ordersDasboardTable, #usersReportTable").on('click', '.view-info', function(event) {
         var title = $(this).attr('data-title');
         var url = $(this).attr('data-url');
         $.ajax({

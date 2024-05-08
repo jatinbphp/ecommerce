@@ -106,16 +106,18 @@ class ReportController extends MY_Controller
 				];
 			}
 			$groupedData[$userId]['total_orders']++;
+			$groupedData[$userId]['all_orders_ids'][$row->order_id] = $row->order_id;
 			$groupedData[$userId]['total_amount'] += $row->total_amount;
 			$groupedData[$userId]['total_products_ordered'] += $row->total_products_ordered;
 		}
 		foreach ($groupedData as $userId => $userData) {
 			$orderReportData = [];
-			$orderReportData[] = $userData['first_name'];
-			$orderReportData[] = $userData['email'];
-			$orderReportData[] = $userData['total_orders'];
-			$orderReportData[] = $userData['total_products_ordered'];
-			$orderReportData[] = '$' . number_format($userData['total_amount'],2);
+			$orderReportData[] = ($userData['first_name'] ?? '');
+			$orderReportData[] = ($userData['email'] ?? '');
+			$orderReportData[] = ($userData['total_orders'] ?? 0);
+			$orderReportData[] = ($userData['total_products_ordered'] ?? 0);
+			$orderReportData[] = '$' . number_format(($userData['total_amount'] ?? 0),2);
+			$orderReportData[] = $this->getActionData(($userData['all_orders_ids'] ?? []));
 			$data[] = $orderReportData;
 		}
 	
@@ -206,4 +208,38 @@ class ReportController extends MY_Controller
 		];
 		echo json_encode($output);
 	}
+
+	/**
+	* generate action button for display.
+	* 
+	* @return string
+	*/
+	public function getActionData($orserIds) {
+		$orderIds = implode('-', $orserIds);
+		return '<div class="btn-group btn-group-sm">
+				<a href="javascript:void(0)" title="View Order" class="btn btn-sm btn-warning tip view-info" data-url="'.base_url("admin/reports/orders/show/$orderIds").'" data-title="Order Details">
+					<i class="fa fa-eye"></i>
+				</a>
+			</div>';
+	}
+
+	public function showOrders($ids) {
+		$orderIds = explode('-', $ids);
+		rsort($orderIds);
+		$data = [];
+		if($orderIds && count($orderIds)){
+			foreach($orderIds as $id){
+				$orderData = $this->Order_model->getDetails($id);
+				$data[$id]['status'] = $this->Order_model->getStatusData();
+				$data[$id]['orderData'] = $this->Order_model->getOrderWithItemsAndOptions($id);
+				$userData = [];
+				if(isset($orderData['user_id']) && $orderData['user_id']){
+					$userData = $this->user_model->getUserData($orderData['user_id']);
+				}
+				$data[$id]['userData'] = $userData;		
+			}
+		}
+        $html = $this->load->view('admin/Orders/orderTabsView', ['ordersData' => $data], true);
+        echo $html;
+	}	
 }

@@ -18,12 +18,10 @@ class DashboardController extends MY_Controller {
 		parent::__construct();
 		$this->checkAdminLoggedIn();
 		$this->load->model('Order_model');
-		$this->load->model('Order_items_model');
 		$this->load->model('Order_options_model');
 		$this->load->model('Product_model');
 		$this->load->model('ProductImage_model');
 		$this->load->model('user_model');
-		$this->load->model('Product_model');
 		$this->load->model('Order_model');
 		$this->checkAdminLoggedIn();
 	}
@@ -133,12 +131,17 @@ class DashboardController extends MY_Controller {
 		$orders = $this->Order_model->getOrdersDataWithUser(5);
 
 		$data = [];
-		$status = $this->getStatusData(); 
+		$status = $this->Order_model->getStatusData();
 		foreach ($orders as $order) {
+			$userName = $order->user_name;
+			if(!$userName){
+				$address = json_decode($order->address_info, true);
+				$userName = ($address['first_name'] ?? '') .' '. ($address['last_name'] ?? '');
+			}
 			$data[] = [
 				'id' => $order->id,
 				'order_id' => '#' . $order->id,
-				'user_name' => $order->user_name,
+				'user_name' => $userName,
 				'total_amount' => '$' . number_format($order->total_amount, 2),
 				'created_at' => date('Y-m-d h:i:s', strtotime($order->created_at)),
 				'status' => $status[$order->status] ?? '',
@@ -162,24 +165,10 @@ class DashboardController extends MY_Controller {
 	}
 
 	/**
-	 * Get the status data with corresponding HTML badge elements.
-	*
-	* @return array
-	*/
-	public function getStatusData(){
-		return [
-			'pending' => '<span class="badge badge-primary">Pending</span>',
-			'reject'  => '<span class="badge badge-warning">Reject</span>',
-			'complete'=> '<span class="badge badge-success">Complete</span>',
-			'cancel'  => '<span class="badge badge-danger">Cancel</span>',
-		]; 
-	}
-
-	/**
 	 * Display the order details for the given order ID.
 	*
 	* This method retrieves order details, status data, order data with items and options,
-	* and user data based on the provided order ID. It then loads the view 'admin/Dashboard/Order/view'
+	* and user data based on the provided order ID. It then loads the view 'admin/Orders/view'
 	* with the collected data and returns the HTML content.
 	*
 	* @param int $id The ID of the order to display
@@ -187,40 +176,14 @@ class DashboardController extends MY_Controller {
 	*/
 	public function showOrder($id) {
 		$orderData = $this->Order_model->getDetails($id);
-		$data['status'] = $this->getStatusData();
-		$data['orderData'] = $this->getOrderWithItemsAndOptions($id);
+		$data['status'] = $this->Order_model->getStatusData();
+		$data['orderData'] = $this->Order_model->getOrderWithItemsAndOptions($id);
 		$userData = [];
 		if(isset($orderData['user_id']) && $orderData['user_id']){
 			$userData = $this->user_model->getUserData($orderData['user_id']);
 		}
 		$data['userData'] = $userData;
-        $html = $this->load->view('admin/Dashboard/Order/view', $data, true);
+        $html = $this->load->view('admin/Orders/view', $data, true);
         echo $html;
-	}
-
-	/**
-	 * Retrieve order details along with items and options based on the provided order ID.
-	*
-	* @param int $id The ID of the order
-	* @return array An array containing order details, items, and options
-	*/
-	public function getOrderWithItemsAndOptions($id)
-	{
-		$order = $this->Order_model->getDetails($id);
-		$orderItems = $this->Order_items_model->getOrderItemsByOrderIdArray($id);
-
-		foreach ($orderItems as &$item) {
-			$product_id = $item['product_id'];
-			$orderItemId = $item['id'];
-			$product = $this->Product_model->getDetails($product_id);
-
-			$product_image =  current($this->ProductImage_model->getDetails($product_id));
-			$product['image'] = $product_image['image'] ?? '';
-
-			$item['product'] = $product;
-			$item['options'] = $this->Order_options_model->getOrderItemsOptionsByOrderIdAndProductId($id, $orderItemId);
-		}
-		$order['items'] = $orderItems;
-		return $order;
 	}
 }

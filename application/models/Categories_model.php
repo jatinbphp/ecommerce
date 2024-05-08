@@ -214,6 +214,7 @@ class Categories_model extends CI_Model
      */
     public function getCategoryArray($isDefaultOptions=true) {
     	$this->db->select('id, name, full_path');
+        $this->db->where('status', self::STATUS_ACTIVE);
     	$this->db->order_by('full_path', 'asc');
         $query = $this->db->get($this->table);
 

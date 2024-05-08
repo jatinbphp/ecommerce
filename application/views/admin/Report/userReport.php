@@ -42,6 +42,7 @@
                                             <th>No.Orders</th>
                                             <th>No.Products</th>
                                             <th>Total</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -62,5 +63,4 @@
         $("#reportTreeview a:first").addClass('active');
         $("#userReport").addClass('active');
     });
-
 </script>

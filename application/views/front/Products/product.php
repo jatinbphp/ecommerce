@@ -27,11 +27,11 @@
             </div>
         </div>
         <div class="text-left">
-            <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a href="javascript:void(0);"><?= ucwords($value['product_name']) ?></a></h5>
+            <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1"><a target="blank" href="<?= base_url('products/' . $value['slug'] . '/details') ?>"><?= ucwords($value['product_name']) ?></a></h5>
             <div class="elis_rty"><span class="text-muted ft-medium line-through mr-2">$<?= number_format (($value['price'] * 2), 2,'.',',') ?></span><span class="ft-bold theme-cl fs-md">$<?= number_format ($value['price'], 2,'.',',') ?></span></div>
             <div class="d-none">
                 <p class="mt-3 mb-4"><?php echo ($value['description'] ?? '')?></p>
-                <a href="#" onclick="handleQuickView(event)" data-id="<?= $value['id'] ?>" class="btn stretched-link borders  snackbar-addcart">Add To Cart</a>
+                <a href="#" onclick="handleQuickView(event)" data-id="<?= $value['id'] ?>" class="btn stretched-link borders snackbar-addcart">Add To Cart</a>
             </div>
         </div>
     </div>

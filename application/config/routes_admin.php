@@ -58,3 +58,4 @@ $route['admin/reports/user_report'] = 'admin/ReportController/indexUserOrders';
 $route['admin/reports/fetch_user_report'] = 'admin/ReportController/fetchUserReport';
 $route['admin/reports/sales_report'] = 'admin/ReportController/indexSalesOrders';
 $route['admin/reports/fetch_sales_report'] = 'admin/ReportController/fetchSalesReport';
+$route['admin/reports/orders/show/(:any)'] = 'admin/ReportController/showOrders/$1';

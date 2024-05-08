@@ -8,7 +8,7 @@
                             <a target="blank" href="<?php echo base_url('products/' . ($wishlist['product_details']['slug'] ?? '') . '/details') ?>"><img src="<?php echo base_url(isset($wishlist['image']) && $wishlist['image'] && count($wishlist['image']) && current($wishlist['image']) ? current($wishlist['image']) : 'images/default-image.png')?>" width="60" class="img-fluid" alt="" /></a>
                         </div>
                         <div class="cart_single_caption pl-2">
-                            <h4 class="product_title fs-sm ft-medium mb-0 lh-1"><?php echo isset($wishlist['product_details']['product_name']) ? $wishlist['product_details']['product_name'] : '' ?></h4>
+                            <a target="blank" href="<?php echo base_url('products/' . ($wishlist['product_details']['slug'] ?? '') . '/details') ?>"><h4 class="product_title fs-sm ft-medium mb-0 lh-1"><?php echo isset($wishlist['product_details']['product_name']) ? $wishlist['product_details']['product_name'] : '' ?></h4></a>
                             <h4 class="fs-md ft-medium mb-0 mt-3 lh-1">$<?php echo isset($wishlist['product_details']['price']) ? number_format($wishlist['product_details']['price'], 2) : '' ?></h4>
                         </div>
                     </div>
