@@ -58,7 +58,7 @@
                                         </div>
 
                                         <div class="info-div pl-3">
-                                            <?php echo ($item['product']['product_name'] ?? '') ?>
+                                            <?php echo ($item['product_name'] ?? '') ?>
                                             <?php if(isset($item['options']) && count($item['options'])): ?>
                                                 <?php foreach ($item['options'] as $option): ?>
                                                     </br><small><b><?php echo $option['name'] ?? '' ?> : </b><?php echo preg_match('/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', ($option['value'] ?? '')) ? '<i class="fas fa-square" style="color: '.($option['value'] ?? '').'"></i>' : ($option['value'] ?? ''); ?></small>
