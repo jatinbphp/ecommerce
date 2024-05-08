@@ -41,21 +41,12 @@
                         <button onclick="closeSearch()" class="close_slide"><i class="ti-close"></i></button>
                     </div>
                     <div class="cart_action px-3 py-4">
-                        <form class="form m-0 p-0">
+                        <form id="searchProductForm" class="form m-0 p-0">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Product Keyword.." />
-                            </div>
-                            <div class="form-group">
-                                <select class="custom-select">
-                                    <option value="1" selected="">Choose Category</option>
-                                    <option value="2">Men's Store</option>
-                                    <option value="3">Women's Store</option>
-                                    <option value="4">Kid's Fashion</option>
-                                    <option value="5">Accessories</option>
-                                </select>
+                                <input type="text" id="keyword" class="form-control" placeholder="Product Keyword..">
                             </div>
                             <div class="form-group mb-0">
-                                <button type="button" class="btn d-block full-width btn-dark">Search Product</button>
+                                <button type="button" onclick="searchProducts()" class="btn d-block full-width btn-dark">Search Product</button>
                             </div>
                         </form>
                     </div>
@@ -125,11 +116,11 @@
                     }
                 });
             }
+
             function closeWishlist() {
             	document.getElementById("Wishlist").style.display = "none";
             }
-        </script>
-        <script>
+
             function openCart() {
             	document.getElementById("Cart").style.display = "block";
                 var cartDataFromLocalStorage = localStorage.getItem('cartData');
@@ -148,19 +139,51 @@
                     }
                 });
             }
+
             function closeCart() {
             	document.getElementById("Cart").style.display = "none";
             }
-        </script>
-        <script>
+
             function openSearch() {
             	document.getElementById("Search").style.display = "block";
             }
             function closeSearch() {
             	document.getElementById("Search").style.display = "none";
             }
-        </script>
-        <script>
+
+            function searchProducts() {
+                var keyword = $('#keyword').val();
+
+                if(!keyword){
+                    SnackbarAlert('Please add product keyword.');
+                    return;
+                }
+
+                $.ajax({
+                    url: 'products',
+                    type: 'GET',
+                    data: {
+                        keyword: keyword,
+                        viewType: 'filter'
+                    },
+                    success: function(response) {
+                        if (response.html) {
+                            closeSearch();
+                            $('#search-text').text('Results for "' + keyword + '"').removeClass('d-none');
+                            $('.rows-products').html('').html(response.html);
+                            $('#filterCount').html($(".product_grid").length);
+                            $('#loader').addClass('d-none');
+                            if ($('.ti-view-list').parent('a').hasClass('active')) {
+                                $('.filters').removeClass().addClass('col-12 filters');
+                            }
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+
             $('.filter_wraps .single_fitres a').on('click',function(e) {
                 if($(this).hasClass('list')) {
                     $('.filter_wraps .single_fitres a.list').addClass('active');

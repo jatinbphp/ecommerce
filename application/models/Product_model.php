@@ -433,4 +433,19 @@ class Product_model extends CI_Model
         $query = $this->db->get();
         return $query->num_rows() > 0;
     }
+
+    /**
+     * Search for products in the database based on the provided keyword.
+     *
+     * @param string $keyword The keyword to search for in the product names.
+     * @return array An array of products matching the search keyword.
+     */
+    public function search_products($keyword) {
+        $this->db->select('*');
+        $this->db->from($this->table);
+        $this->db->like('product_name', $keyword);
+        $this->db->or_like('sku', $keyword);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 }
