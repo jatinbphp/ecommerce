@@ -370,6 +370,14 @@ class Product_model extends CI_Model
             return [];
         }
 
+        return $this->addImageForProduct($row);
+    }
+
+    public function addImageForProduct($row){
+        if(!$row || !count($row)){
+            return [];
+        }
+
         $rowData = [];
         foreach($row as $data){
             $id = ($data['id'] ?? 0);
@@ -501,6 +509,13 @@ class Product_model extends CI_Model
         $this->db->like('product_name', $keyword);
         $this->db->or_like('sku', $keyword);
         $query = $this->db->get();
-        return $query->result_array();
+
+        $row = $query->result_array();
+        
+        if(!$row || !count($row)){
+            return [];
+        }
+
+        return $this->addImageForProduct($row);
     }
 }
