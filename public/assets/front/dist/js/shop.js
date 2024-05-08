@@ -68,10 +68,12 @@ function handleFilter(){
          if($('.ti-view-list').parent('a').hasClass('active')){
             $('.filters').removeClass().addClass('col-12 filters');
          }
+         $('#search-text').text('').removeClass('d-none');
       },
       error: function(jqXHR, textStatus, errorThrown) {
          console.error('AJAX Error:', textStatus, errorThrown);
          $('#loader').addClass('d-none');
+         $('#search-text').text('').removeClass('d-none');
       }
    });
 }
