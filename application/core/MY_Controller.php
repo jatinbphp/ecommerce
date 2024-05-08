@@ -52,8 +52,9 @@ class MY_Controller extends CI_Controller
                         continue;
                     }
                     $categoryData = $this->Categories_model->getDetails($categoryId);
+                    $slug = $this->Categories_model->getSlugBasedOnCategoryId($categoryId);
                     if ($categoryData) {
-                        $footerMenuCategoriesNames[$categoryId] = $this->Categories_model->getFullPathName($categoryId);
+                        $footerMenuCategoriesNames[$slug] = $this->Categories_model->getFullPathName($categoryId);
                     }
                 }
             }
@@ -66,8 +67,9 @@ class MY_Controller extends CI_Controller
                         continue;
                     }
                     $headerCategoryData = $this->Categories_model->getDetails($categoryId);
+                    $slug = $this->Categories_model->getSlugBasedOnCategoryId($categoryId);
                     if ($headerCategoryData) {
-                        $headerMenuCategoriesNames[$categoryId] = $this->Categories_model->getFullPathName($categoryId);
+                        $headerMenuCategoriesNames[$slug] = $this->Categories_model->getFullPathName($categoryId);
                     }
                 }
             }

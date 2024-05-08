@@ -90,6 +90,7 @@ class Product_model extends CI_Model
     */
 	public function create($data = ''){
 		if($data) {
+            $data = $this->setSlug($data);
 			$create = $this->db->insert($this->table, $data);
             if ($create) {
                 return $this->db->insert_id();
@@ -108,10 +109,64 @@ class Product_model extends CI_Model
   * @return bool Returns true if the update was successful, false otherwise
   */
 	public function edit($data = array(), $id = null){
+        $data = $this->setSlug($data);
 		$this->db->where('id', $id);
 		$update = $this->db->update($this->table, $data);
 		return ($update == true) ? true : false;	
 	}
+
+    /**
+     * Set the slug for the given data based on the 'name' field.
+     *
+     * @param array $data
+     * @return array
+     */
+    public function setSlug($data) {
+        if(!isset($data['product_name'])){
+           return $data;
+        }
+
+        $name = $data['product_name'];
+        $slug = strtolower($name);
+        $slug = preg_replace('/[^a-z0-9]+/', '-', $slug);
+        $slug = trim($slug, '-');
+        
+        $this->db->select('id');
+        $this->db->from($this->table);
+        $this->db->where('slug', $slug);
+        if(isset($data['id']) && $data['id']){
+            $this->db->where('id !=', $data['id']);
+        }
+        $query = $this->db->get();
+        $query->num_rows();
+        
+
+        if ($query->num_rows() > 0) {
+            $data['slug'] = $slug . '-' . ($query->num_rows() + 1);
+        } else {
+            $data['slug'] = $slug;
+        }
+
+        return $data;
+
+    }
+
+     /**
+     * Get the product ID based on the provided slug.
+     *
+     * @param string $slug The slug of the product.
+     * @return string The ID of the product corresponding to the given slug, or an empty string if not found.
+     */
+    public function getProductIdBasedOnSlug($slug) {
+        if(!$slug){
+            return '';
+        }
+		$sql = "SELECT `id` FROM $this->table WHERE slug = ?  ORDER BY id DESC";
+		$query = $this->db->query($sql, array($slug));
+		$result = $query->row_array();
+        return ($result['id'] ?? '');
+    }
+
 
  /**
   * Delete a record from the database based on the given ID.

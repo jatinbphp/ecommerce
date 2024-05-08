@@ -20,7 +20,7 @@ $route['updateNewPassword'] = 'front/auth/AuthController/updateNewPassword';
 
 $route['products'] = 'front/ProductController/index';
 $route['products/show/(:num)'] = 'front/ProductController/show/$1';
-$route['products/(:num)/details'] = 'front/ProductController/details/$1';
+$route['products/(:any)/details'] = 'front/ProductController/details/$1';
 $route['products/options'] = 'front/ProductController/options';
 
 $route['payment'] = 'front/PaymentController';
