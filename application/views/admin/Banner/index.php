@@ -30,7 +30,7 @@
                                 <div class='col-md-3'>
                                     <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                                         <input type="checkbox" class="custom-control-input" id="bannerSliderCheckbox" <?php echo (isset($allow_banner_value) && $allow_banner_value) ? 'checked' : '' ?>>
-                                        <label class="custom-control-label" for="bannerSliderCheckbox">Allow banners to slide manually</label>
+                                        <label class="custom-control-label" for="bannerSliderCheckbox">Allow banners to slide automatically</label>
                                     </div>
                                 </div>
                                 <div class='col-md-3'>
