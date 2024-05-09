@@ -19,12 +19,15 @@ class BannerController extends MY_Controller
 		$this->data['page_title'] = 'Banners';
 		$this->data['form_title'] = 'Banner';
 		$this->load->model('Banner_model');
+		$this->load->model('Settings_model');
 	}
 
 	/**
 	 * The index function renders the admin Banner index template with the provided data.
 	 */
 	public function index(){
+		$settingsData = $this->Settings_model->getSettingsById(1);
+		$this->data['allow_banner_value'] = $settingsData['is_allow_auto_move_banners'] ?? 0;
 		$this->adminRenderTemplate('admin/Banner/index', $this->data);
 	}
 
@@ -214,4 +217,11 @@ class BannerController extends MY_Controller
         $html = $this->load->view('admin/Banner/view', $data, true);
         echo $html;
     }
+
+	public function updateBannerSettings() {
+		$settingValue = $this->input->post('isAllow');
+		$data['is_allow_auto_move_banners'] = ($settingValue == 'true'  ? 1 : 0);
+		$this->Settings_model->update(1, $data);
+		echo 1;
+	}
 }

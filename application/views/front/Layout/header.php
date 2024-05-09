@@ -15,6 +15,7 @@
     <!-- <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet"> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     <script src="<?php echo base_url('public/assets/admin/plugins/jquery/jquery.min.js') ?>"></script>
+    <script src="<?php echo base_url('public/assets/front/dist/js/cartData.js') ?>"></script>
 </head>
     <body>
   <div class="loader-bg d-none" id='loader'>
@@ -84,7 +85,10 @@
                                     <ul class="dropdown-menu popup-content link">
                                         <?php if ($this->session->userdata('logged_in')): ?>
                                             <li>
-                                             <a href="<?php echo base_url('profile-info'); ?>" class="dropdown-item medium text-medium">My Account</a>
+                                                <a href="<?php echo base_url('profile-info'); ?>" class="dropdown-item medium text-medium">My Account</a>
+                                            </li>
+                                            <li>
+                                                <a href="<?php echo base_url('shopping-cart'); ?>" class="dropdown-item medium text-medium">Shopping Cart</a>
                                             </li>
                                             <li>
                                                 <a href="<?php echo base_url('my-orders'); ?>" class="dropdown-item medium text-medium">My Orders</a>
@@ -97,7 +101,12 @@
                                             </li>
                                             
                                          <?php else: ?>
-                                            <li><a href="signIn" class="dropdown-item medium text-medium">Sign In</a></li>
+                                            <li>
+                                                <a href="<?php echo base_url('shopping-cart'); ?>" class="dropdown-item medium text-medium">Shopping Cart</a>
+                                            </li>
+                                            <li>
+                                                <a href="signIn" class="dropdown-item medium text-medium">Sign In</a>
+                                            </li>
                                          <?php endif; ?>
                                     </ul>
                                 </li>
@@ -118,6 +127,7 @@
                                             if(data){
                                                 $('.user-cart-counter').text(JSON.parse(data).length);    
                                             }
+                                            updateCartData();
                                         </script>    
                                     <?php endif  ?>
                                 </li>

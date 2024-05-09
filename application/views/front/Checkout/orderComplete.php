@@ -22,5 +22,6 @@
         $('#userCart').val(cartData);
         localStorage.removeItem('cartData');
         $('.user-cart-counter').text(0);
+        updateCartData();
     }
 </script>

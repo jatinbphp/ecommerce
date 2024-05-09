@@ -18,6 +18,7 @@ class HomeController extends MY_Controller {
         $this->load->model('Product_model');
         $this->load->model('Categories_model');
         $this->load->model('Reviews_model');
+        $this->load->model('Settings_model');
     }
 
     /**
@@ -33,6 +34,8 @@ class HomeController extends MY_Controller {
         $data['categorized_products']  = $this->Product_model->filter_products($filters);
         $data['type']                  = $this->Product_model::$type;
         $data['productWiseReviews']    = $this->Reviews_model->getProductWiseReviewData();
+        $settingsData = $this->Settings_model->getSettingsById(1);
+        $data['allow_banner_value']    = $settingsData['is_allow_auto_move_banners'] ?? 0;
         $this->frontRenderTemplate('front/Home/homePage', $data);
     }
 
@@ -86,6 +89,14 @@ class HomeController extends MY_Controller {
      */
     public function profile_address() {
         $this->frontRenderTemplate('front/myAccount/address/index');
+    }
+
+    public function saveCartData() {
+        $data = $this->input->post('cartData');
+        if ($data) {
+            $this->session->set_userdata('cartData', $data);
+        }
+        return $this;
     }
 
 }

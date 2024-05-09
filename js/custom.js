@@ -325,30 +325,6 @@ $(function() {
 	  ]
 	});
 	
-	// Home Slider
-	$('.home-slider').slick({
-	  centerMode:false,
-	  slidesToShow:1,
-	  arrows: true,
-	  dots: true,
-	  responsive: [
-		{
-		  breakpoint: 768,
-		  settings: {
-			arrows:true,
-			slidesToShow:1
-		  }
-		},
-		{
-		  breakpoint: 480,
-		  settings: {
-			arrows: true,
-			slidesToShow:1
-		  }
-		}
-	  ]
-	});
-	
 	// fullwidth home slider
 	function inlineCSS() {
 		$(".home-slider .item").each(function() {

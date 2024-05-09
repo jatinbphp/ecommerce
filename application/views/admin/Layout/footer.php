@@ -21,6 +21,7 @@
 <script src="<?php echo base_url('public/assets/admin/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js') ?>"></script>
 <script src="<?php echo base_url('public/assets/admin/plugins/moment/moment.min.js') ?>"></script>
 <script src="<?php echo base_url('public/assets/admin/plugins/daterangepicker/daterangepicker.js') ?>"></script>
+<script src="<?php echo base_url('public/assets/admin/plugins/bootstrap-switch/js/bootstrap-switch.js') ?>"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script type="text/javascript">
@@ -94,6 +95,10 @@
         $('#daterange').on('apply.daterangepicker', function(event, picker) {
             $(this).val(picker.startDate.format('YYYY/MM/DD') + ' - ' + picker.endDate.format('YYYY/MM/DD'));
         });
+
+        $("input[data-bootstrap-switch]").each(function(){
+            $(this).bootstrapSwitch('state', $(this).prop('checked'));
+        })
 
 </script>
 <script type="text/javascript">

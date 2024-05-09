@@ -26,7 +26,7 @@ class CheckoutController extends MY_Controller {
         $this->data['user_addresses'] = $this->User_address_model->getUserAddresses($userId);
         $cartProducts = $this->Cart_model->getUsrCartData($userId);
         if(!$userId){
-            $cartData = $this->input->post('cartData') ?? '';
+            $cartData = $this->session->userdata('cartData') ?? '';
             $userCartData = json_decode($cartData, true) ?? [];
             $cartProducts = $this->Cart_model->getGuestUserCartData($userCartData);
         }

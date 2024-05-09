@@ -28,6 +28,7 @@ function verifyOtp(){
     if(cartData){
         $('#userCart').val(cartData);
         localStorage.removeItem('cartData');
+        updateCartData();
     }
 }
 </script>

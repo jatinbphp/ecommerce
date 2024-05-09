@@ -18,6 +18,7 @@
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/ladda/ladda-themeless.min.css') ?>">
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') ?>">
 	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/daterangepicker/daterangepicker.css') ?>">
+	<link rel="stylesheet" href="<?php echo base_url('public/assets/admin/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css') ?>">
 	
 	<style type="text/css">
 		.imagePreview{

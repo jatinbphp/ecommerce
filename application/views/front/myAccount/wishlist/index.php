@@ -15,7 +15,7 @@
                                         </button>
                                         <div class="card-body p-0">
                                             <div class="shop_thumb position-relative">
-                                                <a class="card-img-top d-block overflow-hidden" target="blank" href="<?php echo base_url('products/' . ($wishlist_item['product_details']['slug'] ?? 0) . '/details') ?>">
+                                                <a class="card-img-top d-block overflow-hidden" target="blank" href="<?php echo base_url('products/' . ($wishlist_item['product_details']['slug'] ?? '') . '/details') ?>">
                                                     <img class="card-img-top" src="<?php echo base_url(($wishlist_item['image'][0] ?? '')); ?>" alt="Product Image">
                                                 </a>
                                             </div>
@@ -24,7 +24,7 @@
                                             <div class="text-left">
                                                 <div class="text-center">
                                                     <h5 class="fw-bolder fs-md mb-0 lh-1 mb-1">
-                                                        <a target="blank" href="<?php echo base_url('products/' . ($wishlist_item['product_details']['slug'] ?? 0) . '/details') ?>"><?php echo ($wishlist_item['product_details']['product_name'] ?? ''); ?></a>
+                                                        <a target="blank" href="<?php echo base_url('products/' . ($wishlist_item['product_details']['slug'] ?? '') . '/details') ?>"><?php echo ($wishlist_item['product_details']['product_name'] ?? ''); ?></a>
                                                     </h5>
                                                     <div class="elis_rty"><span class="ft-bold fs-md text-dark"><?php echo '$'. number_format(($wishlist_item['product_details']['price'] ?? 0), 2); ?></span></div>
                                                 </div>

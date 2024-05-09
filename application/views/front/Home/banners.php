@@ -28,3 +28,43 @@
         <?php endforeach; ?>
     </div>
 <?php endif; ?>
+<script defer>
+    $(document).ready(function() {
+        var isAllowAutoChange = '<?php echo (isset($allow_banner_value) && $allow_banner_value) ? true : false  ?>';
+        
+        if(isAllowAutoChange == 1){
+            isAllowAutoChange = true;
+        } else {
+            isAllowAutoChange = false;
+        }
+
+        $('.home-slider').slick({
+            centerMode:false,
+            slidesToShow:1,
+            arrows: true,
+            dots: true,
+            autoplay: isAllowAutoChange,
+            autoplaySpeed: 3000,
+            infinite: true,
+            fade: true,
+            speed: 1000,
+            easing: 'easeInOutQuart',
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        arrows:true,
+                        slidesToShow:1
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        arrows: true,
+                        slidesToShow:1
+                    }
+                }
+            ]
+        });
+    });
+</script>
