@@ -95,6 +95,8 @@ class HomeController extends MY_Controller {
         $data = $this->input->post('cartData');
         if ($data) {
             $this->session->set_userdata('cartData', $data);
+        } else {
+            $this->session->set_userdata('cartData', '');
         }
         return $this;
     }
