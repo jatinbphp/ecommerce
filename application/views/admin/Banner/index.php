@@ -27,13 +27,13 @@
                                         Manage <?php echo $page_title; ?>
                                     </h3>
                                 </div>
-                                <div class='col-md-3'>
+                                <div class='col-md-4'>
                                     <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                                         <input type="checkbox" class="custom-control-input" id="bannerSliderCheckbox" <?php echo (isset($allow_banner_value) && $allow_banner_value) ? 'checked' : '' ?>>
                                         <label class="custom-control-label" for="bannerSliderCheckbox">Allow banners to slide automatically</label>
                                     </div>
                                 </div>
-                                <div class='col-md-3'>
+                                <div class='col-md-2'>
                                     <a href="<?php echo base_url('admin/banners/create') ?>" class="btn btn-sm btn-primary float-right"> <i class="fa fa-plus"></i> Add New</a>
                                 </div>
                             </div>
