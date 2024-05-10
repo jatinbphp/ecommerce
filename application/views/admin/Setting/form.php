@@ -9,6 +9,9 @@
         <li class="nav-item">
             <a class="nav-link" id="tab3" data-toggle="tab" href="#content3">Menu</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" id="tab4" data-toggle="tab" href="#content4">Orders</a>
+        </li>
     </ul>
 
     <style type="text/css">
@@ -127,6 +130,32 @@
                                         <?php endforeach; ?>
                                     </select>
                                     <?php echo form_error('footer_menu_categories', '<span class="help-block text-danger">', '</span>'); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content 4 -->
+        <div class="row tab-pane fade" id="content4">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <?php echo form_label('Order Cancel Period:', 'order_cancel_period'); ?>
+                                    <?php echo form_input(['name' => 'order_cancel_period', 'id' => 'order_cancel_period', 'class' => 'form-control', 'placeholder' => 'Enter Cancel Order Period', 'value' => isset($settings_data['order_cancel_period']) ? $settings_data['order_cancel_period'] : '']); ?>
+                                    <?php echo form_error('order_cancel_period', '<div class="text-danger">', '</div>'); ?>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <?php echo form_label('Shipping Charges:', 'shipping_charges'); ?>
+                                    <?php echo form_input(['name' => 'shipping_charges', 'id' => 'shipping_charges', 'class' => 'form-control', 'placeholder' => 'Enter Shipping Charges', 'value' => isset($settings_data['shipping_charges']) ? $settings_data['shipping_charges'] : '']); ?>
+                                    <?php echo form_error('shipping_charges', '<div class="text-danger">', '</div>'); ?>
                                 </div>
                             </div>
                         </div>

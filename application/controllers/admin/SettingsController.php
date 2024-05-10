@@ -68,6 +68,15 @@ class SettingsController extends MY_Controller
      */
     public function update()
     {
+        $this->form_validation->set_rules('order_cancel_period', 'Order Cancel Period', 'numeric');
+        $this->form_validation->set_rules('shipping_charges', 'Shipping Charges', 'numeric');
+
+        if ($this->form_validation->run() == FALSE) {
+            $error_messages = validation_errors();
+            $this->session->set_flashdata('error', $error_messages);
+            redirect('admin/settings/edit');
+        }
+
         $data = [
 			'email_address' => $this->input->post('email_address'),
 			'phone_number' => $this->input->post('phone_number'),
@@ -76,6 +85,8 @@ class SettingsController extends MY_Controller
             'youtube_url' => $this->input->post('youtube_url'),
             'instagram_url' => $this->input->post('instagram_url'),
             'linkedin_url' => $this->input->post('linkedin_url'),
+            'order_cancel_period'=>$this->input->post('order_cancel_period'),
+            'shipping_charges'=>$this->input->post('shipping_charges'),
 		];
 
         $data['header_menu_categories'] = $data['footer_menu_categories'] = '';
