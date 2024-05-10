@@ -13,7 +13,8 @@
                     </h4>
                     <p class="mb-2"><span class="text-dark medium">No. of Products: <?php echo $orderItems; ?></span></p>   
                     <h4 class="fs-sm ft-bold mb-0 lh-1">
-                        <span class="text-muted">Total:</span> <?php echo '$' . number_format($total_amount, 2); ?>
+                        <?php $totalAmount = $total_amount + $shipping_cost; ?>
+                        <span class="text-muted">Total:</span> <?php echo '$' . number_format($totalAmount, 2); ?>
                     </h4>
                 </div>
             </div>
@@ -33,6 +34,11 @@
         <div class="col-xl-1 col-lg-1 col-md-1 col-6">
             <a href="<?php echo base_url('order-details/'.$id); ?>" class="btn btn-sm btn-primary rounded" title="Order Details"><i class="lni lni-eye"></i></a>
         </div>
+        <?php if($isCancelShow): ?>
+            <div class="col-xl-1 col-lg-1 col-md-1 col-6">
+                <a href="javascript:void(0);" onclick='cancelOrder(this)' data-id="<?php echo $id; ?>" class="btn btn-sm btn-danger rounded" title="Cancel Order"><i class="lni lni-circle-minus"></i></a>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
 

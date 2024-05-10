@@ -246,3 +246,13 @@ function updateWishlistClass(type, id){
         }
     });
 }
+
+function cancelOrder(button){
+    var id = $(button).attr('data-id');
+    if(!id || id==0){
+        SnackbarAlert('something went wrong.');
+        return;
+    }
+    $('#orderId').val(id);
+    $('#cancelOrder').modal('show');
+}

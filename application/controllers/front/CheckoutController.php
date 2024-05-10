@@ -15,6 +15,7 @@ class CheckoutController extends MY_Controller {
         $this->load->model('Order_options_model');
         $this->load->model('ProductOptions_model');
         $this->load->model('ProductOptionValues_model');
+        $this->load->model('Settings_model');
     }
 
     /**
@@ -25,12 +26,14 @@ class CheckoutController extends MY_Controller {
         $userId = $this->session->userdata('userId');
         $this->data['user_addresses'] = $this->User_address_model->getUserAddresses($userId);
         $cartProducts = $this->Cart_model->getUsrCartData($userId);
+        $settingData  = $this->Settings_model->getSettingsById(1);
         if(!$userId){
             $cartData = $this->session->userdata('cartData') ?? '';
             $userCartData = json_decode($cartData, true) ?? [];
             $cartProducts = $this->Cart_model->getGuestUserCartData($userCartData);
         }
         $this->data['cart_products'] = $cartProducts;
+        $this->data['shippingCharge'] = $settingData['shipping_charges'] ?? 0;
         $this->frontRenderTemplate('front/Checkout/userCheckout', $this->data);
     }
 
@@ -88,6 +91,9 @@ class CheckoutController extends MY_Controller {
             }
             $orderInputs['address_info'] = json_encode($addressData);
         }
+
+        $settingData  = $this->Settings_model->getSettingsById(1);
+        $orderInputs['shipping_cost']  = $settingData['shipping_charges'] ?? 0;
         
         $order = $this->Order_model->create($orderInputs);
 
@@ -140,7 +146,7 @@ class CheckoutController extends MY_Controller {
             $newOrderData['address_info'] = json_encode($address);
         }
         $newOrderData['total_amount'] = $orderTotal;
-        $newOrderData['status'] = 'complete';
+        $newOrderData['status'] = 'pending';
         if($order){
             $this->Order_model->edit($newOrderData, $order);
         }

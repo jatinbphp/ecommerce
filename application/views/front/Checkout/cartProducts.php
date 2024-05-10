@@ -64,12 +64,11 @@
                 <span>Subtotal</span> 
                 <span class="ml-auto text-dark ft-medium">$<?= number_format($subTotal, 2) ?></span>
             </li>
-            <?php $shippingCost = 50; ?>
             <li class="list-group-item d-flex text-dark fs-sm ft-regular">
                 <span>Shipping</span> 
-                <span class="ml-auto text-dark ft-medium">$<?= number_format($shippingCost, 2) ?></span>
+                <span class="ml-auto text-dark ft-medium">$<?= number_format($shippingCharge, 2) ?></span>
             </li>
-            <?php $subTotal += $shippingCost; ?>
+            <?php $subTotal += $shippingCharge; ?>
             <li class="list-group-item d-flex text-dark fs-sm ft-regular">
                 <span>Total</span> <span class="ml-auto text-dark ft-medium">
                     $<?= number_format($subTotal, 2) ?>

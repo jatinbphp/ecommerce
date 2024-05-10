@@ -212,7 +212,7 @@ class Order_model extends CI_Model
     
     public static $allStatus = [
         self::STATUS_TYPE_PENDING => 'Pending',
-        self::STATUS_TYPE_REJECT => 'Reject',
+        //self::STATUS_TYPE_REJECT => 'Reject',
         self::STATUS_TYPE_COMPLETE => 'Complete',
         self::STATUS_TYPE_CANCEL => 'Cancel',
     ];
@@ -303,4 +303,64 @@ class Order_model extends CI_Model
 		$order['items'] = $orderItems;
 		return $order;
 	}
+
+     /**
+     * Generates a DataTables response by executing the query and applying limit and start parameters.
+     *
+     * @return array The result of the query for DataTables
+     */
+    public function make_order_datatables()
+    {
+        $this->make_order_query();
+        $limit = isset($_POST["length"]) ? $_POST["length"] : -1;
+        $start = isset($_POST["start"]) ? $_POST["start"] : 0;
+    
+        if ($limit != -1) {
+            $this->db->limit($limit, $start);
+        }
+    
+        $query = $this->db->get();
+        return $query->result();
+    }
+    
+    public function make_order_query()
+    {
+        $this->db->select('orders.*,CASE 
+        WHEN users.id IS NOT NULL THEN CONCAT(users.first_name, " ", users.last_name, " (", users.email, ")")
+        ELSE CONCAT(JSON_UNQUOTE(JSON_EXTRACT(address_info, "$.first_name")), " ", JSON_UNQUOTE(JSON_EXTRACT(address_info, "$.last_name")))
+    END AS user_name', FALSE)
+            ->from($this->table)
+            ->join('users', 'orders.user_id = users.id', 'left');
+        
+        if ($_POST["search"]["value"]!='') {
+            $searchString = $_POST["search"]["value"];
+            $this->db->where("(CASE 
+            WHEN users.id IS NOT NULL THEN CONCAT(users.first_name, ' ', users.last_name, ' (', users.email, ')')
+            ELSE CONCAT(JSON_UNQUOTE(JSON_EXTRACT(address_info, '$.first_name')), ' ', JSON_UNQUOTE(JSON_EXTRACT(address_info, '$.last_name')))
+        END LIKE '%".$searchString."%' OR orders.status LIKE '%".$searchString."%' OR orders.id LIKE '%".$searchString."%' OR orders.total_amount LIKE '%".$searchString."%')", NULL, FALSE);
+
+        }
+
+        if (isset($_POST['order'][0]['column']) && isset($_POST['order'][0]['dir'])) {
+            $this->db->order_by($this->order_column[$_POST['order'][0]['column']], $_POST['order'][0]['dir']);
+        } else {
+            $this->db->order_by('id', 'DESC');
+        }
+    }
+
+    public function get_all_order_data() {
+        $this->db->select('orders.*, CONCAT(users.first_name, " ", users.last_name, " (", users.email, ")") AS user_name')
+            ->from($this->table)
+            ->join('users', 'orders.user_id = users.id', 'left');
+
+            return $this->db->count_all_results();
+    }
+
+    public function get_filtered_order_data()
+    {
+        $this->make_order_query();
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
 }

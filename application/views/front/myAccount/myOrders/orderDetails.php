@@ -92,8 +92,13 @@
                                     <td class="text-right">$<?php echo number_format($order->total_amount, 2); ?></td>
                                 </tr>
                                 <tr>
+                                    <td colspan="4" class="text-right"><strong>Shipping</strong></td>
+                                    <td class="text-right">$<?php echo number_format($order->shipping_cost, 2); ?></td>
+                                </tr>
+                                <?php $totalAmount = ($order->total_amount + $order->shipping_cost); ?>
+                                <tr>
                                     <td colspan="4" class="text-right"><strong>Total</strong></td>
-                                    <td class="text-right">$<?php echo number_format($order->total_amount, 2); ?></td>
+                                    <td class="text-right">$<?php echo number_format($totalAmount, 2); ?></td>
                                 </tr>
                             </tfoot>
                         </table>

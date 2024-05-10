@@ -218,6 +218,21 @@ $(document).ready(function() {
         "order": []
     });
 
+    var orders = $('#ordersTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "order":[],
+        "ajax":{
+
+            url:baseUrl+"admin/orders/fetchOrders",
+            type:"POST"
+        },
+        "columnDefs": [{
+            "targets":[0,1,2,3,4,5,6],
+            "orderable": false
+        }]
+    });
+
     $("#categories_form_add").validate(
     {                
         rules:
@@ -312,7 +327,7 @@ $(document).ready(function() {
         });
     });
 
-    $("#banerTable, #usersTable, #contentTable, #contactUsTable, #CategoriesTable, #productsTable, #ordersDasboardTable, #usersReportTable").on('click', '.view-info', function(event) {
+    $("#banerTable, #usersTable, #contentTable, #contactUsTable, #CategoriesTable, #productsTable, #ordersDasboardTable, #usersReportTable, #ordersTable").on('click', '.view-info', function(event) {
         var title = $(this).attr('data-title');
         var url = $(this).attr('data-url');
         $.ajax({
@@ -917,6 +932,45 @@ $(document).ready(function() {
                     $('#skuMessage').html('<span style="color: red;">SKU already exists.</span>');
                     $('#productCreate').prop('disabled', true);
                 }
+            }
+        });
+    });
+
+    $('#ordersTable tbody').on('change', '.orderStatus', function (event) {
+        event.preventDefault();
+        var orderId = $(this).attr('data-id');
+        var status = $(this).val();
+        swal({
+            title: "Are you sure?",
+            text: "To update status of this order",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#17a2b8',
+            confirmButtonText: 'Yes, Sure',
+            cancelButtonText: "No, cancel",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function(isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url: baseUrl+'admin/orders/update-status',
+                    type: "post",
+                    data: {'id': orderId, 'status': status },
+                    success: function(data){
+                        if(data.status == 1){
+                            swal("Success", "Order status is updated", "success");
+                        } else {
+                            swal("Error", "Something is wrong!", "error");
+                        }
+
+                        if(status!='pending'){
+                            $("#status"+orderId).prop("disabled", true);
+                        }                            
+                    }
+                });
+            } else {
+                swal("Cancelled", "Your data is safe!", "error");
             }
         });
     });

@@ -54,3 +54,4 @@ $route['shop/categories/(:any)'] = 'front/ShopController/categoryFilter/$1';
 
 $route['shopping-cart'] = 'front/ShoppingCartController/shoppingCart';
 $route['saveCartData'] = 'HomeController/saveCartData';
+$route['cancel-order'] = 'front/OrderController/cancelOrder';

@@ -22,6 +22,7 @@ class OrderController extends MY_Controller {
         $this->load->model('Order_items_model');
         $this->load->model('Order_options_model');
         $this->load->model('ProductImage_model');
+        $this->load->model('Settings_model');
     }
 
     /**
@@ -45,13 +46,26 @@ class OrderController extends MY_Controller {
     {
         $data    = [];
 		$allData = $this->Order_model->make_datatables();
+        $settingData = $this->Settings_model->getSettingsById(1);
+        $cancelOrderDays = $settingData['order_cancel_period'] ?? 0;
 
 		foreach ($allData as $row) {
 			$orderData = [];
             
             $userData   = $this->User_model->getUserData($row->user_id);
             $orderItems = $this->Order_items_model->getOrderItemsByOrderId($row->id);
+
+           $cancellationDeadline = date('Y-m-d H:i:s', strtotime($row->created_at . " + $cancelOrderDays days"));
+           $currentDate = date('Y-m-d H:i:s');
             
+            $row->isCancelShow = false;
+
+            if ($currentDate < $cancellationDeadline) {
+                if($row->status == $this->Order_model::STATUS_TYPE_PENDING){
+                    $row->isCancelShow = true;
+                }
+            }
+
             $row->orderItems=count($orderItems);
             $row->user = $userData;
 
@@ -93,5 +107,20 @@ class OrderController extends MY_Controller {
         $data['address']    = $address;
 
         $this->frontRenderTemplate('front/myAccount/myOrders/orderDetails', $data);
+    }
+
+    public function cancelOrder() {
+        $data['status'] = 0;
+		$orderId = $this->input->post('id');
+		$reason = $this->input->post('reason');
+        $order = $this->Order_model->getDetails($orderId);
+ 
+        if (!empty($order) && isset($order['status']) && $order['status'] == $this->Order_model::STATUS_TYPE_PENDING) {
+			$this->Order_model->edit(['cancellation_reason' => $reason, 'status' => $this->Order_model::STATUS_TYPE_CANCEL], $orderId);
+            $data['status'] = 1;
+        }
+
+		return $this->output->set_content_type('application/json')
+            ->set_output(json_encode($data));
     }
 }

@@ -108,16 +108,16 @@
                             <p>Categories</p>
                         </a>
                     </li>
-					<li class="nav-item">
-                        <a href="<?php echo base_url('admin/settings/edit'); ?>" id="SettingsList" class="nav-link">
-                            <i class="nav-icon fa fa-cog"></i>
-                            <p>Settings</p>
-						</a>
-					</li>
                     <li class="nav-item">
                         <a href="<?php echo base_url('admin/products'); ?>" id="productlist" class="nav-link">
                             <i class="nav-icon fa fa-tag"></i>
                             <p>Products</p>
+                        </a>
+                    </li>
+					<li class="nav-item">
+                        <a href="<?php echo base_url('admin/orders'); ?>" id="orderlist" class="nav-link">
+                            <i class="nav-icon fa fa-shopping-cart"></i>
+                            <p>Orders</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -161,6 +161,12 @@
 		                    </li>
 		                </ul>
 		            </li>
+					<li class="nav-item">
+                        <a href="<?php echo base_url('admin/settings/edit'); ?>" id="SettingsList" class="nav-link">
+                            <i class="nav-icon fa fa-cog"></i>
+                            <p>Settings</p>
+						</a>
+					</li>
 				</ul>
 			</nav>
 		</div>

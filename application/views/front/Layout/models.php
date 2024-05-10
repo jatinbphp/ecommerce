@@ -75,6 +75,28 @@
                 </div>
             </div>
             <!-- Cart End -->
+
+            <div class="modal fade" id="cancelOrder" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Review Description</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body card card-info card-outline">
+                            <label for="reason" class="small text-dark ft-medium">Reason</label>
+                            <textarea name="reason" id="reason" class="form-control ht-80" placeholder="Type Your Reason"></textarea>
+                            <input type='hidden' id='orderId'>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" onClick="cancelOrderStatus()" class="btn btn-dark">Cancel Order</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
             <a id="back2Top" class="top-scroll" title="Back to top" href="#"><i class="ti-arrow-up"></i></a>
         </div>
@@ -160,7 +182,7 @@
                 }
 
                 $.ajax({
-                    url: 'products',
+                    url: baseUrl+'products',
                     type: 'GET',
                     data: {
                         keyword: keyword,
@@ -200,6 +222,34 @@
                     $('.product_grid .card-footer .text-left .d-block').removeClass('d-block').addClass('d-none');
                 }
             });
+
+            function cancelOrderStatus(){
+                var id = $('#orderId').val();
+                var reason = $('#reason').val();
+                if(!id || id==0){
+                    return;
+                }
+
+                $.ajax({
+                url: baseUrl+'cancel-order',
+                    type: 'post',
+                    data: {
+                        id: id,
+                        reason: reason
+                    },
+                    success: function(data) {
+                        if(data.status == 1){
+                            location.reload();
+                        } else {
+                            $('#cancelOrder').modal('hide');
+                            swal("Error", "Something is wrong!", "error");
+                        }                         
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
         </script>
     </body>
 </html>

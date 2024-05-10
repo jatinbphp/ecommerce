@@ -82,11 +82,16 @@
                 <tfoot>
                     <tr>
                         <th class="text-right" colspan="4">Sub-Total</th>
-                        <td class="text-right" id="grand_total">$<?php echo number_format(($orderData['total_amount'] ?? 0), 2) ?></td>
+                        <td class="text-right" id="total_amount">$<?php echo number_format(($orderData['total_amount'] ?? 0), 2) ?></td>
                     </tr>
                     <tr>
+                        <th class="text-right" colspan="4">Shipping</th>
+                        <td class="text-right" id="shipping">$<?php echo number_format(($orderData['shipping_cost'] ?? 0), 2) ?></td>
+                    </tr>
+                    <tr>
+                        <?php $grandTotal = ($orderData['total_amount'] ?? 0) + ($orderData['shipping_cost'] ?? 0) ?>
                         <th class="text-right" colspan="4">Total</th>
-                        <td class="text-right" id="grand_total">$<?php echo number_format(($orderData['total_amount'] ?? 0), 2) ?></td>
+                        <td class="text-right" id="grand_total">$<?php echo number_format($grandTotal, 2) ?></td>
                     </tr>
                 </tfoot>
             </table>
