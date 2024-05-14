@@ -18,6 +18,8 @@ class Order_model extends CI_Model
         $this->load->model('Order_items_model');
         $this->load->model('Order_options_model');
         $this->load->model('user_model');
+        $this->load->model('Cart_model');
+        $this->load->model('Settings_model');
 	    parent::__construct();
 	}
 
@@ -327,8 +329,13 @@ class Order_model extends CI_Model
     {
         $this->db->select('orders.*,CASE 
         WHEN users.id IS NOT NULL THEN CONCAT(users.first_name, " ", users.last_name, " (", users.email, ")")
-        ELSE CONCAT(JSON_UNQUOTE(JSON_EXTRACT(address_info, "$.first_name")), " ", JSON_UNQUOTE(JSON_EXTRACT(address_info, "$.last_name")))
-    END AS user_name', FALSE)
+        ELSE CONCAT(
+            JSON_UNQUOTE(JSON_EXTRACT(address_info, "$.first_name")), 
+            " ", 
+            JSON_UNQUOTE(JSON_EXTRACT(address_info, "$.last_name")), 
+            IF(JSON_EXTRACT(address_info, "$.email") IS NOT NULL, CONCAT(" (", JSON_UNQUOTE(JSON_EXTRACT(address_info, "$.email")), ")"), "")
+        )
+        END AS user_name', FALSE)
             ->from($this->table)
             ->join('users', 'orders.user_id = users.id', 'left');
         
@@ -336,8 +343,10 @@ class Order_model extends CI_Model
             $searchString = $_POST["search"]["value"];
             $this->db->where("(CASE 
             WHEN users.id IS NOT NULL THEN CONCAT(users.first_name, ' ', users.last_name, ' (', users.email, ')')
-            ELSE CONCAT(JSON_UNQUOTE(JSON_EXTRACT(address_info, '$.first_name')), ' ', JSON_UNQUOTE(JSON_EXTRACT(address_info, '$.last_name')))
-        END LIKE '%".$searchString."%' OR orders.status LIKE '%".$searchString."%' OR orders.id LIKE '%".$searchString."%' OR orders.total_amount LIKE '%".$searchString."%')", NULL, FALSE);
+            ELSE CONCAT(JSON_UNQUOTE(JSON_EXTRACT(address_info, '$.first_name')), ' ', JSON_UNQUOTE(JSON_EXTRACT(address_info, '$.last_name')), 
+                IF(JSON_EXTRACT(address_info, '$.email') IS NOT NULL, CONCAT(' (', JSON_UNQUOTE(JSON_EXTRACT(address_info, '$.email')), ')'), '')
+            )
+            END LIKE '%".$searchString."%' OR orders.status LIKE '%".$searchString."%' OR orders.id LIKE '%".$searchString."%' OR orders.total_amount LIKE '%".$searchString."%')", NULL, FALSE);
 
         }
 
@@ -361,6 +370,111 @@ class Order_model extends CI_Model
         $this->make_order_query();
         $query = $this->db->get();
         return $query->num_rows();
+    }
+
+    public function getTotalAmount($isOnlyTotal = 1) {
+        $userId = $this->session->userdata('userId');
+        $orderProducts = $this->Cart_model->getUsrCartData($userId);
+        if(!$userId){
+            $cartData = $this->session->userdata('cartData') ?? '';
+            $userCartData = json_decode($cartData, true) ?? [];
+            $orderProducts = $this->Cart_model->getGuestUserCartData($userCartData);
+        }
+
+        if(empty($orderProducts)){
+           return 0;
+        }
+
+        $orderTotal = 0;
+        foreach ($orderProducts as $key => $data) {
+            $productData = $data['cart_data']['productData'] ?? [];
+            $productId = ($productData['product_id'] ?? 0);
+            if(!$productId){
+                continue;
+            }
+            $subTotal = (($productData['price'] ?? 0)* ($productData['quantity']));
+            $orderTotal += $subTotal;
+            
+        }
+
+        $settingData  = $this->Settings_model->getSettingsById(1);
+        $shippingCharge = $settingData['shipping_charges'] ?? 0;
+
+        if($shippingCharge && $orderTotal && $isOnlyTotal){
+            $orderTotal += $shippingCharge;
+        }
+
+        return $orderTotal;
+    }
+
+    public function getTaxData($address, $city, $state, $pincode, $country){
+        require_once('./vendor/stripe/stripe-php/init.php');
+        $settingData  = $this->Settings_model->getSettingsById(1);
+        $stripeSecretKey = $settingData['stripe_secret_key'] ?? '';
+        $stripe = new \Stripe\StripeClient($stripeSecretKey);
+        $amount = $this->getTotalAmount(0);
+        try {
+            $taxData = $stripe->tax->calculations->create([
+                'currency' => 'usd',
+                'line_items' => [
+                    [
+                        'amount' => $amount,
+                        'reference' => 'L1',
+                    ],
+                ],
+                'customer_details' => [
+                    'address' => [
+                        'line1' => $address,
+                        'city' => $city,
+                        'state' => $state,
+                        'postal_code' => $pincode,
+                        'country' => $country,
+                    ],
+                    'address_source' => 'shipping',
+                ],
+            ]);
+
+            $taxPercentage = $taxData->tax_breakdown['0']->tax_rate_details->percentage_decimal ?? 0;
+            $afterTaxAmount = $taxData->amount_total ?? 0;
+            $taxAmount      = $taxData->tax_amount_exclusive ?? 0;
+
+            $data = [
+                'tax_percentage'   => $taxPercentage,
+                'after_tax_amount' => $afterTaxAmount,
+                'tax_amount'       => $taxAmount,
+            ];
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            $data = [];
+        }
+
+        return $data;
+    }
+
+    public function refundAmount($intentId){
+        require_once('./vendor/stripe/stripe-php/init.php');
+        $settingData  = $this->Settings_model->getSettingsById(1);
+        $stripeSecretKey = $settingData['stripe_secret_key'] ?? '';
+        \Stripe\Stripe::setApiKey($stripeSecretKey);
+
+        try {
+            $payment_intent = \Stripe\PaymentIntent::retrieve($intentId);
+
+            if($payment_intent){
+                $refund = \Stripe\Refund::create([
+                    'payment_intent' => $intentId,
+                    'reason' => 'requested_by_customer',
+                ]);
+            }
+    
+            $data = [
+                'status'    => 1,
+                'refund_id' => $refund->id,
+            ];
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            $data = [];
+        }
+
+        return $data;
     }
 
 }

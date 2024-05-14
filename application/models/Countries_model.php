@@ -30,4 +30,16 @@ class Countries_model extends CI_Model
         }
         return $country_mobile_codes;
 	}
+
+  public function getCountrCodeWiseCountry()
+	{
+		$this->db->select('country_code, name');
+    $this->db->order_by('name');
+		$query = $this->db->get($this->table);
+		$countryName = [];
+        foreach ($query->result() as $row) {
+            $countryName[$row->country_code] = $row->name;
+        }
+        return $countryName;
+	}
 }

@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var stripe = Stripe('');
+    var stripe = Stripe('pk_test_51OtRCaSFVmTeEsbhRi2LBu40raKWlvp7Fll3BBpizCKdl1ZzspDxRMkR7jI801mRfcRNQNenKnYxJiy4KWreTe3s00beSpV4ds');
     var elements = stripe.elements();
-    // var cardElement = elements.create('card');
-    // cardElement.mount('#card-element');
 
     var style = {
         base: {
@@ -46,22 +44,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle real-time validation errors from the card Elements.
     [cardNumber, cardExpiry, cardCvc, postalCode].forEach(function(element) {
-        element.on('change', function(event) {
-            //var displayError = document.getElementById('card-errors');
+       element.on('change', function(event) {
             if (event.error) {
-                //displayError.textContent = event.error.message;
-                $('#StripePaymentErrors').text(event.error.message);
+                $('#StripePaymentErrors').text(event.error.message).parent('div').addClass('alert alert-danger');
                 $('#StripePaymentErrors').fadeIn();
             } else {
-                //displayError.textContent = '';
-                $('#StripePaymentErrors').text('');
+                $('#StripePaymentErrors').text('').parent('div').removeClass('alert alert-danger');
                 $('#StripePaymentErrors').fadeOut();
             }
         });
     });
 
-    var form = document.getElementById('payment-form');
-    var submitButton = document.getElementById('submit-button');
+
+    var form = document.getElementById('CheckoutForm');
 
     form.addEventListener('submit', function(event) {
         event.preventDefault();
@@ -72,32 +67,40 @@ document.addEventListener('DOMContentLoaded', function() {
         var {token, error} = await stripe.createToken(cardNumber);
 
         if (error) {
-            console.error(error);
-        } else {
-            var data = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                amount: document.getElementById('amount').value,
-                stripeToken: token.id
-            };
-
-            fetch(baseUrl+ '/payment/process-payment', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Payment successful!');
-                } else {
-                    console.log(data);
-                    alert('Payment failed.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+            var code = error.code ? error.code : '';
+            var message = error.message ? error.message : '';
+            if(code && message){
+                $('.error-card').text('');
+                $('.'+code).text(message);
+            }
+            console.log(error);
+            return;
         }
+
+        var data = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            amount: document.getElementById('amount').value,
+            stripeToken: token.id
+        };
+
+        fetch(baseUrl+ '/payment/process-payment', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Payment successful!');
+            } else {
+                console.log(data);
+                alert('Payment failed.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
     }
 });

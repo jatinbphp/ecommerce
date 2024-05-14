@@ -116,7 +116,18 @@ class OrderController extends MY_Controller {
         $order = $this->Order_model->getDetails($orderId);
  
         if (!empty($order) && isset($order['status']) && $order['status'] == $this->Order_model::STATUS_TYPE_PENDING) {
-			$this->Order_model->edit(['cancellation_reason' => $reason, 'status' => $this->Order_model::STATUS_TYPE_CANCEL], $orderId);
+            $data = [
+                'cancellation_reason' => $reason,
+                'status' => $this->Order_model::STATUS_TYPE_CANCEL
+            ];
+            if(isset($order['payment_intent_id']) && $order['payment_intent_id']){
+                $cancelOrderData = $this->Order_model->refundAmount($order['payment_intent_id']);
+                if($cancelOrderData && isset($cancelOrderData['refund_id'])){
+                    $data['payment_refund_id'] = $cancelOrderData['refund_id'];
+                }
+            }
+            
+            $this->Order_model->edit($data, $orderId);
             $data['status'] = 1;
         }
 

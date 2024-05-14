@@ -52,7 +52,6 @@ function handleFilter(){
    if(filterCategory && filterCategory != 0){
       filter['categoryId'] = [Number(filterCategory)];
    }
-   console.log(filter);
    $('#loader').removeClass('d-none');
    $.ajax({
       url: baseUrl+"products",

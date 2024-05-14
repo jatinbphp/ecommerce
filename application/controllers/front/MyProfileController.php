@@ -18,6 +18,7 @@ class MyProfileController extends MY_Controller {
         $this->checkUserLoggedIn();
         $this->load->model('User_model');
         $this->load->model('User_address_model');
+        $this->load->model('Countries_model');
     }
 
     /**
@@ -101,6 +102,7 @@ class MyProfileController extends MY_Controller {
         if ($this->form_validation->run() == FALSE) {
             $data['title'] = "Address";
             $data['userDataArray'] = $userData;
+            $data['countries'] = $this->Countries_model->getCountrCodeWiseCountry();
             $this->frontRenderTemplate('front/myAccount/address/create', $data);
             return $this;
         }
@@ -173,6 +175,7 @@ class MyProfileController extends MY_Controller {
         if ($this->form_validation->run() == FALSE) {
             $data['userDataArray'] = $userData;
             $data['userAddresses'] = $address_details;
+            $data['countries'] = $this->Countries_model->getCountrCodeWiseCountry();
             $data['title'] = "Address";
             $this->frontRenderTemplate('front/myAccount/address/edit', $data);
             return $this;

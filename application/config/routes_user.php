@@ -23,8 +23,9 @@ $route['products/show/(:num)'] = 'front/ProductController/show/$1';
 $route['products/(:any)/details'] = 'front/ProductController/details/$1';
 $route['products/options'] = 'front/ProductController/options';
 
-$route['payment'] = 'front/PaymentController';
 $route['payment/process-payment'] = 'front/PaymentController/processPayment';
+$route['payment/calculate-tax'] = 'front/PaymentController/calculateTax';
+$route['payment/calculate-tax-with-address'] = 'front/PaymentController/calculateTaxUsingAddressId';
 $route['profile-info'] = 'front/MyProfileController/edit';
 $route['profile-address'] = 'HomeController/profile_address';
 $route['profile-add-address'] = 'front/MyProfileController/add_address';

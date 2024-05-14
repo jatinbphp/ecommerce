@@ -136,7 +136,7 @@ class DashboardController extends MY_Controller {
 			$userName = $order->user_name;
 			if(!$userName){
 				$address = json_decode($order->address_info, true);
-				$userName = ($address['first_name'] ?? '') .' '. ($address['last_name'] ?? '');
+				$userName = ($address['first_name'] ?? '') .' '. ($address['last_name'] ?? '') .' '. (isset($address['email']) ? ('(' . $address['email'] . ')') : '');
 			}
 			$data[] = [
 				'id' => $order->id,

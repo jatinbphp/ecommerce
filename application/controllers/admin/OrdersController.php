@@ -33,11 +33,12 @@ class OrdersController extends MY_Controller
 		$allData = $this->order_model->make_order_datatables();
 
 		foreach ($allData as $row) {
+			$totalAmount = number_format(($row->total_amount + $row->shipping_cost + $row->tax_amount), 2);
 			$orderData = [];
 			$orderData[] = "#".$row->id;
 			$orderData[] = $row->id;
 			$orderData[] = $row->user_name;
-			$orderData[] = '$'.$row->total_amount;
+			$orderData[] = '$'.$totalAmount;
 			$orderData[] = $this->getOrderStatus($row);
 			$orderData[] = $row->created_at;
 			$orderData[] = '<div class="btn-group btn-group-sm">
@@ -81,7 +82,16 @@ class OrdersController extends MY_Controller
         $order = $this->order_model->getDetails($orderId);
         
         if (!empty($order) && isset($order['status']) && $order['status'] == 'pending') {
-			$this->order_model->edit(['status' => $status], $orderId);
+			$data = ['status' => $status];
+			if($status == $this->order_model::STATUS_TYPE_CANCEL){
+				if(isset($order['payment_intent_id']) && $order['payment_intent_id']){
+					$cancelOrderData = $this->order_model->refundAmount($order['payment_intent_id']);
+					if($cancelOrderData && isset($cancelOrderData['refund_id'])){
+						$data['payment_refund_id'] = $cancelOrderData['refund_id'];
+					}
+				}
+			}
+			$this->order_model->edit($data, $orderId);
             $data['status'] = 1;
         }
 

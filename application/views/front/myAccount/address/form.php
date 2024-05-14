@@ -6,6 +6,15 @@
             <?php echo form_error('title', '<div class="text-danger">', '</div>'); ?>
         </div>
     </div>
+    <?php if(!$this->session->userdata('userId')): ?>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="form-group">
+                <label for="email" class="text-dark ft-medium">Email: </label>
+                <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+                <?php echo form_error('email', '<div class="text-danger">', '</div>'); ?>
+            </div>
+        </div>
+    <?php endif; ?>
 
     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
         <div class="form-group">
@@ -42,7 +51,7 @@
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="form-group">
             <label for="address_line1" class="text-dark ft-medium">Address:<span style="color:red">*</span></label>
-            <input type="text" name="address_line1" id="address_line1" class="form-control" placeholder="Address" value="<?php echo set_value('address_line1', isset($userAddresses['address_line1']) ? $userAddresses['address_line1'] : ''); ?>">
+            <input type="text" name="address_line1" id="address_line1" class="form-control address" placeholder="Address" value="<?php echo set_value('address_line1', isset($userAddresses['address_line1']) ? $userAddresses['address_line1'] : ''); ?>">
             <?php echo form_error('address_line1', '<div class="text-danger">', '</div>'); ?>
         </div>
     </div>
@@ -50,22 +59,25 @@
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="form-group">
             <label for="address_line2" class="text-dark ft-medium">Address (Line 2):</label>
-            <input type="text" name="address_line2" id="address_line2" class="form-control" placeholder="Address (Line 2)" value="<?php echo set_value('address_line2', isset($userAddresses['address_line2']) ? $userAddresses['address_line2'] : ''); ?>">
+            <input type="text" name="address_line2" id="address_line2" class="form-control address" placeholder="Address (Line 2)" value="<?php echo set_value('address_line2', isset($userAddresses['address_line2']) ? $userAddresses['address_line2'] : ''); ?>">
         </div>
     </div>
     
     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
         <div class="form-group">
-            <label for="country" class="text-dark ft-medium">Country:<span style="color:red">*</span></label>
-            <input type="text" name="country" id="country" class="form-control" placeholder="Country" value="<?php echo set_value('country', isset($userAddresses['country']) ? $userAddresses['country'] : ''); ?>">
             <?php echo form_error('country', '<div class="text-danger">', '</div>'); ?>
+            <?php echo form_label('Select Country: <span class="text-danger">*</span>', 'country', ['class' => 'control-label']); ?>
+            <br>
+            <?php echo form_dropdown('country', ($countries ?? ['' => 'No Data Available']), isset($userAddresses['country']) ? $userAddresses['country'] : '', ['class' => 'form-control select2', 'id' => 'country']); ?>
+            <span class="category-error"></span>
+            <?php echo form_error('category_id', '<p class="text-danger">', '</p>'); ?>
         </div>
     </div>
     
     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
         <div class="form-group">
             <label for="state" class="text-dark ft-medium">State:<span style="color:red">*</span></label>
-            <input type="text" name="state" id="state" class="form-control" placeholder="State" value="<?php echo set_value('state', isset($userAddresses['state']) ? $userAddresses['state'] : ''); ?>">
+            <input type="text" name="state" id="state" class="form-control address" placeholder="State" value="<?php echo set_value('state', isset($userAddresses['state']) ? $userAddresses['state'] : ''); ?>">
             <?php echo form_error('state', '<div class="text-danger">', '</div>'); ?>
         </div>
     </div>
@@ -73,7 +85,7 @@
     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
         <div class="form-group">
             <label for="city" class="text-dark ft-medium">City:<span style="color:red">*</span></label>
-            <input type="text" name="city" id="city" class="form-control" placeholder="City / Town" value="<?php echo set_value('city', isset($userAddresses['city']) ? $userAddresses['city'] : ''); ?>">
+            <input type="text" name="city" id="city" class="form-control address" placeholder="City / Town" value="<?php echo set_value('city', isset($userAddresses['city']) ? $userAddresses['city'] : ''); ?>">
             <?php echo form_error('city', '<div class="text-danger">', '</div>'); ?>
         </div>
     </div>
@@ -81,7 +93,7 @@
     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
         <div class="form-group">
             <label for="pincode" class="text-dark ft-medium">ZIP / Pincode:<span style="color:red">*</span></label>
-            <input type="text" name="pincode" id="pincode" class="form-control" placeholder="Zip / Pincode" value="<?php echo set_value('pincode', isset($userAddresses['pincode']) ? $userAddresses['pincode'] : ''); ?>">
+            <input type="text" name="pincode" id="pincode" class="form-control address" placeholder="Zip / Pincode" value="<?php echo set_value('pincode', isset($userAddresses['pincode']) ? $userAddresses['pincode'] : ''); ?>">
             <?php echo form_error('pincode', '<div class="text-danger">', '</div>'); ?>
         </div>
     </div>

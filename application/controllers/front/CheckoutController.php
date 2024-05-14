@@ -16,6 +16,7 @@ class CheckoutController extends MY_Controller {
         $this->load->model('ProductOptions_model');
         $this->load->model('ProductOptionValues_model');
         $this->load->model('Settings_model');
+        $this->load->model('Countries_model');
     }
 
     /**
@@ -34,6 +35,8 @@ class CheckoutController extends MY_Controller {
         }
         $this->data['cart_products'] = $cartProducts;
         $this->data['shippingCharge'] = $settingData['shipping_charges'] ?? 0;
+        $this->data['stripe_publishable_key'] = $settingData['stripe_publishable_key'] ?? '';
+        $this->data['countries'] = $this->Countries_model->getCountrCodeWiseCountry();
         $this->frontRenderTemplate('front/Checkout/userCheckout', $this->data);
     }
 
@@ -51,7 +54,7 @@ class CheckoutController extends MY_Controller {
         $orderProducts = $this->Cart_model->getUsrCartData($userId);
         if(!$userId){
             $userId = 0;
-            $cartData = $this->input->post('cartData') ?? '';
+            $cartData = $this->session->userdata('cartData') ?? '';
             $userCartData = json_decode($cartData, true) ?? [];
             $orderProducts = $this->Cart_model->getGuestUserCartData($userCartData);
         }
@@ -65,6 +68,9 @@ class CheckoutController extends MY_Controller {
             'user_id' => $userId,
             'delivey_method' => $this->input->post('delivery_method'),
             'notes' => $this->input->post('notes'),
+            'payment_intent_id'  => $this->input->post('pay_intent'),
+            'tax_percentage' => 0,
+            'tax_amount' => 0,
         ];
 
         $addressId = $this->input->post('address_id');
@@ -89,7 +95,31 @@ class CheckoutController extends MY_Controller {
                 $newAddress = $this->User_address_model->createByUser($addressData);
                 $orderInputs['address_id'] = $newAddress;
             }
+            $addressData['email'] = $orderData['email'] ?? '';
             $orderInputs['address_info'] = json_encode($addressData);
+
+            $address = $addressData['address_line1'] ?? '';
+            $country = $addressData['country'] ?? '';
+            $state   = $addressData['state'] ?? '';
+            $city    = $addressData['city'] ?? '';
+            $pincode = $addressData['pincode'] ?? '';
+
+            $taxData = $this->Order_model->getTaxData($address, $city, $state, $pincode, $country);
+        } else {
+            $addressData = $this->User_address_model->getAddressDetails($addressId);
+
+            $address = $addressData['address_line_1'] ?? '';
+            $country = $addressData['country'] ?? '';
+            $state   = $addressData['state'] ?? '';
+            $city    = $addressData['city'] ?? '';
+            $pincode = $addressData['pincode'] ?? '';
+    
+            $taxData = $this->Order_model->getTaxData($address, $city, $state, $pincode, $country);
+        }
+
+        if(isset($taxData)){
+            $orderInputs['tax_percentage'] = $taxData['tax_percentage'] ?? 0;
+            $orderInputs['tax_amount'] = $taxData['tax_amount'] ?? 0;
         }
 
         $settingData  = $this->Settings_model->getSettingsById(1);

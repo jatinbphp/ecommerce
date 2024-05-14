@@ -13,7 +13,7 @@
                     </h4>
                     <p class="mb-2"><span class="text-dark medium">No. of Products: <?php echo $orderItems; ?></span></p>   
                     <h4 class="fs-sm ft-bold mb-0 lh-1">
-                        <?php $totalAmount = $total_amount + $shipping_cost; ?>
+                        <?php $totalAmount = $total_amount + $shipping_cost + $tax_amount; ?>
                         <span class="text-muted">Total:</span> <?php echo '$' . number_format($totalAmount, 2); ?>
                     </h4>
                 </div>
@@ -22,7 +22,14 @@
         <div class="col-xl-2 col-lg-2 col-md-3 col-6">
             <p class="mb-1 p-0"><span class="text-muted">Status:</span></p>
             <div class="delv_status">
-                <span class="ft-medium small text-primary bg-light-primary rounded px-3 py-1"><?php echo $status; ?></span>
+                <?php if($status == \Order_model::STATUS_TYPE_PENDING): ?>
+                    <?php $class = 'ft-medium small text-primary bg-light-primary rounded px-3 py-1'; ?>
+                <?php elseif($status == \Order_model::STATUS_TYPE_CANCEL): ?>
+                    <?php $class = 'ft-medium small text-danger bg-light-danger rounded px-3 py-1'; ?>
+                <?php else: ?>
+                    <?php $class = 'ft-medium small text-success bg-light-success rounded px-3 py-1'; ?>
+                <?php endif; ?>
+                <span class="<?php echo $class; ?>"><?php echo $status; ?></span>
             </div>
         </div>
         <div class="col-xl-3 col-lg-3 col-md-4 col-6">

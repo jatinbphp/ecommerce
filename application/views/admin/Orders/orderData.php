@@ -4,7 +4,7 @@
             <table class="table table-bordered">
                 <tbody>
                     <tr>
-                        <th>Order ID</th>
+                        <th>Order#</th>
                         <th>Customer Name</th>
                         <th>Phone</th>
                         <th>Date Ordered</th>
@@ -17,15 +17,15 @@
                                 $phone    = $userData['phone'] ?? '';
                             } else {
                                 $address = json_decode(($orderData['address_info'] ?? ''), true);
-                                $userName = ($address['first_name'] ?? '') .' '. ($address['last_name'] ?? '');
+                				$userName = ($address['first_name'] ?? '') .' '. ($address['last_name'] ?? '') .' '. (isset($address['email']) ? ('(' . $address['email'] . ')') : '');
                                 $phone    = $address['mobile_phone'] ?? '';
                             }
                         ?>
-                        <td>#<?php echo ($orderData['id'] ?? 0) ?></td>
-                        <td><?php echo $userName; ?> </td>
-                        <td><?php echo $phone; ?> </td>
-                        <td><?php echo ($orderData['created_at'] ?? '') ?></td>
-                        <td><?php echo ($status[($orderData['status'] ?? '')] ?? '') ?></td>
+                        <td width='10%'>#<?php echo ($orderData['id'] ?? 0) ?></td>
+                        <td width='40%'><?php echo $userName; ?> </td>
+                        <td width='15%'><?php echo $phone; ?> </td>
+                        <td width='25%'><?php echo ($orderData['created_at'] ?? '') ?></td>
+                        <td width='10%'><?php echo ($status[($orderData['status'] ?? '')] ?? '') ?></td>
                     </tr>
                 </tbody>
             </table>
@@ -85,11 +85,15 @@
                         <td class="text-right" id="total_amount">$<?php echo number_format(($orderData['total_amount'] ?? 0), 2) ?></td>
                     </tr>
                     <tr>
+                        <th class="text-right" colspan="4">Tax(<?php echo ($orderData['tax_percentage'] ?? 0) ?>%)</th>
+                        <td class="text-right" id="total_amount">$<?php echo number_format(($orderData['tax_amount'] ?? 0), 2) ?></td>
+                    </tr>
+                    <tr>
                         <th class="text-right" colspan="4">Shipping</th>
                         <td class="text-right" id="shipping">$<?php echo number_format(($orderData['shipping_cost'] ?? 0), 2) ?></td>
                     </tr>
                     <tr>
-                        <?php $grandTotal = ($orderData['total_amount'] ?? 0) + ($orderData['shipping_cost'] ?? 0) ?>
+                        <?php $grandTotal = ($orderData['total_amount'] ?? 0) + ($orderData['shipping_cost'] ?? 0) + ($orderData['tax_amount'] ?? 0) ?>
                         <th class="text-right" colspan="4">Total</th>
                         <td class="text-right" id="grand_total">$<?php echo number_format($grandTotal, 2) ?></td>
                     </tr>
@@ -133,8 +137,7 @@
                                     <br><?php echo $addressArray['address_line1'] ?>,
                                 <?php endif ?>
 
-
-                                <?php if (isset($addressArray['address_line2'])): ?>
+                                <?php if (isset($addressArray['address_line2']) && $addressArray['address_line2']): ?>
                                     <br><?php echo $addressArray['address_line2'] ?>,
                                 <?php endif ?>
 

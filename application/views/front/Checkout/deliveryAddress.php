@@ -6,7 +6,7 @@
                 <?php if(!empty($user_addresses)): ?>
                     <?php foreach($user_addresses as $key => $address): ?>
                         <article class="panel panel-default border">
-                            <input id="address_<?php echo ($address['id'] ?? 0); ?>" <?php echo ($key == 1) ? 'checked' : '' ?> type="radio" name="address_id" value="<?php echo ($address['id'] ?? 0); ?>">
+                            <input id="address_<?php echo ($address['id'] ?? 0); ?>" class='addresses-radio' <?php echo ($key == 1) ? 'checked' : '' ?> type="radio" name="address_id" value="<?php echo ($address['id'] ?? 0); ?>">
                             <label class="article-lable" for="address_<?php echo ($address['id'] ?? 0); ?>">
                                 <h5><?php echo (isset($address['title']) && $address['title'] ? $address['title'] : 'Address'); ?></h5>
                             </label>
@@ -53,7 +53,7 @@
                 <?php endif; ?>
 
                 <article class="panel panel-default border">
-                    <input id="address_new" <?php echo (empty($user_addresses) ? 'checked' : '') ?> type="radio" name="address_id" value="0">
+                    <input id="address_new" class='addresses-radio' <?php echo (empty($user_addresses) ? 'checked' : '') ?> type="radio" name="address_id" value="0">
                     <label class="article-lable" for="address_new">
                         <h5>Add a New Address</h5>
                     </label>

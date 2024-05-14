@@ -65,12 +65,16 @@
                 <span class="ml-auto text-dark ft-medium">$<?= number_format($subTotal, 2) ?></span>
             </li>
             <li class="list-group-item d-flex text-dark fs-sm ft-regular">
+                <span>Tax(<span id='tax-percentage'>0</span>%)</span> 
+                <span class="ml-auto text-dark ft-medium" id='tax-amount'>$0.00</span>
+            </li>
+            <li class="list-group-item d-flex text-dark fs-sm ft-regular">
                 <span>Shipping</span> 
                 <span class="ml-auto text-dark ft-medium">$<?= number_format($shippingCharge, 2) ?></span>
             </li>
             <?php $subTotal += $shippingCharge; ?>
             <li class="list-group-item d-flex text-dark fs-sm ft-regular">
-                <span>Total</span> <span class="ml-auto text-dark ft-medium">
+                <span>Total</span> <span class="ml-auto text-dark ft-medium" id='total-amount'>
                     $<?= number_format($subTotal, 2) ?>
                 </span>
             </li>

@@ -20,7 +20,14 @@
                                     <td>#<?php echo $order->id; ?></td>
                                     <td><?php echo isset($user['first_name']) ? $user['first_name'] : ''; ?> (<?php echo isset($user['email']) ? $user['email'] : ''; ?>)</td>
                                     <td><?php echo $order->created_at; ?></td>
-                                    <td><span class="ft-medium small text-primary bg-light-primary rounded px-3 py-1"><?php echo $order->status; ?></span></td>
+                                    <?php if($order->status == \Order_model::STATUS_TYPE_PENDING): ?>
+                                        <?php $class = 'ft-medium small text-primary bg-light-primary rounded px-3 py-1'; ?>
+                                    <?php elseif($order->status == \Order_model::STATUS_TYPE_CANCEL): ?>
+                                        <?php $class = 'ft-medium small text-danger bg-light-danger rounded px-3 py-1'; ?>
+                                    <?php else: ?>
+                                        <?php $class = 'ft-medium small text-success bg-light-success rounded px-3 py-1'; ?>
+                                    <?php endif; ?>
+                                    <td><span class="<?php echo $class; ?>"><?php echo $order->status; ?></span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -92,10 +99,14 @@
                                     <td class="text-right">$<?php echo number_format($order->total_amount, 2); ?></td>
                                 </tr>
                                 <tr>
+                                    <td colspan="4" class="text-right"><strong>Tax(<?php echo ($order->tax_percentage ?? 0) ?>%)</strong></td>
+                                    <td class="text-right">$<?php echo number_format($order->tax_amount, 2); ?></td>
+                                </tr>
+                                <tr>
                                     <td colspan="4" class="text-right"><strong>Shipping</strong></td>
                                     <td class="text-right">$<?php echo number_format($order->shipping_cost, 2); ?></td>
                                 </tr>
-                                <?php $totalAmount = ($order->total_amount + $order->shipping_cost); ?>
+                                <?php $totalAmount = ($order->total_amount + $order->shipping_cost + $order->tax_amount); ?>
                                 <tr>
                                     <td colspan="4" class="text-right"><strong>Total</strong></td>
                                     <td class="text-right">$<?php echo number_format($totalAmount, 2); ?></td>
@@ -119,7 +130,7 @@
                                             <?php echo isset($address['title']) ? '<br><b>'.$address['title'].'</b>' : '' ?>
                                             <?php echo isset($address['company']) ? '<br>'.$address['company'] : '' ?>
                                             <?php echo isset($address['address_line1']) ? '<br>'.$address['address_line1']. ',' : ''?>
-                                            <?php echo isset($address['address_line2']) ? '<br>' . $address['address_line2']. ',' : ''?>
+                                            <?php echo (isset($address['address_line2']) && $address['address_line2']) ? '<br>' . $address['address_line2']. ',' : ''?>
                                             <?php if (!empty($address['city']) || !empty($address['state']) || !empty($address['country']) || !empty($address['pincode'])): ?>
                                                 <br>
                                                 <?php echo isset($address['pincode']) ? $address['pincode']. ' - ' : ''; ?>
