@@ -105,7 +105,7 @@
                                                 <a href="<?php echo base_url('shopping-cart'); ?>" class="dropdown-item medium text-medium">Shopping Cart</a>
                                             </li>
                                             <li>
-                                                <a href="signIn" class="dropdown-item medium text-medium">Sign In</a>
+                                                <a href=<?php echo base_url('signIn'); ?> class="dropdown-item medium text-medium">Sign In</a>
                                             </li>
                                          <?php endif; ?>
                                     </ul>
