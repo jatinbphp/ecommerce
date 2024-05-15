@@ -138,11 +138,12 @@ class DashboardController extends MY_Controller {
 				$address = json_decode($order->address_info, true);
 				$userName = ($address['first_name'] ?? '') .' '. ($address['last_name'] ?? '') .' '. (isset($address['email']) ? ('(' . $address['email'] . ')') : '');
 			}
+			$totalAmount = ($order->total_amount + $order->tax_amount + $order->shipping_cost);
 			$data[] = [
 				'id' => $order->id,
 				'order_id' => '#' . $order->id,
 				'user_name' => $userName,
-				'total_amount' => '$' . number_format($order->total_amount, 2),
+				'total_amount' => '$' . number_format($totalAmount, 2),
 				'created_at' => date('Y-m-d h:i:s', strtotime($order->created_at)),
 				'status' => $status[$order->status] ?? '',
 				'action' => $this->getActionData($order->id),				
