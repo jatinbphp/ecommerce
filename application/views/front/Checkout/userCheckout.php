@@ -240,7 +240,6 @@ $(document).ready(function() {
             $("#pay_intent").val('');
             // Show error from server on payment form
         } else if (response.requires_action) {
-            // Use Stripe.js to handle required card action
             stripe.confirmCardPayment(
                 response.payment_intent_client_secret
             ).then(handleStripeJsResult);
