@@ -105,9 +105,12 @@ class ReportController extends MY_Controller
 					'total_products_ordered' => 0,
 				];
 			}
+
+			$totalAmount = ($order->total_amount + $order->tax_amount + $order->shipping_cost);
+
 			$groupedData[$userId]['total_orders']++;
 			$groupedData[$userId]['all_orders_ids'][$row->order_id] = $row->order_id;
-			$groupedData[$userId]['total_amount'] += $row->total_amount;
+			$groupedData[$userId]['total_amount'] += $totalAmount;
 			$groupedData[$userId]['total_products_ordered'] += $row->total_products_ordered;
 		}
 		foreach ($groupedData as $userId => $userData) {
