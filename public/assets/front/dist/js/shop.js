@@ -67,6 +67,9 @@ function handleFilter(){
          $('#loader').addClass('d-none');
          if($('.ti-view-list').parent('a').hasClass('active')){
             $('.filters').removeClass().addClass('col-12 filters');
+            $('.product-detail-description').removeClass('d-none');
+         } else {
+            $('.product-detail-description').addClass('d-none');
          }
          $('#search-text').text('').removeClass('d-none');
       },

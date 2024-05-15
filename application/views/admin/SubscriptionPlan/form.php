@@ -9,21 +9,6 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="form-group <?php echo form_error('duration') ? 'has-error' : ''; ?>">
-                <?php echo form_label('Duration <span class="text-danger">*</span>', 'duration'); ?>
-                <?php $selected_duration = isset($subscription_plan_data['duration']) ? $subscription_plan_data['duration'] : ''; ?>
-                <?php echo form_dropdown('duration', $duration, $selected_duration, 'class="form-control" id="duration"'); ?>
-                <?php echo form_error('duration', '<span class="help-block text-danger">', '</span>'); ?>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="form-group <?php echo form_error('description') ? 'has-error' : ''; ?>">
-                <?php echo form_label('Description <span class="text-danger">*</span>', 'description'); ?>
-                <?php echo form_textarea('description', isset($subscription_plan_data['description']) ? $subscription_plan_data['description'] : null, 'class="form-control description" id="description" placeholder="Enter Description"'); ?>
-                <?php echo form_error('description', '<span class="help-block text-danger">', '</span>'); ?>
-            </div>
-        </div>
-        <div class="col-md-6">
             <div class="form-group <?php echo form_error('status') ? 'has-error' : ''; ?>">
                 <?php echo form_label('Status <span class="text-danger">*</span>', 'status'); ?>
                 <div class="">

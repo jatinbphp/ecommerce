@@ -171,5 +171,12 @@
 <script>
 $( document ).ready(function() {
     handleFilter();
+    $('.simple-button').click(function(){
+        if($('.simple-button').hasClass('grid')){
+            $('.product-detail-description').addClass('d-none');
+        } else {
+            $('.product-detail-description').removeClass('d-none');
+        }
+    });
 });
 </script>

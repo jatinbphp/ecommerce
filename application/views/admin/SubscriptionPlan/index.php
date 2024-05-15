@@ -32,10 +32,9 @@
                                 <tr>
                                     <th style="width: 8%;">#</th>
                                     <th>Name</th>
-                                    <th style="width: 10%;">Duration</th>
                                     <th style="width: 10%;">Status</th>
                                     <th style="width: 14%;">Date Created</th>
-                                    <th style="width: 10%;">Action</th>
+                                    <th style="width: 15%;">Action</th>
                                 </tr>
                                 </thead>
                             </table>

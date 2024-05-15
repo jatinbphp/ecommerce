@@ -8,7 +8,7 @@ class SubscriptionPlan_model extends CI_Model
 {   
     public $table = "subscription_plans";
     public $select_column = ['*'];
-    public $order_column = ['id', 'name', 'duration', 'description', 'status', 'created_at'];
+    public $order_column = ['id', 'name', 'status', 'created_at'];
 
     /**
      * Constructor for the class.
@@ -29,22 +29,6 @@ class SubscriptionPlan_model extends CI_Model
     public static $status = [
         self::STATUS_ACTIVE   => self::STATUS_ACTIVE_TEXT,
         self::STATUS_INACTIVE => self::STATUS_INACTIVE_TEXT,
-    ];
-
-    /**
-     * Class representing different durations with their corresponding values.
-     */
-    const DURATION_1_MONTH   = '1';
-    const DURATION_3_MONTHS  = '3';
-    const DURATION_6_MONTHS  = '6';
-    const DURATION_12_MONTHS = '12';
-
-    public static $duration = [
-        ''                       => '-Select Duration-',
-        self::DURATION_1_MONTH   => '1 Month',
-        self::DURATION_3_MONTHS  => '3 Months',
-        self::DURATION_6_MONTHS  => '6 Months',
-        self::DURATION_12_MONTHS => '12 Months',
     ];
 
     /**
@@ -170,7 +154,7 @@ class SubscriptionPlan_model extends CI_Model
             return $query->row_array();
         }
 
-        $sql = "SELECT * FROM $this->table ORDER BY id DESC";
+        $sql = "SELECT * FROM $this->table where status = 'active' ORDER BY id DESC";
         $query = $this->db->query($sql);
         return $query->result_array();
     }

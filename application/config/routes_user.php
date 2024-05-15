@@ -52,7 +52,8 @@ $route['checkout/order/place'] = 'front/CheckoutController/orderPlace';
 $route['shop'] = 'front/ShopController/index';
 $route['reviews/add-review'] = 'front/ReviewsController/addReview';
 $route['shop/categories/(:any)'] = 'front/ShopController/categoryFilter/$1';
-
 $route['shopping-cart'] = 'front/ShoppingCartController/shoppingCart';
 $route['saveCartData'] = 'HomeController/saveCartData';
 $route['cancel-order'] = 'front/OrderController/cancelOrder';
+$route['subscription-plans'] = 'front/SubscriptionController/getPlanData';
+$route['subscription-plans/update'] = 'front/SubscriptionController/updatePlanData';

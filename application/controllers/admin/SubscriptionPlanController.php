@@ -18,9 +18,10 @@ class SubscriptionPlanController extends MY_Controller
 	public function __construct(){
 		parent::__construct();
 		$this->checkAdminLoggedIn();
-		$this->data['page_title'] = 'Subscription Plans';
-		$this->data['form_title'] = 'Subscription Plan';
+		$this->data['page_title'] = 'Subscription';
+		$this->data['form_title'] = 'Subscription';
 		$this->load->model('SubscriptionPlan_model');
+		$this->load->model('Subscription_plan_users_model');
 	}
 
 	/**
@@ -44,10 +45,10 @@ class SubscriptionPlanController extends MY_Controller
 			$subscriptionPlanData = [];
 			$subscriptionPlanData[] = "#".$row->id;
 			$subscriptionPlanData[] = $row->name;
-			$subscriptionPlanData[] = $this->SubscriptionPlan_model::$duration[$row->duration] ?? null;
 			$subscriptionPlanData[] = $this->getStatusButton($row->id, $row->status, 'subscription_plans');
 			$subscriptionPlanData[] = $row->created_at;
-			$subscriptionPlanData[] = '<a href="' . base_url('admin/subscription-plan/edit/' . $row->id) . '" class="btn btn-sm btn-info"  style="margin-right:5px;"><i class="fa fa-edit"></i></a><a href="javascript:void(0);" class="btn btn-sm btn-danger deleteRecord" style="margin-right:5px;" data-id="' . $row->id . '" data-controller="subscription-plan" data-title="subscription plan"><i class="fa fa-trash"></i></a>';
+			$subscriptionPlanData[] = '<a href="' . base_url('admin/subscription-plan/edit/' . $row->id) . '" class="btn btn-sm btn-info"  style="margin-right:5px;"><i class="fa fa-edit"></i></a><a href="javascript:void(0);" class="btn btn-sm btn-danger deleteRecord" style="margin-right:5px;" data-id="' . $row->id . '" data-controller="subscription-plan" data-title="subscription plan"><i class="fa fa-trash"></i></a><a href="javascript:void(0)" title="View Subscription" data-id="'. $row->id .'" class="btn btn-sm btn-warning tip view-info" data-title="Subscription Details" data-url="'.base_url('admin/subscription-plan/show/' . $row->id).'">
+			<i class="fa fa-eye"></i></a>';
 			$data[] = $subscriptionPlanData;
 		}
 
@@ -70,21 +71,16 @@ class SubscriptionPlanController extends MY_Controller
 	*/
 	public function create(){
 		$this->form_validation->set_rules('name', 'Name', 'required');
-		$this->form_validation->set_rules('duration', 'Duration', 'required');
-		$this->form_validation->set_rules('description', 'Description', 'required');
 		$this->form_validation->set_rules('status', 'Status', 'required');
 
         if ($this->form_validation->run() == FALSE) {
         	$this->data['status'] = $this->SubscriptionPlan_model::$status;
-        	$this->data['duration'] = $this->SubscriptionPlan_model::$duration;
         	$this->adminRenderTemplate('admin/SubscriptionPlan/create', $this->data);
         	return $this;
         }
 
 		$data = [
 			'name' 			=> $this->input->post('name'),
-			'duration' 		=> $this->input->post('duration'),
-			'description' 	=> !empty(strip_tags($this->input->post('description'))) ? $this->input->post('description') : null,
 			'status' 		=> $this->input->post('status'),
 			'created_at' 	=> date("Y-m-d H:i:s"),
 		];
@@ -109,17 +105,12 @@ class SubscriptionPlanController extends MY_Controller
 	public function edit($id = null){
 		if($id) {
 			$this->form_validation->set_rules('name', 'Name', 'required');
-			$this->form_validation->set_rules('duration', 'Duration', 'required');
-			$this->form_validation->set_rules('description', 'Description', 'required');
 			$this->form_validation->set_rules('status', 'Status', 'required');
 
 			if($this->form_validation->run()){
 				$data = [
 					'name' 			=> $this->input->post('name'),
-					'duration' 		=> $this->input->post('duration'),
-					'description' 	=> !empty(strip_tags($this->input->post('description'))) ? $this->input->post('description') : null,
 					'status' 		=> $this->input->post('status'),
-					'created_at' 	=> date("Y-m-d H:i:s"),
 				];
 
 				$update = $this->SubscriptionPlan_model->edit($data, $id);
@@ -135,7 +126,6 @@ class SubscriptionPlanController extends MY_Controller
 				$subscriptionPlanData = $this->SubscriptionPlan_model->getDetails($id);
 				$this->data['subscription_plan_data'] = $subscriptionPlanData;
 				$this->data['status'] = $this->SubscriptionPlan_model::$status;
-				$this->data['duration'] = $this->SubscriptionPlan_model::$duration;
 				$this->adminRenderTemplate('admin/SubscriptionPlan/edit', $this->data);
 			}
 		}
@@ -156,5 +146,24 @@ class SubscriptionPlanController extends MY_Controller
 				echo true;
 			}
 		}
+	}
+
+	/**
+	 * Display the subscription details for the given ID.
+	*
+	* This method retrieves subscription details,
+	* based on the provided subscription ID. It then loads the view 'admin/Subscription/view'
+	* with the collected data and returns the HTML content.
+	*
+	* @param int $id The ID of the subscription to display
+	* @return void
+	*/
+	public function show($id) {
+		$data['subscriptionData'] = $this->SubscriptionPlan_model->getDetails($id);
+		$subscriptionUsersEmail = $this->Subscription_plan_users_model->getDetailsBySubscriptionId($id);
+		$subscriptionUsersEmail = array_column($subscriptionUsersEmail, 'email');
+		$data['subscriptionUsersEmail'] = $subscriptionUsersEmail;
+        $html = $this->load->view('admin/SubscriptionPlan/view', $data, true);
+        echo $html;
 	}
 }

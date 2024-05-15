@@ -52,24 +52,24 @@
                         <h4 class="widget_title">Company</h4>
                         <ul class="footer-menu">
                             <li><a href="<?php echo base_url() ?>">Home</a></li>
-                            <li><a href="about-us">About Us</a></li>
-                            <li><a href="contact">Contact Us</a></li>
+                            <li><a href="<?php echo base_url('about-us') ?>">About Us</a></li>
+                            <li><a href="<?php echo base_url('contact') ?>">Contact Us</a></li>
                             <li><a href="javaScript:;">FAQ's Page</a></li>
-                            <li><a href="privecy-policy">Privacy Policy</a></li>
-                            <li><a href="terms-conditions">Terms & Conditions</a></li>
-                            <li><a href="signIn">Login</a></li>
+                            <li><a href="<?php echo base_url('privecy-policy') ?>">Privacy Policy</a></li>
+                            <li><a href="<?php echo base_url('terms-conditions') ?>">Terms & Conditions</a></li>
+                            <li><a href="<?php echo base_url('signIn') ?>">Login</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
                     <div class="footer_widget">
                         <h4 class="widget_title">Subscribe</h4>
-                        <p>Receive updates, hot deals, discounts sent straignt in your inbox daily</p>
+                        <p>Receive updates, Promotions, news, sent straignt in your inbox daily</p>
                         <div class="foot-news-last">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Email Address">
+                                <input type="text" id='subscribeEmailId' class="form-control" placeholder="Email Address">
                                 <div class="input-group-append">
-                                    <button type="button" class="input-group-text bg-dark b-0 text-light"><i class="lni lni-arrow-right"></i></button>
+                                    <button type="button" onClick='openSubscription()' class="input-group-text bg-dark b-0 text-light"><i class="lni lni-arrow-right"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -112,8 +112,8 @@
 </div>
 </footer>
 
-    <script>
-      function AjaxUploadImage(obj,id){
+<script>
+    function AjaxUploadImage(obj,id){
         var file = obj.files[0];
         var imagefile = file.type;
         var match = ["image/jpeg", "image/png", "image/jpg", 'image/webp'];
@@ -134,5 +134,62 @@
             $('#DisplayImage').attr('src', e.target.result);
             $('#DisplayImage').attr('width', '150');
         }
+
+    }
+
+    function openSubscription(){
+        var email = $('#subscribeEmailId').val();
+        if(!email){
+            SnackbarAlert('Please add email address.');
+            return;
+        }
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(!emailRegex.test(email)){
+            SnackbarAlert('Please enter valid email address.');
+            return;
+        }
+        $.ajax({
+            url: baseUrl+"subscription-plans",
+            type: "post",
+            data: {
+                'email': email,
+            },
+            success: function(response) {
+                $("#subscriptionbody").html(response);
+                $("#subscription").modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    function updatePlan(checkBox){
+        var action = 'remove';
+        var planId = $(checkBox).attr('id');
+        var email = $(checkBox).attr('data-email');
+        if(!planId || planId == 0 || !email){
+            SnackbarAlert('Something went wrong.');
+            return;
+        }
+        if($(checkBox).is(':checked')){
+            action = 'add';
+        }
+
+        $.ajax({
+            url: baseUrl+"subscription-plans/update",
+            type: "post",
+            data: {
+                'action': action,
+                'planId': planId,
+                'email' : email,
+            },
+            success: function(response) {
+                SnackbarAlert(response.message);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
     }
 </script>

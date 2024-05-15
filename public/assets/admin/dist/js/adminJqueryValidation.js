@@ -177,7 +177,7 @@ $(document).ready(function() {
             type:"POST",
         },
         "columnDefs": [{
-            "targets":[5],
+            "targets":[4],
             "orderable": false
         }]
     });
@@ -331,7 +331,7 @@ $(document).ready(function() {
         });
     });
 
-    $("#banerTable, #usersTable, #contentTable, #contactUsTable, #CategoriesTable, #productsTable, #ordersDasboardTable, #usersReportTable, #ordersTable, #salesReportTable").on('click', '.view-info', function(event) {
+    $("#banerTable, #usersTable, #contentTable, #contactUsTable, #CategoriesTable, #productsTable, #ordersDasboardTable, #usersReportTable, #ordersTable, #salesReportTable, #subscriptionPlanTable").on('click', '.view-info', function(event) {
         var title = $(this).attr('data-title');
         var url = $(this).attr('data-url');
         $.ajax({
