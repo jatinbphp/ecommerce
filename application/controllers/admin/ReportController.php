@@ -106,7 +106,7 @@ class ReportController extends MY_Controller
 				];
 			}
 
-			$totalAmount = ($order->total_amount + $order->tax_amount + $order->shipping_cost);
+			$totalAmount = ($row->total_amount + $row->tax_amount + $row->shipping_cost);
 
 			$groupedData[$userId]['total_orders']++;
 			$groupedData[$userId]['all_orders_ids'][$row->order_id] = $row->order_id;
