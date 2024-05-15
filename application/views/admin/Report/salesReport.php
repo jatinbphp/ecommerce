@@ -41,6 +41,7 @@
                                             <th>No.Orders</th>
                                             <th>No.Products</th>
                                             <th>Total</th>
+                                            <th width='10%'>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>

@@ -229,7 +229,7 @@
                 if(!id || id==0){
                     return;
                 }
-
+                $('#loader').removeClass('d-none');
                 $.ajax({
                 url: baseUrl+'cancel-order',
                     type: 'post',
@@ -238,6 +238,7 @@
                         reason: reason
                     },
                     success: function(data) {
+                        $('#loader').addClass('d-none');
                         if(data.status == 1){
                             location.reload();
                         } else {

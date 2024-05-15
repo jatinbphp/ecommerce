@@ -103,7 +103,11 @@ $(document).ready(function() {
                 'Showing ' + start + ' to ' + end +
                 ' of ' + totalEntries + ' entries'
             );
-        }
+        },
+        "columnDefs": [{
+            "targets":[4],
+            "orderable": false
+        }]
     });
 
     var banners = $('#banerTable').DataTable({
@@ -327,7 +331,7 @@ $(document).ready(function() {
         });
     });
 
-    $("#banerTable, #usersTable, #contentTable, #contactUsTable, #CategoriesTable, #productsTable, #ordersDasboardTable, #usersReportTable, #ordersTable").on('click', '.view-info', function(event) {
+    $("#banerTable, #usersTable, #contentTable, #contactUsTable, #CategoriesTable, #productsTable, #ordersDasboardTable, #usersReportTable, #ordersTable, #salesReportTable").on('click', '.view-info', function(event) {
         var title = $(this).attr('data-title');
         var url = $(this).attr('data-url');
         $.ajax({

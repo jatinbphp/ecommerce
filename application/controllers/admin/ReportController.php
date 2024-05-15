@@ -188,6 +188,7 @@ class ReportController extends MY_Controller
 			}
 			$groupedData[$orderDate]['total_orders'] += 1;
 			$groupedData[$orderDate]['total_amount'] += $row->total_amount;
+			$groupedData[$orderDate]['all_orders_ids'][$row->order_id] = $row->order_id;
 			$groupedData[$orderDate]['total_products_ordered'] += $row->total_products_ordered;
 		}
 
@@ -197,6 +198,7 @@ class ReportController extends MY_Controller
 			$orderSalesData[] = $salesData['total_orders'];
 			$orderSalesData[] = $salesData['total_products_ordered'];
 			$orderSalesData[] = '$' . number_format($salesData['total_amount'], 2);
+			$orderSalesData[] = $this->getActionData(($salesData['all_orders_ids'] ?? []));
 			$data[] = $orderSalesData;
 		}
 
