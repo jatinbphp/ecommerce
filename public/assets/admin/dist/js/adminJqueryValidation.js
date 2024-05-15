@@ -73,7 +73,7 @@ $(document).ready(function() {
     var salesreport = $('#salesReportTable').DataTable({
         "processing": true,
         "serverSide": true,
-        "order":[],
+        "order": [[0, "desc"]],
         "ajax":{
             url:"fetch_sales_report",
             type:"POST",
