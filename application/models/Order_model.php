@@ -159,7 +159,9 @@ class Order_model extends CI_Model
                         orders.total_amount AS total_amount,
                         COUNT(order_items.product_id) AS total_products_ordered, 
                         MAX(orders.status) AS status, 
-                        DATE(MAX(orders.created_at)) AS created_date');
+                        DATE(MAX(orders.created_at)) AS created_date,
+                        orders.tax_amount AS tax_amount,
+                        orders.shipping_cost AS shipping_cost');
         $this->db->from($this->table);
         $this->db->join('users', 'users.id = orders.user_id');
         $this->db->join('order_items', 'order_items.order_id = orders.id');
