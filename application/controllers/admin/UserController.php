@@ -23,6 +23,7 @@ class UserController extends MY_Controller
 		$this->load->model('user_model');
 		$this->load->model('countries_model');
 		$this->load->model('user_address_model');
+		$this->load->model('Countries_model');
 	}
 
 	/**
@@ -157,6 +158,7 @@ class UserController extends MY_Controller
 				$this->data['userData'] = $usersData;
 				$this->data['status'] = $this->user_model::$status;
 				$this->data['userAddress'] = $getUsrAddr;
+				$this->data['countries'] = $this->Countries_model->getCountrCodeWiseCountry();
 				$this->data['userAddressCnt'] = $userAddrCnt;
 				$getCountryCode = $this->countries_model->getCountryData();
 				$this->data['countryCodes'] = $getCountryCode;

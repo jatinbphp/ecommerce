@@ -76,6 +76,12 @@ class SettingsController extends MY_Controller
             $this->session->set_flashdata('error', $error_messages);
             redirect('admin/settings/edit');
         }
+        
+        $isStripeLiveMode = $this->input->post('is_stripe_live_mode');
+        $stripeMode = 0;
+        if(!empty($isStripeLiveMode) && $isStripeLiveMode == 'on'){
+            $stripeMode = 1;
+        }
 
         $data = [
 			'email_address' => $this->input->post('email_address'),
@@ -87,6 +93,11 @@ class SettingsController extends MY_Controller
             'linkedin_url' => $this->input->post('linkedin_url'),
             'order_cancel_period'=>$this->input->post('order_cancel_period'),
             'shipping_charges'=>$this->input->post('shipping_charges'),
+            'stripe_publishable_key'=>$this->input->post('stripe_publishable_key'),
+            'stripe_secret_key'=>$this->input->post('stripe_secret_key'),
+            'live_stripe_publishable_key'=>$this->input->post('live_stripe_publishable_key'),
+            'live_stripe_secret_key'=>$this->input->post('live_stripe_secret_key'),
+            'is_stripe_live_mode'=>$stripeMode,
 		];
 
         $data['header_menu_categories'] = $data['footer_menu_categories'] = '';

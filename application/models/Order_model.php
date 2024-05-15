@@ -410,7 +410,8 @@ class Order_model extends CI_Model
     public function getTaxData($address, $city, $state, $pincode, $country){
         require_once('./vendor/stripe/stripe-php/init.php');
         $settingData  = $this->Settings_model->getSettingsById(1);
-        $stripeSecretKey = $settingData['stripe_secret_key'] ?? '';
+        $stripeSecretKey = $this->Settings_model->getStripeSecretKey();       
+
         $stripe = new \Stripe\StripeClient($stripeSecretKey);
         $amount = $this->getTotalAmount(0);
         try {
@@ -453,7 +454,7 @@ class Order_model extends CI_Model
     public function refundAmount($intentId){
         require_once('./vendor/stripe/stripe-php/init.php');
         $settingData  = $this->Settings_model->getSettingsById(1);
-        $stripeSecretKey = $settingData['stripe_secret_key'] ?? '';
+        $stripeSecretKey = $this->Settings_model->getStripeSecretKey();
         \Stripe\Stripe::setApiKey($stripeSecretKey);
 
         try {

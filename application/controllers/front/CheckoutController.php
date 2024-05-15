@@ -35,7 +35,7 @@ class CheckoutController extends MY_Controller {
         }
         $this->data['cart_products'] = $cartProducts;
         $this->data['shippingCharge'] = $settingData['shipping_charges'] ?? 0;
-        $this->data['stripe_publishable_key'] = $settingData['stripe_publishable_key'] ?? '';
+        $this->data['stripe_publishable_key'] = $this->Settings_model->getStripePublishableKey();
         $this->data['countries'] = $this->Countries_model->getCountrCodeWiseCountry();
         $this->frontRenderTemplate('front/Checkout/userCheckout', $this->data);
     }

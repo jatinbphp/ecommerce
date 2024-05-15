@@ -140,15 +140,11 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
-                                                            <div class="form-group">
-                                                                <?php echo form_label('Country :', 'country_0', array('class' => 'control-label')); ?>
-                                                                <span class="text-red">*</span>
-                                                                <?php echo form_input(array(
-                                                                    'name' => 'addresses[new][0][country]',
-                                                                    'id' => 'country_0',
-                                                                    'class' => 'form-control chk-required',
-                                                                    'placeholder' => 'Enter Country'
-                                                                )); ?>
+                                                        <div class="form-group">
+                                                                <?php echo form_label('Select Country :', 'country_0', array('class' => 'control-label')); ?><span class="text-red">*</span>
+                                                                <br>
+                                                                <?php echo form_dropdown('addresses[new][0][country]', ($countries), '', ['class' => 'form-control', 'id' => "country_0", 'style' => 'width:100%']); ?>
+                                                                <?php echo form_error('country_id', '<p class="text-danger">', '</p>'); ?>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">

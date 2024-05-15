@@ -450,7 +450,7 @@ $(document).ready(function() {
 
 
     function addNewAddress() {
-             addressCounter++;
+        addressCounter++;
         var newAddress = $('#addressTemplate').clone();
         newAddress.removeAttr('id'); // Remove ID attribute to avoid duplicates
 
@@ -467,18 +467,19 @@ $(document).ready(function() {
 
         // Append the new address to the container
         $('#extraAddress').append(newAddress.html());
-        }
+        $('#title_0_'+addressCounter).focus();
+    }
 
-        // Add new address when button is clicked
-        $('#addressBtn').on('click', function() {
-            addNewAddress();
-        });
+    // Add new address when button is clicked
+    $('#addressBtn').on('click', function() {
+        addNewAddress();
+    });
 
-        $(document).on('click', '.delete-new-address', function() {
-            $(this).closest('.user-addresses').remove();
-        });
+    $(document).on('click', '.delete-new-address', function() {
+        $(this).closest('.user-addresses').remove();
+    });
 
-        $('.delete-address').on('click', function() {
+    $('.delete-address').on('click', function() {
         var addressId = $(this).data('address-id');
         var addressForm = $(this).closest('.user-addresses');
 

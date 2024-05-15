@@ -12,6 +12,9 @@
         <li class="nav-item">
             <a class="nav-link" id="tab4" data-toggle="tab" href="#content4">Orders</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" id="tab5" data-toggle="tab" href="#content5">Payments</a>
+        </li>
     </ul>
 
     <style type="text/css">
@@ -146,7 +149,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <?php echo form_label('Order Cancel Period:', 'order_cancel_period'); ?>
+                                    <?php echo form_label('Order Cancel Period (In days):', 'order_cancel_period'); ?>
                                     <?php echo form_input(['name' => 'order_cancel_period', 'id' => 'order_cancel_period', 'class' => 'form-control', 'placeholder' => 'Enter Cancel Order Period', 'value' => isset($settings_data['order_cancel_period']) ? $settings_data['order_cancel_period'] : '']); ?>
                                     <?php echo form_error('order_cancel_period', '<div class="text-danger">', '</div>'); ?>
                                 </div>
@@ -156,6 +159,54 @@
                                     <?php echo form_label('Shipping Charges:', 'shipping_charges'); ?>
                                     <?php echo form_input(['name' => 'shipping_charges', 'id' => 'shipping_charges', 'class' => 'form-control', 'placeholder' => 'Enter Shipping Charges', 'value' => isset($settings_data['shipping_charges']) ? $settings_data['shipping_charges'] : '']); ?>
                                     <?php echo form_error('shipping_charges', '<div class="text-danger">', '</div>'); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content 5 -->
+        <div class="row tab-pane fade" id="content5">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class='col-md-12'>
+                                <div class="form-group">
+                                    <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <input type="checkbox" name="is_stripe_live_mode" class="custom-control-input" id="is_stripe_live_mode" <?php echo (isset($settings_data['is_stripe_live_mode']) && $settings_data['is_stripe_live_mode']) ? 'checked' : '' ?>>
+                                        <label class="custom-control-label" for="is_stripe_live_mode">Is Stripe Live Mode</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <?php echo form_label('Testing Stripe Publishable Key:', 'stripe_publishable_key'); ?>
+                                    <?php echo form_input(['name' => 'stripe_publishable_key', 'id' => 'stripe_publishable_key', 'class' => 'form-control', 'placeholder' => 'Enter Testing Stripe Publishable Key', 'value' => isset($settings_data['stripe_publishable_key']) ? $settings_data['stripe_publishable_key'] : '']); ?>
+                                    <?php echo form_error('stripe_publishable_key', '<div class="text-danger">', '</div>'); ?>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <?php echo form_label('Testing Stripe Secret Key:', 'stripe_secret_key'); ?>
+                                    <?php echo form_input(['name' => 'stripe_secret_key', 'id' => 'stripe_secret_key', 'class' => 'form-control', 'placeholder' => 'Enter Testing Stripe Secret Key', 'value' => isset($settings_data['stripe_secret_key']) ? $settings_data['stripe_secret_key'] : '']); ?>
+                                    <?php echo form_error('stripe_secret_key', '<div class="text-danger">', '</div>'); ?>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <?php echo form_label('Live Stripe Publishable Key:', 'live_stripe_publishable_key'); ?>
+                                    <?php echo form_input(['name' => 'live_stripe_publishable_key', 'id' => 'live_stripe_publishable_key', 'class' => 'form-control', 'placeholder' => 'Enter Live Stripe Publishable Key', 'value' => isset($settings_data['live_stripe_publishable_key']) ? $settings_data['live_stripe_publishable_key'] : '']); ?>
+                                    <?php echo form_error('live_stripe_publishable_key', '<div class="text-danger">', '</div>'); ?>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <?php echo form_label('Live Stripe Secret Key:', 'live_stripe_secret_key'); ?>
+                                    <?php echo form_input(['name' => 'live_stripe_secret_key', 'id' => 'live_stripe_secret_key', 'class' => 'form-control', 'placeholder' => 'Enter Live Stripe Secret Key', 'value' => isset($settings_data['live_stripe_secret_key']) ? $settings_data['live_stripe_secret_key'] : '']); ?>
+                                    <?php echo form_error('live_stripe_secret_key', '<div class="text-danger">', '</div>'); ?>
                                 </div>
                             </div>
                         </div>

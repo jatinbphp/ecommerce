@@ -69,8 +69,8 @@
             <?php echo form_label('Select Country: <span class="text-danger">*</span>', 'country', ['class' => 'control-label']); ?>
             <br>
             <?php echo form_dropdown('country', ($countries ?? ['' => 'No Data Available']), isset($userAddresses['country']) ? $userAddresses['country'] : '', ['class' => 'form-control select2', 'id' => 'country']); ?>
-            <span class="category-error"></span>
-            <?php echo form_error('category_id', '<p class="text-danger">', '</p>'); ?>
+            <span class="country-error"></span>
+            <?php echo form_error('country_id', '<p class="text-danger">', '</p>'); ?>
         </div>
     </div>
     

@@ -74,9 +74,10 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <?php echo form_label('Country :', 'country_'.$key, array('class' => 'control-label')); ?>
-                                <span class="text-red">*</span>
-                                <?php echo form_input(array('class' => 'form-control chk-required', 'placeholder' => 'Enter Country', 'id' => 'country_'.$key, 'name' => 'addresses[existing]['.$val['id'].'][country]', 'type' => 'text', 'value' => $val['country'])); ?>
+                                <?php echo form_label('Select Country :', 'country_'.$key, array('class' => 'control-label')); ?><span class="text-red">*</span>
+                                <br>
+                                <?php echo form_dropdown('addresses[existing]['.$val['id'].'][country]', ($countries ?? ['' => 'No Data Available']), isset($val['country']) ? $val['country'] : '', ['class' => 'form-control select2', 'id' => "country_$key", 'style' => 'width:100%']); ?>
+                                <?php echo form_error('country_id', '<p class="text-danger">', '</p>'); ?>
                             </div>
                         </div>
                         <div class="col-md-3">

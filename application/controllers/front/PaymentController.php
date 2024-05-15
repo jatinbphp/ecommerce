@@ -26,10 +26,8 @@ class PaymentController extends MY_Controller {
         $json_str = file_get_contents('php://input');
         $json_obj = json_decode($json_str);
 
-        $settingData  = $this->Settings_model->getSettingsById(1);
-        $stripeSecretKey = $settingData['stripe_secret_key'] ?? '';
-
-        $userId = $this->session->userdata('userId');
+        $stripeSecretKey = $this->Settings_model->getStripeSecretKey();
+        $userId          = $this->session->userdata('userId');
         
         \Stripe\Stripe::setApiKey($stripeSecretKey);
         if($userId){

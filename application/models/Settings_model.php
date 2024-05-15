@@ -40,4 +40,22 @@ class Settings_model extends CI_Model
         return $query->row_array(); 
     }
 
+    public function getStripePublishableKey() {
+        $settingData = $this->getSettingsById(1);
+
+        if(isset($settingData['is_stripe_live_mode']) && $settingData['is_stripe_live_mode']){
+            return $settingData['live_stripe_publishable_key']; 
+        }
+        return $settingData['stripe_publishable_key'];
+    
+    }
+
+    public function getStripeSecretKey() {
+        $settingData = $this->getSettingsById(1);
+        if(isset($settingData['is_stripe_live_mode']) && $settingData['is_stripe_live_mode']){
+            return $settingData['live_stripe_secret_key']; 
+        }
+        return $settingData['stripe_secret_key'];
+    }
+
 }
