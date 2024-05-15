@@ -440,14 +440,18 @@ class Order_model extends CI_Model
             $taxPercentage = $taxData->tax_breakdown['0']->tax_rate_details->percentage_decimal ?? 0;
             $afterTaxAmount = $taxData->amount_total ?? 0;
             $taxAmount      = $taxData->tax_amount_exclusive ?? 0;
-
+    
             $data = [
                 'tax_percentage'   => $taxPercentage,
                 'after_tax_amount' => $afterTaxAmount,
                 'tax_amount'       => $taxAmount,
             ];
         } catch (\Stripe\Exception\ApiErrorException $e) {
-            $data = [];
+            $data = [
+                'tax_percentage'   => 0,
+                'after_tax_amount' => $amount,
+                'tax_amount'       => 0,
+            ];
         }
 
         return $data;
