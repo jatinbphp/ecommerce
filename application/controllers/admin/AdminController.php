@@ -72,6 +72,9 @@ class AdminController extends MY_Controller {
         
         if($id && $tableName && $type){
             $data = ['status' => ($type == 'unassign') ? 'inactive' : 'active'];
+            if($tableName == 'users'){
+                $data['login_attempts'] = 0;
+            }
             $this->db->where('id', $id);
             $this->db->update($tableName, $data);
         }
