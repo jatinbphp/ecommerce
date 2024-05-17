@@ -301,7 +301,6 @@ function removeOptionRow(divId, type){
 //remove the row
 function deleteRow(divId, type){
     if(type==1){
-        console.log($('#options_values_'+divId).parent('div').children('div').length);
         if($('#options_values_'+divId).parent('div').children('div').length <= 2){
             swal("Error", "You cannot remove all option values. If you wish to remove them, you must delete the entire option.", "error");
             return 0;
@@ -430,8 +429,6 @@ function removeAdditionalProductImg(img_name, image_id, product_id){
 
 function updateOptions(select, optionId){
     var selectedOptions = $(select).val();
-    console.log(selectedOptions);
-    console.log(optionId);
     var className = '';
     var colorElement = '';
     if(selectedOptions == 'color'){     

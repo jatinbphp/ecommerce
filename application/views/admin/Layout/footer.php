@@ -28,7 +28,7 @@
 	function AjaxUploadImage(obj,id){
         var file = obj.files[0];
         var imagefile = file.type;
-        console.log(imagefile);
+    
         var match = ["image/jpeg", "image/png", "image/jpg", 'image/webp'];
         if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]) || (imagefile == match[3])))
         {

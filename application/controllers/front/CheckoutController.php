@@ -17,6 +17,8 @@ class CheckoutController extends MY_Controller {
         $this->load->model('ProductOptionValues_model');
         $this->load->model('Settings_model');
         $this->load->model('Countries_model');
+        $this->load->model('User_model');
+        $this->load->library('email');
     }
 
     /**
@@ -25,7 +27,8 @@ class CheckoutController extends MY_Controller {
      */
     public function index() {
         $userId = $this->session->userdata('userId');
-        $this->data['user_addresses'] = $this->User_address_model->getUserAddresses($userId);
+        $this->data['user_billing_addresses'] = $this->User_address_model->getUserAddressesByType($userId, $this->User_address_model::ADDRESS_TYPE_BILLING);
+        $this->data['user_shipping_addresses'] = $this->User_address_model->getUserAddressesByType($userId, $this->User_address_model::ADDRESS_TYPE_SHIPPING);
         $cartProducts = $this->Cart_model->getUsrCartData($userId);
         $settingData  = $this->Settings_model->getSettingsById(1);
         if(!$userId){
@@ -74,7 +77,9 @@ class CheckoutController extends MY_Controller {
         ];
 
         $addressId = $this->input->post('address_id');
+        $shippingAddressId = $this->input->post('shipping_address_id');
         $orderInputs['address_id'] = $addressId;
+        $orderInputs['shipping_address_id'] = $shippingAddressId;
         if($addressId == 0){
             $addressData = [
                 'user_id'       => $userId,
@@ -120,6 +125,40 @@ class CheckoutController extends MY_Controller {
         if(isset($taxData)){
             $orderInputs['tax_percentage'] = $taxData['tax_percentage'] ?? 0;
             $orderInputs['tax_amount'] = $taxData['tax_amount'] ?? 0;
+        }
+
+        if($shippingAddressId == 0){
+            $addressData = [
+                'user_id'       => $userId,
+                'title'         => $orderData['shipping_title'] ?? '',
+                'first_name'    => $orderData['shipping_first_name'] ?? '',
+                'last_name'     => $orderData['shipping_last_name'] ?? '',
+                'company'       => $orderData['shipping_company'] ?? '',
+                'mobile_phone'  => $orderData['shipping_mobile_phone'] ?? '',
+                'address_line1' => $orderData['shipping_address_line1'] ?? '',
+                'address_line2' => $orderData['shipping_address_line2'] ?? '',
+                'country'       => $orderData['shipping_country'] ?? '',
+                'state'         => $orderData['shipping_state'] ?? '',
+                'city'          => $orderData['shipping_city'] ?? '',
+                'pincode'       => $orderData['shipping_pincode'] ?? '',
+                'additional_information' => $orderData['shipping_additional_information'] ?? '',
+                'address_type' => $this->User_address_model::ADDRESS_TYPE_SHIPPING,
+            ];
+            if($userId){
+                $newAddress = $this->User_address_model->createByUser($addressData);
+                $orderInputs['shipping_address_id'] = $newAddress;
+            }
+            $orderInputs['shipping_address_info'] = json_encode($addressData);
+        } else {
+            $addressData = $this->User_address_model->getAddressDetails($addressId);
+
+            $address = $addressData['address_line_1'] ?? '';
+            $country = $addressData['country'] ?? '';
+            $state   = $addressData['state'] ?? '';
+            $city    = $addressData['city'] ?? '';
+            $pincode = $addressData['pincode'] ?? '';
+    
+            $taxData = $this->Order_model->getTaxData($address, $city, $state, $pincode, $country);
         }
 
         $settingData  = $this->Settings_model->getSettingsById(1);
@@ -175,6 +214,10 @@ class CheckoutController extends MY_Controller {
         if($address && $userId){
             $newOrderData['address_info'] = json_encode($address);
         }
+        $shippingAddress = $this->User_address_model->getAddressDetails($shippingAddressId);
+        if($shippingAddress && $userId){
+            $newOrderData['shipping_address_info'] = json_encode($shippingAddress);
+        }
         $newOrderData['total_amount'] = $orderTotal;
         $newOrderData['status'] = 'pending';
         if($order){
@@ -202,6 +245,38 @@ class CheckoutController extends MY_Controller {
         }
 
         $data['order_id'] = $orderId;
+        $this->sendOrderConfirmationMail($orderId);
         $this->frontRenderTemplate('front/Checkout/orderComplete', $data);
+    }
+
+    public function sendOrderConfirmationMail($orderId) {
+        $orderData = $this->Order_model->getDetails($orderId);
+		$data['status'] = $this->Order_model->getStatusData();
+		$data['orderData'] = $this->Order_model->getOrderWithItemsAndOptions($orderId);
+		$userData = [];
+		if(isset($orderData['user_id']) && $orderData['user_id']){
+			$userData = $this->user_model->getUserData($orderData['user_id']);
+		}
+		$data['userData'] = $userData;
+        $message = $this->load->view('front/EmailTemplates/orderConfirmationEmail', $data, true);
+
+        $email = '';
+
+        if(isset($userData['email']) && $userData['email']){
+            $email = $userData['email'];
+
+        } else {
+            $address = json_decode(($orderData['address_info'] ?? ''), true);
+            $email = isset($address['email']) && $address['email'] ? $address['email'] : '';
+        }
+
+        if($email){
+            $this->email->from('noreply@gorentonline.com', 'Order Confirmation');
+            $this->email->to($email);
+            $this->email->subject("Order Confirmation - #$orderId");
+            $this->email->message($message);
+            $this->email->send();
+        }
+        return $this;
     }
 }

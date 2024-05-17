@@ -93,15 +93,18 @@ class PaymentController extends MY_Controller {
             if (isset($json_obj->payment_method_id) && $totalAmount) {
                 $amount = ($totalAmount * 100);
 
+                $paymentMethod = \Stripe\PaymentMethod::retrieve($json_obj->payment_method_id);
+                $paymentMethod->attach(['customer' => $stripeCustomerId]);
+
                 # Create the PaymentIntent
-                $customer_id = $stripeCustomerId;
+                $stripeCustomerId = $stripeCustomerId;
                 $intent = \Stripe\PaymentIntent::create([
                     'payment_method' => $json_obj->payment_method_id,
                     'amount' => $amount,
                     'description' => 'Ecommerce user purchase Product.',
                     'currency' => 'usd',
                     'confirm' => true,
-                    'customer' => $customer_id,
+                    'customer' => $stripeCustomerId,
                     'automatic_payment_methods' => [
                         'enabled' => true,
                         'allow_redirects' => 'never',

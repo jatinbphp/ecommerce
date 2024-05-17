@@ -121,7 +121,9 @@
                             ?>
                             <div class="">
                                 <?php foreach ($status as $key => $value): ?>
-                                <?php $checked = !isset($users) && $key == 'active' ? 'checked' : ''; ?>    
+                                <?php $statusData = (isset($userData['status'])) ? $userData['status'] : 'active';
+                                    $checked = $statusData == $key ? 'checked' : '';
+                                ?>
                                 <label>
                                     <?php echo form_radio('status', $key, $checked, 'class="flat-red"'); ?>
                                     <span style="margin-right: 10px"><?php echo $value; ?></span>

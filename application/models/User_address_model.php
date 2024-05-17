@@ -8,6 +8,15 @@ class User_address_model extends CI_Model
     public $table = "user_addresses";
     public $select_column = '*';
     
+    const ADDRESS_TYPE_BILLING  = 1;
+    const ADDRESS_TYPE_SHIPPING = 2;
+    const ADDRESS_TYPE_BILLING_TEXT = "Billing Address";
+    const ADDRESS_TYPE_SHIPPING_TEXT = "Shipping Address";
+
+    public static $addressType = [
+        self::ADDRESS_TYPE_BILLING  => self::ADDRESS_TYPE_BILLING_TEXT,
+        self::ADDRESS_TYPE_SHIPPING => self::ADDRESS_TYPE_SHIPPING_TEXT,
+    ];
 
 	public function __construct(){
 		parent::__construct();
@@ -104,6 +113,48 @@ class User_address_model extends CI_Model
                     $getData[$recCnt]['state'] = $row['state'];
                     $getData[$recCnt]['country'] = $row['country'];
                     $getData[$recCnt]['additional_information'] = $row['additional_information'];
+                    $getData[$recCnt]['address_type'] = $row['address_type'];
+                    $recCnt++;
+                }
+            }
+        }
+
+        return $getData;
+    }
+
+    /**
+     * Get user addresses based on the user ID and type.
+     *
+     * @param int $usrId The ID of the user
+     * @return array An array containing user addresses
+     */
+    
+     public function getUserAddressesByType($usrId, $type)
+    {
+         $getData = [];
+        if ($usrId) {
+            $sql = "SELECT $this->select_column FROM $this->table WHERE user_id = ? and address_type = ?";
+            $query = $this->db->query($sql, [$usrId, $type]);
+            $result = $query->result_array(); // Fetch all rows as an array of associative arrays
+            
+            if (!empty($result)) {
+                $recCnt = 1;
+                foreach ($result as $row) {
+                    
+                    $getData[$recCnt]['id'] = $row['id'];
+                    $getData[$recCnt]['title'] = $row['title'];
+                    $getData[$recCnt]['first_name'] = $row['first_name'];
+                    $getData[$recCnt]['last_name'] = $row['last_name'];
+                    $getData[$recCnt]['company'] = $row['company'];
+                    $getData[$recCnt]['mobile_phone'] = $row['mobile_phone'];
+                    $getData[$recCnt]['address_line1'] = $row['address_line1'];
+                    $getData[$recCnt]['address_line2'] = $row['address_line2'];
+                    $getData[$recCnt]['pincode'] = $row['pincode'];
+                    $getData[$recCnt]['city'] = $row['city'];
+                    $getData[$recCnt]['state'] = $row['state'];
+                    $getData[$recCnt]['country'] = $row['country'];
+                    $getData[$recCnt]['additional_information'] = $row['additional_information'];
+                    $getData[$recCnt]['address_type'] = $row['address_type'];
                     $recCnt++;
                 }
             }

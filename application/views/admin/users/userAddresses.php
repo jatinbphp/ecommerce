@@ -19,7 +19,15 @@
                         </div>
                     </div>
                     <div class="row p-2">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <?php echo form_label('Select Address Type :', 'address_type_'.$key, array('class' => 'control-label')); ?><span class="text-red">*</span>
+                                <br>
+                                <?php echo form_dropdown('addresses[existing]['.$val['id'].'][address_type]', ($addressType ?? ['' => 'No Data Available']), isset($val['address_type']) ? $val['address_type'] : '', ['class' => 'form-control select2', 'id' => "address_type_$key", 'style' => 'width:100%']); ?>
+                                <?php echo form_error('country_id', '<p class="text-danger">', '</p>'); ?>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <?php echo form_label('Title :', 'title_'.$key, array('class' => 'control-label')); ?>
                                 <?php echo form_input(array('class' => 'form-control', 'placeholder' => 'Enter Title', 'id' => 'title_'.$key, 'name' => 'addresses[existing]['.$val['id'].'][title]', 'type' => 'text', 'value' => $val['title'])); ?>

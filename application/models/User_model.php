@@ -232,13 +232,13 @@ class User_model extends CI_Model
         $this->db->where('email', $email);
         $query = $this->db->get('users');
 
-		if ($query->num_rows() > 0) {
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+      if ($query->num_rows() > 0) {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
     }
 
  /**

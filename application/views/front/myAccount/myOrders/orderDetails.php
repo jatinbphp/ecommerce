@@ -118,25 +118,75 @@
                         <table class="table m-0">
                             <tbody>
                                 <tr>
-                                    <th>Address</th>
+                                    <th width='50%'>Transaction Id</th>
+                                    <th width='50%'>Refund Id</th>
                                 </tr>
                                 <tr>
                                     <td>
+                                        <h6 class='ft-medium'><?php echo ($order->payment_intent_id ? $order->payment_intent_id : '-') ; ?></h6>
+                                    </td>
+                                    <td>
+                                        <h6 class='ft-medium'><?php echo ($order->payment_refund_id ? $order->payment_refund_id : '-') ; ?></h6>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-responsive mb-4">
+                        <table class="table m-0">
+                            <tbody>
+                                <tr>
+                                    <th width='50%'>Billing Address</th>
+                                    <th width='50%'>Shipping Address</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <?php
+                                            $addressArray = [];
+                                            if(isset($order->address_info)){
+                                                $addressArray = json_decode($order->address_info, true);
+                                            }
+                                        ?>
                                         <h5 class="ft-medium mb-1">
-                                            <?php echo isset($address['first_name']) ? $address['first_name'] : ''; ?>
-                                            <?php echo isset($address['last_name']) ? $address['last_name'] : ''; ?>
+                                            <?php echo isset($addressArray['first_name']) ? $addressArray['first_name'] : ''; ?>
+                                            <?php echo isset($addressArray['last_name']) ? $addressArray['last_name'] : ''; ?>
                                         </h5>
                                         <p>
-                                            <?php echo isset($address['title']) ? '<br><b>'.$address['title'].'</b>' : '' ?>
-                                            <?php echo isset($address['company']) ? '<br>'.$address['company'] : '' ?>
-                                            <?php echo isset($address['address_line1']) ? '<br>'.$address['address_line1']. ',' : ''?>
-                                            <?php echo (isset($address['address_line2']) && $address['address_line2']) ? '<br>' . $address['address_line2']. ',' : ''?>
-                                            <?php if (!empty($address['city']) || !empty($address['state']) || !empty($address['country']) || !empty($address['pincode'])): ?>
+                                            <?php echo isset($addressArray['title']) ? '<br><b>'.$addressArray['title'].'</b>' : '' ?>
+                                            <?php echo isset($addressArray['company']) ? '<br>'.$addressArray['company'] : '' ?>
+                                            <?php echo isset($addressArray['address_line1']) ? '<br>'.$addressArray['address_line1']. ',' : ''?>
+                                            <?php echo (isset($addressArray['address_line2']) && $addressArray['address_line2']) ? '<br>' . $addressArray['address_line2']. ',' : ''?>
+                                            <?php if (!empty($addressArray['city']) || !empty($addressArray['state']) || !empty($addressArray['country']) || !empty($addressArray['pincode'])): ?>
                                                 <br>
-                                                <?php echo isset($address['pincode']) ? $address['pincode']. ' - ' : ''; ?>
-                                                <?php echo isset($address['city']) ? $address['city'] . ', ' : ''; ?>
-                                                <?php echo isset($address['state']) ? $address['state'] . ', ' : ''; ?>
-                                                <?php echo isset($address['country']) ? $address['country'] . ', ' : ''; ?>
+                                                <?php echo isset($addressArray['pincode']) ? $addressArray['pincode']. ' - ' : ''; ?>
+                                                <?php echo isset($addressArray['city']) ? $addressArray['city'] . ', ' : ''; ?>
+                                                <?php echo isset($addressArray['state']) ? $addressArray['state'] . ', ' : ''; ?>
+                                                <?php echo isset($addressArray['country']) ? $addressArray['country'] . ', ' : ''; ?>
+                                            <?php endif; ?>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <?php
+                                            $shippingAddressArray = [];
+                                            if(isset($order->shipping_address_info)){
+                                                $shippingAddressArray = json_decode($order->shipping_address_info, true);
+                                            }
+                                        ?>
+                                        <h5 class="ft-medium mb-1">
+                                            <?php echo isset($shippingAddressArray['first_name']) ? $shippingAddressArray['first_name'] : ''; ?>
+                                            <?php echo isset($shippingAddressArray['last_name']) ? $shippingAddressArray['last_name'] : ''; ?>
+                                        </h5>
+                                        <p>
+                                            <?php echo isset($shippingAddressArray['title']) ? '<br><b>'.$shippingAddressArray['title'].'</b>' : '' ?>
+                                            <?php echo isset($shippingAddressArray['company']) ? '<br>'.$shippingAddressArray['company'] : '' ?>
+                                            <?php echo isset($shippingAddressArray['address_line1']) ? '<br>'.$shippingAddressArray['address_line1']. ',' : ''?>
+                                            <?php echo (isset($shippingAddressArray['address_line2']) && $shippingAddressArray['address_line2']) ? '<br>' . $shippingAddressArray['address_line2']. ',' : ''?>
+                                            <?php if (!empty($shippingAddressArray['city']) || !empty($shippingAddressArray['state']) || !empty($shippingAddressArray['country']) || !empty($shippingAddressArray['pincode'])): ?>
+                                                <br>
+                                                <?php echo isset($shippingAddressArray['pincode']) ? $shippingAddressArray['pincode']. ' - ' : ''; ?>
+                                                <?php echo isset($shippingAddressArray['city']) ? $shippingAddressArray['city'] . ', ' : ''; ?>
+                                                <?php echo isset($shippingAddressArray['state']) ? $shippingAddressArray['state'] . ', ' : ''; ?>
+                                                <?php echo isset($shippingAddressArray['country']) ? $shippingAddressArray['country'] . ', ' : ''; ?>
                                             <?php endif; ?>
                                         </p>
                                     </td>
@@ -160,7 +210,7 @@
                         <table class="table m-0">
                             <tbody>
                                 <tr>
-                                    <th>Delivery Method</th>
+                                    <th>Payment Method</th>
                                 </tr>
                                 <tr>
                                     <td><?php echo $order->delivey_method; ?></td>

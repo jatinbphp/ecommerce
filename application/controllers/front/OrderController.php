@@ -104,7 +104,6 @@ class OrderController extends MY_Controller {
         $data['user']       = $user;
         $data['orderItems'] = $orderItems;
         $data['orderAttributes'] = $orderAttributes;
-        $data['address']    = $address;
 
         $this->frontRenderTemplate('front/myAccount/myOrders/orderDetails', $data);
     }
@@ -125,6 +124,7 @@ class OrderController extends MY_Controller {
                 if($cancelOrderData && isset($cancelOrderData['refund_id'])){
                     $data['payment_refund_id'] = $cancelOrderData['refund_id'];
                 }
+                $this->Order_model->sendOrderStatusMail($orderId, $this->Order_model::STATUS_TYPE_CANCEL);
             }
             
             $this->Order_model->edit($data, $orderId);

@@ -1,16 +1,4 @@
 <div class="row mb-2">
-    <?php if(isset($addressType)): ?>
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            <div class="form-group">
-                <?php echo form_error('address_type', '<div class="text-danger">', '</div>'); ?>
-                <?php echo form_label('Select Address Type: <span class="text-danger">*</span>', 'address_type', ['class' => 'control-label text-dark ft-medium']); ?>
-                <br>
-                <?php echo form_dropdown('address_type', ($addressType ?? ['' => 'No Data Available']), isset($userAddresses['address_type']) ? $userAddresses['address_type'] : '', ['class' => 'form-control select2', 'id' => 'address_type']); ?>
-                <span class="country-error"></span>
-                <?php echo form_error('country_id', '<p class="text-danger">', '</p>'); ?>
-            </div>
-        </div>
-    <?php endif ?>
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="form-group">
             <label for="title" class="text-dark ft-medium">Title: </label>
@@ -30,16 +18,16 @@
 
     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
         <div class="form-group">
-            <label for="first_name" class="text-dark ft-medium">First Name:<span style="color:red">*</span></label>
-            <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name" value="<?php echo set_value('first_name', isset($userAddresses['first_name']) ? $userAddresses['first_name'] : ''); ?>" >
+            <label for="first_name_0" class="text-dark ft-medium">First Name:<span style="color:red">*</span></label>
+            <input type="text" name="first_name" id="first_name_0" class="form-control" placeholder="First Name" value="<?php echo set_value('first_name', isset($userAddresses['first_name']) ? $userAddresses['first_name'] : ''); ?>" >
             <?php echo form_error('first_name', '<div class="text-danger">', '</div>'); ?>
         </div>
     </div>
     
     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
         <div class="form-group">
-            <label for="last_name" class="text-dark ft-medium">Last Name:<span style="color:red">*</span></label>
-            <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Last Name" value="<?php echo set_value('last_name', isset($userAddresses['last_name']) ? $userAddresses['last_name'] : ''); ?>">
+            <label for="last_name_0" class="text-dark ft-medium">Last Name:<span style="color:red">*</span></label>
+            <input type="text" name="last_name" id="last_name_0" class="form-control" placeholder="Last Name" value="<?php echo set_value('last_name', isset($userAddresses['last_name']) ? $userAddresses['last_name'] : ''); ?>">
             <?php echo form_error('last_name', '<div class="text-danger">', '</div>'); ?>
         </div>
     </div>
@@ -54,24 +42,24 @@
     
     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
         <div class="form-group">
-            <label for="mobile_phone" class="text-dark ft-medium">Mobile Number:<span style="color:red">*</span></label>
-            <input type="text" name="mobile_phone" id="mobile_phone" class="form-control" placeholder="Mobile Number" value="<?php echo set_value('mobile_phone', isset($userAddresses['mobile_phone']) ? $userAddresses['mobile_phone'] : ''); ?>">
+            <label for="mobile_phone_0" class="text-dark ft-medium">Mobile Number:<span style="color:red">*</span></label>
+            <input type="text" name="mobile_phone" id="mobile_phone_0" class="form-control" placeholder="Mobile Number" value="<?php echo set_value('mobile_phone', isset($userAddresses['mobile_phone']) ? $userAddresses['mobile_phone'] : ''); ?>">
             <?php echo form_error('mobile_phone', '<div class="text-danger">', '</div>'); ?>
         </div>
     </div>
     
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="form-group">
-            <label for="address_line1" class="text-dark ft-medium">Address:<span style="color:red">*</span></label>
-            <input type="text" name="address_line1" id="address_line1" class="form-control address" placeholder="Address" value="<?php echo set_value('address_line1', isset($userAddresses['address_line1']) ? $userAddresses['address_line1'] : ''); ?>">
+            <label for="address_line1_0" class="text-dark ft-medium">Address:<span style="color:red">*</span></label>
+            <input type="text" name="address_line1" id="address_line1_0" class="form-control address" placeholder="Address" value="<?php echo set_value('address_line1', isset($userAddresses['address_line1']) ? $userAddresses['address_line1'] : ''); ?>">
             <?php echo form_error('address_line1', '<div class="text-danger">', '</div>'); ?>
         </div>
     </div>
     
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="form-group">
-            <label for="address_line2" class="text-dark ft-medium">Address (Line 2):</label>
-            <input type="text" name="address_line2" id="address_line2" class="form-control address" placeholder="Address (Line 2)" value="<?php echo set_value('address_line2', isset($userAddresses['address_line2']) ? $userAddresses['address_line2'] : ''); ?>">
+            <label for="address_line2_0" class="text-dark ft-medium">Address (Line 2):</label>
+            <input type="text" name="address_line2" id="address_line2_0" class="form-control address" placeholder="Address (Line 2)" value="<?php echo set_value('address_line2', isset($userAddresses['address_line2']) ? $userAddresses['address_line2'] : ''); ?>">
         </div>
     </div>
     
@@ -80,7 +68,7 @@
             <?php echo form_error('country', '<div class="text-danger">', '</div>'); ?>
             <?php echo form_label('Select Country: <span class="text-danger">*</span>', 'country', ['class' => 'control-label text-dark ft-medium']); ?>
             <br>
-            <?php echo form_dropdown('country', ($countries ?? ['' => 'No Data Available']), isset($userAddresses['country']) ? $userAddresses['country'] : '', ['class' => 'form-control select2 address', 'id' => 'country']); ?>
+            <?php echo form_dropdown('country', ($countries ?? ['' => 'No Data Available']), isset($userAddresses['country']) ? $userAddresses['country'] : '', ['class' => 'form-control select2 address', 'id' => 'country_0']); ?>
             <span class="country-error"></span>
             <?php echo form_error('country_id', '<p class="text-danger">', '</p>'); ?>
         </div>
@@ -88,24 +76,24 @@
     
     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
         <div class="form-group">
-            <label for="state" class="text-dark ft-medium">State:<span style="color:red">*</span></label>
-            <input type="text" name="state" id="state" class="form-control address" placeholder="State" value="<?php echo set_value('state', isset($userAddresses['state']) ? $userAddresses['state'] : ''); ?>">
+            <label for="state_0" class="text-dark ft-medium">State:<span style="color:red">*</span></label>
+            <input type="text" name="state" id="state_0" class="form-control address" placeholder="State" value="<?php echo set_value('state', isset($userAddresses['state']) ? $userAddresses['state'] : ''); ?>">
             <?php echo form_error('state', '<div class="text-danger">', '</div>'); ?>
         </div>
     </div>
     
     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
         <div class="form-group">
-            <label for="city" class="text-dark ft-medium">City:<span style="color:red">*</span></label>
-            <input type="text" name="city" id="city" class="form-control address" placeholder="City / Town" value="<?php echo set_value('city', isset($userAddresses['city']) ? $userAddresses['city'] : ''); ?>">
+            <label for="city_0" class="text-dark ft-medium">City:<span style="color:red">*</span></label>
+            <input type="text" name="city" id="city_0" class="form-control address" placeholder="City / Town" value="<?php echo set_value('city', isset($userAddresses['city']) ? $userAddresses['city'] : ''); ?>">
             <?php echo form_error('city', '<div class="text-danger">', '</div>'); ?>
         </div>
     </div>
     
     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
         <div class="form-group">
-            <label for="pincode" class="text-dark ft-medium">ZIP / Pincode:<span style="color:red">*</span></label>
-            <input type="text" name="pincode" id="pincode" class="form-control address" placeholder="Zip / Pincode" value="<?php echo set_value('pincode', isset($userAddresses['pincode']) ? $userAddresses['pincode'] : ''); ?>">
+            <label for="pincode_0" class="text-dark ft-medium">ZIP / Pincode:<span style="color:red">*</span></label>
+            <input type="text" name="pincode" id="pincode_0" class="form-control address" placeholder="Zip / Pincode" value="<?php echo set_value('pincode', isset($userAddresses['pincode']) ? $userAddresses['pincode'] : ''); ?>">
             <?php echo form_error('pincode', '<div class="text-danger">', '</div>'); ?>
         </div>
     </div>

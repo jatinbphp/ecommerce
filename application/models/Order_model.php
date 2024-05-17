@@ -20,6 +20,7 @@ class Order_model extends CI_Model
         $this->load->model('user_model');
         $this->load->model('Cart_model');
         $this->load->model('Settings_model');
+        $this->load->library('email');
 	    parent::__construct();
 	}
 
@@ -482,6 +483,42 @@ class Order_model extends CI_Model
         }
 
         return $data;
+    }
+
+    public function sendOrderStatusMail($orderId, $status) {
+        $orderData = $this->getDetails($orderId);
+		$userData = [];
+		if(isset($orderData['user_id']) && $orderData['user_id']){
+			$userData = $this->user_model->getUserData($orderData['user_id']);
+		}
+		$data['userData'] = $userData;
+        $data['orderData'] = $orderData;
+
+        $email = '';
+
+        if(isset($userData['email']) && $userData['email']){
+            $email = $userData['email'];
+
+        } else {
+            $address = json_decode(($orderData['address_info'] ?? ''), true);
+            $email = isset($address['email']) && $address['email'] ? $address['email'] : '';
+        }
+
+        if($email){
+            if($status == self::STATUS_TYPE_CANCEL){
+                $message = $this->load->view('front/EmailTemplates/cancelOrderEmail', $data, true);
+                $subject = 'Order Cancellation';
+            } else {
+                $message = $this->load->view('front/EmailTemplates/completeOrderEmail', $data, true);
+                $subject = 'Order Complete';
+            }
+            $this->email->from('noreply@gorentonline.com', $subject);
+            $this->email->to($email);
+            $this->email->subject("$subject - #$orderId");
+            $this->email->message($message);
+            $this->email->send();
+        }
+        return $this;
     }
 
 }

@@ -41,7 +41,15 @@
                                                         </div>
                                                     </div>
                                                     <div class="row p-2">
-                                                        <div class="col-md-12">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <?php echo form_label('Select Address Type :', 'address_type_0', array('class' => 'control-label')); ?><span class="text-red">*</span>
+                                                                <br>
+                                                                <?php echo form_dropdown('addresses[new][0][address_type]', ($addressType), '', ['class' => 'form-control', 'id' => "address_type_0", 'style' => 'width:100%']); ?>
+                                                                <?php echo form_error('address_type', '<p class="text-danger">', '</p>'); ?>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <?php echo form_label('Title :', 'title_0', array('class' => 'control-label')); ?>
                                                                 <?php echo form_input(array(
@@ -140,7 +148,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
-                                                        <div class="form-group">
+                                                            <div class="form-group">
                                                                 <?php echo form_label('Select Country :', 'country_0', array('class' => 'control-label')); ?><span class="text-red">*</span>
                                                                 <br>
                                                                 <?php echo form_dropdown('addresses[new][0][country]', ($countries), '', ['class' => 'form-control', 'id' => "country_0", 'style' => 'width:100%']); ?>

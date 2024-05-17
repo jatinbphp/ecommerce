@@ -75,8 +75,8 @@
                 </a>
             </div>
         <?php else: ?>
-            <div class="d-flex align-items-center justify-content-between px-3 py-3 col-12">
-                <h6 class="mb-0 ft-medium">No cart data available.</h6>
+            <div class="align-items-center justify-content-between px-3 py-3 col-12">
+                <h6 class="mb-0 ft-medium text-center">No cart data available.</h6>
             </div>
         <?php endif; ?>
     </div>

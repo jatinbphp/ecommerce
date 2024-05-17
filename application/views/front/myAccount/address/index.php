@@ -13,7 +13,12 @@
                                 <div class="card-wrap border rounded mb-4">
                                     <div class="card-wrap-header px-3 py-2 br-bottom d-flex align-items-center justify-content-between">
                                         <div class="card-header-flex">
-                                            <h4 class="fs-md ft-bold mb-1">Delivery Address</h4>
+                                            <?php
+                                                $addressType = $address['address_type'] ?? 1;
+                                                $addressTypeTextArray = \User_address_model::$addressType;
+                                                $addressTypeText = $addressTypeTextArray[$addressType] ?? \User_address_model::ADDRESS_TYPE_BILLING_TEXT;
+                                            ?>
+                                            <h4 class="fs-md ft-bold mb-1"><?php echo $addressTypeText; ?></h4>
                                         </div>
                                         <div class="card-head-last-flex">
                                             <a class="border p-3 circle text-dark d-inline-flex align-items-center justify-content-center" href="<?php echo site_url('profile-update-data/'.($address['id'] ?? 0)); ?>">

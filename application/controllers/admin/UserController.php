@@ -159,6 +159,7 @@ class UserController extends MY_Controller
 				$this->data['status'] = $this->user_model::$status;
 				$this->data['userAddress'] = $getUsrAddr;
 				$this->data['countries'] = $this->Countries_model->getCountrCodeWiseCountry();
+				$this->data['addressType'] = $this->user_address_model::$addressType;
 				$this->data['userAddressCnt'] = $userAddrCnt;
 				$getCountryCode = $this->countries_model->getCountryData();
 				$this->data['countryCodes'] = $getCountryCode;
@@ -181,6 +182,7 @@ class UserController extends MY_Controller
 			            $this->form_validation->set_rules("addresses[existing][$key][country]", 'Country', 'required');
 			            $this->form_validation->set_rules("addresses[existing][$key][state]", 'State', 'required');
 			            $this->form_validation->set_rules("addresses[existing][$key][city]", 'City / Town', 'required');
+			            $this->form_validation->set_rules("addresses[existing][$key][address_type]", 'Address type', 'required');
 	        		}
 
 
@@ -212,6 +214,7 @@ class UserController extends MY_Controller
 			            $this->form_validation->set_rules("addresses[new][$key][country]", 'Country', 'required');
 			            $this->form_validation->set_rules("addresses[new][$key][state]", 'State', 'required');
 			            $this->form_validation->set_rules("addresses[new][$key][city]", 'City / Town', 'required');
+			            $this->form_validation->set_rules("addresses[new][$key][address_type]", 'Address type', 'required');
 	    		}
 
 	    		if ($this->form_validation->run() == FALSE) {

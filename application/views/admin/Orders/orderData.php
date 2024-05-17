@@ -99,11 +99,29 @@
                     </tr>
                 </tfoot>
             </table>
-        
+                        
             <table class="table table-bordered">
                 <tbody>
                     <tr>
-                        <th>Address</th>
+                        <th width='50%'>Transaction Id</th>
+                        <th width='50%'>Refund Id</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h6 class='ft-medium'><?php echo ((isset($orderData['payment_intent_id']) && $orderData['payment_intent_id']) ? $orderData['payment_intent_id'] : '-') ; ?></h6>
+                        </td>
+                        <td>
+                            <h6 class='ft-medium'><?php echo ((isset($orderData['payment_refund_id']) && $orderData['payment_refund_id']) ? $orderData['payment_refund_id'] : '-') ; ?></h6>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th width=50%>Billing Address</th>
+                        <th width=50%>Shipping Address</th>
                     </tr>
                     <tr>
                         <td>
@@ -129,7 +147,7 @@
                                     <br><b><?php echo $addressArray['title'] ?></b>
                                 <?php endif ?>
 
-                                <?php if (isset($addressArray['company'])): ?>
+                                <?php if (isset($addressArray['company']) && $addressArray['company']): ?>
                                     <br><?php echo $addressArray['company'] ?>
                                 <?php endif ?>
 
@@ -156,6 +174,56 @@
                                 <?php endif; ?>
                             </p>
                         </td>
+                        <td>
+                            <?php
+                                $shippingAddressArray = [];
+                                if(isset($orderData['shipping_address_info'])){
+                                    $shippingAddressArray = json_decode($orderData['shipping_address_info'], true);
+                                }
+                            ?>
+
+                            <h5 class="ft-medium mb-1">
+                                <?php if(isset($shippingAddressArray['first_name'])): ?>
+                                    <?php echo $shippingAddressArray['first_name'] ?>
+                                <?php endif ?>
+
+                                <?php if(isset($shippingAddressArray['last_name'])): ?>
+                                    <?php echo $shippingAddressArray['last_name'] ?>
+                                <?php endif ?>
+                            </h5>
+
+                            <p>
+                                <?php if (isset($shippingAddressArray['title'])): ?>
+                                    <br><b><?php echo $shippingAddressArray['title'] ?></b>
+                                <?php endif ?>
+
+                                <?php if (isset($shippingAddressArray['company']) && $shippingAddressArray['company']): ?>
+                                    <br><?php echo $shippingAddressArray['company'] ?>
+                                <?php endif ?>
+
+                                <?php if (isset($shippingAddressArray['address_line1'])): ?>
+                                    <br><?php echo $shippingAddressArray['address_line1'] ?>,
+                                <?php endif ?>
+
+                                <?php if (isset($shippingAddressArray['address_line2']) && $shippingAddressArray['address_line2']): ?>
+                                    <br><?php echo $shippingAddressArray['address_line2'] ?>,
+                                <?php endif ?>
+
+                                <br>
+                                <?php if (isset($shippingAddressArray['pincode'])) : ?>
+                                    <?php echo $shippingAddressArray['pincode']; ?> -
+                                <?php endif; ?>
+                                <?php if (isset($shippingAddressArray['city'])) : ?>
+                                    <?php echo $shippingAddressArray['city']; ?>,
+                                <?php endif; ?>
+                                <?php if (isset($shippingAddressArray['state'])) : ?>
+                                    <?php echo $shippingAddressArray['state']; ?>,
+                                <?php endif; ?>
+                                <?php if (isset($shippingAddressArray['country'])) : ?>
+                                    <?php echo $shippingAddressArray['country']; ?>
+                                <?php endif; ?>
+                            </p>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -167,7 +235,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <?php echo ($orderData['notes'] ?? '') ?>
+                            <?php echo ((isset($orderData['notes']) && $orderData['notes']) ? $orderData['notes'] : '-') ?>
                         </td>
                     </tr>
                 </tbody>
@@ -176,7 +244,7 @@
             <table class="table table-bordered">
                 <tbody>
                     <tr>
-                        <th>Delivery Method</th>
+                        <th>Payment Method</th>
                     </tr>
                     <tr>
                         <td>

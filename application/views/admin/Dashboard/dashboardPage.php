@@ -197,7 +197,6 @@ $(document).ready(function() {
     $order_date = json_encode($totalOrdersData);
     ?>
 	var order_date = <?php echo $order_date; ?>;
-	console.log(order_date);
 
 	order_date.forEach(function(item) {
 	    labelsOrders.push(item.order_date);
@@ -237,9 +236,5 @@ $(document).ready(function() {
 	    data: barChartDataOrders,
 	    options: ordersChartOptions
 	});
-
-	 $('.order-info').click(function() {
-        $('#orderInfoModal').modal('show');
-    });
 });
 </script>

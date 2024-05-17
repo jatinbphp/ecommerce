@@ -104,59 +104,17 @@ $(document).ready(function() {
     });
 
     $('#checkoutSubmit').click(function(event) {
+        var validationArray = getValidationArray();
         event.preventDefault();
         var cartData = localStorage.getItem('cartData');
         if(cartData){
             $('#userCart').val(cartData);
         }
         var addressId = $('input[name="address_id"]:checked').val();
+        var shippingAddressId = $('input[name="shipping_address_id"]:checked').val();
         $('#CheckoutForm').validate().destroy();
-        if (addressId === '0') {
-            $('#CheckoutForm').validate({
-                rules: {
-                    first_name: 'required',
-                    last_name: 'required',
-                    address_line1: 'required',
-                    country: 'required',
-                    state: 'required',
-                    city: 'required',
-                    pincode: 'required',
-                    email: {
-                        required: true,
-                        email: true
-                    },
-                    mobile_phone: {
-                        required: true,
-                        minlength: 10,
-                        maxlength: 10,
-                        number:true,
-                    },
-                },
-                messages: {
-                    first_name: "Please enter your first name",
-                    last_name: "Please enter your last name",
-                    address_line1: "Please enter your address line1 name",
-                    country: "Please enter your country name",
-                    state: "Please enter your state name",
-                    city: "Please enter your city name",
-                    pincode: "Please enter your pincode name",
-                    mobile_phone: {
-                        required: "Please enter your phone number",
-                        minlength: "Your phone number must be at least {0} digits",
-                        maxlength: "Your phone number must not exceed {0} digits",
-                        number: "Please enter a valid phone number"
-                    },
-                    email: {
-                        required: "Please enter your email",
-                        email: "Please enter a valid email address"
-                    }
-                },
-                errorPlacement: function(error, element) {
-                    var errorSpan = $('<span class="text-danger"></span>');
-                    errorSpan.insertAfter(element);
-                    error.appendTo(errorSpan);
-                },
-            });
+        if (addressId === '0' || shippingAddressId === '0') {
+            $('#CheckoutForm').validate(validationArray);
             if ($('#CheckoutForm').valid()) {
                 payWithStripe();
             }
@@ -197,15 +155,15 @@ $(document).ready(function() {
         } else {
             // Otherwise send paymentMethod.id to your server (see Step 4)
             $("#stripe-payment-success-3ds").modal('show');
-            var firstName = $('#first_name').val();
-            var lastName = $('#last_name').val();
+            var firstName = $('#first_name_0').val();
+            var lastName = $('#last_name_0').val();
             var email    = $('#email').val();
             var userName = firstName+ ' ' +lastName;
-            var address = $('#address_line1').val();
-            var country = $('#country').val();
-            var state   = $('#state').val();
-            var city    = $('#city').val();
-            var pincode = $('#pincode').val();
+            var address = $('#address_line1_0').val();
+            var country = $('#country_0').val();
+            var state   = $('#state_0').val();
+            var city    = $('#city_0').val();
+            var pincode = $('#pincode_0').val();
             var addressId = $('.addresses-radio:checked').val();
             fetch(baseUrl+ '/payment/process-payment', {
                 method: 'POST',
@@ -236,7 +194,7 @@ $(document).ready(function() {
         if (response.error) {
             //$('.loading').fadeOut();
             $("#stripe-payment-success-3ds").modal('hide');
-            swal("Cancelled", response.error, "error");
+            swal("Error", response.error, "error");
             $("#pay_intent").val('');
             // Show error from server on payment form
         } else if (response.requires_action) {
@@ -261,21 +219,21 @@ $(document).ready(function() {
         if (result.error) {
             $("#stripe-payment-success-3ds").modal('hide');
             // Show error in payment form
-            swal("Cancelled", result.error.message, "error");
+            swal("Error", result.error.message, "error");
         } else {
             payment_intent_ID = result.paymentIntent.id;
             //alert("Handle script else");
             // The card action has been handled
             // The PaymentIntent can be confirmed again on the server
-            var firstName = $('#first_name').val();
-            var lastName = $('#last_name').val();
+            var firstName = $('#first_name_0').val();
+            var lastName = $('#last_name_0').val();
             var email    = $('#email').val();
             var userName = firstName+ ' ' +lastName;
-            var address = $('#address_line1').val();
-            var country = $('#country').val();
-            var state   = $('#state').val();
-            var city    = $('#city').val();
-            var pincode = $('#pincode').val();
+            var address = $('#address_line1_0').val();
+            var country = $('#country_0').val();
+            var state   = $('#state_0').val();
+            var city    = $('#city_0').val();
+            var pincode = $('#pincode_0').val();
             var addressId = $('.addresses-radio:checked').val();
             fetch(baseUrl+ '/payment/process-payment', {
                 method: 'POST',
@@ -303,11 +261,11 @@ $(document).ready(function() {
     }
 
     $('.address').change(function() {
-        var address = $('#address_line1').val();
-        var country = $('#country').val();
-        var state   = $('#state').val();
-        var city    = $('#city').val();
-        var pincode = $('#pincode').val();
+        var address = $('#address_line1_0').val();
+        var country = $('#country_0').val();
+        var state   = $('#state_0').val();
+        var city    = $('#city_0').val();
+        var pincode = $('#pincode_0').val();
 
         if(!address || !country || !state || !city || !pincode){
             return;
@@ -341,6 +299,58 @@ $(document).ready(function() {
     $('.addresses-radio').change(function(){
         var selectedAddress = $(this).val();
         updateTaxData(selectedAddress);
+        copyBillingAddress();
+    });
+
+    $('#first_name_0, #last_name_0, #address_line1_0, #address_line2_0, #state_0, #city_0, #pincode_0, #mobile_phone_0').keyup(function(){
+        var sameAsBilling = $('#same_as_billing:checked').val();
+        if(sameAsBilling){
+            $('#shipping_first_name').val($('#first_name_0').val());
+            $('#shipping_last_name').val($('#last_name_0').val());
+            $('#shipping_address_line1').val($('#address_line1_0').val());
+            $('#shipping_address_line2').val($('#address_line2_0').val());
+            $('#shipping_country').val($('#country_0').val());
+            $('#shipping_state').val($('#state_0').val());
+            $('#shipping_city').val($('#city_0').val());
+            $('#shipping_pincode').val($('#pincode_0').val());
+            $('#shipping_mobile_phone').val($('#mobile_phone_0').val());
+        }
+    });
+
+    $('#country_0').change(function(){
+        var sameAsBilling = $('#same_as_billing:checked').val();
+        if(sameAsBilling){
+            $('#shipping_country').val($('#country_0').val());
+        }
+    });
+
+    $('#email').keyup(function(){
+        var email = $(this).val();
+        $.ajax({
+            url:  baseUrl+"check-email",
+            type: "POST",
+            data: {
+                'email': email,
+            },
+            success: function(data){                  
+                if(data == 'false'){
+                    swal({
+                        title: "Welcome back!",
+                        text: "Please sign in to continue. Don't worry, your cart data will be saved.",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "Login",
+                        cancelButtonText: "Cancel"
+                    },
+                    function(isConfirm) {
+                        if (isConfirm) {
+                            // Redirect to the login page
+                            window.location.href = baseUrl+'signIn';
+                        }
+                    });
+                }
+            }
+        });
     });
 });
 
@@ -365,5 +375,132 @@ function updateTaxValue(data) {
     $('#tax-percentage').html(data.taxPercentage);
     $('#tax-amount').html('$'+data.taxAmount);
     $('#total-amount').html('$'+data.afterTaxAmount);
+}
+
+function getValidationArray(){
+    var addressId = $('input[name="address_id"]:checked').val();
+    var shippingAddressId = $('input[name="shipping_address_id"]:checked').val();
+    var data = {};var shippingAddressId = $('input[name="shipping_address_id"]:checked').val();
+
+    if (addressId == 0) {
+        data = {
+            rules: {
+                first_name: 'required',
+                last_name: 'required',
+                address_line1: 'required',
+                country: 'required',
+                state: 'required',
+                city: 'required',
+                pincode: 'required',
+                email: {
+                    required: true,
+                    email: true
+                },
+                mobile_phone: {
+                    required: true,
+                    minlength: 10,
+                    maxlength: 10,
+                    number: true,
+                },
+            },
+            messages: {
+                first_name: "Please enter your first name",
+                last_name: "Please enter your last name",
+                address_line1: "Please enter your address line1 name",
+                country: "Please enter your country name",
+                state: "Please enter your state name",
+                city: "Please enter your city name",
+                pincode: "Please enter your pincode name",
+                mobile_phone: {
+                    required: "Please enter your phone number",
+                    minlength: "Your phone number must be at least {0} digits",
+                    maxlength: "Your phone number must not exceed {0} digits",
+                    number: "Please enter a valid phone number"
+                },
+                email: {
+                    required: "Please enter your email",
+                    email: "Please enter a valid email address"
+                }
+            },
+            errorPlacement: commonErrorPlacement, // Use common error placement function
+        }
+    }
+
+    if (shippingAddressId == 0) {
+        if (!data.rules) {
+            data.rules = {};
+        }
+        $.extend(data.rules, {
+            shipping_first_name: 'required',
+            shipping_last_name: 'required',
+            shipping_address_line1: 'required',
+            shipping_country: 'required',
+            shipping_state: 'required',
+            shipping_city: 'required',
+            shipping_pincode: 'required',
+            shipping_email: {
+                required: true,
+                email: true
+            },
+            shipping_mobile_phone: {
+                required: true,
+                minlength: 10,
+                maxlength: 10,
+                number: true,
+            },
+        });
+
+        if (!data.messages) {
+            data.messages = {};
+        }
+        $.extend(data.messages, {
+            shipping_first_name: "Please enter your first name",
+            shipping_last_name: "Please enter your last name",
+            shipping_address_line1: "Please enter your address line1 name",
+            shipping_country: "Please enter your country name",
+            shipping_state: "Please enter your state name",
+            shipping_city: "Please enter your city name",
+            shipping_pincode: "Please enter your pincode name",
+            shipping_mobile_phone: {
+                required: "Please enter your phone number",
+                minlength: "Your phone number must be at least {0} digits",
+                maxlength: "Your phone number must not exceed {0} digits",
+                number: "Please enter a valid phone number"
+            },
+            shipping_email: {
+                required: "Please enter your email",
+                email: "Please enter a valid email address"
+            }
+        });
+
+        // Use common error placement function
+        data.errorPlacement = commonErrorPlacement;
+    }
+
+    return data;
+}
+
+function commonErrorPlacement(error, element) {
+    var errorSpan = $('<span class="text-danger"></span>');
+    errorSpan.insertAfter(element);
+    error.appendTo(errorSpan);
+}
+
+function copyBillingAddress(){
+    var addressId = $('input[name="address_id"]:checked').val();
+    var sameAsBilling = $('#same_as_billing:checked').val();
+    if(!sameAsBilling){
+        return;
+    }
+
+    var fileds = ['first_name','last_name','mobile_phone','address_line1','address_line2','country','state','city','pincode'];
+    $.each(fileds, function(index, value){
+        if(addressId == 0){
+            var elementVal = $('#'+value+'_'+addressId).val();
+        } else {
+            var elementVal = $('#'+value+'_'+addressId).text();
+        }
+        $('#shipping_'+value).val(elementVal);
+    });
 }
 </script>

@@ -97,12 +97,14 @@ class MyProfileController extends MY_Controller {
         $this->form_validation->set_rules('state', 'State', 'required');
         $this->form_validation->set_rules('city', 'City', 'required');
         $this->form_validation->set_rules('pincode', 'Pincode', 'required|numeric');
+        $this->form_validation->set_rules('address_type', 'Address Type', 'required');
         
         $userData = $this->session->userdata();
         if ($this->form_validation->run() == FALSE) {
             $data['title'] = "Address";
             $data['userDataArray'] = $userData;
             $data['countries'] = $this->Countries_model->getCountrCodeWiseCountry();
+            $data['addressType'] = $this->User_address_model::$addressType;
             $this->frontRenderTemplate('front/myAccount/address/create', $data);
             return $this;
         }
@@ -123,6 +125,7 @@ class MyProfileController extends MY_Controller {
             'company' => !empty($this->input->post('company')) ? $this->input->post('company') : "",
             'address_line2' => !empty($this->input->post('address_line2')) ? $this->input->post('address_line2') : "",
             'additional_information' => !empty($this->input->post('additional_information')) ? $this->input->post('additional_information') : "",
+            'address_type' => !empty($this->input->post('address_type')) ? $this->input->post('address_type') : 1,
         ];
 
         $this->User_address_model->insert($data);
@@ -168,6 +171,7 @@ class MyProfileController extends MY_Controller {
         $this->form_validation->set_rules('state', 'State', 'required');
         $this->form_validation->set_rules('city', 'City', 'required');
         $this->form_validation->set_rules('pincode', 'Pincode', 'required|numeric');
+        $this->form_validation->set_rules('address_type', 'Address Type', 'required');
 
         $userData = $this->session->userdata();
         $address_details = $this->User_address_model->getAddressDetails($address_id);
@@ -176,6 +180,7 @@ class MyProfileController extends MY_Controller {
             $data['userDataArray'] = $userData;
             $data['userAddresses'] = $address_details;
             $data['countries'] = $this->Countries_model->getCountrCodeWiseCountry();
+            $data['addressType'] = $this->User_address_model::$addressType;
             $data['title'] = "Address";
             $this->frontRenderTemplate('front/myAccount/address/edit', $data);
             return $this;
@@ -196,6 +201,8 @@ class MyProfileController extends MY_Controller {
             'company' => !empty($this->input->post('company')) ? $this->input->post('company') : "",
             'address_line2' => !empty($this->input->post('address_line2')) ? $this->input->post('address_line2') : "",
             'additional_information' => !empty($this->input->post('additional_information')) ? $this->input->post('additional_information') : "",
+            'address_type' => !empty($this->input->post('address_type')) ? $this->input->post('address_type') : 1,
+
         ];
 
         $this->User_address_model->update_address($address_id, $data);
