@@ -100,13 +100,13 @@
                                 </tr>
                                 <tr>
                                     <td colspan="4" class="text-right"><strong>Tax(<?php echo ($order->tax_percentage ?? 0) ?>%)</strong></td>
-                                    <td class="text-right">$<?php echo number_format($order->tax_amount, 2); ?></td>
+                                    <td class="text-right">$<?php echo number_format(($order->tax_percentage ?? 0), 2); ?></td>
                                 </tr>
                                 <tr>
                                     <td colspan="4" class="text-right"><strong>Shipping</strong></td>
                                     <td class="text-right">$<?php echo number_format($order->shipping_cost, 2); ?></td>
                                 </tr>
-                                <?php $totalAmount = ($order->total_amount + $order->shipping_cost + $order->tax_amount); ?>
+                                <?php $totalAmount = ($order->total_amount + $order->shipping_cost + ($order->tax_percentage ?? 0)); ?>
                                 <tr>
                                     <td colspan="4" class="text-right"><strong>Total</strong></td>
                                     <td class="text-right">$<?php echo number_format($totalAmount, 2); ?></td>
