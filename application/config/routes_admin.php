@@ -55,6 +55,8 @@ $route['admin/subscription-plan/edit/(:num)'] = 'admin/SubscriptionPlanControlle
 $route['admin/subscription-plan/delete/(:num)'] = 'admin/SubscriptionPlanController/delete/$1';
 $route['admin/subscription-plan/fetch_subscription_plan'] = 'admin/SubscriptionPlanController/fetchSubscriptionPlan';
 $route['admin/subscription-plan/show/(:num)'] = 'admin/SubscriptionPlanController/show/$1';
+$route['admin/subscription-plan/send-mail-template/(:num)'] = 'admin/SubscriptionPlanController/sendMailTemplate/$1';
+$route['admin/subscription-plan/send-mail/(:num)'] = 'admin/SubscriptionPlanController/sendMail/$1';
 /*Reports*/
 $route['admin/reports/user_report'] = 'admin/ReportController/indexUserOrders';
 $route['admin/reports/fetch_user_report'] = 'admin/ReportController/fetchUserReport';

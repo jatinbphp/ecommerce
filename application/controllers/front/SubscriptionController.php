@@ -31,11 +31,11 @@ class SubscriptionController extends MY_Controller
         $responce['status'] = 0;
 
         if(!$action || !$planId || !$email){
-            $message = 'Something went wrong!';
             $responce['messge'] = 'Something went wrong!';
             return $this->output->set_content_type('application/json')
             ->set_output(json_encode($responce));
         }
+        
         $data['subscription_id'] = $planId;
         $data['email'] = $email;
         if($action == 'remove'){

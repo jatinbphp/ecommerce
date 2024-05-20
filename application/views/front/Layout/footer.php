@@ -138,7 +138,6 @@
     }
 
     function openSubscription(){
-        return;
         var email = $('#subscribeEmailId').val();
         if(!email){
             SnackbarAlert('Please add email address.');

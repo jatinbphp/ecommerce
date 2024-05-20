@@ -47,8 +47,10 @@ class SubscriptionPlanController extends MY_Controller
 			$subscriptionPlanData[] = $row->name;
 			$subscriptionPlanData[] = $this->getStatusButton($row->id, $row->status, 'subscription_plans');
 			$subscriptionPlanData[] = $row->created_at;
-			$subscriptionPlanData[] = '<a href="' . base_url('admin/subscription-plan/edit/' . $row->id) . '" class="btn btn-sm btn-info"  style="margin-right:5px;"><i class="fa fa-edit"></i></a><a href="javascript:void(0);" class="btn btn-sm btn-danger deleteRecord" style="margin-right:5px;" data-id="' . $row->id . '" data-controller="subscription-plan" data-title="subscription plan"><i class="fa fa-trash"></i></a><a href="javascript:void(0)" title="View Subscription" data-id="'. $row->id .'" class="btn btn-sm btn-warning tip view-info" data-title="Subscription Details" data-url="'.base_url('admin/subscription-plan/show/' . $row->id).'">
-			<i class="fa fa-eye"></i></a>';
+			$subscriptionPlanData[] = '<a href="' . base_url('admin/subscription-plan/edit/' . $row->id) . '" class="btn btn-sm btn-info"  style="margin-right:5px;"><i class="fa fa-edit"></i></a>
+										<a href="javascript:void(0);" class="btn btn-sm btn-danger deleteRecord" style="margin-right:5px;" data-id="' . $row->id . '" data-controller="subscription-plan" data-title="subscription plan"><i class="fa fa-trash"></i></a>
+										<a href="javascript:void(0)" title="View Subscription" data-id="'. $row->id .'" class="btn btn-sm btn-warning tip view-info" data-title="Subscription Details" style="margin-right:5px;" data-url="'.base_url('admin/subscription-plan/show/' . $row->id).'"><i class="fa fa-eye"></i></a>
+										<a href="' . base_url('admin/subscription-plan/send-mail-template/' . $row->id) . '" class="btn btn-sm btn-success" data-title="Send Mail" style="margin-right:5px;"><i class="fa fa-envelope"></i></a>';
 			$data[] = $subscriptionPlanData;
 		}
 
@@ -165,5 +167,41 @@ class SubscriptionPlanController extends MY_Controller
 		$data['subscriptionUsersEmail'] = $subscriptionUsersEmail;
         $html = $this->load->view('admin/SubscriptionPlan/view', $data, true);
         echo $html;
+	}
+
+	public function sendMailTemplate($id) {
+		$this->data['form_title'] = 'Subscription Mail Template';
+		$this->data['subsctiptionId'] = $id;
+		$this->adminRenderTemplate('admin/SubscriptionPlan/subscriptionData', $this->data);
+	}
+
+	public function sendMail($id) {
+		if(!$id){
+			$this->session->set_flashdata('error', 'something went wrong.');
+			return redirect('admin/subscription-plan');
+		}
+		$subscriptionUsersEmail = $this->Subscription_plan_users_model->getDetailsBySubscriptionId($id);
+		$subscriptionUsersEmail = array_column($subscriptionUsersEmail, 'email');
+		$emails = implode(',', $subscriptionUsersEmail);
+		$subject = $this->input->post('subject');
+		$content = $this->input->post('content');
+		if(empty($emails) || empty($subject) || empty($content)){
+			$this->session->set_flashdata('error', 'something went wrong.');
+			return redirect('admin/subscription-plan');
+		}
+		$subject = $this->input->post('subject');
+		$content = $this->input->post('content');
+		
+		$message = $this->load->view('admin/SubscriptionPlan/subscriptionTemplate', ['content' => $content], true);
+
+		$this->load->library('email');
+		$this->email->from('noreply@gorentonline.com', $subject);
+		$this->email->to($emails);
+		$this->email->subject($subject);
+		$this->email->message($message);
+		$this->email->send();
+
+		$this->session->set_flashdata('success', 'Subscription mail has been sent successfully!.');
+		return redirect('admin/subscription-plan');
 	}
 }
