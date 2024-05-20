@@ -124,6 +124,7 @@ $(document).ready(function() {
                 }
             }
         } else {
+            var savedCard = $('input[name="saved_card"]:checked').val();
             if(savedCard != undefined && savedCard != 0){
                 payWithOldCard();
             } else {
