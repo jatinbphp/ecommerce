@@ -314,7 +314,7 @@ class CheckoutController extends MY_Controller {
             $brand = $payment['card']['brand'] ?? '';
             $last4 = $payment['card']['last4'] ?? '';
 
-            $cardData[$paymentId]['brand'] = $brand;
+            $cardData[$paymentId]['brand'] = ucfirst($brand);
             $cardData[$paymentId]['last4'] = $last4;
         }
         
