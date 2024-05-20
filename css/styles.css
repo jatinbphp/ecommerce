@@ -2992,32 +2992,32 @@ li.login-attri .account-drop a {
     position: relative;
     display: block;
 }
-#payaccordion .panel.panel-default {
+.payaccordion .panel.panel-default {
     background: #ffffff;
     box-shadow: none;
     border-radius: 4px;
     overflow: hidden;
     margin-bottom: 20px;
 }
-#payaccordion .panel-default>.panel-heading {
+.payaccordion .panel-default>.panel-heading {
     color: #0047ab;
     padding: 14px 15px;
     background-color: #ffffff;
     border-color: #eaeff5;
 }
-#payaccordion .panel-default>.panel-heading h4 {
+.payaccordion .panel-default>.panel-heading h4 {
     margin: 0;
     font-size: 17px;
 }
-#payaccordion .panel-default .panel-body {
+.payaccordion .panel-default .panel-body {
     padding: 1.5rem 2rem;
 }
-#payaccordion .panel-default>.panel-heading h4 a {
+.payaccordion .panel-default>.panel-heading h4 a {
     color: #202738;
     position: relative;
     padding-left: 25px;
 }
-#payaccordion .panel-default>.panel-heading h4 a:before {
+.payaccordion .panel-default>.panel-heading h4 a:before {
     content: "";
     position: absolute;
     width: 18px;
@@ -3033,47 +3033,49 @@ li.login-attri .account-drop a {
     color: #ffffff;
     transition: all ease 0.4s;
 }
-#payaccordion .panel-default>.panel-heading h4 a[aria-expanded="true"]:before {
+.payaccordion .panel-default>.panel-heading h4 a[aria-expanded="true"]:before {
     content: "\e64c";
     font-family: 'themify';
     background: #009acd;
 }
 
-#payaccordion article {
+.payaccordion article {
     border: 1px solid #eaeff5;
     padding: 1em
 }
 
-#payaccordion input[type="radio"] {
+.payaccordion input[type="radio"] {
     appearance: none;
     position: fixed;
     top: -100vh;
-    left: -100vh
+    left: -100vh;
+    display: none;
+
 }
 
-#payaccordion input[type="radio"]~div {
+.payaccordion input[type="radio"]~div {
     max-height: 0;
     overflow: hidden;
     transition: max-height .5s
 }
 
-#payaccordion input[type="radio"]:checked~div {
+.payaccordion input[type="radio"]:checked~div {
     max-height: inherit
 }
 
-#payaccordion input[type="radio"] {
+.payaccordion input[type="radio"] {
     position: absolute;
     opacity: 0
 }
 
-#payaccordion .article-lable {
+.payaccordion .article-lable {
     display: block;
     cursor: pointer;
     padding-left: 30px;
     position: relative
 }
 
-#payaccordion .article-lable::before {
+.payaccordion .article-lable::before {
     content: "";
     position: absolute;
     width: 18px;
@@ -3091,28 +3093,28 @@ li.login-attri .account-drop a {
     transition: all ease .4s
 }
 
-#payaccordion input[type="radio"]:checked+.article-lable::before {
+.payaccordion input[type="radio"]:checked+.article-lable::before {
     content: "\e64c";
     font-family: 'themify';
     background: #009acd
 }
 
-#payaccordion [type="radio"]:checked+label:after,
-#payaccordion [type="radio"]:not(:checked)+label:after {
+.payaccordion [type="radio"]:checked+label:after,
+.payaccordion [type="radio"]:not(:checked)+label:after {
     background: none !important
 }
 
-#payaccordion article label, #payaccordion article label h5 {
+.payaccordion article label, .payaccordion article label h5 {
     margin: 0;
 }
 
-.bg-dark #payaccordion .panel.panel-default {
+.bg-dark .payaccordion .panel.panel-default {
     background: transparent;
 }
-.bg-dark #payaccordion .article-lable::before {
+.bg-dark .payaccordion .article-lable::before {
     background: rgba(255, 255, 255, .3);
 }
-.bg-dark #payaccordion .panel-default .panel-body {
+.bg-dark .payaccordion .panel-default .panel-body {
     color: #ffffff;
 }
 

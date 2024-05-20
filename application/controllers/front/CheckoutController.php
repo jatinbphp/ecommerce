@@ -37,6 +37,7 @@ class CheckoutController extends MY_Controller {
             $cartProducts = $this->Cart_model->getGuestUserCartData($userCartData);
         }
         $this->data['cart_products'] = $cartProducts;
+        $this->data['userCardData'] = $this->getCardData($userId);
         $this->data['shippingCharge'] = $settingData['shipping_charges'] ?? 0;
         $this->data['stripe_publishable_key'] = $this->Settings_model->getStripePublishableKey();
         $this->data['countries'] = $this->Countries_model->getCountrCodeWiseCountry();
@@ -278,5 +279,45 @@ class CheckoutController extends MY_Controller {
             $this->email->send();
         }
         return $this;
+    }
+
+    public function getCardData($userId) {
+        if(!$userId){
+            return [];
+        }
+        $userData = $this->user_model->getUserData($userId);
+        $customerId = $userData['stripe_customer_id'] ?? '';
+        if(!$customerId){
+            return [];
+        }
+        require_once('./vendor/stripe/stripe-php/init.php');
+        $stripeSecretKey = $this->Settings_model->getStripeSecretKey();
+        $stripe = new \Stripe\StripeClient($stripeSecretKey);
+
+        $paymentMethods = $stripe->paymentMethods->all([
+            'customer' => $customerId,
+            'type' => 'card',
+        ]);
+
+        if(empty($paymentMethods)){
+            return [];
+        }
+
+        $cardData = [];
+
+        foreach ($paymentMethods as $payment) {
+            $paymentId = $payment['id'] ?? 0;
+            if(!$paymentId){
+                continue;
+            }
+            
+            $brand = $payment['card']['brand'] ?? '';
+            $last4 = $payment['card']['last4'] ?? '';
+
+            $cardData[$paymentId]['brand'] = $brand;
+            $cardData[$paymentId]['last4'] = $last4;
+        }
+        
+        return $cardData;
     }
 }

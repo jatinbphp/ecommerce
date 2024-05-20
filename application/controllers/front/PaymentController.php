@@ -14,10 +14,6 @@ class PaymentController extends MY_Controller {
 		$this->load->model('User_address_model');
 	}
 
-	public function index(){
-		$this->frontRenderTemplate('front/payment');
-	}
-
 	public function processPayment() {
 		require_once('./vendor/stripe/stripe-php/init.php');
 		header('Content-Type: application/json');
@@ -93,11 +89,14 @@ class PaymentController extends MY_Controller {
             if (isset($json_obj->payment_method_id) && $totalAmount) {
                 $amount = ($totalAmount * 100);
 
-                $paymentMethod = \Stripe\PaymentMethod::retrieve($json_obj->payment_method_id);
-                $paymentMethod->attach(['customer' => $stripeCustomerId]);
+                $isAddNewCard = $this->getAllowToAddNewCard($json_obj, $stripeCustomerId);
+
+                if($isAddNewCard){
+                    $paymentMethod = \Stripe\PaymentMethod::retrieve($json_obj->payment_method_id);
+                    $paymentMethod->attach(['customer' => $stripeCustomerId]);
+                }
 
                 # Create the PaymentIntent
-                $stripeCustomerId = $stripeCustomerId;
                 $intent = \Stripe\PaymentIntent::create([
                     'payment_method' => $json_obj->payment_method_id,
                     'amount' => $amount,
@@ -231,5 +230,64 @@ class PaymentController extends MY_Controller {
         $data['afterTaxAmount'] = number_format($afterTaxAmount, 2);
 
         echo json_encode($data);
+    }
+
+    public function getAllowToAddNewCard($json_obj, $customerId) {
+        $saveForLater = isset($json_obj->saveCard) ? $json_obj->saveCard : false;
+        if(!$saveForLater){
+            return false;
+        }
+        $paymentId = $json_obj->payment_method_id;
+        require_once('./vendor/stripe/stripe-php/init.php');
+        $stripeSecretKey = $this->Settings_model->getStripeSecretKey();
+        \Stripe\Stripe::setApiKey($stripeSecretKey);
+
+        $paymentMethod = \Stripe\PaymentMethod::retrieve($paymentId);
+
+        if(empty($paymentMethod) || !isset($paymentMethod['card'])){
+            return false;
+        }
+
+        $currentCardNumber = $paymentMethod['card']['last4'] ?? 0;
+        
+        if(!$currentCardNumber){
+            return false;
+        }
+
+        $existingCards = $this->existingCardData($customerId);
+
+        if(in_array($currentCardNumber, $existingCards)){
+            return false;
+        }
+
+        return true;
+    }
+
+    public function existingCardData($customerId) {
+        require_once('./vendor/stripe/stripe-php/init.php');
+        $stripeSecretKey = $this->Settings_model->getStripeSecretKey();
+        $stripe = new \Stripe\StripeClient($stripeSecretKey);
+
+        $allPayments = $stripe->paymentMethods->all([
+            'customer' => $customerId,
+            'type' => 'card',
+        ]);
+
+        if(empty($allPayments)){
+            return [];
+        }
+
+        $cardNumbers = [];
+
+        foreach ($allPayments as $cardData) {
+            $cardData = $cardData['card'] ?? [];
+            if(!count($cardData)){
+                continue;
+            }
+
+            $cardNumbers[] = $cardData['last4'];
+        }
+
+        return $cardNumbers;
     }
 }

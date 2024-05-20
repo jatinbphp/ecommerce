@@ -1,7 +1,7 @@
 <h5 class="mb-2 ft-medium">Billing Address</h5>
 <div class="row mb-4">
     <div class="col-12 col-lg-12 col-xl-12 col-md-12">
-        <div class="panel-group" id="payaccordion">
+        <div class="panel-group payaccordion" id='billingAddress'>
             <div class="accordion">
                 <?php if(!empty($user_billing_addresses)): ?>
                     <?php foreach($user_billing_addresses as $key => $address): ?>
@@ -10,7 +10,7 @@
                             <label class="article-lable" for="address_<?php echo ($address['id'] ?? 0); ?>">
                                 <h5><?php echo (isset($address['title']) && $address['title'] ? $address['title'] : 'Address'); ?></h5>
                             </label>
-                            <div id="address_<?php echo ($address['id'] ?? ''); ?>" class="panel-collapse collapse show" aria-labelledby="pay" data-parent="#payaccordion">
+                            <div id="address_<?php echo ($address['id'] ?? ''); ?>" class="panel-collapse collapse show" aria-labelledby="pay" data-parent="#billingAddress">
                                 <div class="panel-body">
                                     <h5 class="ft-medium mb-1">
                                         <span class='d-none' id='first_name_<?php echo ($address['id'] ?? '') ?>'><?php echo ($address['first_name'] ?? '')?></span>
@@ -55,11 +55,11 @@
                 <?php endif; ?>
 
                 <article class="panel panel-default border">
-                    <input id="address_new" class='addresses-radio' <?php echo (empty($user_billing_addresses) ? 'checked' : '') ?> type="radio" name="address_id" value="0">
+                    <input id="address_new" class='' <?php echo (empty($user_billing_addresses) ? 'checked' : '') ?> type="radio" name="address_id" value="0">
                     <label class="article-lable" for="address_new">
                         <h5>Add Billing Address</h5>
                     </label>
-                    <div id="address_new_div" class="panel-collapse collapse show" aria-labelledby="pay" data-parent="#payaccordion">
+                    <div id="address_new_div" class="panel-collapse collapse show" aria-labelledby="pay" data-parent="#billingAddress">
                         <div class="panel-body">
                             <?php $this->load->view('front/Checkout/billingAddress') ?>
                         </div>
@@ -73,7 +73,7 @@
 <h5 class="mb-2 ft-medium">Shipping Address</h5>
 <div class="row mb-4">
     <div class="col-12 col-lg-12 col-xl-12 col-md-12">
-        <div class="panel-group" id="payaccordion">
+        <div class="panel-group payaccordion" id="shippingAddress">
             <div class="accordion">
                 <?php if(!empty($user_shipping_addresses)): ?>
                     <?php foreach($user_shipping_addresses as $key => $address): ?>
@@ -82,7 +82,7 @@
                             <label class="article-lable" for="address_<?php echo ($address['id'] ?? 0); ?>">
                                 <h5><?php echo (isset($address['title']) && $address['title'] ? $address['title'] : 'Address'); ?></h5>
                             </label>
-                            <div id="address_<?php echo ($address['id'] ?? ''); ?>" class="panel-collapse collapse show" aria-labelledby="pay" data-parent="#payaccordion">
+                            <div id="address_<?php echo ($address['id'] ?? ''); ?>" class="panel-collapse collapse show" aria-labelledby="pay" data-parent="#shippingAddress">
                                 <div class="panel-body">
                                     <h5 class="ft-medium mb-1">
                                         <?php echo ($address['first_name'] ?? '') . ' ' . ($address['last_name'] ?? ''); ?>
@@ -125,11 +125,11 @@
                 <?php endif; ?>
 
                 <article class="panel panel-default border">
-                    <input id="shipping_address_new" class='' <?php echo (empty($user_shipping_addresses) ? 'checked' : '') ?> type="radio" name="shipping_address_id" value="0">
+                    <input id="shipping_address_new" class='addresses-radio' <?php echo (empty($user_shipping_addresses) ? 'checked' : '') ?> type="radio" name="shipping_address_id" value="0">
                     <label class="article-lable" for="shipping_address_new">
                         <h5>Add Shipping Address</h5>
                     </label>
-                    <div id="shipping_address_new_div" class="panel-collapse collapse show" aria-labelledby="pay" data-parent="#payaccordion">
+                    <div id="shipping_address_new_div" class="panel-collapse collapse show" aria-labelledby="pay" data-parent="#shippingAddress">
                         <div class="panel-body">
                             <?php $this->load->view('front/Checkout/shippingAddress') ?>
                         </div>

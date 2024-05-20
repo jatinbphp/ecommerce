@@ -115,11 +115,20 @@ $(document).ready(function() {
         $('#CheckoutForm').validate().destroy();
         if (addressId === '0' || shippingAddressId === '0') {
             $('#CheckoutForm').validate(validationArray);
+            var savedCard = $('input[name="saved_card"]:checked').val();
             if ($('#CheckoutForm').valid()) {
-                payWithStripe();
+                if(savedCard != undefined && savedCard != 0){
+                    payWithOldCard();
+                } else {
+                    payWithStripe();
+                }
             }
         } else {
-            payWithStripe();
+            if(savedCard != undefined && savedCard != 0){
+                payWithOldCard();
+            } else {
+                payWithStripe();
+            }
         }
     });
 
@@ -164,6 +173,7 @@ $(document).ready(function() {
             var state   = $('#state_0').val();
             var city    = $('#city_0').val();
             var pincode = $('#pincode_0').val();
+            var saveCard = $('#saveForLater').is(':checked');;
             var addressId = $('.addresses-radio:checked').val();
             fetch(baseUrl+ '/payment/process-payment', {
                 method: 'POST',
@@ -180,6 +190,7 @@ $(document).ready(function() {
                     city: city,
                     pincode: pincode,
                     addressId: addressId,
+                    saveCard: saveCard
                 })
             }).then(function(result) {
                 // Handle server response (see Step 4)
@@ -188,6 +199,46 @@ $(document).ready(function() {
                 })
             });
         }
+    }
+
+    function payWithOldCard(){
+        var intentId = $('input[name="saved_card"]:checked').val();
+
+        $("#stripe-payment-success-3ds").modal('show');
+        var firstName = $('#first_name_0').val();
+        var lastName = $('#last_name_0').val();
+        var email    = $('#email').val();
+        var userName = firstName+ ' ' +lastName;
+        var address = $('#address_line1_0').val();
+        var country = $('#country_0').val();
+        var state   = $('#state_0').val();
+        var city    = $('#city_0').val();
+        var pincode = $('#pincode_0').val();
+        var saveCard = $('#saveForLater').is(':checked');;
+        var addressId = $('.addresses-radio:checked').val();
+        fetch(baseUrl+ '/payment/process-payment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                payment_method_id: intentId,
+                userName: userName,
+                email: email,
+                address: address,
+                country: country,
+                state: state,
+                city: city,
+                pincode: pincode,
+                addressId: addressId,
+                saveCard: saveCard
+            })
+        }).then(function(result) {
+            // Handle server response (see Step 4)
+            result.json().then(function(json) {
+                handleServerResponse(json);
+            })
+        });
     }
 
     function handleServerResponse(response) {
@@ -235,6 +286,7 @@ $(document).ready(function() {
             var city    = $('#city_0').val();
             var pincode = $('#pincode_0').val();
             var addressId = $('.addresses-radio:checked').val();
+            var saveCard = $('#saveForLater').is(':checked');
             fetch(baseUrl+ '/payment/process-payment', {
                 method: 'POST',
                 headers: {
@@ -250,6 +302,7 @@ $(document).ready(function() {
                     city: city,
                     pincode: pincode,
                     addressId: addressId,
+                    saveCard: saveCard
                 })
             }).then(function(confirmResult) {
                 // console.log(confirmResult);
