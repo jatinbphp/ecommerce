@@ -12,6 +12,7 @@
                     </ol>
                 </div>
             </div>
+            <?php $this->load->view('admin/SessionMessages');?>
         </div>
     </section>
 
@@ -19,7 +20,6 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <?php $this->load->view('admin/SessionMessages');?>
                     <div class="card card-info card-outline">
                         <div class="card-header">
                             <h3 class="card-title">Edit <?php echo $form_title; ?></h3>

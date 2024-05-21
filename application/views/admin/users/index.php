@@ -49,8 +49,8 @@
 </div>
 
 <script type="text/javascript">
-$(document).ready(function() {
-    $("#UserList").addClass('active');
-});
+    $(document).ready(function() {
+        $("#UserList").addClass('active');
+    });
 </script>
 

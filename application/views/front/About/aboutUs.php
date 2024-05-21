@@ -4,7 +4,7 @@
         <div class="row align-items-center justify-content-between">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                 <div class="abt_caption">
-                	<?php echo ($aboutUsData['description']) ? $aboutUsData['description'] : ''; ?>
+                	<?php echo (isset($aboutUsData['description'])) ? $aboutUsData['description'] : ''; ?>
                 </div>
             </div>
         </div>

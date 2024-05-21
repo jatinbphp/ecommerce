@@ -1,7 +1,7 @@
 <div class="content-wrapper">
 	<section class="content">
 		<div class="container-fluid">
-			<div class="row mt-3">
+			<div class="row mt-3 mb-2">
 				    <div class="col-md-12">
 				        <?php $this->load->view('admin/SessionMessages'); ?>
 				    </div>
