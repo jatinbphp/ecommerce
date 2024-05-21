@@ -43,7 +43,10 @@ class HomeController extends MY_Controller {
      * Display the 'About Us' page.
      */
     public function aboutUs() {
-        $this->frontRenderTemplate('front/About/aboutUs');
+        $sql = "SELECT * FROM content_management WHERE id = 4";
+        $query = $this->db->query($sql);
+        $data = $query->row_array();
+        $this->frontRenderTemplate('front/About/aboutUs', ['aboutUsData' => $data]);
     }
 
     /**

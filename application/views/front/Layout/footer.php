@@ -28,10 +28,8 @@
                     <div class="footer_widget">
                         <h4 class="widget_title">Supports</h4>
                         <ul class="footer-menu">
-                            <li><a href="javaScript:;">Size Guide</a></li>
-                            <li><a href="javaScript:;">Shipping & Returns</a></li>
-                            <!-- <li><a href="javaScript:;">FAQ's Page</a></li>
-                            <li><a href="javaScript:;">Privacy</a></li> -->
+                            <li><a href="<?php echo base_url('privecy-policy') ?>">Privacy Policy</a></li>
+                            <li><a href="<?php echo base_url('terms-conditions') ?>">Terms & Conditions</a></li>
                         </ul>
                     </div>
                 </div>
@@ -54,10 +52,11 @@
                             <li><a href="<?php echo base_url() ?>">Home</a></li>
                             <li><a href="<?php echo base_url('about-us') ?>">About Us</a></li>
                             <li><a href="<?php echo base_url('contact') ?>">Contact Us</a></li>
-                            <li><a href="javaScript:;">FAQ's Page</a></li>
-                            <li><a href="<?php echo base_url('privecy-policy') ?>">Privacy Policy</a></li>
-                            <li><a href="<?php echo base_url('terms-conditions') ?>">Terms & Conditions</a></li>
-                            <li><a href="<?php echo base_url('signIn') ?>">Login</a></li>
+                            <?php if ($this->session->userdata('logged_in')): ?>
+                                <li><a href="<?php echo base_url('logout'); ?>">Log Out</a></li>
+                            <?php else: ?>
+                                <li><a href="<?php echo base_url('signIn') ?>">Login</a></li>
+                            <?php endif; ?>
                         </ul>
                     </div>
                 </div>
