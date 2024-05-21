@@ -373,6 +373,12 @@ class Product_model extends CI_Model
         return $this->addImageForProduct($row);
     }
 
+    /**
+     * Add images for each product in the given row.
+     *
+     * @param array $row
+     * @return array
+     */
     public function addImageForProduct($row){
         if(!$row || !count($row)){
             return [];

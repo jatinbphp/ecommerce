@@ -108,6 +108,14 @@ class OrderController extends MY_Controller {
         $this->frontRenderTemplate('front/myAccount/myOrders/orderDetails', $data);
     }
 
+    /**
+     * Cancels an order by updating its status and adding cancellation reason.
+     *
+     * This method cancels an order by setting its status to cancelled and adding a cancellation reason.
+     * If the order is in pending status, it also refunds the payment (if applicable) and sends a cancellation email.
+     *
+     * @return string JSON-encoded data containing the updated order status and cancellation details
+     */
     public function cancelOrder() {
         $data['status'] = 0;
 		$orderId = $this->input->post('id');

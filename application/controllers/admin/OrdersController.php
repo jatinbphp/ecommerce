@@ -59,6 +59,12 @@ class OrdersController extends MY_Controller
 		echo json_encode($output);
 	}
 
+	/**
+	 * Get the HTML select element for changing the order status based on the provided row.
+	*
+	* @param  object  $row
+	* @return string
+	*/
 	public function getOrderStatus($row) {
 		$disabled = 'disabled';
 		if($row->status==='pending'){
@@ -74,6 +80,18 @@ class OrdersController extends MY_Controller
 		return $select;
 	}
 
+	/**
+	 * Updates the status of an order based on the input data.
+	* 
+	* This method retrieves the order details based on the provided order ID, 
+	* checks if the order is pending, and updates the status accordingly. 
+	* If the status is set to cancel, it refunds the payment amount if applicable 
+	* and sends an order status mail. If the status is set to complete, it sends 
+	* an order status mail. Finally, it updates the order status in the database 
+	* and returns the updated status in JSON format.
+	* 
+	* @return void
+	*/
 	public function updateStatus()
     { 
         $data['status'] = 0;

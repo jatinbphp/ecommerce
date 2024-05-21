@@ -250,6 +250,17 @@ class CheckoutController extends MY_Controller {
         $this->frontRenderTemplate('front/Checkout/orderComplete', $data);
     }
 
+    /**
+     * Sends an order confirmation email to the user associated with the given order ID.
+     *
+     * Retrieves order details, status data, order data with items and options, and user data.
+     * Constructs an email message using the order confirmation email template.
+     * Determines the recipient email address from user data or order address information.
+     * Sends the email with the order confirmation message.
+     *
+     * @param int $orderId The ID of the order for which the confirmation email is being sent.
+     * @return $this
+     */
     public function sendOrderConfirmationMail($orderId) {
         $orderData = $this->Order_model->getDetails($orderId);
 		$data['status'] = $this->Order_model->getStatusData();
@@ -281,6 +292,18 @@ class CheckoutController extends MY_Controller {
         return $this;
     }
 
+    /**
+     * Retrieves card data associated with the given user ID.
+     *
+     * If the user ID is empty, an empty array is returned.
+     * If the user has no associated Stripe customer ID, an empty array is returned.
+     * Retrieves payment methods from Stripe using the customer ID and filters by card type.
+     * If no payment methods are found, an empty array is returned.
+     * Extracts and structures card data including brand and last 4 digits from payment methods.
+     *
+     * @param int $userId The ID of the user
+     * @return array An array containing card data with keys as payment IDs and values as arrays with 'brand' and 'last4' keys
+     */
     public function getCardData($userId) {
         if(!$userId){
             return [];

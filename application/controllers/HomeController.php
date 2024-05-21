@@ -94,6 +94,9 @@ class HomeController extends MY_Controller {
         $this->frontRenderTemplate('front/myAccount/address/index');
     }
 
+    /**
+     * retrive and store cart data in session.
+     */
     public function saveCartData() {
         $data = $this->input->post('cartData');
         if ($data) {

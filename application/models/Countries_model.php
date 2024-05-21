@@ -31,6 +31,15 @@ class Countries_model extends CI_Model
         return $country_mobile_codes;
 	}
 
+  /**
+   * Retrieves a list of countries with their country codes.
+   *
+   * This method queries the database to fetch the country code and name of each country,
+   * orders the results by country name, and returns an associative array with country codes as keys
+   * and country names as values.
+   *
+   * @return array An associative array where keys are country codes and values are country names.
+   */
   public function getCountrCodeWiseCountry()
 	{
 		$this->db->select('country_code, name');

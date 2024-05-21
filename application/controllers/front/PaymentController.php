@@ -14,6 +14,9 @@ class PaymentController extends MY_Controller {
 		$this->load->model('User_address_model');
 	}
 
+    /**
+     *Process the payment using the provided data and Stripe API.
+    */
 	public function processPayment() {
 		require_once('./vendor/stripe/stripe-php/init.php');
 		header('Content-Type: application/json');
@@ -124,6 +127,11 @@ class PaymentController extends MY_Controller {
         }
     }
 
+    /**
+     * Generate a response based on the status of the provided PaymentIntent.
+     *
+     * @param $intent
+     */
     public function generateResponse($intent)
     {
         # Note that if your API version is before 2019-02-11, 'requires_action'
@@ -156,6 +164,12 @@ class PaymentController extends MY_Controller {
         }
     }
 
+    /**
+     * Calculate tax based on the provided address details and return the tax information in JSON format.
+     * Retrieves settings data, shipping charges, address details, and tax data from the database.
+     * Calculates tax amount, tax percentage, and total amount after tax including shipping charges.
+     * Returns the tax information in JSON format with status, tax percentage, tax amount, and total amount after tax.
+     */
     public function calculateTax() {
 		header('Content-Type: application/json');
         $settingData  = $this->Settings_model->getSettingsById(1);
@@ -187,6 +201,13 @@ class PaymentController extends MY_Controller {
         echo json_encode($data);
     }
 
+    /**
+     * Calculate tax based on the address ID provided.
+     * Retrieves tax data based on the address details and calculates tax amount.
+     * If no address ID is provided, returns the total amount without tax.
+     * 
+     * @return $this
+     */
     public function calculateTaxUsingAddressId() {
         header('Content-Type: application/json');
         $settingData  = $this->Settings_model->getSettingsById(1);
@@ -232,6 +253,13 @@ class PaymentController extends MY_Controller {
         echo json_encode($data);
     }
 
+    /**
+     * Determines if a new card can be added for a customer based on the provided JSON object and customer ID.
+     *
+     * @param mixed $json_obj The JSON object containing payment information
+     * @param int $customerId The ID of the customer
+     * @return bool Returns true if a new card can be added, false otherwise
+     */
     public function getAllowToAddNewCard($json_obj, $customerId) {
         $saveForLater = isset($json_obj->saveCard) ? $json_obj->saveCard : false;
         if(!$saveForLater){
@@ -263,6 +291,15 @@ class PaymentController extends MY_Controller {
         return true;
     }
 
+    /**
+     * Retrieves the existing card data for a given customer ID from the Stripe API.
+     *
+     * This method initializes the Stripe API client, retrieves all payment methods associated with the customer ID,
+     * and extracts the last 4 digits of the card numbers for each payment method.
+     *
+     * @param string $customerId The ID of the customer for whom to retrieve the card data.
+     * @return array An array containing the last 4 digits of the card numbers associated with the customer.
+     */
     public function existingCardData($customerId) {
         require_once('./vendor/stripe/stripe-php/init.php');
         $stripeSecretKey = $this->Settings_model->getStripeSecretKey();

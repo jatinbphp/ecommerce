@@ -50,6 +50,11 @@ class Settings_model extends CI_Model
     
     }
 
+    /**
+     * Get the Stripe secret key based on the settings.
+     *
+     * @return string
+     */
     public function getStripeSecretKey() {
         $settingData = $this->getSettingsById(1);
         if(isset($settingData['is_stripe_live_mode']) && $settingData['is_stripe_live_mode']){

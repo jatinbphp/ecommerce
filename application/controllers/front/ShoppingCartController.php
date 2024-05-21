@@ -16,6 +16,12 @@ class ShoppingCartController extends MY_Controller {
 		$this->load->model('Cart_model');
 	}
 
+    /**
+     * Retrieves the shopping cart data for the current user.
+     * If the user is logged in, it fetches the cart data from the database using the user ID.
+     * If the user is a guest, it retrieves the cart data from the session and converts it to an array.
+     * Finally, it renders the shopping cart view with the cart data.
+     */
     public function shoppingCart(){
         $userId = $this->session->userdata('userId');
         $cartDataArr = [];

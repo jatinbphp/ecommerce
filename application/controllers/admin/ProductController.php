@@ -449,6 +449,15 @@ class ProductController extends MY_Controller
         echo $html;
     }
 
+	/**
+	 * Display product reviews for a given product ID.
+	*
+	* Retrieves product details using the Product_model based on the provided ID.
+	* Sets the page title to 'Reviews' and assigns the product ID and name to the data array.
+	* Renders the 'admin/Product/Reviews/index' template with the provided data.
+	*
+	* @param int $id The ID of the product to retrieve reviews for
+	*/
 	public function productReviews($id){
 		$product = $this->Product_model->getDetails($id);
 		$data['page_title'] = 'Reviews';
@@ -457,6 +466,12 @@ class ProductController extends MY_Controller
 		$this->adminRenderTemplate('admin/Product/Reviews/index', $data);
 	}
 
+	/**
+	 * Fetches reviews for a given product ID and returns the data in JSON format for DataTables.
+	*
+	* @param int $id The ID of the product for which reviews are fetched.
+	* @return void
+	*/
 	public function fetchReviews($id)
 	{
 		$id = ($id) ?? 0;
@@ -479,6 +494,12 @@ class ProductController extends MY_Controller
 		echo json_encode($output);
 	}
 
+	/**
+	 * Check if the SKU provided in the input is unique by querying the database.
+	* 
+	* This method retrieves the SKU from the input POST data, checks if it is available in the database using the Product_model,
+	* and returns a JSON response indicating whether the SKU is unique or not.
+	*/
 	public function checkSku() {
 		$sku = $this->input->post('sku');
 		$existingSku = $this->Product_model->isSkuAvailable($sku);

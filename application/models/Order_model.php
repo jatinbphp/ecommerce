@@ -328,6 +328,15 @@ class Order_model extends CI_Model
         return $query->result();
     }
     
+    /**
+     * Constructs and returns a query to retrieve order information with user details if available.
+     * 
+     * This method constructs a query to fetch order details along with user information if present. 
+     * It selects various fields from the 'orders' table and constructs the user's name based on the availability 
+     * of user information. It also allows searching based on user details, order status, order ID, and total amount.
+     * 
+     * @return void
+     */
     public function make_order_query()
     {
         $this->db->select('orders.*,CASE 
@@ -360,6 +369,14 @@ class Order_model extends CI_Model
         }
     }
 
+    /**
+     * Retrieves all order data including user information.
+     *
+     * This method selects order data along with the concatenated user name and email from the database.
+     * It joins the 'users' table to fetch user information based on the user_id in orders table.
+     *
+     * @return int The total count of results from the query.
+     */
     public function get_all_order_data() {
         $this->db->select('orders.*, CONCAT(users.first_name, " ", users.last_name, " (", users.email, ")") AS user_name')
             ->from($this->table)
@@ -368,6 +385,11 @@ class Order_model extends CI_Model
             return $this->db->count_all_results();
     }
 
+    /**
+     * Retrieves and returns the number of rows from the filtered order data query.
+     *
+     * @return int
+     */
     public function get_filtered_order_data()
     {
         $this->make_order_query();
@@ -375,6 +397,12 @@ class Order_model extends CI_Model
         return $query->num_rows();
     }
 
+    /**
+     * Calculate the total amount of the order, including shipping charges if applicable.
+     *
+     * @param int $isOnlyTotal Flag to determine if only the total amount should be returned
+     * @return float The total amount of the order
+     */
     public function getTotalAmount($isOnlyTotal = 1) {
         $userId = $this->session->userdata('userId');
         $orderProducts = $this->Cart_model->getUsrCartData($userId);
@@ -410,6 +438,16 @@ class Order_model extends CI_Model
         return $orderTotal;
     }
 
+    /**
+     * Retrieves tax data using Stripe API based on the provided address details.
+     *
+     * @param string $address
+     * @param string $city
+     * @param string $state
+     * @param string $pincode
+     * @param string $country
+     * @return array
+     */
     public function getTaxData($address, $city, $state, $pincode, $country){
         require_once('./vendor/stripe/stripe-php/init.php');
         $settingData  = $this->Settings_model->getSettingsById(1);
@@ -458,6 +496,12 @@ class Order_model extends CI_Model
         return $data;
     }
 
+    /**
+     * Refunds the amount for a specific payment intent using the Stripe API.
+     *
+     * @param string $intentId The ID of the payment intent to refund.
+     * @return array An array containing the status and refund ID if successful, or an empty array if an error occurs.
+     */
     public function refundAmount($intentId){
         require_once('./vendor/stripe/stripe-php/init.php');
         $settingData  = $this->Settings_model->getSettingsById(1);
@@ -485,6 +529,15 @@ class Order_model extends CI_Model
         return $data;
     }
 
+    /**
+     * Sends an order status email to the user based on the provided order ID and status.
+     *
+     * Retrieves order and user data, prepares email content based on the status, and sends the email.
+     *
+     * @param int $orderId The ID of the order
+     * @param string $status The status of the order
+     * @return $this
+     */
     public function sendOrderStatusMail($orderId, $status) {
         $orderData = $this->getDetails($orderId);
 		$userData = [];

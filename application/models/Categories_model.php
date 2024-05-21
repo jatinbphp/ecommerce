@@ -423,6 +423,14 @@ class Categories_model extends CI_Model
     }
 
    
+    /**
+     * Retrieves categories recursively based on the parent category ID.
+     *
+     * This method fetches categories along with the count of products in each category.
+     *
+     * @param int $parent_id The parent category ID to start the recursive search from (default is 0).
+     * @return array An array containing categories and their sub-categories in a recursive structure.
+     */
     public function get_categories_recursive($parent_id = 0) {
         $this->db->select('categories.id, categories.parent_category_id, categories.name, COUNT(products.id) as product_count');
         $this->db->from($this->table);

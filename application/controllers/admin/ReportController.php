@@ -228,6 +228,12 @@ class ReportController extends MY_Controller
 			</div>';
 	}
 
+	/**
+	 * Retrieves and displays detailed information about the orders based on the provided order IDs.
+	*
+	* @param string $ids A string containing order IDs separated by '-'.
+	* @return void
+	*/
 	public function showOrders($ids) {
 		$orderIds = explode('-', $ids);
 		rsort($orderIds);

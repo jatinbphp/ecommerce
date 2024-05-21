@@ -218,6 +218,15 @@ class BannerController extends MY_Controller
         echo $html;
     }
 
+	/**
+	 * Update the banner settings based on the input value.
+	*
+	* This function retrieves the 'isAllow' value from the input POST data, converts it to a boolean value,
+	* and updates the 'is_allow_auto_move_banners' setting in the database using the Settings_model.
+	* If the setting value is 'true', it is stored as 1, otherwise as 0.
+	*
+	* @return void
+	*/
 	public function updateBannerSettings() {
 		$settingValue = $this->input->post('isAllow');
 		$data['is_allow_auto_move_banners'] = ($settingValue == 'true'  ? 1 : 0);

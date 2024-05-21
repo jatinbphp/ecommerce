@@ -175,6 +175,12 @@ class SubscriptionPlanController extends MY_Controller
 		$this->adminRenderTemplate('admin/SubscriptionPlan/subscriptionData', $this->data);
 	}
 
+	/**
+	 * Sends a subscription mail to users based on the provided subscription ID.
+	*
+	* @param int $id The ID of the subscription plan
+	* @return void
+	*/
 	public function sendMail($id) {
 		if(!$id){
 			$this->session->set_flashdata('error', 'something went wrong.');
