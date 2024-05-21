@@ -167,34 +167,29 @@ class UserController extends MY_Controller
 				return;
 			}
 
-
 			if(isset($_POST['addresses']['existing']))
 			{
-				  $addresses = $this->input->post('addresses')['existing'];
-
-				   foreach ($addresses as $key => $address) {
-			            // $this->form_validation->set_rules("addresses[existing][$key][title]", 'Title', 'required');
-			            $this->form_validation->set_rules("addresses[existing][$key][first_name]", 'First Name', 'required');
-			            $this->form_validation->set_rules("addresses[existing][$key][last_name]", 'Last Name', 'required');
-			            $this->form_validation->set_rules("addresses[existing][$key][mobile_phone]", 'Mobile No', 'required');
-			            $this->form_validation->set_rules("addresses[existing][$key][address_line1]", 'Address', 'required');
-			            $this->form_validation->set_rules("addresses[existing][$key][pincode]", 'ZIP / Pincode', 'required');
-			            $this->form_validation->set_rules("addresses[existing][$key][country]", 'Country', 'required');
-			            $this->form_validation->set_rules("addresses[existing][$key][state]", 'State', 'required');
-			            $this->form_validation->set_rules("addresses[existing][$key][city]", 'City / Town', 'required');
-			            $this->form_validation->set_rules("addresses[existing][$key][address_type]", 'Address type', 'required');
-	        		}
-
+				$addresses = $this->input->post('addresses')['existing'];
+				foreach ($addresses as $key => $address) {
+					// $this->form_validation->set_rules("addresses[existing][$key][title]", 'Title', 'required');
+					$this->form_validation->set_rules("addresses[existing][$key][first_name]", 'First Name', 'required');
+					$this->form_validation->set_rules("addresses[existing][$key][last_name]", 'Last Name', 'required');
+					$this->form_validation->set_rules("addresses[existing][$key][mobile_phone]", 'Mobile No', 'required');
+					$this->form_validation->set_rules("addresses[existing][$key][address_line1]", 'Address', 'required');
+					$this->form_validation->set_rules("addresses[existing][$key][pincode]", 'ZIP / Pincode', 'required');
+					$this->form_validation->set_rules("addresses[existing][$key][country]", 'Country', 'required');
+					$this->form_validation->set_rules("addresses[existing][$key][state]", 'State', 'required');
+					$this->form_validation->set_rules("addresses[existing][$key][city]", 'City / Town', 'required');
+					$this->form_validation->set_rules("addresses[existing][$key][address_type]", 'Address type', 'required');
+				}
 
 				if ($this->form_validation->run() == FALSE) {
 					$error_messages = validation_errors();
 					$this->session->set_flashdata('error', $error_messages);
 					redirect('admin/users/edit/'.$userId, 'refresh');
-				}
-				else
-				{
-					 foreach ($addresses as $id => $address) {
-		                $this->user_address_model->updateAddress($id, $address);
+				} else {
+					foreach ($addresses as $id => $address) {
+						$this->user_address_model->updateAddress($id, $address);
 	            	}
 				}
 			}

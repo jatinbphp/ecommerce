@@ -184,7 +184,8 @@ class User_address_model extends CI_Model
             'country' => $data['country'],
             'state' => $data['state'],
             'city' => $data['city'],
-            'additional_information' => $data['additional_information']
+            'additional_information' => $data['additional_information'],
+            'address_type' => $data['address_type'] ?? '',
         ];
 
         $this->db->where('id', $id);
