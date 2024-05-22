@@ -147,10 +147,62 @@ $(document).ready(function() {
             }
             return;
         }
+        var addressId = $('input[name="address_id"]:checked').val();
+        var fileds = {
+            'first_name':'first_name',
+            'last_name':'last_name',
+            'line1':'address_line1',
+            'line2':'address_line2',
+            'country': 'country',
+            'state':'state',
+            'city': 'city',
+            'postal_code':'pincode'
+        };
 
+        var billingAddress = {};
+        var firstName = '';
+        var lastName = '';
+        $.each(fileds, function(index, value){
+            if(addressId == 0){
+                if(index == 'first_name'){
+                    firstName = $('#'+value+'_'+addressId).val();
+                    return;
+                }
+                if(index == 'last_name'){
+                    lastName = $('#'+value+'_'+addressId).val();
+                    return;
+                }
+                var elementVal = $('#'+value+'_'+addressId).val();
+            } else {
+                if(index == 'first_name'){
+                    firstName = $('#'+value+'_'+addressId).text();
+                    return;
+                }
+                if(index == 'last_name'){
+                    lastName = $('#'+value+'_'+addressId).text();
+                    return;
+                }
+                var elementVal = $('#'+value+'_'+addressId).text();
+            }
+            billingAddress[index] = elementVal;
+        });
+
+        var email = '';
+        <?php if(isset($userEmail) && $userEmail): ?>
+            email = '<?php echo $userEmail; ?>';    
+        <?php else: ?>
+            email = $('#email').val();    
+        <?php endif; ?>
+
+        var userName = firstName +' '+ lastName;
         stripe.createPaymentMethod({
             type: 'card',
             card: cardNumber,
+            billing_details: {
+                'address': billingAddress,
+                'name': userName,
+                'email': email,
+            },
         }).then(stripePaymentMethodHandler);
     }
 

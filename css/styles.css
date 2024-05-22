@@ -5193,8 +5193,8 @@ footer.skin-dark-footer ul.footer-bottom-social li a:hover, footer.skin-dark-foo
     display: none;
     cursor: pointer;
     position: fixed;
-    bottom: 10px;
-    right: 20px;
+    bottom: 25px;
+    right: 100px;
     text-align: center;
     font-size: 15px;
     border-radius: 4px;

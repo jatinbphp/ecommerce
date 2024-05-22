@@ -36,6 +36,11 @@ class CheckoutController extends MY_Controller {
             $userCartData = json_decode($cartData, true) ?? [];
             $cartProducts = $this->Cart_model->getGuestUserCartData($userCartData);
         }
+        $this->data['userEmail'] = '';
+        if($userId){
+            $userData = $this->user_model->getUserData($userId);
+            $this->data['userEmail'] = $userData['email'] ?? '';
+        }
         $this->data['cart_products'] = $cartProducts;
         $this->data['userCardData'] = $this->getCardData($userId);
         $this->data['shippingCharge'] = $settingData['shipping_charges'] ?? 0;

@@ -110,7 +110,7 @@ class OrdersController extends MY_Controller
 				}
 				$this->order_model->sendOrderStatusMail($orderId, $status);
 			} elseif($status == $this->order_model::STATUS_TYPE_COMPLETE){
-				$this->sendOrderStatusMail($orderId, $status);
+				$this->order_model->sendOrderStatusMail($orderId, $status);
 			}
 			$this->order_model->edit($data, $orderId);
             $data['status'] = 1;
