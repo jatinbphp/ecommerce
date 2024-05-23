@@ -212,10 +212,8 @@ $(document).ready(function() {
             // Show error in payment form
             $('#StripePaymentErrors').text(result.error.message);
             $('#StripePaymentErrors').fadeIn();
-            //$('.loading').fadeOut();
             $("#stripe-payment-success-3ds").modal('hide');
         } else {
-            // Otherwise send paymentMethod.id to your server (see Step 4)
             $("#stripe-payment-success-3ds").modal('show');
             var firstName = $('#first_name_0').val();
             var lastName = $('#last_name_0').val();
@@ -246,7 +244,6 @@ $(document).ready(function() {
                     saveCard: saveCard
                 })
             }).then(function(result) {
-                // Handle server response (see Step 4)
                 result.json().then(function(json) {
                     handleServerResponse(json);
                 })
@@ -287,7 +284,6 @@ $(document).ready(function() {
                 saveCard: saveCard
             })
         }).then(function(result) {
-            // Handle server response (see Step 4)
             result.json().then(function(json) {
                 handleServerResponse(json);
             })
@@ -296,7 +292,6 @@ $(document).ready(function() {
 
     function handleServerResponse(response) {
         if (response.error) {
-            //$('.loading').fadeOut();
             $("#stripe-payment-success-3ds").modal('hide');
             swal("Error", response.error, "error");
             $("#pay_intent").val('');
@@ -308,11 +303,8 @@ $(document).ready(function() {
         } else {
             // Show success message
             $("#stripe-payment-success-3ds").modal('show');
-            //console.log(response);
-            //payment_intent_ID
             payment_intent_ID = response.intent;
             $("#pay_intent").val(payment_intent_ID);
-            //$('.loading').fadeOut();
             $("#stripe-payment-success-3ds").modal('hide');
             $('#CheckoutForm').submit();
         }
@@ -322,13 +314,9 @@ $(document).ready(function() {
         //console.log(result);
         if (result.error) {
             $("#stripe-payment-success-3ds").modal('hide');
-            // Show error in payment form
             swal("Error", result.error.message, "error");
         } else {
             payment_intent_ID = result.paymentIntent.id;
-            //alert("Handle script else");
-            // The card action has been handled
-            // The PaymentIntent can be confirmed again on the server
             var firstName = $('#first_name_0').val();
             var lastName = $('#last_name_0').val();
             var email    = $('#email').val();
@@ -358,9 +346,6 @@ $(document).ready(function() {
                     saveCard: saveCard
                 })
             }).then(function(confirmResult) {
-                // console.log(confirmResult);
-                // alert("Handle script feth then");
-                // console.log(confirmResult);
                 return confirmResult.json();
             }).then(handleServerResponse);
         }
@@ -528,7 +513,7 @@ function getValidationArray(){
                     email: "Please enter a valid email address"
                 }
             },
-            errorPlacement: commonErrorPlacement, // Use common error placement function
+            errorPlacement: commonErrorPlacement,
         }
     }
 
@@ -578,8 +563,6 @@ function getValidationArray(){
                 email: "Please enter a valid email address"
             }
         });
-
-        // Use common error placement function
         data.errorPlacement = commonErrorPlacement;
     }
 

@@ -18,6 +18,8 @@ class PaymentController extends MY_Controller {
      *Process the payment using the provided data and Stripe API.
     */
 	public function processPayment() {
+        addPaymentLog('***********************************');
+        addPaymentLog('payment-start');
 		require_once('./vendor/stripe/stripe-php/init.php');
 		header('Content-Type: application/json');
 
@@ -27,7 +29,7 @@ class PaymentController extends MY_Controller {
 
         $stripeSecretKey = $this->Settings_model->getStripeSecretKey();
         $userId          = $this->session->userdata('userId');
-        
+        addPaymentLog("User Id: $userId");
         \Stripe\Stripe::setApiKey($stripeSecretKey);
         if($userId){
             $userData = $this->user_model->getUserData($userId);
@@ -37,6 +39,9 @@ class PaymentController extends MY_Controller {
             $userName = $json_obj->userName;
             $userEmail = $json_obj->email;
         }
+
+        addPaymentLog("User Name: $userName");
+        addPaymentLog("User email: $userEmail");
 
         if(isset($userData['stripe_customer_id']) && $userData['stripe_customer_id']){
             $stripeCustomerId = $userData['stripe_customer_id'];
@@ -61,11 +66,13 @@ class PaymentController extends MY_Controller {
                 echo json_encode(['error' => $api_error]);
             }
         }
+        addPaymentLog("User CustomerId: $stripeCustomerId");
 
         header('Content-Type: application/json');
 
         $intent = null;
         $totalAmount = $this->Order_model->getTotalAmount();
+        addPaymentLog("Amount: $totalAmount");
 
         $address = $json_obj->address;
         $country = $json_obj->country;
@@ -87,6 +94,8 @@ class PaymentController extends MY_Controller {
         if($taxData && isset($taxData['tax_amount']) && $taxData['tax_amount']){
             $totalAmount += $taxData['tax_amount'];
         }
+        addPaymentLog("Tax");
+        addPaymentLog($taxData);
 
         try {
             if (isset($json_obj->payment_method_id) && $totalAmount) {
@@ -121,10 +130,14 @@ class PaymentController extends MY_Controller {
             $this->generateResponse($intent);
         } catch (\Stripe\Exception\ApiErrorException $e) {
             # Display error on client
+            addPaymentLog("Error: ");
+            addPaymentLog($e->getMessage());
             echo json_encode([
                 'error' => $e->getMessage(),
             ]);
         }
+        addPaymentLog('payment-end');
+        addPaymentLog('***********************************');
     }
 
     /**

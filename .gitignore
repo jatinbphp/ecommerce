@@ -11,6 +11,8 @@ application/logs/*
 /application/config/database.php
 /application/config/email.php
 
+/logs/*
+
 composer.lock
 tests/mocks/database/ci_test.sqlite
 

@@ -503,6 +503,9 @@ class Order_model extends CI_Model
      * @return array An array containing the status and refund ID if successful, or an empty array if an error occurs.
      */
     public function refundAmount($intentId){
+        addPaymentLog('***********************************');
+        addPaymentLog('Refund start');
+        addPaymentLog("Intent Id: $intentId");
         require_once('./vendor/stripe/stripe-php/init.php');
         $settingData  = $this->Settings_model->getSettingsById(1);
         $stripeSecretKey = $this->Settings_model->getStripeSecretKey();
@@ -522,10 +525,14 @@ class Order_model extends CI_Model
                 'status'    => 1,
                 'refund_id' => $refund->id,
             ];
+            addPaymentLog("refund_id Id: $$refund->id");
         } catch (\Stripe\Exception\ApiErrorException $e) {
+            addPaymentLog("Error:");
+            addPaymentLog($e->getMessage());
             $data = [];
         }
-
+        addPaymentLog('Refund End');
+        addPaymentLog('***********************************');
         return $data;
     }
 
