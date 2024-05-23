@@ -142,6 +142,8 @@ $(document).ready(function() {
             var code = error.code ? error.code : '';
             var message = error.message ? error.message : '';
             if(code && message){
+                $('#StripePaymentErrors').text(message);
+                $('#StripePaymentErrors').fadeIn();
                 $('.error-card').text('');
                 $('.'+code).text(message);
             }
