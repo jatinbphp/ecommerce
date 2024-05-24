@@ -16,6 +16,7 @@ class Product_model extends CI_Model
         $this->load->model('ProductImage_model');
         $this->load->model('ProductOptions_model');
         $this->load->model('ProductOptionValues_model');
+        $this->load->model('User_model');
 		parent::__construct();
 	}
 
