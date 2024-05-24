@@ -74,13 +74,13 @@ class User_model extends CI_Model
 	public function getUserData($userId = null)
 	{
 		if($userId) {
-			$sql = "SELECT $this->select_column FROM $this->table WHERE id = ? AND role = 2 ";
-			$query = $this->db->query($sql, array($userId));
+			$sql = "SELECT $this->select_column FROM $this->table WHERE id = ? AND role = ? ";
+			$query = $this->db->query($sql, array($userId, 2));
 			return $query->row_array();
 		}
 
-		$sql = "SELECT $this->select_column FROM $this->table WHERE role = 2 ORDER BY id DESC";
-		$query = $this->db->query($sql, array(0));
+		$sql = "SELECT $this->select_column FROM $this->table WHERE role = ? ORDER BY id DESC";
+		$query = $this->db->query($sql, array(2));
 		return $query->result_array();
 	}
 

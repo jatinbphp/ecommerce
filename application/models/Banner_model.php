@@ -174,8 +174,8 @@ class Banner_model extends CI_Model
      * @return array An array containing the active data from the database table.
      */
     public function getActiveBammerData() {
-        $sql = "SELECT * FROM $this->table where status = '" . self::STATUS_ACTIVE . "'  ORDER BY id DESC";
-        $query = $this->db->query($sql);
+        $sql = "SELECT * FROM $this->table where status = ? ORDER BY id DESC";
+        $query = $this->db->query($sql, [self::STATUS_ACTIVE]);
         return $query->result_array();
     }
 }

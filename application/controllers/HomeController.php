@@ -43,8 +43,8 @@ class HomeController extends MY_Controller {
      * Display the 'About Us' page.
      */
     public function aboutUs() {
-        $sql = "SELECT * FROM content_management WHERE id = 4";
-        $query = $this->db->query($sql);
+        $sql = "SELECT * FROM content_management WHERE id = ?";
+        $query = $this->db->query($sql, [4]);
         $data = $query->row_array();
         $this->frontRenderTemplate('front/About/aboutUs', ['aboutUsData' => $data]);
     }
@@ -60,8 +60,8 @@ class HomeController extends MY_Controller {
      * Retrieve the terms and conditions data from the database and render the terms and conditions page.
      */
     public function termaConditions() {
-        $sql = "SELECT * FROM content_management WHERE id = 2";
-        $query = $this->db->query($sql);
+        $sql = "SELECT * FROM content_management WHERE id = ?";
+        $query = $this->db->query($sql, [2]);
         $data = $query->row_array();
         $this->frontRenderTemplate('front/TermsConditions/termaConditionsPage',['terms_data' => $data]);
     }
@@ -74,8 +74,8 @@ class HomeController extends MY_Controller {
      * the 'front/PrivecyPolicy/privecyPolicyPage' template with the privacy data.
      */
     public function privecyPolicy() {
-        $sql = "SELECT * FROM content_management WHERE id = 1";
-        $query = $this->db->query($sql);
+        $sql = "SELECT * FROM content_management WHERE id = ?";
+        $query = $this->db->query($sql, [1]);
         $data = $query->row_array();
         $this->frontRenderTemplate('front/PrivecyPolicy/privecyPolicyPage',['privecy_data' => $data]);
     }

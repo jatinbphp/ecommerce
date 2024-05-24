@@ -35,8 +35,8 @@ class Reviews_model extends CI_Model
             return [];
         }
 
-		$sql = "SELECT * FROM $this->table where product_id = $productId ORDER BY id DESC";
-		$query = $this->db->query($sql);
+		$sql = "SELECT * FROM $this->table where product_id = ? ORDER BY id DESC";
+		$query = $this->db->query($sql, [$productId]);
 		return $query->result_array();
 	}
 
