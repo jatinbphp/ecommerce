@@ -117,4 +117,20 @@ class SettingsController extends MY_Controller
 
 		redirect('admin/settings/edit', 'refresh');
     }
+
+    /**
+	 * Update the Stripe mode settings based on the input value.
+	*
+	* This function retrieves the 'islivemode' value from the input POST data, converts it to a boolean value,
+	* and updates the 'is_stripe_live_mode' setting in the database using the Settings_model.
+	* If the setting value is 'true', it is stored as 1, otherwise as 0.
+	*
+	* @return void
+	*/
+	public function updateStripeMode() {
+		$settingValue = $this->input->post('islivemode');
+		$data['is_stripe_live_mode'] = ($settingValue == 'true'  ? 1 : 0);
+		$this->Settings_model->update(1, $data);
+		echo 1;
+	}
 }

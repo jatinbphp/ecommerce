@@ -70,7 +70,9 @@ $(document).ready(function() {
             url: '<?php echo base_url('admin/banners/update-banner-setting') ?>',
             data: { isAllow: isChecked },
             success: function(response) {
-                
+                if(response){
+                    swal("Success", "Your data successfully Updated!", "success");
+                }
             },
             error: function(xhr, status, error) {
                 console.error('Error:', error);

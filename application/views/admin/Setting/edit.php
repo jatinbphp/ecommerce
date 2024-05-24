@@ -46,5 +46,22 @@
 <script type="text/javascript">
 $(document).ready(function() {
     $("#SettingsList").addClass('active');
+    $('#is_stripe_live_mode').change(function(){
+        var isChecked = $(this).prop('checked');
+        // Make an AJAX request to save the state in the database
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo base_url('admin/settings/update-stripe-mode') ?>',
+            data: { islivemode: isChecked },
+            success: function(response) {
+                if(response){
+                    swal("Success", "Your data successfully Updated!", "success");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    });
 });
 </script>

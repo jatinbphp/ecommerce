@@ -39,6 +39,8 @@ $route['admin/banners/fetch_banners'] = 'admin/BannerController/fetchBanners';
 $route['admin/banners/update-banner-setting'] = 'admin/BannerController/updateBannerSettings';
 $route['admin/settings/edit'] = 'admin/SettingsController/edit';
 $route['admin/settings/update'] = 'admin/SettingsController/update';
+$route['admin/settings/update-stripe-mode'] = 'admin/SettingsController/updateStripeMode';
+
 $route['admin/contemt-management'] = 'admin/ContentManagementController';
 $route['admin/contemt-management/edit/(:num)'] = 'admin/ContentManagementController/edit/$1';
 $route['admin/contemt-management/fetch_content'] = 'admin/ContentManagementController/fetchContent';
