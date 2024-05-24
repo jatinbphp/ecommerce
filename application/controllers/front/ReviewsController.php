@@ -26,10 +26,14 @@ class ReviewsController extends MY_Controller {
     public function addReview(){
         $input = $this->input->post();
         $input['user_id'] = (($this->session->userdata('userId') ?? 0));
+        $productId = $this->input->post('product_id', 0);
 
         if($this->Reviews_model->create($input)){
-            $reviewData = $this->Reviews_model->getDetailsBasedOnProductId($this->input->post('product_id'));
+            $this->load->model('Product_model');
+            $reviewData = $this->Reviews_model->getDetailsBasedOnProductId($productId);
+            $productData = $this->Product_model->product_data($productId);
             $data['html'] = $this->load->view('front/Products/DetailsTab/ReviewsInfo', ['reviews' => $reviewData], true);
+            $data['product_html'] = $this->load->view('front/Products/view', $productData, TRUE);
             $success = 1;
             $message = "Your review has been submitted successfully!";
         } else {

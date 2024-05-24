@@ -1,5 +1,5 @@
 <?php if(isset($product) && !empty($product)): ?>
-    <div class="quick_view_wrap">
+    <div class="quick_view_wrap" id='product_details'>
         <div class="quick_view_thmb">
             <?php $images = explode(",", ($product['images'] ?? '')); ?>
             <?php if($images && count($images) > 1): ?>

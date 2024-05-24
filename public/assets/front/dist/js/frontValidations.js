@@ -170,7 +170,7 @@ $(document).ready(function() {
     });
 
     $('#reviewForm').submit(function(e) {
-        e.preventDefault(); 
+        e.preventDefault();
         var formData = $(this).serialize();
         var full_name = $('#reviewForm #full_name').val();
         var email_address = $('#reviewForm #email_address').val();
@@ -210,6 +210,8 @@ $(document).ready(function() {
                 if(response.success){
                     $('#reviewForm')[0].reset();
                     $('#reviews_info').html(response.html);
+                    $('#product_details').html(response.product_html);
+                    initSlickSlider();
                 }
                 SnackbarAlert(response.message);
             }

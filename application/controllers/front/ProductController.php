@@ -63,7 +63,7 @@ class ProductController extends MY_Controller {
      * @return void
      */
     public function show($id) {
-        $data = $this->product_data($id);
+        $data = $this->Product_model->product_data($id);
         $response = [
             'status' => !empty($data['product']) ? true : false,
             'html'   => $this->load->view('front/Products/view', $data, TRUE)
@@ -79,34 +79,8 @@ class ProductController extends MY_Controller {
      */
     public function details($slug) {
         $productId = $this->Product_model->getProductIdBasedOnSlug($slug);
-        $data = $this->product_data($productId);
+        $data = $this->Product_model->product_data($productId);
         $this->frontRenderTemplate('front/Products/details', $data);
-    }
-
-    
-    /**
-     * Retrieves and prepares data related to a product based on the provided ID.
-     *
-     * @param int $id The ID of the product
-     * @return array An array containing product information, wishlist product IDs, reviews, user image, stock status, quantity, and options
-     */
-    private function product_data($id) {
-        $this->load->model('Wishlist_model');
-        $data['product'] = $this->Product_model->show($id);
-        $data['wishlistProductId'] = $this->Wishlist_model->getWishlistProductIds();
-        $data['reviews'] = $this->Reviews_model->getDetailsBasedOnProductId($id);
-        $data['productWiseReviews']    = $this->Reviews_model->getProductWiseReviewData();
-        if($userId   = $this->session->userdata('userId')){
-            $user = $this->User_model->getUserData($userId);
-            $data['userImage'] = $user['image'];
-        }
-        if (!empty($data['product'])) {
-            $data['product']['stock_status']    = $this->Product_model::$stock_status;
-            $data['product']['quantity']        = $this->Product_model::$quantity;
-            $data['product']['options']         = $this->ProductOptions_model->getOptionsWithValues($id);
-        }
-
-        return $data;
     }
 
     /**
