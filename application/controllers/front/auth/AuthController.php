@@ -352,6 +352,7 @@ class AuthController extends MY_Controller {
             else
             {
                 $this->db->where('id', $user->id);
+                $this->db->where('role', '2');
                 $this->db->update('users', array('status' => 'inactive'));
                 $this->session->set_flashdata('error', 'You have reached the maximum login attempts. Please contact customer service.');
             }
