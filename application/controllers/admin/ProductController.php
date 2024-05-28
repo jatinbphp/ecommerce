@@ -382,7 +382,7 @@ class ProductController extends MY_Controller
 			$productData[] = "#".$row->id;
 			$productData[] = $row->product_name;
 			$productData[] = $row->sku;
-			$productData[] = $row->price;
+			$productData[] = "$".number_format($row->price,2);
 			$productData[] = $this->getStatusButton($row->id, $row->status, 'products');
 			$productData[] = $row->created_at;
 			$productData[] = '<a href="' . base_url('admin/products/edit/' . $row->id) . '" class="btn btn-sm btn-info"  style="margin-right:5px;"><i class="fa fa-edit"></i></a>

@@ -38,6 +38,8 @@ class DashboardController extends MY_Controller {
 		$totalSales = 0;
 		foreach ($this->data['totalOrders'] as $order) {
 			$totalSales += $order->total_amount;
+			$totalSales += ($order->tax_amount ?? 0);
+			$totalSales += ($order->shipping_cost ?? 0);
 		}
 
 		$this->data['totalSales']        = $totalSales;
@@ -64,12 +66,13 @@ class DashboardController extends MY_Controller {
 
         for ($i = 0; $i < 6; $i++) {
             $monthYear = date('Y-m', strtotime("-$i months", strtotime($currentDate)));
-            $sql = "SELECT SUM(total_amount) as total_amount 
+            $sql = "SELECT SUM(COALESCE(total_amount, 0) + COALESCE(shipping_cost, 0) + COALESCE(tax_amount, 0))  as total_amount 
                     FROM orders 
-                    WHERE DATE_FORMAT(created_at, '%Y-%m') = ?
+					WHERE status != ?
+                    AND DATE_FORMAT(created_at, '%Y-%m') = ?
                     GROUP BY DATE_FORMAT(created_at, '%Y-%m')";
 
-            $query = $this->db->query($sql, array($monthYear));
+            $query = $this->db->query($sql, array($this->Order_model::STATUS_TYPE_CANCEL ,$monthYear));
             $row = $query->row_array();
 
             $result[] = [

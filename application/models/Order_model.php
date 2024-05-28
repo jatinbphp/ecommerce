@@ -264,8 +264,8 @@ class Order_model extends CI_Model
      * @return array An array of all orders retrieved from the database.
      */
     public function getAllOrders(){
-        $sql = "SELECT * FROM $this->table ORDER BY id DESC";
-		$query = $this->db->query($sql);
+        $sql = "SELECT * FROM $this->table where status != ? ORDER BY id DESC";
+		$query = $this->db->query($sql, [self::STATUS_TYPE_CANCEL]);
 		return $query->result();
     }
 

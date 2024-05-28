@@ -416,6 +416,8 @@ class Categories_model extends CI_Model
         $this->db->from('categories');
         $this->db->join('products', 'categories.id = products.category_id', 'left');
         $this->db->group_by('categories.id');
+        $this->db->where('categories.status', self::STATUS_ACTIVE);
+        $this->db->where('products.status', self::STATUS_ACTIVE);
         //$this->db->order_by('categories.name', 'asc');
         $this->db->order_by('product_count', 'DESC');
         $this->db->limit(4);

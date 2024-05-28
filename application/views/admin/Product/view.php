@@ -26,7 +26,7 @@
                         </tr>
                         <tr>
                             <th>Price</th>
-                            <td><?php echo isset($product['price']) ? $product['price'] : '' ?></td>
+                            <td><?php echo isset($product['price']) ? "$".number_format($product['price'], 2) : '' ?></td>
                         </tr>
                         <tr>
                             <th>Image</th>
