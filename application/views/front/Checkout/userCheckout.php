@@ -47,6 +47,10 @@
 </style>
 <script>
 $(document).ready(function() {
+    var totalItems = $('#order_total_items').attr('data-total-item');
+    if(totalItems == 0){
+        $('#checkoutSubmit').prop('disabled',true);
+    }
     var stripePublishableKey = '<?php echo $stripe_publishable_key; ?>';
     var stripe = Stripe(stripePublishableKey);
     var elements = stripe.elements();

@@ -1,6 +1,6 @@
 <?php $subTotal = 0; ?>
 <div class="d-block mb-3">
-    <h5 class="mb-4">Order Items (<?= count($cart_products) ?>)</h5>
+    <h5 class="mb-4" id='order_total_items' data-total-item='<?= count($cart_products) ?>'>Order Items (<?= count($cart_products) ?>)</h5>
     <ul class="list-group list-group-sm list-group-flush-y list-group-flush-x mb-4">
         <?php foreach($cart_products as $key => $cart): ?>
             <?php if(isset($cart) && count($cart)): ?>
