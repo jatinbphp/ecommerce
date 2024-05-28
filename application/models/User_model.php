@@ -292,6 +292,7 @@ class User_model extends CI_Model
      */
     public function incrementLoginAttempts($user_id) {
         $this->db->where('id', $user_id);
+        $this->db->where('role', '2');
         $this->db->set('login_attempts', 'login_attempts+1', FALSE);
         $this->db->update($this->table);
     }
