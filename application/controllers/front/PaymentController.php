@@ -24,8 +24,10 @@ class PaymentController extends MY_Controller {
 		header('Content-Type: application/json');
 
         # retrieve json from POST body
-        $json_str = file_get_contents('php://input');
-        $json_obj = json_decode($json_str);
+        // $json_str = file_get_contents('php://input');
+        // $json_obj = json_decode($json_str);
+
+        $json_obj = (object) $this->input->post();
 
         $stripeSecretKey = $this->Settings_model->getStripeSecretKey();
         $userId          = $this->session->userdata('userId');

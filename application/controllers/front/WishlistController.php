@@ -86,7 +86,13 @@ class WishlistController extends MY_Controller {
     public function addToFaviourits(){
         $productId = $this->input->post('id');
         if(!$userId = $this->session->userdata('userId')){
-            return '';
+            $responseData = [
+                'error' => 1,
+                'csrf_token_name' => $this->security->get_csrf_token_name(),
+                'csrf_token_value' => $this->security->get_csrf_hash(),
+            ];
+            return $this->output->set_content_type('application/json')
+            ->set_output(json_encode($responseData));
         }
 
         $sql = "SELECT * FROM wishlists WHERE user_id = ? AND product_id = ?";
@@ -108,6 +114,8 @@ class WishlistController extends MY_Controller {
         $responseData = [
             'total' => count($this->Wishlist_model->getWishlistItems($userId)),
             'type' => $type,
+            'csrf_token_name' => $this->security->get_csrf_token_name(),
+            'csrf_token_value' => $this->security->get_csrf_hash(),
         ];
 
         // Return the data as JSON response

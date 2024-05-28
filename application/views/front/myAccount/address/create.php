@@ -7,6 +7,7 @@
                 <?php $this->load->view('front/myAccount/common-file'); ?>
                 <div class="col-12 col-md-12 col-lg-8 col-xl-8">
                     <form action="<?php echo base_url('profile-add-address'); ?>" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name() ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                         <div class="row">
                             <div class="col-12 col-lg-12 col-xl-12 col-md-12 mb-3">
                                 <h4 class="ft-medium fs-lg">Add Address</h4>

@@ -304,6 +304,28 @@ class AuthController extends MY_Controller {
         $result = $this->user_model->isEmailExists($email);
         if($result)
         {
+            $response = [
+                'status' => 0,
+                'csrf_token_name' => $this->security->get_csrf_token_name(),
+                'csrf_token_value' => $this->security->get_csrf_hash(),
+            ];
+        }
+         else {
+            $response = [
+                'status' => 1,
+                'csrf_token_name' => $this->security->get_csrf_token_name(),
+                'csrf_token_value' => $this->security->get_csrf_hash(),
+            ];
+        }
+        return $this->output->set_content_type('application/json')
+        ->set_output(json_encode($response));
+    }
+
+    public function check_email_exists_validation() {
+        $email = $this->input->get('email');
+        $result = $this->user_model->isEmailExists($email);
+        if($result)
+        {
             echo json_encode(false);
         }
          else {

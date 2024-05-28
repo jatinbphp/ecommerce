@@ -24,11 +24,11 @@
                                 <div class="row align-items-center">
                                     <div class="col-4">
                                         <?php $image = (isset($data['cart_data']['productData']['image']) && file_exists($data['cart_data']['productData']['image']) ? $data['cart_data']['productData']['image'] : 'images/default-image.png') ?>
-                                        <a target="blank" href="<?php echo base_url('products/' . ($data['cart_data']['productData']['slug'] ?? '') . '/details') ?>"><img src="<?php echo base_url($image); ?>" class="img-fluid" alt="" /></a>
+                                        <a target="_blank" href="<?php echo base_url('products/' . ($data['cart_data']['productData']['slug'] ?? '') . '/details') ?>"><img src="<?php echo base_url($image); ?>" class="img-fluid" alt="" /></a>
                                     </div>
                                     <div class="col d-flex align-items-center justify-content-between">
                                         <div class="cart_single_caption">
-                                        <a target="blank" href="<?php echo base_url('products/' . ($data['cart_data']['productData']['slug'] ?? '') . '/details') ?>"><h4 class="product_title fs-md ft-medium mb-1 lh-1"><?php echo ($data['cart_data']['productData']['product_name'] ?? ''); ?></h4></a>
+                                        <a target="_blank" href="<?php echo base_url('products/' . ($data['cart_data']['productData']['slug'] ?? '') . '/details') ?>"><h4 class="product_title fs-md ft-medium mb-1 lh-1"><?php echo ($data['cart_data']['productData']['product_name'] ?? ''); ?></h4></a>
                                             <p class="mb-1 lh-1"><span class="text-dark">Qty:<?php echo ($data['cart_data']['productData']['quantity'] ?? 0); ?> * <?php echo number_format(($data['cart_data']['productData']['price'] ?? 0), 2); ?></span></p>
                                             <?php if(isset($data['cart_data']['productOptions'])): ?>
                                                 <?php foreach($data['cart_data']['productOptions'] as $optKey => $optVal): ?>
@@ -114,7 +114,8 @@
                         url: baseUrl+"cart/delete-user-item",
                         method: 'POST',
                         data: {
-                            cartId: cartId
+                            cartId: cartId,
+                            '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>' 
                         },
                         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
                         success: function(response) {

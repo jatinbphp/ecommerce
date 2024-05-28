@@ -415,6 +415,7 @@ function removeAdditionalProductImg(img_name, image_id, product_id){
                     'id': image_id,
                     'product_id': product_id,
                     'img_name': img_name,
+                    '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
                  },
                 success: function(data){                        
                     swal("Deleted", "Your image successfully deleted!", "success");

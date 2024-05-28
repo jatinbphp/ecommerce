@@ -91,6 +91,7 @@ class SettingsController extends MY_Controller
             'youtube_url' => $this->input->post('youtube_url'),
             'instagram_url' => $this->input->post('instagram_url'),
             'linkedin_url' => $this->input->post('linkedin_url'),
+            'twitter_url' => $this->input->post('twitter_url'),
             'order_cancel_period'=>$this->input->post('order_cancel_period'),
             'shipping_charges'=>$this->input->post('shipping_charges'),
             'stripe_publishable_key'=>$this->input->post('stripe_publishable_key'),

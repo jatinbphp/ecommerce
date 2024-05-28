@@ -104,7 +104,19 @@ class HomeController extends MY_Controller {
         } else {
             $this->session->set_userdata('cartData', '');
         }
-        return $this;
+
+        // Generate new CSRF token
+        $csrfTokenName = $this->security->get_csrf_token_name();
+        $csrfHash      = $this->security->get_csrf_hash();
+
+        // Return response with new CSRF token
+        $response = [
+            'csrf_token_name' => $csrfTokenName,
+            'csrf_token_value' => $csrfHash
+        ];
+
+        return $this->output->set_content_type('application/json')
+            ->set_output(json_encode($response));
     }
 
 }

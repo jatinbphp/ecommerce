@@ -217,7 +217,7 @@ $(document).ready(function() {
             url: "{{route('user.add-address')}}",
             type: "POST",
             data: {
-                _token: '{{csrf_token()}}',
+                '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
                 'addressCounter': addressCounter,            
              },
             success: function(data){                        

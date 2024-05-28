@@ -68,7 +68,7 @@ $(document).ready(function() {
         $.ajax({
             type: 'POST',
             url: '<?php echo base_url('admin/banners/update-banner-setting') ?>',
-            data: { isAllow: isChecked },
+            data: { isAllow: isChecked, '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>' },
             success: function(response) {
                 if(response){
                     swal("Success", "Your data successfully Updated!", "success");

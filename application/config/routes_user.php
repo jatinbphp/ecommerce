@@ -8,6 +8,7 @@ $route['otpCheck'] = 'front/auth/AuthController/optCheckView';
 $route['verifyOtp'] = 'front/auth/AuthController/verifyOTP';
 $route['logout'] = 'front/auth/AuthController/logout';
 $route['check-email'] = 'front/auth/AuthController/check_email_exists';
+$route['check-email-validation'] = 'front/auth/AuthController/check_email_exists_validation';
 $route['about-us'] = 'HomeController/aboutUs';
 $route['contact'] = 'front/ContactusController';
 $route['contact/send_message'] = 'front/ContactusController/sendMessage';

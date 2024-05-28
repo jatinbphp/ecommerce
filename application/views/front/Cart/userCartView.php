@@ -13,10 +13,10 @@
                                 <div class="cart_single d-flex align-items-center">
                                     <div class="cart_selected_single_thumb">
                                         <?php $image = (isset($cartVal['cart_data']['productData']['image']) && file_exists($cartVal['cart_data']['productData']['image']) ? $cartVal['cart_data']['productData']['image'] : 'images/default-image.png') ?>
-                                        <a target="blank" href="<?php echo base_url('products/' . ($cartVal['cart_data']['productData']['slug'] ?? '') . '/details') ?>"><img src="<?php echo base_url($image); ?>" width="60" class="img-fluid" alt="" /></a>
+                                        <a target="_blank" href="<?php echo base_url('products/' . ($cartVal['cart_data']['productData']['slug'] ?? '') . '/details') ?>"><img src="<?php echo base_url($image); ?>" width="60" class="img-fluid" alt="" /></a>
                                     </div>
                                     <div class="cart_single_caption pl-2">
-                                    <a target="blank" href="<?php echo base_url('products/' . ($cartVal['cart_data']['productData']['slug'] ?? '') . '/details') ?>"><h4 class="product_title fs-sm ft-medium mb-0 lh-1"><?php echo $cartVal['cart_data']['productData']['product_name']; ?></h4></a>
+                                    <a target="_blank" href="<?php echo base_url('products/' . ($cartVal['cart_data']['productData']['slug'] ?? '') . '/details') ?>"><h4 class="product_title fs-sm ft-medium mb-0 lh-1"><?php echo $cartVal['cart_data']['productData']['product_name']; ?></h4></a>
                                         <span class="text-dark">Qty:<?php echo ($cartVal['cart_data']['productData']['quantity'] ?? 0); ?> * <?php echo number_format(($cartVal['cart_data']['productData']['price'] ?? 0), 2); ?></span>
                                             <?php if(isset($cartVal['cart_data']['productOptions'])): ?>
                                                 <?php 

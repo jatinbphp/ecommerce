@@ -228,12 +228,12 @@ $(document).ready(function() {
             var pincode = $('#pincode_0').val();
             var saveCard = $('#saveForLater').is(':checked');;
             var addressId = $('.addresses-radio:checked').val();
-            fetch(baseUrl+ '/payment/process-payment', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
+
+            $.ajax({
+                url: baseUrl + '/payment/process-payment',
+                type: 'POST',
+                dataType: 'json',
+                data: {
                     payment_method_id: result.paymentMethod.id,
                     userName: userName,
                     email: email,
@@ -243,37 +243,105 @@ $(document).ready(function() {
                     city: city,
                     pincode: pincode,
                     addressId: addressId,
-                    saveCard: saveCard
-                })
-            }).then(function(result) {
-                result.json().then(function(json) {
-                    handleServerResponse(json);
-                })
+                    saveCard: saveCard,
+                    '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
+                },
+                success: function(result) {
+                    handleServerResponse(result);
+                },
+                error: function(xhr, status, error) {
+                    // Handle error
+                }
             });
+
+            // fetch(baseUrl+ '/payment/process-payment', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'X-CSRFToken':  '<?php echo $this->security->get_csrf_hash() ?>',
+            //     },
+            //     body: JSON.stringify({
+            //         payment_method_id: result.paymentMethod.id,
+            //         userName: userName,
+            //         email: email,
+            //         address: address,
+            //         country: country,
+            //         state: state,
+            //         city: city,
+            //         pincode: pincode,
+            //         addressId: addressId,
+            //         saveCard: saveCard,
+            //     })
+            // }).then(function(result) {
+            //     result.json().then(function(json) {
+            //         handleServerResponse(json);
+            //     })
+            // });
         }
     }
 
-    function payWithOldCard(){
-        var intentId = $('input[name="saved_card"]:checked').val();
+    // function payWithOldCard(){
+    //     var intentId = $('input[name="saved_card"]:checked').val();
 
+    //     $("#stripe-payment-success-3ds").modal('show');
+    //     var firstName = $('#first_name_0').val();
+    //     var lastName = $('#last_name_0').val();
+    //     var email    = $('#email').val();
+    //     var userName = firstName+ ' ' +lastName;
+    //     var address = $('#address_line1_0').val();
+    //     var country = $('#country_0').val();
+    //     var state   = $('#state_0').val();
+    //     var city    = $('#city_0').val();
+    //     var pincode = $('#pincode_0').val();
+    //     var saveCard = $('#saveForLater').is(':checked');;
+    //     var addressId = $('.addresses-radio:checked').val();
+    //     fetch(baseUrl+ '/payment/process-payment', {
+    //         method: 'POST',
+    //         // credentials: "same-origin",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             'X-Requested-With': 'XMLHttpRequest',
+    //             'X-CSRF-Token': '<?php echo $this->security->get_csrf_hash() ?>',
+    //         },
+    //         body: JSON.stringify({
+    //             payment_method_id: intentId,
+    //             userName: userName,
+    //             email: email,
+    //             address: address,
+    //             country: country,
+    //             state: state,
+    //             city: city,
+    //             pincode: pincode,
+    //             addressId: addressId,
+    //             saveCard: saveCard,
+    //         })
+    //     }).then(function(result) {
+    //         result.json().then(function(json) {
+    //             handleServerResponse(json);
+    //         })
+    //     });
+    // }
+
+    function payWithOldCard() {
+        var intentId = $('input[name="saved_card"]:checked').val();
         $("#stripe-payment-success-3ds").modal('show');
         var firstName = $('#first_name_0').val();
         var lastName = $('#last_name_0').val();
-        var email    = $('#email').val();
-        var userName = firstName+ ' ' +lastName;
+        var email = $('#email').val();
+        var userName = firstName + ' ' + lastName;
         var address = $('#address_line1_0').val();
         var country = $('#country_0').val();
-        var state   = $('#state_0').val();
-        var city    = $('#city_0').val();
+        var state = $('#state_0').val();
+        var city = $('#city_0').val();
         var pincode = $('#pincode_0').val();
-        var saveCard = $('#saveForLater').is(':checked');;
+        var saveCard = $('#saveForLater').is(':checked');
         var addressId = $('.addresses-radio:checked').val();
-        fetch(baseUrl+ '/payment/process-payment', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+
+        $.ajax({
+            url: baseUrl + '/payment/process-payment',
+            type: 'POST',
+            dataType: 'json',
+            data: {
                 payment_method_id: intentId,
                 userName: userName,
                 email: email,
@@ -283,12 +351,15 @@ $(document).ready(function() {
                 city: city,
                 pincode: pincode,
                 addressId: addressId,
-                saveCard: saveCard
-            })
-        }).then(function(result) {
-            result.json().then(function(json) {
-                handleServerResponse(json);
-            })
+                saveCard: saveCard,
+                '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
+            },
+            success: function(result) {
+                handleServerResponse(result);
+            },
+            error: function(xhr, status, error) {
+                // Handle error
+            }
         });
     }
 
@@ -330,12 +401,11 @@ $(document).ready(function() {
             var pincode = $('#pincode_0').val();
             var addressId = $('.addresses-radio:checked').val();
             var saveCard = $('#saveForLater').is(':checked');
-            fetch(baseUrl+ '/payment/process-payment', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
+            $.ajax({
+                url: baseUrl + '/payment/process-payment',
+                type: 'POST',
+                dataType: 'json',
+                data: {
                     payment_intent_id: result.paymentIntent.id,
                     userName: userName,
                     email: email,
@@ -345,11 +415,50 @@ $(document).ready(function() {
                     city: city,
                     pincode: pincode,
                     addressId: addressId,
-                    saveCard: saveCard
-                })
-            }).then(function(confirmResult) {
-                return confirmResult.json();
-            }).then(handleServerResponse);
+                    saveCard: saveCard,
+                    '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
+                },
+                success: function(confirmResult) {
+                    handleServerResponse(confirmResult);
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error if needed
+                    console.error('AJAX request failed:', status, error);
+                }
+            });
+            // payment_intent_ID = result.paymentIntent.id;
+            // var firstName = $('#first_name_0').val();
+            // var lastName = $('#last_name_0').val();
+            // var email    = $('#email').val();
+            // var userName = firstName+ ' ' +lastName;
+            // var address = $('#address_line1_0').val();
+            // var country = $('#country_0').val();
+            // var state   = $('#state_0').val();
+            // var city    = $('#city_0').val();
+            // var pincode = $('#pincode_0').val();
+            // var addressId = $('.addresses-radio:checked').val();
+            // var saveCard = $('#saveForLater').is(':checked');
+            // fetch(baseUrl+ '/payment/process-payment', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify({
+            //         payment_intent_id: result.paymentIntent.id,
+            //         userName: userName,
+            //         email: email,
+            //         address: address,
+            //         country: country,
+            //         state: state,
+            //         city: city,
+            //         pincode: pincode,
+            //         addressId: addressId,
+            //         saveCard: saveCard,
+            //         '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
+            //     })
+            // }).then(function(confirmResult) {
+            //     return confirmResult.json();
+            // }).then(handleServerResponse);
         }
     }
 
@@ -373,6 +482,7 @@ $(document).ready(function() {
                 'state': state,
                 'city': city,
                 'pincode': pincode,
+                '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
             },
             success: function(data){                   
                 if(data.status == 1){
@@ -422,11 +532,9 @@ $(document).ready(function() {
         $.ajax({
             url:  baseUrl+"check-email",
             type: "POST",
-            data: {
-                'email': email,
-            },
-            success: function(data){                  
-                if(data == 'false'){
+            data: {'email': email, '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'},
+            success: function(data){           
+                if(data.status == '0'){
                     swal({
                         title: "Welcome back!",
                         text: "Please sign in to continue. Don't worry, your cart data will be saved.",
@@ -437,7 +545,7 @@ $(document).ready(function() {
                     },
                     function(isConfirm) {
                         if (isConfirm) {
-                            // Redirect to the login page
+                            // Redirect to the login pag    e
                             window.location.href = baseUrl+'signIn';
                         }
                     });
@@ -454,6 +562,7 @@ function updateTaxData(addressId) {
         type: "POST",
         data: {
             'addressId': addressId,
+            '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
         },
         success: function(data){                  
             if(data.status == 1){

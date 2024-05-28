@@ -34,8 +34,7 @@
                         </div>
                     </div>
                 <?php echo form_close(); ?>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

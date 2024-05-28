@@ -44,14 +44,20 @@ $(document).ready(function() {
         if(!id){
             return;
         }
-
+        var tockenName = getTockenName();
+        var tockenValue = getTockenValue();
+        var dataObj = { 'id': id };
+        dataObj[tockenName] = tockenValue;
         $.ajax({
             url: baseUrl+"wishlist/add_to_faviourits",
             type: "POST",
-            data: {
-                'id': id,
-            },
+            data: dataObj,
             success: function(data) {
+                updateCsrfTokens(data.csrf_token_name, data.csrf_token_value);
+                if(data.error){
+                    SnackbarAlert("To add this product to your favorites, please log in to your account!");
+                    return;
+                }
                 if(data){
                     $('.wishlist-counter').text(data.total);
                     var msg = '';
@@ -62,26 +68,9 @@ $(document).ready(function() {
                     }
                     updateWishlistClass(data.type, id);
                     SnackbarAlert(msg);
-                } else {
-                    SnackbarAlert("To add this product to your favorites, please log in to your account!");
                 }
             }
         });
-    });
-
-    var frontordersTable = $('#frontordersTable').DataTable({
-        "processing": true,
-        "serverSide": true,
-        "order":[],
-        "ajax":{
-            url: baseUrl+"fetch_orders",
-            type:"POST",
-        },
-        "columnDefs": [{
-            "targets":[0,1],
-            "orderable": false,
-            "searchable": false,
-        }],
     });
     
     //Delete Address
@@ -104,7 +93,6 @@ $(document).ready(function() {
                 $.ajax({
                     url: baseUrl+"addresses/delete/" + id,
                     type: "DELETE",
-                    headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
                     success: function(response) {
                         if (response.success) {
                             $('#address-box-'+id).remove();
@@ -152,6 +140,7 @@ $(document).ready(function() {
                         } else {
                             swal("Error", "Failed to remove item from wishlist.", "error");
                         }
+                        // openWishlist();
                     },
                     error: function(xhr, status, error) {
                         console.error(xhr.responseText);

@@ -179,8 +179,8 @@
                     required: true,
                     email: true,
                     remote: {
-                        url: "<?php echo site_url('check-email'); ?>",
-                        type: "post"
+                        url: "<?php echo site_url('check-email-validation'); ?>",
+                        type: "get"
                     }
                 },
                  password: {

@@ -8,6 +8,7 @@
                 <div class="col-12 col-md-12 col-lg-8 col-xl-8">
                     <div class="row align-items-center">
                     <form class="row m-0" method="post" enctype="multipart/form-data" action="<?php echo base_url('profile-info'); ?>">
+                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name() ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                         <input type="hidden" name="id" value="<?php echo ($userDataArray['id'] ?? ''); ?>">
                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                             <div class="form-group">

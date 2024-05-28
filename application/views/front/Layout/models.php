@@ -170,7 +170,7 @@
                 $.ajax({
                     url: baseUrl+"cart/get-user-cart", 
                     type: 'POST',
-                    data: { cartData: cartDataFromLocalStorage },
+                    data: { cartData: cartDataFromLocalStorage, '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>' },
                     headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
                     success: function(response) {
                         $("#usrCartDataMenu").html(response.cartView);
@@ -255,7 +255,8 @@
                     type: 'post',
                     data: {
                         id: id,
-                        reason: reason
+                        reason: reason,
+                        '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
                     },
                     success: function(data) {
                         $('#loader').addClass('d-none');

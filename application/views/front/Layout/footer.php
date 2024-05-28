@@ -152,6 +152,7 @@
             type: "post",
             data: {
                 'email': email,
+                '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
             },
             success: function(response) {
                 $("#subscriptionbody").html(response);
@@ -182,6 +183,7 @@
                 'action': action,
                 'planId': planId,
                 'email' : email,
+                '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
             },
             success: function(response) {
                 SnackbarAlert(response.message);
@@ -191,4 +193,72 @@
             }
         });
     }
+
+    function deleteCartItem(cartId, button) {
+    swal({
+        title: "Are you sure?",
+        text: "You want to delete Cart item ?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'Yes, Delete',
+        cancelButtonText: 'No, cancel',
+        closeOnConfirm: true,
+        closeOnCancel: true
+    },
+    function(isConfirm) {
+        if (isConfirm) {
+            if(cartId == 0){
+                var productId = $(button).attr('data-productId');
+                var existingCartData = localStorage.getItem('cartData') ? JSON.parse(localStorage.getItem('cartData')) : [];
+                var filteredCartData = existingCartData.filter(function(item) {
+                    return item.product_id !== productId;
+                });
+                localStorage.setItem('cartData', JSON.stringify(filteredCartData));
+                var data =  localStorage.getItem('cartData');
+                if(data){
+                    $('.user-cart-counter').text(JSON.parse(data).length);
+                }
+                updateCartData();
+            } else {
+                $.ajax({
+                    url: baseUrl+"cart/delete-user-item",
+                    method: 'POST',
+                    data: {
+                        cartId: cartId,
+                        '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
+                    },
+                    success: function(response) {
+                        // $("#usrCartDataMenu").html(response.cartView);
+                        $(".user-cart-counter").html(response.cartCounter);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('AJAX Error:', textStatus, errorThrown);
+                    }
+                });
+            }
+            openCart();
+        } else {
+            swal("Cancelled", "Your Data is Safe.", "error");
+        }
+    });
+}
+
+    $(document).ready(function() {
+        var frontordersTable = $('#frontordersTable').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "order":[],
+            "ajax":{
+                url: baseUrl+"fetch_orders",
+                type:"POST",
+                data:{'<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'}
+            },
+            "columnDefs": [{
+                "targets":[0,1],
+                "orderable": false,
+                "searchable": false,
+            }],
+        });
+    });
 </script>

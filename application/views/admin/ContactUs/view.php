@@ -17,6 +17,10 @@
                             <td><?php echo isset($contactus['email']) ? $contactus['email'] : '' ?></td>
                         </tr>
                         <tr>
+                            <th>Subject</th>
+                            <td><?php echo isset($contactus['subject']) ? $contactus['subject'] : '' ?></td>
+                        </tr>
+                        <tr>
                             <th>Message</th>
                             <td><?php echo isset($contactus['message']) ? $contactus['message'] : '' ?></td>
                         </tr>
