@@ -28,7 +28,6 @@ class PaymentController extends MY_Controller {
         // $json_obj = json_decode($json_str);
 
         $json_obj = (object) $this->input->post();
-
         $stripeSecretKey = $this->Settings_model->getStripeSecretKey();
         $userId          = $this->session->userdata('userId');
         addPaymentLog("User Id: $userId");
@@ -104,7 +103,6 @@ class PaymentController extends MY_Controller {
                 $amount = ($totalAmount * 100);
 
                 $isAddNewCard = $this->getAllowToAddNewCard($json_obj, $stripeCustomerId);
-
                 if($isAddNewCard){
                     $paymentMethod = \Stripe\PaymentMethod::retrieve($json_obj->payment_method_id);
                     $paymentMethod->attach(['customer' => $stripeCustomerId]);
@@ -277,7 +275,7 @@ class PaymentController extends MY_Controller {
      */
     public function getAllowToAddNewCard($json_obj, $customerId) {
         $saveForLater = isset($json_obj->saveCard) ? $json_obj->saveCard : false;
-        if(!$saveForLater){
+        if(!$saveForLater || $saveForLater == 'false'){
             return false;
         }
         $paymentId = $json_obj->payment_method_id;
