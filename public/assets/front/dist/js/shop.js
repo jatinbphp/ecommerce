@@ -56,7 +56,6 @@ function handleFilter(){
    $.ajax({
       url: baseUrl+"products",
       method: 'GET',
-      headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
       data: {
          filter: filter,
          viewType:'filter',
@@ -78,7 +77,9 @@ function handleFilter(){
          $('#loader').addClass('d-none');
          $('#search-text').text('').removeClass('d-none');
       }
-   });
+   }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+      updateCsrfToken();
+  });
 }
 
 // Range Slider Script

@@ -212,17 +212,19 @@ $(document).ready(function() {
     var addressCounter = <?php echo $addressesCounter ?>;
     $('#addressBtn').on('click', function(){
         addressCounter = addressCounter + 1;
-
+        var tockenName = getTockenName();
+        var tockenValue = getTockenValue();
+        var dataObj = { 'addressCounter': addressCounter };
+        dataObj[tockenName] = tockenValue;
         $.ajax({
             url: "{{route('user.add-address')}}",
             type: "POST",
-            data: {
-                '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-                'addressCounter': addressCounter,            
-             },
+            data: dataObj,
             success: function(data){                        
                 $('#extraAddress').append(data);
             }
+        }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+            updateCsrfToken();
         });
     });
 

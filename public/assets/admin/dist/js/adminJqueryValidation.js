@@ -56,6 +56,8 @@ $(document).ready(function() {
             error: function(xhr, status, error) {
                 console.error(error);
             }
+        }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+            updateCsrfToken();
         });
     });
 

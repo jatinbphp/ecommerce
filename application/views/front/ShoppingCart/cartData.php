@@ -110,20 +110,22 @@
                     }
                     updateCartData();
                 } else {
+                    var tockenName = getTockenName();
+                    var tockenValue = getTockenValue();
+                    var dataObj = {cartId: cartId};
+                    dataObj[tockenName] = tockenValue;
                     $.ajax({
                         url: baseUrl+"cart/delete-user-item",
                         method: 'POST',
-                        data: {
-                            cartId: cartId,
-                            '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>' 
-                        },
-                        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                        data: dataObj,
                         success: function(response) {
                             $(".user-cart-counter").html(response.cartCounter);
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             console.error('AJAX Error:', textStatus, errorThrown);
                         }
+                    }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+                        updateCsrfToken();
                     });
                 }
                 location.reload();

@@ -148,7 +148,6 @@
                 $.ajax({
                     url: baseUrl+"wishlist-data", 
                     type: 'GET',
-                    headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
                     success: function(response) {
                         $("#userWishlist").html(response.wishlistHtml);
                         $(".user-cart-counter").html(response.cartCounter);
@@ -156,6 +155,8 @@
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.error('AJAX Error:', textStatus, errorThrown);
                     }
+                }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+                    updateCsrfToken();
                 });
             }
 
@@ -166,12 +167,14 @@
             function openCart() {
             	document.getElementById("Cart").style.display = "block";
                 var cartDataFromLocalStorage = localStorage.getItem('cartData');
-
+                var tockenName = getTockenName();
+                var tockenValue = getTockenValue();
+                var dataObj = {cartData: cartDataFromLocalStorage};
+                dataObj[tockenName] = tockenValue;
                 $.ajax({
                     url: baseUrl+"cart/get-user-cart", 
                     type: 'POST',
-                    data: { cartData: cartDataFromLocalStorage, '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>' },
-                    headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                    data: dataObj,
                     success: function(response) {
                         $("#usrCartDataMenu").html(response.cartView);
                         $(".user-cart-counter").html(response.cartCounter);
@@ -179,6 +182,8 @@
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.error('AJAX Error:', textStatus, errorThrown);
                     }
+                }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+                    updateCsrfToken();
                 });
             }
 
@@ -223,6 +228,8 @@
                     error: function(xhr, status, error) {
                         console.error(xhr.responseText);
                     }
+                }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+                    updateCsrfToken();
                 });
             }
 
@@ -249,15 +256,15 @@
                 if(!id || id==0){
                     return;
                 }
+                var tockenName = getTockenName();
+                var tockenValue = getTockenValue();
+                var dataObj = { id: id, reason: reason};
+                dataObj[tockenName] = tockenValue;
                 $('#loader').removeClass('d-none');
                 $.ajax({
                 url: baseUrl+'cancel-order',
                     type: 'post',
-                    data: {
-                        id: id,
-                        reason: reason,
-                        '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-                    },
+                    data: dataObj,
                     success: function(data) {
                         $('#loader').addClass('d-none');
                         if(data.status == 1){
@@ -270,6 +277,8 @@
                     error: function(xhr, status, error) {
                         console.error(xhr.responseText);
                     }
+                }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+                    updateCsrfToken();
                 });
             }
         </script>

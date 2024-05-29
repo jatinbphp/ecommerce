@@ -53,7 +53,6 @@ $(document).ready(function() {
             type: "POST",
             data: dataObj,
             success: function(data) {
-                updateCsrfTokens(data.csrf_token_name, data.csrf_token_value);
                 if(data.error){
                     SnackbarAlert("To add this product to your favorites, please log in to your account!");
                     return;
@@ -70,6 +69,8 @@ $(document).ready(function() {
                     SnackbarAlert(msg);
                 }
             }
+        }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+            updateCsrfToken();
         });
     });
     
@@ -101,8 +102,9 @@ $(document).ready(function() {
                             swal("Error", "Failed to remove item from wishlist.", "error");
                         }
                     }
+                }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+                    updateCsrfToken();
                 });
-
             } else {
                 swal("Cancelled", "Your data safe!", "error");
             }
@@ -145,6 +147,8 @@ $(document).ready(function() {
                     error: function(xhr, status, error) {
                         console.error(xhr.responseText);
                     }
+                }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+                    updateCsrfToken();
                 });
             } else {
                 swal("Cancelled", "Your data safe!", "error");
@@ -204,6 +208,8 @@ $(document).ready(function() {
                 }
                 SnackbarAlert(response.message);
             }
+        }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+            updateCsrfToken();
         });
     });
 });

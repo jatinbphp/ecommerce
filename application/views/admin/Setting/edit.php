@@ -49,10 +49,14 @@ $(document).ready(function() {
     $('#is_stripe_live_mode').change(function(){
         var isChecked = $(this).prop('checked');
         // Make an AJAX request to save the state in the database
+        var tockenName = getTockenName();
+        var tockenValue = getTockenValue();
+        var dataObj = { islivemode: isChecked };
+        dataObj[tockenName] = tockenValue;
         $.ajax({
             type: 'POST',
             url: '<?php echo base_url('admin/settings/update-stripe-mode') ?>',
-            data: { islivemode: isChecked, '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'},
+            data: dataObj,
             success: function(response) {
                 if(response){
                     swal("Success", "Your data successfully Updated!", "success");
@@ -61,6 +65,8 @@ $(document).ready(function() {
             error: function(xhr, status, error) {
                 console.error('Error:', error);
             }
+        }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+            updateCsrfToken();
         });
     });
 });

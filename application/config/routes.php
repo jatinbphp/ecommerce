@@ -52,6 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+$route['get-tocken'] = 'HomeController/getTocken';
 
 include('routes_admin.php');
 include('routes_user.php');

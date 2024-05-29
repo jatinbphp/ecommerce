@@ -233,29 +233,35 @@ $(document).ready(function() {
             var saveCard = $('#saveForLater').is(':checked');;
             var addressId = $('.addresses-radio:checked').val();
 
+            var tockenName = getTockenName();
+            var tockenValue = getTockenValue();
+            var dataObj = {
+                payment_method_id: result.paymentMethod.id,
+                userName: userName,
+                email: email,
+                address: address,
+                country: country,
+                state: state,
+                city: city,
+                pincode: pincode,
+                addressId: addressId,
+                saveCard: saveCard,
+            };
+            dataObj[tockenName] = tockenValue;
+
             $.ajax({
                 url: baseUrl + '/payment/process-payment',
                 type: 'POST',
                 dataType: 'json',
-                data: {
-                    payment_method_id: result.paymentMethod.id,
-                    userName: userName,
-                    email: email,
-                    address: address,
-                    country: country,
-                    state: state,
-                    city: city,
-                    pincode: pincode,
-                    addressId: addressId,
-                    saveCard: saveCard,
-                    '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-                },
+                data: dataObj,
                 success: function(result) {
                     handleServerResponse(result);
                 },
                 error: function(xhr, status, error) {
                     // Handle error
                 }
+            }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+                updateCsrfToken();
             });
 
             // fetch(baseUrl+ '/payment/process-payment', {
@@ -341,29 +347,35 @@ $(document).ready(function() {
         var saveCard = $('#saveForLater').is(':checked');
         var addressId = $('.addresses-radio:checked').val();
 
+        var tockenName = getTockenName();
+        var tockenValue = getTockenValue();
+        var dataObj = {
+            payment_method_id: intentId,
+            userName: userName,
+            email: email,
+            address: address,
+            country: country,
+            state: state,
+            city: city,
+            pincode: pincode,
+            addressId: addressId,
+            saveCard: saveCard,
+        };
+        dataObj[tockenName] = tockenValue;
+
         $.ajax({
             url: baseUrl + '/payment/process-payment',
             type: 'POST',
             dataType: 'json',
-            data: {
-                payment_method_id: intentId,
-                userName: userName,
-                email: email,
-                address: address,
-                country: country,
-                state: state,
-                city: city,
-                pincode: pincode,
-                addressId: addressId,
-                saveCard: saveCard,
-                '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-            },
+            data: dataObj,
             success: function(result) {
                 handleServerResponse(result);
             },
             error: function(xhr, status, error) {
                 // Handle error
             }
+        }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+            updateCsrfToken();
         });
     }
 
@@ -405,23 +417,28 @@ $(document).ready(function() {
             var pincode = $('#pincode_0').val();
             var addressId = $('.addresses-radio:checked').val();
             var saveCard = $('#saveForLater').is(':checked');
+
+            var tockenName = getTockenName();
+            var tockenValue = getTockenValue();
+            var dataObj = {
+                payment_intent_id: result.paymentIntent.id,
+                userName: userName,
+                email: email,
+                address: address,
+                country: country,
+                state: state,
+                city: city,
+                pincode: pincode,
+                addressId: addressId,
+                saveCard: saveCard,
+            };
+            dataObj[tockenName] = tockenValue;
+
             $.ajax({
                 url: baseUrl + '/payment/process-payment',
                 type: 'POST',
                 dataType: 'json',
-                data: {
-                    payment_intent_id: result.paymentIntent.id,
-                    userName: userName,
-                    email: email,
-                    address: address,
-                    country: country,
-                    state: state,
-                    city: city,
-                    pincode: pincode,
-                    addressId: addressId,
-                    saveCard: saveCard,
-                    '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-                },
+                data: dataObj,
                 success: function(confirmResult) {
                     handleServerResponse(confirmResult);
                 },
@@ -429,6 +446,8 @@ $(document).ready(function() {
                     // Handle the error if needed
                     console.error('AJAX request failed:', status, error);
                 }
+            }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+                updateCsrfToken();
             });
             // payment_intent_ID = result.paymentIntent.id;
             // var firstName = $('#first_name_0').val();
@@ -477,23 +496,28 @@ $(document).ready(function() {
             return;
         }
         $('#loader').removeClass('d-none');
+        var tockenName = getTockenName();
+        var tockenValue = getTockenValue();
+        var dataObj = {
+            'address': address,
+            'country': country,
+            'state': state,
+            'city': city,
+            'pincode': pincode,
+        };
+        dataObj[tockenName] = tockenValue;
         $.ajax({
             url:  baseUrl+"payment/calculate-tax",
             type: "POST",
-            data: {
-                'address': address,
-                'country': country,
-                'state': state,
-                'city': city,
-                'pincode': pincode,
-                '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-            },
+            data: dataObj,
             success: function(data){                   
                 if(data.status == 1){
                     updateTaxValue(data);
                 }
                 $('#loader').addClass('d-none');
             }
+        }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+            updateCsrfToken();
         });
     });
 
@@ -533,10 +557,14 @@ $(document).ready(function() {
 
     $('#email').keyup(function(){
         var email = $(this).val();
+        var tockenName = getTockenName();
+        var tockenValue = getTockenValue();
+        var dataObj = { 'email': email };
+        dataObj[tockenName] = tockenValue;
         $.ajax({
             url:  baseUrl+"check-email",
             type: "POST",
-            data: {'email': email, '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'},
+            data: dataObj,
             success: function(data){           
                 if(data.status == '0'){
                     swal({
@@ -555,25 +583,30 @@ $(document).ready(function() {
                     });
                 }
             }
+        }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+            updateCsrfToken();
         });
     });
 });
 
 function updateTaxData(addressId) {
     $('#loader').removeClass('d-none');
+    var tockenName = getTockenName();
+    var tockenValue = getTockenValue();
+    var dataObj = { 'addressId': addressId };
+    dataObj[tockenName] = tockenValue;
     $.ajax({
         url:  baseUrl+"payment/calculate-tax-with-address",
         type: "POST",
-        data: {
-            'addressId': addressId,
-            '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-        },
+        data: dataObj,
         success: function(data){                  
             if(data.status == 1){
                 updateTaxValue(data);
             }
             $('#loader').addClass('d-none');
         }
+    }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+        updateCsrfToken();
     });
 }
 

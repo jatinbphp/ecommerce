@@ -106,13 +106,22 @@ class HomeController extends MY_Controller {
         }
 
         // Generate new CSRF token
-        $csrfTokenName = $this->security->get_csrf_token_name();
-        $csrfHash      = $this->security->get_csrf_hash();
+        // $csrfTokenName = $this->security->get_csrf_token_name();
+        // $csrfHash      = $this->security->get_csrf_hash();
 
         // Return response with new CSRF token
         $response = [
-            'csrf_token_name' => $csrfTokenName,
-            'csrf_token_value' => $csrfHash
+            // 'csrf_token_name' => $csrfTokenName,
+            // 'csrf_token_value' => $csrfHash
+        ];
+
+        return $this->output->set_content_type('application/json')
+            ->set_output(json_encode($response));
+    }
+
+    public function getTocken(){
+        $response = [
+            'csrf_token_value' => $this->security->get_csrf_hash()
         ];
 
         return $this->output->set_content_type('application/json')

@@ -408,19 +408,20 @@ function removeAdditionalProductImg(img_name, image_id, product_id){
         },
     function(isConfirm) {
         if (isConfirm) {
+            var tockenName = getTockenName();
+            var tockenValue = getTockenValue();
+            var dataObj = {'id': image_id, 'product_id': product_id,'img_name': img_name,};
+            dataObj[tockenName] = tockenValue;
             $.ajax({
                 url:  baseUrl+"admin/product/removeimage",
                 type: "POST",
-                data: {
-                    'id': image_id,
-                    'product_id': product_id,
-                    'img_name': img_name,
-                    '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-                 },
+                data: dataObj,
                 success: function(data){                        
                     swal("Deleted", "Your image successfully deleted!", "success");
                     $('#'+image_id).remove();
                 }
+            }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+                updateCsrfToken();
             });
         } else {
             swal("Cancelled", "Your data safe!", "error");

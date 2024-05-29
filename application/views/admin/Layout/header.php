@@ -37,6 +37,25 @@
     <script src="<?php echo base_url('public/assets/admin/plugins/jquery/jquery.min.js') ?>"></script>
     <script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
     <script type="text/javascript">const baseUrl = "<?php echo base_url(); ?>";</script>
+	<meta name="<?php echo $this->security->get_csrf_token_name(); ?>" content="<?= $this->security->get_csrf_hash(); ?>">
+    <script>
+        function updateCsrfToken() {
+            $.ajax({
+                type: 'get',
+                url: baseUrl+'get-tocken',
+                success: function(data){
+                    $('input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(data.csrf_token_value);
+                    $('meta[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').attr('content', data.csrf_token_value);
+                }
+            });
+        }
+        function getTockenName() {
+            return '<?php echo $this->security->get_csrf_token_name(); ?>';
+        }
+        function getTockenValue() {
+            return $('meta[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').attr('content');
+        }
+    </script>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">

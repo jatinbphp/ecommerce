@@ -147,13 +147,14 @@
             SnackbarAlert('Please enter valid email address.');
             return;
         }
+        var tockenName = getTockenName();
+        var tockenValue = getTockenValue();
+        var dataObj = { 'email': email };
+        dataObj[tockenName] = tockenValue;
         $.ajax({
             url: baseUrl+"subscription-plans",
             type: "post",
-            data: {
-                'email': email,
-                '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-            },
+            data: dataObj,
             success: function(response) {
                 $("#subscriptionbody").html(response);
                 $("#subscription").modal('show');
@@ -161,6 +162,8 @@
             error: function(xhr, status, error) {
                 console.error(error);
             }
+        }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+            updateCsrfToken();
         });
     }
 
@@ -175,22 +178,26 @@
         if($(checkBox).is(':checked')){
             action = 'add';
         }
-
+        var tockenName = getTockenName();
+        var tockenValue = getTockenValue();
+        var dataObj = {
+            'action': action,
+            'planId': planId,
+            'email' : email,
+        };
+        dataObj[tockenName] = tockenValue;
         $.ajax({
             url: baseUrl+"subscription-plans/update",
             type: "post",
-            data: {
-                'action': action,
-                'planId': planId,
-                'email' : email,
-                '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-            },
+            data: dataObj,
             success: function(response) {
                 SnackbarAlert(response.message);
             },
             error: function(xhr, status, error) {
                 console.error(error);
             }
+        }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+            updateCsrfToken();
         });
     }
 
@@ -221,13 +228,14 @@
                 }
                 updateCartData();
             } else {
+                var tockenName = getTockenName();
+                var tockenValue = getTockenValue();
+                var dataObj = { cartId: cartId };
+                dataObj[tockenName] = tockenValue;
                 $.ajax({
                     url: baseUrl+"cart/delete-user-item",
                     method: 'POST',
-                    data: {
-                        cartId: cartId,
-                        '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-                    },
+                    data: dataObj,
                     success: function(response) {
                         // $("#usrCartDataMenu").html(response.cartView);
                         $(".user-cart-counter").html(response.cartCounter);
@@ -235,6 +243,8 @@
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.error('AJAX Error:', textStatus, errorThrown);
                     }
+                }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+                    updateCsrfToken();
                 });
             }
             openCart();
@@ -245,6 +255,10 @@
 }
 
     $(document).ready(function() {
+        var tockenName = getTockenName();
+        var tockenValue = getTockenValue();
+        var dataObj = {};
+        dataObj[tockenName] = tockenValue;
         var frontordersTable = $('#frontordersTable').DataTable({
             "processing": true,
             "serverSide": true,
@@ -252,7 +266,10 @@
             "ajax":{
                 url: baseUrl+"fetch_orders",
                 type:"POST",
-                data:{'<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'}
+                data:dataObj,
+                complete: function() {
+                    updateCsrfToken();
+                },
             },
             "columnDefs": [{
                 "targets":[0,1],

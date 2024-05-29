@@ -16,18 +16,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     <script src="<?php echo base_url('public/assets/admin/plugins/jquery/jquery.min.js') ?>"></script>
     <script src="<?php echo base_url('public/assets/front/dist/js/cartData.js') ?>"></script>
-    <meta name="csrf-token-name" content="<?= $this->security->get_csrf_token_name(); ?>">
-    <meta name="csrf-token-value" content="<?= $this->security->get_csrf_hash(); ?>">
+    <meta name="<?php echo $this->security->get_csrf_token_name(); ?>" content="<?= $this->security->get_csrf_hash(); ?>">
     <script>
-        function updateCsrfTokens(name, value) {
-            $('meta[name="csrf-token-name"]').attr('content', name);
-            $('meta[name="csrf-token-value"]').attr('content', value);
+        function updateCsrfToken() {
+            $.ajax({
+                type: 'get',
+                url: baseUrl+'get-tocken',
+                success: function(data){
+                    $('input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(data.csrf_token_value);
+                    $('meta[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').attr('content', data.csrf_token_value);
+                }
+            });
         }
         function getTockenName() {
-            return $('meta[name="csrf-token-name"]').attr('content');
+            return '<?php echo $this->security->get_csrf_token_name(); ?>';
         }
         function getTockenValue() {
-            return $('meta[name="csrf-token-value"]').attr('content');
+            return $('meta[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').attr('content');
         }
     </script>
 </head>

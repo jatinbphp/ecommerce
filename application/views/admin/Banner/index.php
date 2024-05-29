@@ -64,11 +64,15 @@ $(document).ready(function() {
     $("#bannerlist").addClass('active');
     $('#bannerSliderCheckbox').change(function(){
         var isChecked = $(this).prop('checked');
+        var tockenName = getTockenName();
+        var tockenValue = getTockenValue();
+        var dataObj = { 'isAllow': isChecked };
+        dataObj[tockenName] = tockenValue;
         // Make an AJAX request to save the state in the database
         $.ajax({
             type: 'POST',
             url: '<?php echo base_url('admin/banners/update-banner-setting') ?>',
-            data: { isAllow: isChecked, '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>' },
+            data: dataObj,
             success: function(response) {
                 if(response){
                     swal("Success", "Your data successfully Updated!", "success");
@@ -77,6 +81,8 @@ $(document).ready(function() {
             error: function(xhr, status, error) {
                 console.error('Error:', error);
             }
+        }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+            updateCsrfToken();
         });
     });
 });

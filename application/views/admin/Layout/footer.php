@@ -25,6 +25,10 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 $(document).ready(function() {
+    var tockenName = getTockenName();
+    var tockenValue = getTockenValue();
+    var dataObj = {};
+    dataObj[tockenName] = tockenValue;
     var categories = $('#CategoriesTable').DataTable({
         "processing": true,
         "serverSide": true,
@@ -32,9 +36,10 @@ $(document).ready(function() {
         "ajax":{
             url:baseUrl+"admin/categories/fetch_categories",
             type:"POST",
-            data:{
-                '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-            },
+            data:dataObj,
+            complete: function() {
+                updateCsrfToken();
+            }
         },
         "columnDefs": [{
             "targets":[0,1,2,3,4],
@@ -49,9 +54,10 @@ $(document).ready(function() {
         "ajax":{
             url:baseUrl+"admin/users/fetch_users",
             type:"POST",
-            data:{
-                '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-            },
+            data:dataObj,
+            complete: function() {
+                updateCsrfToken();
+            }
         },
         "columnDefs": [{
             "targets":[5,6],
@@ -65,7 +71,7 @@ $(document).ready(function() {
         "serverSide": true,
         "order":[],
         "ajax":{
-            url:"fetch_user_report",
+            url:baseUrl+"fetch_user_report",
             type:"POST",
             data: function (d) {
                 var formDataArray = $('#report-filter-Form').find(':input:not(select[multiple])').serializeArray();
@@ -73,11 +79,14 @@ $(document).ready(function() {
                 $.each(formDataArray, function(i, field){
                     formData[field.name] = field.value;
                 });
-                formData['<?php echo $this->security->get_csrf_token_name() ?>'] = '<?php echo $this->security->get_csrf_hash() ?>';
+                formData[tockenName] = tockenValue;
                 d = $.extend(d, formData);
     
                 return d;
             },
+            complete: function() {
+                updateCsrfToken();
+            }
         },
         "drawCallback": function (settings) {
             var api = this.api();
@@ -107,7 +116,7 @@ $(document).ready(function() {
         "serverSide": true,
         "order": [[0, "desc"]],
         "ajax":{
-            url:"fetch_sales_report",
+            url:baseUrl+"fetch_sales_report",
             type:"POST",
             data: function (d) {
                 var formDataArray = $('#report-filter-Form').find(':input:not(select[multiple])').serializeArray();
@@ -115,11 +124,14 @@ $(document).ready(function() {
                 $.each(formDataArray, function(i, field){
                     formData[field.name] = field.value;
                 });
-                formData['<?php echo $this->security->get_csrf_token_name() ?>'] = '<?php echo $this->security->get_csrf_hash() ?>';
+                formData[tockenName] = tockenValue;
                 d = $.extend(d, formData);
 
                 return d;
             },
+            complete: function() {
+                updateCsrfToken();
+            }
         },
         "drawCallback": function (settings) {
             var api = this.api();
@@ -150,9 +162,10 @@ $(document).ready(function() {
         "ajax":{
             url:baseUrl+"admin/banners/fetch_banners",
             type:"POST",
-            data:{
-                '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-            },
+            data:dataObj,
+            complete: function() {
+                updateCsrfToken();
+            }
         },
         "columnDefs": [{
             "targets":[5],
@@ -167,9 +180,10 @@ $(document).ready(function() {
         "ajax":{
             url:baseUrl+"admin/contemt-management/fetch_content",
             type:"POST",
-            data:{
-                '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-            },
+            data:dataObj,
+            complete: function() {
+                updateCsrfToken();
+            }
         },
         "columnDefs": [{
             "targets":[2],
@@ -185,9 +199,10 @@ $(document).ready(function() {
         "ajax":{
             url:baseUrl+"admin/contact-us/fetch_contactus",
             type:"POST",
-            data:{
-                '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-            },
+            data:dataObj,
+            complete: function() {
+                updateCsrfToken();
+            }
         },
         "columnDefs": [{
             "targets":[5],
@@ -203,9 +218,10 @@ $(document).ready(function() {
         "ajax":{
             url:baseUrl+"admin/products/fetch_products",
             type:"POST",
-            data:{
-                '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-            },
+            data:dataObj,
+            complete: function() {
+                updateCsrfToken();
+            }
         },
         "columnDefs": [{
             "targets":[4,6],
@@ -220,9 +236,10 @@ $(document).ready(function() {
         "ajax":{
             url:baseUrl+"admin/subscription-plan/fetch_subscription_plan",
             type:"POST",
-            data:{
-                '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-            },
+            data:dataObj,
+            complete: function() {
+                updateCsrfToken();
+            }
         },
         "columnDefs": [{
             "targets":[4],
@@ -238,9 +255,10 @@ $(document).ready(function() {
         "ajax":{
             url:baseUrl+"admin/products/fetch_reviews/"+productId,
             type:"POST",
-            data:{
-                '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-            },
+            data:dataObj,
+            complete: function() {
+                updateCsrfToken();
+            }
         },
         "columnDefs": [{
             "targets":[0],
@@ -254,9 +272,10 @@ $(document).ready(function() {
         "ajax":{
             url:baseUrl+"admin/dashboard/fetch-orders",
             type:"POST",
-            data:{
-                '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-            },
+            data:dataObj,
+            complete: function() {
+                updateCsrfToken();
+            }
         },
         
         'paging': false, // Hide pagination
@@ -283,9 +302,10 @@ $(document).ready(function() {
         "ajax":{
             url:baseUrl+"admin/orders/fetchOrders",
             type:"POST",
-            data:{
-                '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-            },
+            data:dataObj,
+            complete: function() {
+                updateCsrfToken();
+            }
         },
         "columnDefs": [{
             "targets":[0,1,2,3,4,5,6],
@@ -299,6 +319,11 @@ $(document).ready(function() {
         var id = $(this).attr("data-id");
         var controller = $(this).attr("data-controller");
         var title = $(this).attr("data-title");
+        var tockenName = getTockenName();
+        var tockenValue = getTockenValue();
+        var dataObj = {};
+        dataObj[tockenName] = tockenValue;
+        
         swal({
             title: "Are you sure?",
             text: "You want to delete "+title+"?",
@@ -315,9 +340,7 @@ $(document).ready(function() {
                 $.ajax({
                     url: controller+"/delete/" + id,
                     type: "POST",
-                    data:{
-                        '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-                    },
+                    data:dataObj,
                     success: function(data){
                         if(controller == 'users'){
                             users.row('.selected').remove().draw(false);
@@ -339,7 +362,9 @@ $(document).ready(function() {
                                                     
                         swal("Deleted", "Your data successfully deleted!", "success");
                     }
-                })
+                }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+                    updateCsrfToken();
+                });
             } else {
                 swal("Cancelled", "Your Data is Safe.", "error");
             }
@@ -352,18 +377,21 @@ $(document).ready(function() {
         var id = $(this).attr("data-id");
         var type = $(this).attr("data-type");
         var table_name = $(this).attr("data-table_name");
+        var tockenName = getTockenName();
+        var tockenValue = getTockenValue();
+        var dataObj = {
+            'id': id,
+            'type': type,
+            'table_name': table_name,
+        };
+        dataObj[tockenName] = tockenValue;
 
         var l = Ladda.create(this);
         l.start();
         $.ajax({
             url: url,
             type: "post",
-            data: {
-                'id': id,
-                'type': type,
-                'table_name': table_name,
-                '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-            },
+            data: dataObj,
             success: function(data){
                 l.stop();
                 if(type=='unassign'){
@@ -374,12 +402,18 @@ $(document).ready(function() {
                     $('#assign_add_'+id).hide();
                 }
             }
+        }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+            updateCsrfToken();
         });
     });
 
     $('.delete-address').on('click', function() {
         var addressId = $(this).data('address-id');
         var addressForm = $(this).closest('.user-addresses');
+        var tockenName = getTockenName();
+        var tockenValue = getTockenValue();
+        var dataObj = { address_id: addressId};
+        dataObj[tockenName] = tockenValue;
 
         swal({
             title: "Are you sure?",
@@ -397,7 +431,7 @@ $(document).ready(function() {
                 $.ajax({
                     type: 'POST',
                     url: usrDelAddrUrl, 
-                    data: { address_id: addressId, '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'},
+                    data: dataObj,
                     dataType: 'json',
                     success: function(response) {
                         if (response.success) {
@@ -405,6 +439,8 @@ $(document).ready(function() {
                             swal("Deleted", "Your data successfully deleted!", "success");
                         }
                     }
+                }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+                    updateCsrfToken();
                 });
             } else {
                 swal("Cancelled", "Your Data is Safe.", "error");
@@ -415,10 +451,14 @@ $(document).ready(function() {
     $('#sku').keyup(function() {
         var sku = $(this).val();
         var url = $(this).attr('data-check-url');
+        var tockenName = getTockenName();
+        var tockenValue = getTockenValue();
+        var dataObj = {sku: sku};
+        dataObj[tockenName] = tockenValue;
         $.ajax({
             url: url,
             type: 'POST',
-            data: {sku: sku, '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'},
+            data: dataObj,
             dataType: 'json',
             success: function(response) {
                 if (response.unique) {
@@ -429,6 +469,8 @@ $(document).ready(function() {
                     $('#productCreate').prop('disabled', true);
                 }
             }
+        }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+            updateCsrfToken();
         });
     });
 
@@ -436,6 +478,10 @@ $(document).ready(function() {
         event.preventDefault();
         var orderId = $(this).attr('data-id');
         var status = $(this).val();
+        var tockenName = getTockenName();
+        var tockenValue = getTockenValue();
+        var dataObj = { 'id': orderId, 'status': status };
+        dataObj[tockenName] = tockenValue;
         swal({
             title: "Are you sure?",
             text: "To update status of this order",
@@ -452,7 +498,7 @@ $(document).ready(function() {
                 $.ajax({
                     url: baseUrl+'admin/orders/update-status',
                     type: "post",
-                    data: {'id': orderId, 'status': status, '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'},
+                    data: dataObj,
                     success: function(data){
                         if(data.status == 1){
                             swal("Success", "Order status is updated", "success");
@@ -464,6 +510,8 @@ $(document).ready(function() {
                             $("#status"+orderId).prop("disabled", true);
                         }                            
                     }
+                }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+                    updateCsrfToken();
                 });
             } else {
                 swal("Cancelled", "Your data is safe!", "error");

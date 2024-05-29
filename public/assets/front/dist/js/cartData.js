@@ -8,8 +8,7 @@ function updateCartData(){
         type: 'POST',
         url: baseUrl+'saveCartData',
         data: dataObj,
-        success: function(response){
-            updateCsrfTokens(response.csrf_token_name, response.csrf_token_value);
-        }
+    }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+        updateCsrfToken();
     });
 }

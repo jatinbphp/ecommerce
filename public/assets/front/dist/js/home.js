@@ -13,7 +13,6 @@ function getProducts(categoryId){
 	$.ajax({
         url: baseUrl+"products", 
         method: 'GET',
-        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             filter:{
             	categoryId: categoryId
@@ -27,6 +26,8 @@ function getProducts(categoryId){
             console.error('AJAX Error:', textStatus, errorThrown);
             $('#loader').addClass('d-none');
         }
+    }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+        updateCsrfToken();
     });
 }
 
@@ -37,7 +38,6 @@ function handleQuickView(event){
     $.ajax({
         url: baseUrl+"products/show/" + productId, 
         method: 'GET',
-        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         success: function(response) {
             if (response.status) {
                 $('.modal-body, #quickviewbody').html(response.html);
@@ -47,6 +47,8 @@ function handleQuickView(event){
                 console.error('Error loading view:', response);
             }
         }
+    }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+        updateCsrfToken();
     });
 }
 
@@ -100,6 +102,8 @@ $(document).on("click", "#add_to_cartproduct", function(e) {
         error: function(xhr, status, error){
             SnackbarAlert(error);
         }
+    }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+        updateCsrfToken();
     });
 });
 
