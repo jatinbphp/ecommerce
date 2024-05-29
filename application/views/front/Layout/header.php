@@ -19,13 +19,13 @@
     <meta name="<?php echo $this->security->get_csrf_token_name(); ?>" content="<?= $this->security->get_csrf_hash(); ?>">
     <script>
         function updateCsrfToken() {
-            $.ajax({
-                type: 'get',
-                url: baseUrl+'get-tocken',
-                success: function(data){
+            fetch(baseUrl+ 'get-tocken', {
+                method: 'GET',
+            }).then(function(result) {
+                result.json().then(function(data) {
                     $('input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(data.csrf_token_value);
                     $('meta[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').attr('content', data.csrf_token_value);
-                }
+                })
             });
         }
         function getTockenName() {

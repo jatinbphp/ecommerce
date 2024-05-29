@@ -395,8 +395,19 @@ $(document).ready(function() {
             payment_intent_ID = response.intent;
             $("#pay_intent").val(payment_intent_ID);
             $("#stripe-payment-success-3ds").modal('hide');
-            $('#CheckoutForm').submit();
+            submitForm();
         }
+    }
+
+    function submitForm(){
+        fetch(baseUrl+ 'get-tocken', {
+            method: 'GET',
+        }).then(function(result) {
+            result.json().then(function(data) {
+                $('input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(data.csrf_token_value);
+                $('#CheckoutForm').submit();
+            })
+        });
     }
 
     function handleStripeJsResult(result) {
@@ -563,7 +574,7 @@ $(document).ready(function() {
         dataObj[tockenName] = tockenValue;
         $.ajax({
             url:  baseUrl+"check-email",
-            type: "POST",
+            type: "GET",
             data: dataObj,
             success: function(data){           
                 if(data.status == '0'){
