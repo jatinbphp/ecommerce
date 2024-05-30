@@ -501,7 +501,7 @@ class ProductController extends MY_Controller
 	* and returns a JSON response indicating whether the SKU is unique or not.
 	*/
 	public function checkSku() {
-		$sku = $this->input->post('sku');
+		$sku = $this->input->get('sku');
 		$existingSku = $this->Product_model->isSkuAvailable($sku);
 
 		$response['unique'] = !$existingSku;

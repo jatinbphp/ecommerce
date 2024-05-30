@@ -300,7 +300,7 @@ class AuthController extends MY_Controller {
     * If the email exists, return false; otherwise, return true.
     */
    public function check_email_exists() {
-        $email = $this->input->post('email');
+        $email = $this->input->get('email');
         $result = $this->user_model->isEmailExists($email);
         if($result)
         {

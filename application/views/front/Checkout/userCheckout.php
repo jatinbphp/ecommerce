@@ -568,14 +568,10 @@ $(document).ready(function() {
 
     $('#email').keyup(function(){
         var email = $(this).val();
-        var tockenName = getTockenName();
-        var tockenValue = getTockenValue();
-        var dataObj = { 'email': email };
-        dataObj[tockenName] = tockenValue;
         $.ajax({
             url:  baseUrl+"check-email",
             type: "GET",
-            data: dataObj,
+            data: { 'email': email },
             success: function(data){           
                 if(data.status == '0'){
                     swal({

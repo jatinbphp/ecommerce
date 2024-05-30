@@ -24,19 +24,24 @@
 <script src="<?php echo base_url('public/assets/admin/plugins/bootstrap-switch/js/bootstrap-switch.js') ?>"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    function getData(){
+        var tockenName = getTockenName();
+        var tockenValue = getTockenValue();
+        var dataObj = {};
+        dataObj[tockenName] = tockenValue;
+        return dataObj;
+    }
 $(document).ready(function() {
-    var tockenName = getTockenName();
-    var tockenValue = getTockenValue();
-    var dataObj = {};
-    dataObj[tockenName] = tockenValue;
-    var categories = $('#CategoriesTable').DataTable({
+    var categories = $('#CategoriesTable').on('preXhr.dt', function (e, settings, data) {
+        $.extend(data, getData());
+    }).DataTable({
         "processing": true,
         "serverSide": true,
         "order":[],
         "ajax":{
             url:baseUrl+"admin/categories/fetch_categories",
             type:"POST",
-            data:dataObj,
+            data:getData(),
             complete: function() {
                 updateCsrfToken();
             }
@@ -47,14 +52,16 @@ $(document).ready(function() {
         }]
     });
 
-    var users = $('#usersTable').DataTable({
+    var users = $('#usersTable').on('preXhr.dt', function (e, settings, data) {
+        $.extend(data, getData());
+    }).DataTable({
         "processing": true,
         "serverSide": true,
         "order":[],
         "ajax":{
             url:baseUrl+"admin/users/fetch_users",
             type:"POST",
-            data:dataObj,
+            data:getData(),
             complete: function() {
                 updateCsrfToken();
             }
@@ -66,12 +73,14 @@ $(document).ready(function() {
     });
 
     //users report
-    var usersreport = $('#usersReportTable').DataTable({
+    var usersreport = $('#usersReportTable').on('preXhr.dt', function (e, settings, data) {
+        $.extend(data, getData());
+    }).DataTable({
         "processing": true,
         "serverSide": true,
         "order":[],
         "ajax":{
-            url:baseUrl+"fetch_user_report",
+            url:baseUrl+"admin/reports/fetch_user_report",
             type:"POST",
             data: function (d) {
                 var formDataArray = $('#report-filter-Form').find(':input:not(select[multiple])').serializeArray();
@@ -79,7 +88,6 @@ $(document).ready(function() {
                 $.each(formDataArray, function(i, field){
                     formData[field.name] = field.value;
                 });
-                formData[tockenName] = tockenValue;
                 d = $.extend(d, formData);
     
                 return d;
@@ -111,12 +119,14 @@ $(document).ready(function() {
     });
     
     //sales report
-    var salesreport = $('#salesReportTable').DataTable({
+    var salesreport = $('#salesReportTable').on('preXhr.dt', function (e, settings, data) {
+        $.extend(data, getData());
+    }).DataTable({
         "processing": true,
         "serverSide": true,
         "order": [[0, "desc"]],
         "ajax":{
-            url:baseUrl+"fetch_sales_report",
+            url:baseUrl+"admin/reports/fetch_sales_report",
             type:"POST",
             data: function (d) {
                 var formDataArray = $('#report-filter-Form').find(':input:not(select[multiple])').serializeArray();
@@ -124,7 +134,6 @@ $(document).ready(function() {
                 $.each(formDataArray, function(i, field){
                     formData[field.name] = field.value;
                 });
-                formData[tockenName] = tockenValue;
                 d = $.extend(d, formData);
 
                 return d;
@@ -155,14 +164,16 @@ $(document).ready(function() {
         }]
     });
 
-    var banners = $('#banerTable').DataTable({
+    var banners = $('#banerTable').on('preXhr.dt', function (e, settings, data) {
+        $.extend(data, getData());
+    }).DataTable({
         "processing": true,
         "serverSide": true,
         "order":[],
         "ajax":{
             url:baseUrl+"admin/banners/fetch_banners",
             type:"POST",
-            data:dataObj,
+            data:getData(),
             complete: function() {
                 updateCsrfToken();
             }
@@ -173,14 +184,16 @@ $(document).ready(function() {
         }]
     });
 
-    var contentTable = $('#contentTable').DataTable({
+    var contentTable = $('#contentTable').on('preXhr.dt', function (e, settings, data) {
+        $.extend(data, getData());
+    }).DataTable({
         "processing": true,
         "serverSide": true,
         "order":[],
         "ajax":{
             url:baseUrl+"admin/contemt-management/fetch_content",
             type:"POST",
-            data:dataObj,
+            data:getData(),
             complete: function() {
                 updateCsrfToken();
             }
@@ -192,14 +205,16 @@ $(document).ready(function() {
         }]
     });
 
-    var contactUs = $('#contactUsTable').DataTable({
+    var contactUs = $('#contactUsTable').on('preXhr.dt', function (e, settings, data) {
+        $.extend(data, getData());
+    }).DataTable({
         "processing": true,
         "serverSide": true,
         "order":[],
         "ajax":{
             url:baseUrl+"admin/contact-us/fetch_contactus",
             type:"POST",
-            data:dataObj,
+            data:getData(),
             complete: function() {
                 updateCsrfToken();
             }
@@ -211,14 +226,16 @@ $(document).ready(function() {
         }]
     });
 
-    var products = $('#productsTable').DataTable({
+    var products = $('#productsTable').on('preXhr.dt', function (e, settings, data) {
+        $.extend(data, getData());
+    }).DataTable({
         "processing": true,
         "serverSide": true,
         "order":[],
         "ajax":{
             url:baseUrl+"admin/products/fetch_products",
             type:"POST",
-            data:dataObj,
+            data:getData(),
             complete: function() {
                 updateCsrfToken();
             }
@@ -229,14 +246,16 @@ $(document).ready(function() {
         }]
     });
 
-    var subscriptionPlan = $('#subscriptionPlanTable').DataTable({
+    var subscriptionPlan = $('#subscriptionPlanTable').on('preXhr.dt', function (e, settings, data) {
+        $.extend(data, getData());
+    }).DataTable({
         "processing": true,
         "serverSide": true,
         "order":[],
         "ajax":{
             url:baseUrl+"admin/subscription-plan/fetch_subscription_plan",
             type:"POST",
-            data:dataObj,
+            data:getData(),
             complete: function() {
                 updateCsrfToken();
             }
@@ -248,14 +267,16 @@ $(document).ready(function() {
     });
 
     var productId = $('#reviewsTable').attr('data-product-id'); 
-    var reviews = $('#reviewsTable').DataTable({
+    var reviews = $('#reviewsTable').on('preXhr.dt', function (e, settings, data) {
+        $.extend(data, getData());
+    }).DataTable({
         "processing": true,
         "serverSide": true,
         "order":[],
         "ajax":{
             url:baseUrl+"admin/products/fetch_reviews/"+productId,
             type:"POST",
-            data:dataObj,
+            data:getData(),
             complete: function() {
                 updateCsrfToken();
             }
@@ -266,13 +287,15 @@ $(document).ready(function() {
         }]
     });
 
-    var orders_table = $('#ordersDasboardTable').DataTable({
+    var orders_table = $('#ordersDasboardTable').on('preXhr.dt', function (e, settings, data) {
+        $.extend(data, getData());
+    }).DataTable({
         'processing': true,
         'serverSide': false,
         "ajax":{
             url:baseUrl+"admin/dashboard/fetch-orders",
             type:"POST",
-            data:dataObj,
+            data:getData(),
             complete: function() {
                 updateCsrfToken();
             }
@@ -295,14 +318,16 @@ $(document).ready(function() {
         "order": []
     });
 
-    var orders = $('#ordersTable').DataTable({
+    var orders = $('#ordersTable').on('preXhr.dt', function (e, settings, data) {
+        $.extend(data, getData());
+    }).DataTable({
         "processing": true,
         "serverSide": true,
         "order":[],
         "ajax":{
             url:baseUrl+"admin/orders/fetchOrders",
             type:"POST",
-            data:dataObj,
+            data:getData(),
             complete: function() {
                 updateCsrfToken();
             }
@@ -337,33 +362,41 @@ $(document).ready(function() {
         },
         function(isConfirm) {
             if (isConfirm) {
+                var responceData = {};
                 $.ajax({
                     url: controller+"/delete/" + id,
                     type: "POST",
                     data:dataObj,
                     success: function(data){
-                        if(controller == 'users'){
-                            users.row('.selected').remove().draw(false);
-                        } else if(controller == 'banners'){
-                            banners.row('.selected').remove().draw(false);
-                        } else if(controller == 'categories'){
-                            if(data.success == 0){
-                                swal("Warning", data.message, "warning");
-                                return;
-                            }
-                            categories.row('.selected').remove().draw(false);
-                        } else if(controller == 'contact-us'){
-                            contactUs.row('.selected').remove().draw(false);
-                        } else if(controller == 'products'){
-                            products.row('.selected').remove().draw(false);
-                        } else if(controller == 'subscription-plan'){
-                            subscriptionPlan.row('.selected').remove().draw(false);
-                        }
-                                                    
+                        responceData = data;     
                         swal("Deleted", "Your data successfully deleted!", "success");
                     }
                 }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
-                    updateCsrfToken();
+                    fetch(baseUrl+ 'get-tocken', {
+                        method: 'GET',
+                    }).then(function(result) {
+                        result.json().then(function(data) {
+                            $('input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(data.csrf_token_value);
+                            $('meta[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').attr('content', data.csrf_token_value);
+                            if(controller == 'users'){
+                                users.row('.selected').remove().draw(false);
+                            } else if(controller == 'banners'){
+                                banners.row('.selected').remove().draw(false);
+                            } else if(controller == 'categories'){
+                                if(responceData.success == 0){
+                                    swal("Warning", responceData.message, "warning");
+                                    return;
+                                }
+                                categories.row('.selected').remove().draw(false);
+                            } else if(controller == 'contact-us'){
+                                contactUs.row('.selected').remove().draw(false);
+                            } else if(controller == 'products'){
+                                products.row('.selected').remove().draw(false);
+                            } else if(controller == 'subscription-plan'){
+                                subscriptionPlan.row('.selected').remove().draw(false);
+                            }
+                        })
+                    });
                 });
             } else {
                 swal("Cancelled", "Your Data is Safe.", "error");
@@ -451,14 +484,10 @@ $(document).ready(function() {
     $('#sku').keyup(function() {
         var sku = $(this).val();
         var url = $(this).attr('data-check-url');
-        var tockenName = getTockenName();
-        var tockenValue = getTockenValue();
-        var dataObj = {sku: sku};
-        dataObj[tockenName] = tockenValue;
         $.ajax({
             url: url,
-            type: 'POST',
-            data: dataObj,
+            type: 'GET',
+            data: {sku: sku},
             dataType: 'json',
             success: function(response) {
                 if (response.unique) {
