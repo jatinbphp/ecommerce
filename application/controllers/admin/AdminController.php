@@ -79,4 +79,8 @@ class AdminController extends MY_Controller {
             $this->db->update($tableName, $data);
         }
     }
+
+    public function load404(){
+        $this->adminRenderTemplate('admin/error-404');
+    }
 }

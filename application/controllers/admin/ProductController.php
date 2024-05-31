@@ -179,7 +179,7 @@ class ProductController extends MY_Controller
 			} else {
 				$productData = $this->Product_model->getDetails($id);
 				if(empty($productData)){
-					redirect('404_override');
+					redirect('admin/404', 'refresh');
 				}
 				$this->data['product_data'] = $productData;
 				$this->data['status'] = $this->Product_model::$status;

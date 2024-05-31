@@ -134,6 +134,9 @@ class BannerController extends MY_Controller
 				}
 			} else {
 				$bannerData = $this->Banner_model->getDetails($id);
+				if(empty($bannerData)){
+					redirect('admin/404', 'refresh');
+				}
 				$this->data['banner_data'] = $bannerData;
 				$this->data['status'] = $this->Banner_model::$status;
 				$this->adminRenderTemplate('admin/Banner/edit', $this->data);

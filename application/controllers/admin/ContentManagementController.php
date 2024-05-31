@@ -56,7 +56,7 @@ class ContentManagementController extends MY_Controller {
 			} else {
 				$contentData = $this->Content_model->getDetails($id);
 				if(empty($contentData)){
-					redirect('404_override');
+					redirect('admin/404', 'refresh');
 				}
 				$this->data['content_data'] = $contentData;
 				$this->adminRenderTemplate('admin/ContentManagement/edit', $this->data);

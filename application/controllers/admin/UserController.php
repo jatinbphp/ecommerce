@@ -156,7 +156,7 @@ class UserController extends MY_Controller
 
 				$usersData = $this->user_model->getUserData($userId);
 				if(empty($usersData)){
-					redirect('404_override');
+					redirect('admin/404', 'refresh');
 				}
 				$this->data['userData'] = $usersData;
 				$this->data['status'] = $this->user_model::$status;

@@ -127,7 +127,7 @@ class SubscriptionPlanController extends MY_Controller
 			} else {
 				$subscriptionPlanData = $this->SubscriptionPlan_model->getDetails($id);
 				if(empty($subscriptionPlanData)){
-					redirect('404_override');
+					redirect('admin/404', 'refresh');
 				}
 				$this->data['subscription_plan_data'] = $subscriptionPlanData;
 				$this->data['status'] = $this->SubscriptionPlan_model::$status;
