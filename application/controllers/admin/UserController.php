@@ -155,6 +155,9 @@ class UserController extends MY_Controller
 				$userAddrCnt = count($getUsrAddr);
 
 				$usersData = $this->user_model->getUserData($userId);
+				if(empty($usersData)){
+					redirect('404_override');
+				}
 				$this->data['userData'] = $usersData;
 				$this->data['status'] = $this->user_model::$status;
 				$this->data['userAddress'] = $getUsrAddr;

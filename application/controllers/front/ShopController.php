@@ -87,6 +87,9 @@ class ShopController extends MY_Controller {
         $data['categories'] = $this->product_categories();
         $data['options']    = $this->product_options();
         $data['categoryId'] = $this->Categories_model->getCategoryIdBasedOnSlug($slug);
+        if(empty($data['categoryId'])){
+            redirect('404_override');
+        }
         $this->frontRenderTemplate('front/Shop/shop', $data);
     }
 }

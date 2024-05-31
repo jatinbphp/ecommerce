@@ -128,4 +128,7 @@ class HomeController extends MY_Controller {
             ->set_output(json_encode($response));
     }
 
+    public function load404(){
+        $this->frontRenderTemplate('error-404');
+    }
 }

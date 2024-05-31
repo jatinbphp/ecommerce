@@ -95,7 +95,13 @@ class OrderController extends MY_Controller {
         $data['title']= "My Orders";
         
         $order      = $this->Order_model->getOrderById($id);
+        if(empty($order)){
+            redirect('404_override');
+        }
         $user       = $this->User_model->getUserData($order->user_id);
+        if($order->user_id != $this->session->userdata('userId')){
+            redirect('404_override');
+        }
         $orderItems = $this->Order_items_model->getOrderItemsByOrderId($id);
         $orderAttributes = $this->Order_options_model->getOrderItemsByOrderId($id);
         $address    = $this->User_address_model->getAddressDetails($order->address_id);

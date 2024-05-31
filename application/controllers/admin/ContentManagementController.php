@@ -54,8 +54,11 @@ class ContentManagementController extends MY_Controller {
 					redirect('admin/contemt-management/edit/'.$id, 'refresh');
 				}
 			} else {
-				$bannerData = $this->Content_model->getDetails($id);
-				$this->data['content_data'] = $bannerData;
+				$contentData = $this->Content_model->getDetails($id);
+				if(empty($contentData)){
+					redirect('404_override');
+				}
+				$this->data['content_data'] = $contentData;
 				$this->adminRenderTemplate('admin/ContentManagement/edit', $this->data);
 			}
 		}

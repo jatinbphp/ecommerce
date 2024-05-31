@@ -178,6 +178,9 @@ class ProductController extends MY_Controller
 				}
 			} else {
 				$productData = $this->Product_model->getDetails($id);
+				if(empty($productData)){
+					redirect('404_override');
+				}
 				$this->data['product_data'] = $productData;
 				$this->data['status'] = $this->Product_model::$status;
         		$this->data['categories'] = $this->Categories_model->getCategoryArray(false);

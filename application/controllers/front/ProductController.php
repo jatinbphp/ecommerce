@@ -79,6 +79,9 @@ class ProductController extends MY_Controller {
      */
     public function details($slug) {
         $productId = $this->Product_model->getProductIdBasedOnSlug($slug);
+        if(empty($productId)){
+            redirect('404_override');
+        }
         $data = $this->Product_model->product_data($productId);
         $this->frontRenderTemplate('front/Products/details', $data);
     }

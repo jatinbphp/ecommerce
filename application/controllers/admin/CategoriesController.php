@@ -156,6 +156,9 @@ class CategoriesController extends MY_Controller
 				}
 			} else {
 				$categories_data = $this->Categories_model->getDetails($id);
+				if(empty($categories_data)){
+					redirect('404_override');
+				}
 				$this->data['category_data'] = $categories_data;
 				$this->data['allCategories'] = $this->Categories_model->getCategoryArrayExceptSub($id);
         		$this->data['status'] = $this->Categories_model::$status;
