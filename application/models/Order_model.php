@@ -147,12 +147,12 @@ class Order_model extends CI_Model
         if (isset($_POST['search']['value']) && $_POST['search']['value'] != '') {
             $search_value = $_POST['search']['value'];
             $this->db->group_start();
-            $this->db->like('users.first_name', $search_value);
+            $this->db->like('CONCAT(first_name, " ", last_name)', $search_value);
             $this->db->or_like('users.email', $search_value);
             $this->db->group_end();
         }
 
-        $this->db->select('users.first_name, users.email, users.id, 
+        $this->db->select('CONCAT(first_name, " ", last_name) as first_name, users.email, users.id, 
                         orders.id AS order_id,
                         orders.status AS order_status,
                         orders.created_at AS order_created_date,

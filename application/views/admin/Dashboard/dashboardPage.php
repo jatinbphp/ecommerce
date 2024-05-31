@@ -163,7 +163,7 @@ $(document).ready(function() {
 	            label               : 'Total Sales',
 	            backgroundColor     : '#343a40',
 	            borderColor         : '#343a40',
-	            pointRadius          : false,
+	            pointRadius         : false,
 	            pointColor          : '#3b8bba',
 	            pointStrokeColor    : 'rgba(60,141,188,1)',
 	            pointHighlightFill  : '#fff',
@@ -180,7 +180,32 @@ $(document).ready(function() {
 	var barChartOptions = {
 	    responsive              : true,
 	    maintainAspectRatio     : false,
-	    datasetFill             : false
+	    datasetFill             : false,
+        scales: {
+            x: {
+                ticks: {
+                    font: {
+                        weight: 'bold',
+                    }
+                }
+            },
+            y: {
+                ticks: {
+                    font: {
+                        weight: 'bold',
+                    }
+                }
+            }
+        },
+        plugins: {
+            tooltip: {
+                titleFont: {
+                    weight: 'bold',
+                },
+                bodyFont: {
+                    weight: 'bold',                }
+            }
+        }
 	};
 
 	new Chart(barChartCanvas, {
@@ -228,7 +253,32 @@ $(document).ready(function() {
 	var ordersChartOptions = {
 	    responsive: true,
 	    maintainAspectRatio: false,
-	    datasetFill: false
+	    datasetFill: false,
+        scales: {
+            x: {
+                ticks: {
+                    font: {
+                        weight: 'bold',
+                    }
+                }
+            },
+            y: {
+                ticks: {
+                    font: {
+                        weight: 'bold',
+                    }
+                }
+            }
+        },
+        plugins: {
+            tooltip: {
+                titleFont: {
+                    weight: 'bold',
+                },
+                bodyFont: {
+                    weight: 'bold',                }
+            }
+        }
 	};
 
 	new Chart(barChartCanvasOrders, {

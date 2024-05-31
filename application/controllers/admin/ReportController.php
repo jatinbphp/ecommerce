@@ -32,7 +32,7 @@ class ReportController extends MY_Controller
     public function indexUserOrders()
     {
 		$this->data['type']="user";
-        $this->data['userFirstNames'] = $this->User_model->getAllFirstNames();
+        $this->data['userFirstNames'] = $this->User_model->getAllFrontUsersFirstNames();
         $this->adminRenderTemplate('admin/Report/userReport', $this->data);
     }
 

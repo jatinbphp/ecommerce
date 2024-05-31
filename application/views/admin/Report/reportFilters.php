@@ -7,7 +7,7 @@
                     <select name="user_id" class="form-control" id="user_id">
                         <option value="">Please Select</option>
                         <?php foreach ($userFirstNames as $user): ?>
-                            <option value="<?php echo $user['id']; ?>"><?php echo $user['first_name']; ?></option>
+                            <option value="<?php echo $user['id'] ?? 0; ?>"><?php echo $user['first_name'] ?? ''; ?></option>
                         <?php endforeach; ?>
                     </select>           
                 </div>

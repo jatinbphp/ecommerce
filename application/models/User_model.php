@@ -443,9 +443,10 @@ class User_model extends CI_Model
  * 
  * @return array An array containing user IDs and first names.
  */
-  public function getAllFirstNames()
+  public function getAllFrontUsersFirstNames()
   {
-      $this->db->select('id, first_name');
+      $this->db->select("id, CONCAT(first_name, ' ', last_name) as first_name");
+      $this->db->where('role', 2);
       $query = $this->db->get($this->table);
 
       if ($query->num_rows() > 0) {
