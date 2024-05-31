@@ -514,18 +514,20 @@ class Order_model extends CI_Model
         try {
             $payment_intent = \Stripe\PaymentIntent::retrieve($intentId);
 
+            $data = [];
             if($payment_intent){
                 $refund = \Stripe\Refund::create([
                     'payment_intent' => $intentId,
                     'reason' => 'requested_by_customer',
                 ]);
+                
+                $data = [
+                    'status'    => 1,
+                    'refund_id' => $refund->id,
+                ];
             }
     
-            $data = [
-                'status'    => 1,
-                'refund_id' => $refund->id,
-            ];
-            addPaymentLog("refund_id Id: $$refund->id");
+            addPaymentLog("refund_id Id: $refund->id");
         } catch (\Stripe\Exception\ApiErrorException $e) {
             addPaymentLog("Error:");
             addPaymentLog($e->getMessage());

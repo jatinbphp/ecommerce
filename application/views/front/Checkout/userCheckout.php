@@ -263,74 +263,8 @@ $(document).ready(function() {
             }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
                 updateCsrfToken();
             });
-
-            // fetch(baseUrl+ '/payment/process-payment', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         'X-CSRFToken':  '<?php echo $this->security->get_csrf_hash() ?>',
-            //     },
-            //     body: JSON.stringify({
-            //         payment_method_id: result.paymentMethod.id,
-            //         userName: userName,
-            //         email: email,
-            //         address: address,
-            //         country: country,
-            //         state: state,
-            //         city: city,
-            //         pincode: pincode,
-            //         addressId: addressId,
-            //         saveCard: saveCard,
-            //     })
-            // }).then(function(result) {
-            //     result.json().then(function(json) {
-            //         handleServerResponse(json);
-            //     })
-            // });
         }
     }
-
-    // function payWithOldCard(){
-    //     var intentId = $('input[name="saved_card"]:checked').val();
-
-    //     $("#stripe-payment-success-3ds").modal('show');
-    //     var firstName = $('#first_name_0').val();
-    //     var lastName = $('#last_name_0').val();
-    //     var email    = $('#email').val();
-    //     var userName = firstName+ ' ' +lastName;
-    //     var address = $('#address_line1_0').val();
-    //     var country = $('#country_0').val();
-    //     var state   = $('#state_0').val();
-    //     var city    = $('#city_0').val();
-    //     var pincode = $('#pincode_0').val();
-    //     var saveCard = $('#saveForLater').is(':checked');;
-    //     var addressId = $('.addresses-radio:checked').val();
-    //     fetch(baseUrl+ '/payment/process-payment', {
-    //         method: 'POST',
-    //         // credentials: "same-origin",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             'X-Requested-With': 'XMLHttpRequest',
-    //             'X-CSRF-Token': '<?php echo $this->security->get_csrf_hash() ?>',
-    //         },
-    //         body: JSON.stringify({
-    //             payment_method_id: intentId,
-    //             userName: userName,
-    //             email: email,
-    //             address: address,
-    //             country: country,
-    //             state: state,
-    //             city: city,
-    //             pincode: pincode,
-    //             addressId: addressId,
-    //             saveCard: saveCard,
-    //         })
-    //     }).then(function(result) {
-    //         result.json().then(function(json) {
-    //             handleServerResponse(json);
-    //         })
-    //     });
-    // }
 
     function payWithOldCard() {
         var intentId = $('input[name="saved_card"]:checked').val();
@@ -460,39 +394,6 @@ $(document).ready(function() {
             }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
                 updateCsrfToken();
             });
-            // payment_intent_ID = result.paymentIntent.id;
-            // var firstName = $('#first_name_0').val();
-            // var lastName = $('#last_name_0').val();
-            // var email    = $('#email').val();
-            // var userName = firstName+ ' ' +lastName;
-            // var address = $('#address_line1_0').val();
-            // var country = $('#country_0').val();
-            // var state   = $('#state_0').val();
-            // var city    = $('#city_0').val();
-            // var pincode = $('#pincode_0').val();
-            // var addressId = $('.addresses-radio:checked').val();
-            // var saveCard = $('#saveForLater').is(':checked');
-            // fetch(baseUrl+ '/payment/process-payment', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify({
-            //         payment_intent_id: result.paymentIntent.id,
-            //         userName: userName,
-            //         email: email,
-            //         address: address,
-            //         country: country,
-            //         state: state,
-            //         city: city,
-            //         pincode: pincode,
-            //         addressId: addressId,
-            //         saveCard: saveCard,
-            //         '<?php echo $this->security->get_csrf_token_name() ?>': '<?php echo $this->security->get_csrf_hash() ?>'
-            //     })
-            // }).then(function(confirmResult) {
-            //     return confirmResult.json();
-            // }).then(handleServerResponse);
         }
     }
 

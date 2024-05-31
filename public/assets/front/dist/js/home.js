@@ -87,7 +87,6 @@ $(document).on("click", "#add_to_cartproduct", function(e) {
                     existingCartData.push(response.addCartData);
                 }
                 localStorage.setItem('cartData', JSON.stringify(existingCartData));
-                updateCartData();
                 var data = localStorage.getItem('cartData');
                 if(data){
                     $('.user-cart-counter').text(JSON.parse(data).length);
@@ -104,6 +103,15 @@ $(document).on("click", "#add_to_cartproduct", function(e) {
         }
     }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
         updateCsrfToken();
+        fetch(baseUrl+ 'get-tocken', {
+            method: 'GET',
+        }).then(function(result) {
+            result.json().then(function(data) {
+                $('input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(data.csrf_token_value);
+                $('meta[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').attr('content', data.csrf_token_value);
+                updateCartData();
+            })
+        });
     });
 });
 
