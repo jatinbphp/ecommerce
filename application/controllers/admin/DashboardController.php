@@ -22,8 +22,6 @@ class DashboardController extends MY_Controller {
 		$this->load->model('Product_model');
 		$this->load->model('ProductImage_model');
 		$this->load->model('user_model');
-		$this->load->model('Order_model');
-		$this->checkAdminLoggedIn();
 	}
 
  /**
