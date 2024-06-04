@@ -139,7 +139,42 @@ $(document).ready(function() {
 
     async function payWithStripe() {
         $('#loader').removeClass('d-none');
-        var {token, error} = await stripe.createToken(cardNumber);
+
+        var addressId = $('input[name="address_id"]:checked').val();
+        var fileds = {
+            'name':'first_name',
+            'address_line1':'address_line1',
+            'address_line2':'address_line2',
+            'address_country': 'country',
+            'address_state':'state',
+            'address_city': 'city',
+            'address_zip':'pincode'
+        };
+
+        var data = {};
+        var firstName = '';
+        $.each(fileds, function(index, value){
+            if(addressId == 0){
+                if(index == 'name'){
+                    firstName = $('#'+value+'_'+addressId).val();
+                    firstName += ' '+$('#last_name_'+addressId).val();
+                    data[index] = firstName;
+                    return;
+                }
+                var elementVal = $('#'+value+'_'+addressId).val();
+            } else {
+                if(index == 'name'){
+                    firstName = $('#'+value+'_'+addressId).text();
+                    firstName += ' '+$('#last_name_'+addressId).text();
+                    data[index] = firstName;
+                    return;
+                }
+                var elementVal = $('#'+value+'_'+addressId).text();
+            }
+            data[index] = elementVal;
+        });
+
+        var {token, error} = await stripe.createToken(cardNumber, data);
 
         if (error) {
             $('#loader').addClass('d-none');
