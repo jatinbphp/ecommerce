@@ -131,4 +131,13 @@ class HomeController extends MY_Controller {
     public function load404(){
         $this->frontRenderTemplate('error-404');
     }
+
+    public function getLoggedInUserId(){
+        $response = [
+            'user_id' => $this->session->userdata('userId'),
+        ];
+
+        return $this->output->set_content_type('application/json')
+            ->set_output(json_encode($response));
+    }
 }

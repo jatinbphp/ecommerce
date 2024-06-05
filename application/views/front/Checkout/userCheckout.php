@@ -108,33 +108,47 @@ $(document).ready(function() {
     });
 
     $('#checkoutSubmit').click(function(event) {
-        var validationArray = getValidationArray();
-        event.preventDefault();
-        var cartData = localStorage.getItem('cartData');
-        if(cartData){
-            $('#userCart').val(cartData);
-        }
-        var addressId = $('input[name="address_id"]:checked').val();
-        var shippingAddressId = $('input[name="shipping_address_id"]:checked').val();
-        $('#CheckoutForm').validate().destroy();
-        if (addressId === '0' || shippingAddressId === '0') {
-            $('#CheckoutForm').validate(validationArray);
-            var savedCard = $('input[name="saved_card"]:checked').val();
-            if ($('#CheckoutForm').valid()) {
-                if(savedCard != undefined && savedCard != 0){
-                    payWithOldCard();
-                } else {
-                    payWithStripe();
+        fetch(baseUrl+ 'logged-in-user', {
+            method: 'GET',
+        }).then(function(result) {
+            result.json().then(function(data) {
+                if(!data.user_id){
+                    var cartData = localStorage.getItem('cartData');
+                    if(!cartData || cartData.length == 0){
+                        $('#checkoutSubmit').prop('disabled',true);
+                        SnackbarAlert('Something went wrong Please Refresh The page.');
+                        return; 
+                    }
                 }
-            }
-        } else {
-            var savedCard = $('input[name="saved_card"]:checked').val();
-            if(savedCard != undefined && savedCard != 0){
-                payWithOldCard();
-            } else {
-                payWithStripe();
-            }
-        }
+                var validationArray = getValidationArray();
+                event.preventDefault();
+                var cartData = localStorage.getItem('cartData');
+                if(cartData){
+                    $('#userCart').val(cartData);
+                }
+                var addressId = $('input[name="address_id"]:checked').val();
+                var shippingAddressId = $('input[name="shipping_address_id"]:checked').val();
+                $('#CheckoutForm').validate().destroy();
+                if (addressId === '0' || shippingAddressId === '0') {
+                    $('#CheckoutForm').validate(validationArray);
+                    var savedCard = $('input[name="saved_card"]:checked').val();
+                    if ($('#CheckoutForm').valid()) {
+                        if(savedCard != undefined && savedCard != 0){
+                            payWithOldCard();
+                        } else {
+                            payWithStripe();
+                        }
+                    }
+                } else {
+                    var savedCard = $('input[name="saved_card"]:checked').val();
+                    if(savedCard != undefined && savedCard != 0){
+                        payWithOldCard();
+                    } else {
+                        payWithStripe();
+                    }
+                }
+            })
+        });
     });
 
     async function payWithStripe() {

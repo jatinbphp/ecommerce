@@ -57,3 +57,4 @@ $route['cancel-order'] = 'front/OrderController/cancelOrder';
 $route['subscription-plans'] = 'front/SubscriptionController/getPlanData';
 $route['subscription-plans/update'] = 'front/SubscriptionController/updatePlanData';
 $route['404'] = 'HomeController/load404';
+$route['logged-in-user'] = 'HomeController/getLoggedInUserId';
