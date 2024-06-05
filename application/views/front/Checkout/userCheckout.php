@@ -116,7 +116,7 @@ $(document).ready(function() {
                     var cartData = localStorage.getItem('cartData');
                     if(!cartData || cartData.length == 0){
                         $('#checkoutSubmit').prop('disabled',true);
-                        SnackbarAlert('Something went wrong Please Refresh The page.');
+                        SnackbarAlert('Your session has expired. Please refresh the page.');
                         return; 
                     }
                 }
