@@ -141,10 +141,14 @@ class DashboardController extends MY_Controller {
 			}
 			$totalAmount = ($order->total_amount + $order->tax_amount + $order->shipping_cost);
 			$data[] = [
+				'payment_intent_id' => $order->payment_intent_id,
 				'id' => $order->id,
 				'order_id' => '#' . $order->id,
 				'user_name' => $userName,
 				'total_amount' => '$' . number_format($totalAmount, 2),
+				'card_brand' => '',
+				'card_number' => '',
+				'card_exp' => '',
 				'created_at' => date('Y-m-d h:i:s', strtotime($order->created_at)),
 				'status' => $status[$order->status] ?? '',
 				'action' => $this->getActionData($order->id),				

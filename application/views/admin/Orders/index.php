@@ -33,6 +33,9 @@
                                     <th>Order ID</th>
                                     <th>User Informations</th>
                                     <th style="width: 10%;">Total</th>
+                                    <th>Card Brand</th>
+                                    <th>Card Number</th>
+                                    <th>Card Exp</th>
                                     <th style="width: 12%;">Status</th>
                                     <th style="width: 15%;">Date Created</th>
                                     <th style="width: 8%;">Action</th>

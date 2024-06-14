@@ -1,13 +1,9 @@
 function updateCartData(){
     var data = localStorage.getItem('cartData');
-    var tockenName = getTockenName();
-    var tockenValue = getTockenValue();
-    var dataObj = { 'cartData': data };
-    dataObj[tockenName] = tockenValue;
     $.ajax({
-        type: 'POST',
+        type: 'GET',
         url: baseUrl+'saveCartData',
-        data: dataObj,
+        data: { 'cartData': data },
     }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
         updateCsrfToken();
     });

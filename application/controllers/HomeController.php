@@ -98,26 +98,35 @@ class HomeController extends MY_Controller {
      * retrive and store cart data in session.
      */
     public function saveCartData() {
-        $data = $this->input->post('cartData');
+        $data = $this->input->get('cartData');
         if ($data) {
             $this->session->set_userdata('cartData', $data);
         } else {
             $this->session->set_userdata('cartData', '');
         }
 
-        // Generate new CSRF token
-        // $csrfTokenName = $this->security->get_csrf_token_name();
-        // $csrfHash      = $this->security->get_csrf_hash();
-
         // Return response with new CSRF token
         $response = [
-            // 'csrf_token_name' => $csrfTokenName,
-            // 'csrf_token_value' => $csrfHash
         ];
 
         return $this->output->set_content_type('application/json')
             ->set_output(json_encode($response));
     }
+
+    /**
+     * Generate and return a CSRF token.
+     *
+     * This method retrieves the current CSRF (Cross-Site Request Forgery) token
+     * from the security library and returns it in a JSON response. The CSRF token
+     * is used to protect forms and other sensitive operations from CSRF attacks.
+     * 
+     * The response includes the CSRF token in the following format:
+     * {
+     *     "csrf_token_value": "your_csrf_token_here"
+     * }
+     *
+     * @return CI_Output JSON response containing the CSRF token.
+     */
 
     public function getTocken(){
         $response = [
@@ -128,9 +137,37 @@ class HomeController extends MY_Controller {
             ->set_output(json_encode($response));
     }
 
+    /**
+     * Load and render the 404 error page.
+     *
+     * This method is responsible for loading and rendering the 404 error page 
+     * template. It uses the front-end rendering template function to display 
+     * the 'error-404' view when a requested page is not found.
+     * 
+     * This method does not return any value but directly renders the 404 error 
+     * page to inform the user that the requested resource could not be found.
+     *
+     * @return void
+     */
+
     public function load404(){
         $this->frontRenderTemplate('error-404');
     }
+    
+    /**
+     * Retrieve and return the logged-in user's ID.
+     *
+     * This method fetches the user ID of the currently logged-in user from the session data.
+     * It then returns the user ID in a JSON response. The user ID is stored in the session 
+     * under the key 'userId'.
+     * 
+     * The response includes the user ID in the following format:
+     * {
+     *     "user_id": "logged_in_user_id_here"
+     * }
+     *
+     * @return CI_Output JSON response containing the user ID.
+     */
 
     public function getLoggedInUserId(){
         $response = [

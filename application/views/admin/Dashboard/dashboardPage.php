@@ -113,6 +113,9 @@
                                         <th>#</th>
                                         <th>Order ID</th>
                                         <th>User</th>
+                                        <th>Card Brand</th>
+                                        <th>Card Number</th>
+                                        <th>Card Exp</th>
                                         <th>Total</th>
                                         <th>Status</th>
                                         <th>Date Created</th>

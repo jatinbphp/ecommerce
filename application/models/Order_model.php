@@ -7,6 +7,7 @@ class Order_model extends CI_Model
     public $table = "orders";
     public $select_column = '*';
     public $order_column = ['id','user_id','address_id', 'total_amount', 'status', 'delivey_method', 'notes', 'address_info','created_at'];
+    protected $_stripeSecretKey = null;
 
     /**
      * Constructor for the class.
@@ -21,6 +22,9 @@ class Order_model extends CI_Model
         $this->load->model('Cart_model');
         $this->load->model('Settings_model');
         $this->load->library('email');
+        require_once('./vendor/stripe/stripe-php/init.php');
+        $stripeSecretKey = $this->getStripeSecretKey();
+        \Stripe\Stripe::setApiKey($stripeSecretKey);
 	    parent::__construct();
 	}
 
@@ -323,7 +327,7 @@ class Order_model extends CI_Model
         if ($limit != -1) {
             $this->db->limit($limit, $start);
         }
-    
+
         $query = $this->db->get();
         return $query->result();
     }
@@ -351,7 +355,7 @@ class Order_model extends CI_Model
             ->from($this->table)
             ->join('users', 'orders.user_id = users.id', 'left');
         
-        if ($_POST["search"]["value"]!='') {
+        if (isset($_POST["search"]["value"]) &&  $_POST["search"]["value"] !='') {
             $searchString = $_POST["search"]["value"];
             $this->db->where("(CASE 
             WHEN users.id IS NOT NULL THEN CONCAT(users.first_name, ' ', users.last_name, ' (', users.email, ')')
@@ -583,4 +587,77 @@ class Order_model extends CI_Model
         return $this;
     }
 
+    /**
+     * Retrieve and return the Stripe secret key.
+     *
+     * This method checks if the Stripe secret key is already set. If it is not set, 
+     * the method fetches the settings data using the `getSettingsById` method of 
+     * the `Settings_model` with a predefined ID of 1. It then retrieves the Stripe 
+     * secret key from the settings data using the `getStripeSecretKey` method of 
+     * the `Settings_model`.
+     *
+     * The retrieved Stripe secret key is stored in the `_stripeSecretKey` property 
+     * for future use, avoiding repeated database queries.
+     *
+     * @return string The Stripe secret key.
+     */
+    public function getStripeSecretKey()
+    {
+        if(!$this->_stripeSecretKey){
+            $settingData = $this->Settings_model->getSettingsById(1);
+            $this->_stripeSecretKey = $this->Settings_model->getStripeSecretKey();
+        }
+
+        return $this->_stripeSecretKey;        
+    }
+
+    /**
+     * Retrieve and return card details based on the Stripe payment intent ID.
+     *
+     * This method uses the Stripe API to retrieve card details associated with a 
+     * given payment intent ID. It first retrieves the payment intent using the 
+     * `PaymentIntent::retrieve` method, then extracts the payment method ID from 
+     * the payment intent. Using this payment method ID, it retrieves the payment 
+     * method details, from which the card details are accessed.
+     *
+     * The card details returned include the brand, last 4 digits of the card number, 
+     * expiration month and year, and a formatted expiration date.
+     *
+     * The response format is as follows:
+     * {
+     *     'brand' => 'Card Brand',
+     *     'last4' => 'Last 4 Digits',
+     *     'exp_month' => 'Expiration Month',
+     *     'exp_year' => 'Expiration Year',
+     *     'exp_date' => 'Formatted Expiration Date'
+     * }
+     *
+     * If an error occurs during the Stripe API calls, an empty array is returned.
+     *
+     * @param string $paymentIntentId The payment intent ID.
+     * @return array The card details or an empty array if an error occurs.
+     */
+    
+    public function getCardDetialsBasedOnPaymentIntentId($paymentIntentId){
+        try {
+            $payment_intent = \Stripe\PaymentIntent::retrieve($paymentIntentId);
+            $payment_method_id = $payment_intent->payment_method;
+
+            // Retrieve the Payment Method
+            $payment_method = \Stripe\PaymentMethod::retrieve($payment_method_id);
+            // Access Card Details
+            $card_details = $payment_method->card;
+
+            return [
+                'brand' => ucfirst($card_details->brand),
+                'last4' => $card_details->last4,
+                'exp_month' => $card_details->exp_month,
+                'exp_year' => $card_details->exp_year,
+                'exp_date' => "{$card_details->exp_month} / {$card_details->exp_year}"
+            ];
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            $data = [];
+        }
+        return $data;
+    }
 }

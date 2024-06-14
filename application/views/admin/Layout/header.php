@@ -33,6 +33,43 @@
 			background-position: center;
 			box-shadow:0 -3px 6px 2px rgba(0,0,0,0.2)
 		}
+		.loader-show {
+			content: "";
+			position: fixed;
+			z-index: 9999;
+			top: 0;
+			right: 0;
+			left: 0;
+			bottom: 0;
+			background:rgba(0,0,0,0.5);
+		}
+		.loader-sm {
+		  width: 20px;
+		  aspect-ratio: 1;
+		  display: grid;
+		  border-radius: 50%;
+		  background:
+		    linear-gradient(0deg ,rgb(0 0 0/50%) 30%,#0000 0 70%,rgb(0 0 0/100%) 0) 50%/8% 100%,
+		    linear-gradient(90deg,rgb(0 0 0/25%) 30%,#0000 0 70%,rgb(0 0 0/75% ) 0) 50%/100% 8%;
+		  background-repeat: no-repeat;
+		  animation: l23 1s infinite steps(12);
+		}
+		.loader-sm::before,
+		.loader-sm::after {
+		   content: "";
+		   grid-area: 1/1;
+		   border-radius: 50%;
+		   background: inherit;
+		   opacity: 0.915;
+		   transform: rotate(30deg);
+		}
+		.loader-sm::after {
+		   opacity: 0.83;
+		   transform: rotate(60deg);
+		}
+		@keyframes l23 {
+		  100% {transform: rotate(1turn)}
+		}
 	</style>
     <script src="<?php echo base_url('public/assets/admin/plugins/jquery/jquery.min.js') ?>"></script>
     <script src="https://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
@@ -58,6 +95,7 @@
     </script>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
+<div class="loader-show" style="display: none;"></div>
 <div class="wrapper">
 	<nav class="main-header navbar navbar-expand navbar-white navbar-light">
 		<ul class="navbar-nav">

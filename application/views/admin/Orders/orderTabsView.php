@@ -21,7 +21,7 @@
                             <?php $i = 1; ?>
                             <?php foreach($ordersData as $orderId => $data): ?>
                                 <div class="tab-pane fade mt-3 <?php echo ($i == 1) ? "active show" : ""; ?>" id="custom-content-below-<?php echo $orderId; ?>" role="tabpanel" aria-labelledby="custom-content-below-<?php echo $orderId; ?>-tab">
-                                    <?php $this->load->view('admin/Orders/orderData', $data); ?>
+                                    <?php //$this->load->view('admin/Orders/orderData', $data); ?>
                                 </div>
                                 <?php $i++; ?>
                             <?php endforeach; ?>
@@ -34,3 +34,27 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#custom-tabs-three-tab a').on('show.bs.tab', function (e) {
+            var tabId = $(e.target).attr('href'); // newly activated tab
+            var orderId = tabId.split('-').pop(); // extract order ID from tab ID
+
+            if (!$(tabId).data('loaded')) { // check if tab content is already loaded
+                $.ajax({
+                    url: baseUrl + 'admin/dashboard/order/show/'+orderId,
+                    method: 'GET',
+                    success: function(response) {
+                        $(tabId).html(response); // update tab content with AJAX response
+                        $(tabId).data('loaded', true); // mark tab as loaded to prevent future AJAX calls
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error loading tab content:', error);
+                    }
+                });
+            }
+        });
+        // Trigger click on the first tab to load its content by default
+        $('#custom-tabs-three-tab a.active').trigger('show.bs.tab'); 
+    });
+</script>

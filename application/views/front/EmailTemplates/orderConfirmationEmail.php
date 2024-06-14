@@ -294,7 +294,7 @@
                                     <th style="padding: 8px; border: 1px solid #ddd;  text-align:left;">Payment Method</th>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 8px; border: 1px solid #ddd;  text-align:left;"><?php echo ($orderData['delivey_method'] ?? '') ?></td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;  text-align:left;"><?php echo ($cardData ?? '') ?></td>
                                 </tr>
                             </tbody>
                         </table>

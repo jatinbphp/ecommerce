@@ -248,7 +248,9 @@
                     </tr>
                     <tr>
                         <td>
-                            <?php echo ($orderData['delivey_method'] ?? '') ?>
+                            <div id="cardData-<?php echo ($orderData['id'] ?? 0)?>">
+                                <div class="loader-sm"></div>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -256,3 +258,24 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var payment_intent_id = "<?php echo ((isset($orderData['payment_intent_id']) && $orderData['payment_intent_id']) ? $orderData['payment_intent_id'] : '') ; ?>";
+        var orderId = "<?php echo $orderData['id'] ?? 0 ?>";
+        $.ajax({
+            url:baseUrl+"admin/orders/card-details",
+            method: 'GET',
+            data: { payment_intent_id: payment_intent_id },
+            success: function(response) {
+                if(response.status == 1){
+                    var brandName = response.card_data.brand;
+                    var cardNo = response.card_data.last4;
+                    var text = brandName +' - '+ cardNo;
+                    $('#cardData-'+orderId).html(text);
+                }else{
+                    $('#cardData-'+orderId).html('-');
+                }
+            },
+        });
+    });
+</script>

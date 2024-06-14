@@ -34,24 +34,27 @@ class OrdersController extends MY_Controller
 
 		foreach ($allData as $row) {
 			$totalAmount = number_format(($row->total_amount + $row->shipping_cost + $row->tax_amount), 2);
-			$orderData = [];
-			$orderData[] = "#".$row->id;
-			$orderData[] = $row->id;
-			$orderData[] = $row->user_name;
-			$orderData[] = '$'.$totalAmount;
-			$orderData[] = $this->getOrderStatus($row);
-			$orderData[] = $row->created_at;
-			$orderData[] = '<div class="btn-group btn-group-sm">
+			$data[] = [
+				'payment_intent_id' => $row->payment_intent_id,
+				'id' => $row->id,
+				'order_id' => '#' . $row->id,
+				'user_name' => $row->user_name,
+				'total_amount' => '$'.$totalAmount,
+				'card_brand' => '',
+				'card_number' => '',
+				'card_exp' => '',
+				'status' => $this->getOrderStatus($row),
+				'created_at' => date('Y-m-d h:i:s', strtotime($row->created_at)),
+				'action' => '<div class="btn-group btn-group-sm">
 									<a href="javascript:void(0)" title="View Order" data-id="'.$row->id.'" class="btn btn-sm btn-warning tip view-info" data-url="'.base_url("admin/dashboard/order/show/$row->id").'" data-title="Order Details">
 										<i class="fa fa-eye"></i>
 									</a>
-								</div>';
-
-			$data[] = $orderData;
+								</div>',		
+			];
 		}
 
 		$output = [
-			"draw"            => intval($_POST["draw"]),
+			"draw"            => intval(isset($_POST["draw"]) ? $_POST["draw"] : 0),
 			"recordsTotal"    => $this->order_model->get_all_order_data(),
 			"recordsFiltered" => $this->order_model->get_filtered_order_data(),
 			"data"            => $data,
@@ -117,6 +120,44 @@ class OrdersController extends MY_Controller
         }
 
 		return $this->output->set_content_type('application/json')
+            ->set_output(json_encode($data));
+    }
+
+	/**
+	 * Retrieve and return card details based on the payment intent ID.
+	 *
+	 * This method fetches the payment intent ID from the GET parameters and uses it 
+	 * to retrieve the associated card details from the database. The card details 
+	 * are fetched using the `getCardDetialsBasedOnPaymentIntentId` method of the 
+	 * `order_model`.
+	 *
+	 * The response includes the card details and a status flag indicating whether 
+	 * the retrieval was successful. The response format is as follows:
+	 * 
+	 * If the payment intent ID is provided:
+	 * {
+	 *     "status": 1,
+	 *     "card_data": "card_details_here"
+	 * }
+	 * 
+	 * If the payment intent ID is missing:
+	 * {
+	 *     "status": 0
+	 * }
+	 *
+	 * @return CI_Output JSON response containing the card details and status flag.
+	 */
+
+    public function getCardDetails()
+    {
+    	$paymentIntentId = $this->input->get('payment_intent_id');
+    	if(empty($paymentIntentId)){
+    		$data['status'] = 0;
+    	}else{
+    		$data['card_data'] = $this->order_model->getCardDetialsBasedOnPaymentIntentId($paymentIntentId);
+    		$data['status'] = 1;
+    	}
+    	return $this->output->set_content_type('application/json')
             ->set_output(json_encode($data));
     }
 }

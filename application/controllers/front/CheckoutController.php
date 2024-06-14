@@ -269,8 +269,17 @@ class CheckoutController extends MY_Controller {
     public function sendOrderConfirmationMail($orderId) {
         $orderData = $this->Order_model->getDetails($orderId);
 		$data['status'] = $this->Order_model->getStatusData();
-		$data['orderData'] = $this->Order_model->getOrderWithItemsAndOptions($orderId);
+        $orderData = $this->Order_model->getOrderWithItemsAndOptions($orderId);
+		$data['orderData'] = $orderData;
 		$userData = [];
+        $data['cardData'] = '';
+        if ($orderData['payment_intent_id']) {
+            $cardData = $this->Order_model->getCardDetialsBasedOnPaymentIntentId($orderData['payment_intent_id']);
+            $brand = ($cardData['brand'] ?? '');
+            $last4 = ($cardData['last4'] ?? '');
+
+            $data['cardData'] = "{$brand} - {$last4}";
+        }
 		if(isset($orderData['user_id']) && $orderData['user_id']){
 			$userData = $this->user_model->getUserData($orderData['user_id']);
 		}

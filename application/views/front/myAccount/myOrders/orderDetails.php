@@ -213,7 +213,7 @@
                                     <th>Payment Method</th>
                                 </tr>
                                 <tr>
-                                    <td><?php echo $order->delivey_method; ?></td>
+                                    <td><?php echo ($cardData ?? '') ?></td>
                                 </tr>
                             </tbody>
                         </table>

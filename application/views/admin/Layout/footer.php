@@ -53,6 +53,14 @@ $(document).ready(function() {
     });
 
     var users = $('#usersTable').on('preXhr.dt', function (e, settings, data) {
+        fetch(baseUrl+ 'get-tocken', {
+            method: 'GET',
+        }).then(function(result) {
+            result.json().then(function(data) {
+                $('input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(data.csrf_token_value);
+                $('meta[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').attr('content', data.csrf_token_value);
+            })
+        });
         $.extend(data, getData());
     }).DataTable({
         "processing": true,
@@ -74,6 +82,14 @@ $(document).ready(function() {
 
     //users report
     var usersreport = $('#usersReportTable').on('preXhr.dt', function (e, settings, data) {
+        fetch(baseUrl+ 'get-tocken', {
+            method: 'GET',
+        }).then(function(result) {
+            result.json().then(function(data) {
+                $('input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(data.csrf_token_value);
+                $('meta[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').attr('content', data.csrf_token_value);
+            })
+        });
         $.extend(data, getData());
     }).DataTable({
         "processing": true,
@@ -120,6 +136,14 @@ $(document).ready(function() {
     
     //sales report
     var salesreport = $('#salesReportTable').on('preXhr.dt', function (e, settings, data) {
+        fetch(baseUrl+ 'get-tocken', {
+            method: 'GET',
+        }).then(function(result) {
+            result.json().then(function(data) {
+                $('input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(data.csrf_token_value);
+                $('meta[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').attr('content', data.csrf_token_value);
+            })
+        });
         $.extend(data, getData());
     }).DataTable({
         "processing": true,
@@ -165,6 +189,14 @@ $(document).ready(function() {
     });
 
     var banners = $('#banerTable').on('preXhr.dt', function (e, settings, data) {
+        fetch(baseUrl+ 'get-tocken', {
+            method: 'GET',
+        }).then(function(result) {
+            result.json().then(function(data) {
+                $('input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(data.csrf_token_value);
+                $('meta[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').attr('content', data.csrf_token_value);
+            })
+        });
         $.extend(data, getData());
     }).DataTable({
         "processing": true,
@@ -185,6 +217,14 @@ $(document).ready(function() {
     });
 
     var contentTable = $('#contentTable').on('preXhr.dt', function (e, settings, data) {
+        fetch(baseUrl+ 'get-tocken', {
+            method: 'GET',
+        }).then(function(result) {
+            result.json().then(function(data) {
+                $('input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(data.csrf_token_value);
+                $('meta[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').attr('content', data.csrf_token_value);
+            })
+        });
         $.extend(data, getData());
     }).DataTable({
         "processing": true,
@@ -206,6 +246,14 @@ $(document).ready(function() {
     });
 
     var contactUs = $('#contactUsTable').on('preXhr.dt', function (e, settings, data) {
+        fetch(baseUrl+ 'get-tocken', {
+            method: 'GET',
+        }).then(function(result) {
+            result.json().then(function(data) {
+                $('input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(data.csrf_token_value);
+                $('meta[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').attr('content', data.csrf_token_value);
+            })
+        });
         $.extend(data, getData());
     }).DataTable({
         "processing": true,
@@ -227,6 +275,14 @@ $(document).ready(function() {
     });
 
     var products = $('#productsTable').on('preXhr.dt', function (e, settings, data) {
+        fetch(baseUrl+ 'get-tocken', {
+            method: 'GET',
+        }).then(function(result) {
+            result.json().then(function(data) {
+                $('input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(data.csrf_token_value);
+                $('meta[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').attr('content', data.csrf_token_value);
+            })
+        });
         $.extend(data, getData());
     }).DataTable({
         "processing": true,
@@ -247,6 +303,14 @@ $(document).ready(function() {
     });
 
     var subscriptionPlan = $('#subscriptionPlanTable').on('preXhr.dt', function (e, settings, data) {
+        fetch(baseUrl+ 'get-tocken', {
+            method: 'GET',
+        }).then(function(result) {
+            result.json().then(function(data) {
+                $('input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(data.csrf_token_value);
+                $('meta[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').attr('content', data.csrf_token_value);
+            })
+        });
         $.extend(data, getData());
     }).DataTable({
         "processing": true,
@@ -268,6 +332,14 @@ $(document).ready(function() {
 
     var productId = $('#reviewsTable').attr('data-product-id'); 
     var reviews = $('#reviewsTable').on('preXhr.dt', function (e, settings, data) {
+        fetch(baseUrl+ 'get-tocken', {
+            method: 'GET',
+        }).then(function(result) {
+            result.json().then(function(data) {
+                $('input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(data.csrf_token_value);
+                $('meta[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').attr('content', data.csrf_token_value);
+            })
+        });
         $.extend(data, getData());
     }).DataTable({
         "processing": true,
@@ -287,7 +359,16 @@ $(document).ready(function() {
         }]
     });
 
+    var ajaxCalled = {};
     var orders_table = $('#ordersDasboardTable').on('preXhr.dt', function (e, settings, data) {
+        fetch(baseUrl+ 'get-tocken', {
+            method: 'GET',
+        }).then(function(result) {
+            result.json().then(function(data) {
+                $('input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(data.csrf_token_value);
+                $('meta[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').attr('content', data.csrf_token_value);
+            })
+        });
         $.extend(data, getData());
     }).DataTable({
         'processing': true,
@@ -304,21 +385,91 @@ $(document).ready(function() {
         'paging': false, // Hide pagination
         'info': false, // Hide information about number of records
         'columns': [
-            { data: 'id', width: '10%', name: 'id'},
+            { data: 'id', width: '5%', name: 'id'},
             { data: 'order_id', name: 'order_id'},
             { data: 'user_name', name: 'user_name'},
+            {
+                data: 'card_brand',
+                orderable: false,
+                render: function(data, type, full, meta) {
+                    if(!full.payment_intent_id){
+                        return '-';
+                    }
+                    var resultElement = $('<div id="divDist-'+full.id+'"><div class="loader-sm"></div></div>');
+                    var payment_intent_id = full.payment_intent_id;
+                    $('.loader-show').show();
+                    if (!ajaxCalled[payment_intent_id]) {
+                        ajaxCalled[payment_intent_id] = true;
+                        fetchCardDetails(full).then(function(cardData) {
+                            if (ajaxCalled.hasOwnProperty(full.payment_intent_id)) {
+                                delete ajaxCalled[payment_intent_id];
+                            }
+                            if (Object.keys(ajaxCalled).length === 0) {
+                                $('.loader-show').hide();
+                            }
+                            if (cardData) {
+                                $('#divDist-' + full.id).text(cardData.brand);
+                                $('#cardNumber-' + full.id).text(cardData.last4);
+                                $('#cardExp-' + full.id).text(cardData.exp_date);
+                            } else {
+                                $('#divDist-' + full.id).text('-');
+                                $('#cardNumber-' + full.id).text('-');
+                                $('#cardExp-' + full.id).text('-');
+                            }
+                        })
+                        .catch(function(error) {
+                            $('#divDist-' + full.id).text('-');
+                            $('#cardNumber-' + full.id).text('-');
+                            $('#cardExp-' + full.id).text('-');
+                        });
+                    }
+
+                    return resultElement.prop('outerHTML');
+                }
+            },
+            {
+                data: 'card_number',
+                orderable: false,
+                render: function(data, type, full, meta) {
+                    if(!full.payment_intent_id){
+                        return '-';
+                    }
+                    var resultElement = $('<div id="cardNumber-' + full.id + '"><div class="loader-sm"></div></div>');
+                    return resultElement.prop('outerHTML');
+                }
+            },
+            {
+                data: 'card_exp',
+                orderable: false,
+                render: function(data, type, full, meta) {
+                    if(!full.payment_intent_id){
+                        return '-';
+                    }
+                    var resultElement = $('<div id="cardExp-' + full.id + '"><div class="loader-sm"></div></div>');
+                    return resultElement.prop('outerHTML');
+                }
+            },
             { data: 'total_amount', name: 'total_amount', class: 'text-right'},
-            { data: 'status', "width": "12%", name: 'status'},
+            { data: 'status', "width": "9%", name: 'status'},
             { data: 'created_at', "width": "15%", name: 'created_at'},
             { data: 'action', "width": "5%", name: 'action'},
         ],
         "columnDefs": [
             { "orderable": false, "targets": "_all" } // Disable sorting only for the first column
         ],
-        "order": []
+        "order": [],
     });
 
+    var ajaxCalled = {};
     var orders = $('#ordersTable').on('preXhr.dt', function (e, settings, data) {
+        fetch(baseUrl+ 'get-tocken', {
+            method: 'GET',
+        }).then(function(result) {
+            result.json().then(function(data) {
+                $('input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(data.csrf_token_value);
+                $('meta[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').attr('content', data.csrf_token_value);
+            })
+        });
         $.extend(data, getData());
     }).DataTable({
         "processing": true,
@@ -332,8 +483,87 @@ $(document).ready(function() {
                 updateCsrfToken();
             }
         },
+        'columns': [
+            { data: 'id', width: '5%', name: 'id'},
+            { data: 'order_id', name: 'order_id'},
+            { data: 'user_name', name: 'user_name'},
+            { data: 'total_amount', name: 'total_amount', class: 'text-right'},
+            {
+                data: 'card_brand',
+                orderable: false,
+                width: "6%",
+                render: function(data, type, full, meta) {
+                    if(!full.payment_intent_id){
+                        return '-';
+                    }
+                    var resultElement = $('<div id="divDist-'+full.id+'"><div class="loader-sm"></div></div>');
+                    var payment_intent_id = full.payment_intent_id;
+                    $('.loader-show').show();
+                    if (!ajaxCalled[payment_intent_id]) {
+                        ajaxCalled[payment_intent_id] = true;
+                        fetchCardDetails(full)
+                        .then(function(cardData) {
+                            if (ajaxCalled.hasOwnProperty(full.payment_intent_id)) {
+                                delete ajaxCalled[payment_intent_id];
+                            }
+                            if (Object.keys(ajaxCalled).length === 0) {
+                                $('.loader-show').hide();
+                            }
+                            console.log(full);
+                            console.log(cardData);
+                            if (cardData) {
+                                $('#divDist-' + full.id).text(cardData.brand);
+                                $('#cardNumber-' + full.id).text(cardData.last4);
+                                $('#cardExp-' + full.id).text(cardData.exp_date);
+                                console.log('in if');
+
+                            } else {
+                                $('#divDist-' + full.id).text('-');
+                                $('#cardNumber-' + full.id).text('-');
+                                $('#cardExp-' + full.id).text('-');
+                                console.log('in else');
+                            }
+                        })
+                        .catch(function(error) {
+                            $('#divDist-' + full.id).text('-');
+                            $('#cardNumber-' + full.id).text('-');
+                            $('#cardExp-' + full.id).text('-');
+                        });
+                    }
+
+                    return resultElement.prop('outerHTML');
+                }
+            },
+            {
+                data: 'card_number',
+                orderable: false,
+                width: "6%",
+                render: function(data, type, full, meta) {
+                    if(!full.payment_intent_id){
+                        return '-';
+                    }
+                    var resultElement = $('<div id="cardNumber-' + full.id + '"><div class="loader-sm"></div></div>');
+                    return resultElement.prop('outerHTML');
+                }
+            },
+            {
+                data: 'card_exp',
+                orderable: false,
+                width: "8%",
+                render: function(data, type, full, meta) {
+                    if(!full.payment_intent_id){
+                        return '-';
+                    }
+                    var resultElement = $('<div id="cardExp-' + full.id + '"><div class="loader-sm"></div></div>');
+                    return resultElement.prop('outerHTML');
+                }
+            },
+            { data: 'status', "width": "11%", name: 'status'},
+            { data: 'created_at', "width": "15%", name: 'created_at'},
+            { data: 'action', "width": "5%", name: 'action'},
+        ],
         "columnDefs": [{
-            "targets":[0,1,2,3,4,5,6],
+            "targets":[0,1,2,3,4,5,6,7,8,9],
             "orderable": false
         }]
     });
@@ -524,24 +754,33 @@ $(document).ready(function() {
         },
         function(isConfirm) {
             if (isConfirm) {
-                $.ajax({
-                    url: baseUrl+'admin/orders/update-status',
-                    type: "post",
-                    data: dataObj,
-                    success: function(data){
-                        if(data.status == 1){
-                            swal("Success", "Order status is updated", "success");
-                        } else {
-                            swal("Error", "Something is wrong!", "error");
-                        }
+                fetch(baseUrl+ 'get-tocken', {
+                method: 'GET',
+            }).then(function(result) {
+                result.json().then(function(data) {
+                    $('input[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').val(data.csrf_token_value);
+                    $('meta[name="<?php echo $this->security->get_csrf_token_name(); ?>"]').attr('content', data.csrf_token_value);
+                    
+                    $.ajax({
+                        url: baseUrl+'admin/orders/update-status',
+                        type: "post",
+                        data: dataObj,
+                        success: function(data){
+                            if(data.status == 1){
+                                swal("Success", "Order status is updated", "success");
+                            } else {
+                                swal("Error", "Something is wrong!", "error");
+                            }
 
-                        if(status!='pending'){
-                            $("#status"+orderId).prop("disabled", true);
-                        }                            
-                    }
-                }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
-                    updateCsrfToken();
-                });
+                            if(status!='pending'){
+                                $("#status"+orderId).prop("disabled", true);
+                            }                            
+                        }
+                    }).always(function (dataOrjqXHR, textStatus, jqXHRorErrorThrown) {
+                        updateCsrfToken();
+                    });
+                })
+            });
             } else {
                 swal("Cancelled", "Your data is safe!", "error");
             }
@@ -645,6 +884,22 @@ $(document).ready(function() {
         $("input[data-bootstrap-switch]").each(function(){
             $(this).bootstrapSwitch('state', $(this).prop('checked'));
         })
+
+        function fetchCardDetails(full) {
+            return new Promise(function(resolve, reject) {
+                $.ajax({
+                    url: baseUrl + "admin/orders/card-details",
+                    method: 'GET',
+                    data: { payment_intent_id: full.payment_intent_id },
+                    success: function(response) {
+                        resolve(response.card_data);
+                    },
+                    error: function(xhr, status, error) {
+                        reject(error);
+                    },
+                });
+            });
+        }
 
 </script>
 <script type="text/javascript">
