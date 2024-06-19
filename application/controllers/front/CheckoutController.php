@@ -82,6 +82,14 @@ class CheckoutController extends MY_Controller {
             'tax_amount' => 0,
         ];
 
+        //Add Card Details
+        if(isset($orderInputs['payment_intent_id']) && $orderInputs['payment_intent_id']){
+            $card_data = $this->Order_model->getCardDetialsBasedOnPaymentIntentId($orderInputs['payment_intent_id']);
+            $orderInputs['card_brand'] = ($card_data['brand'] ?? '');
+            $orderInputs['card_four'] = ($card_data['last4'] ?? '');
+            $orderInputs['card_exp'] = ($card_data['exp_date'] ?? '');
+        }
+
         $addressId = $this->input->post('address_id');
         $shippingAddressId = $this->input->post('shipping_address_id');
         $orderInputs['address_id'] = $addressId;
@@ -215,6 +223,8 @@ class CheckoutController extends MY_Controller {
             }
         }
 
+
+
         $address = $this->User_address_model->getAddressDetails($addressId);
 
         if($address && $userId){
@@ -272,14 +282,7 @@ class CheckoutController extends MY_Controller {
         $orderData = $this->Order_model->getOrderWithItemsAndOptions($orderId);
 		$data['orderData'] = $orderData;
 		$userData = [];
-        $data['cardData'] = '';
-        if ($orderData['payment_intent_id']) {
-            $cardData = $this->Order_model->getCardDetialsBasedOnPaymentIntentId($orderData['payment_intent_id']);
-            $brand = ($cardData['brand'] ?? '');
-            $last4 = ($cardData['last4'] ?? '');
 
-            $data['cardData'] = "{$brand} - {$last4}";
-        }
 		if(isset($orderData['user_id']) && $orderData['user_id']){
 			$userData = $this->user_model->getUserData($orderData['user_id']);
 		}

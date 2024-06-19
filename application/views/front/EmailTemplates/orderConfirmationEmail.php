@@ -294,7 +294,7 @@
                                     <th style="padding: 8px; border: 1px solid #ddd;  text-align:left;">Payment Method</th>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 8px; border: 1px solid #ddd;  text-align:left;"><?php echo ($cardData ?? '') ?></td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;  text-align:left;"><?php echo isset($orderData['card_brand']) ? $orderData['card_brand'] : '' ?> - <?php echo isset($orderData['card_four']) ? $orderData['card_four'] : '' ?></td>
                                 </tr>
                             </tbody>
                         </table>

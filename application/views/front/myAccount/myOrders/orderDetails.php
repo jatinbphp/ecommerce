@@ -213,7 +213,7 @@
                                     <th>Payment Method</th>
                                 </tr>
                                 <tr>
-                                    <td><?php echo ($cardData ?? '') ?></td>
+                                    <td><?php echo isset($order->card_brand) ? $order->card_brand : '' ?> - <?php echo isset($order->card_four) ? $order->card_four : '' ?></td>
                                 </tr>
                             </tbody>
                         </table>

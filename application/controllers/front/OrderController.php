@@ -103,14 +103,7 @@ class OrderController extends MY_Controller {
             redirect('404', 'refresh');
         }
         $orderItems = $this->Order_items_model->getOrderItemsByOrderId($id);
-        $data['cardData'] = '';
-        if ($order->payment_intent_id) {
-            $cardData = $this->Order_model->getCardDetialsBasedOnPaymentIntentId($order->payment_intent_id);
-            $brand = ($cardData['brand'] ?? '');
-            $last4 = ($cardData['last4'] ?? '');
 
-            $data['cardData'] = "{$brand} - {$last4}";
-        }
         $orderAttributes = $this->Order_options_model->getOrderItemsByOrderId($id);
         $address    = $this->User_address_model->getAddressDetails($order->address_id);
          

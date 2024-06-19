@@ -362,7 +362,7 @@ class Order_model extends CI_Model
             ELSE CONCAT(JSON_UNQUOTE(JSON_EXTRACT(address_info, '$.first_name')), ' ', JSON_UNQUOTE(JSON_EXTRACT(address_info, '$.last_name')), 
                 IF(JSON_EXTRACT(address_info, '$.email') IS NOT NULL, CONCAT(' (', JSON_UNQUOTE(JSON_EXTRACT(address_info, '$.email')), ')'), '')
             )
-            END LIKE '%".$searchString."%' OR orders.status LIKE '%".$searchString."%' OR orders.id LIKE '%".$searchString."%' OR orders.total_amount LIKE '%".$searchString."%')", NULL, FALSE);
+            END LIKE '%".$searchString."%' OR orders.status LIKE '%".$searchString."%' OR orders.id LIKE '%".$searchString."%' OR orders.total_amount LIKE '%".$searchString."%' OR orders.card_brand LIKE '%".$searchString."%' OR orders.card_four LIKE '%".$searchString."%' OR orders.card_exp LIKE '%".$searchString."%')", NULL, FALSE);
 
         }
 

@@ -71,4 +71,3 @@ $route['admin/reports/orders/show/(:any)'] = 'admin/ReportController/showOrders/
 $route['admin/orders'] = 'admin/OrdersController';
 $route['admin/orders/fetchOrders'] = 'admin/OrdersController/fetchOrders';
 $route['admin/orders/update-status'] = 'admin/OrdersController/updateStatus';
-$route['admin/orders/card-details'] = 'admin/OrdersController/getCardDetails';

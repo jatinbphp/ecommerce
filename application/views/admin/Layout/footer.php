@@ -359,7 +359,6 @@ $(document).ready(function() {
         }]
     });
 
-    var ajaxCalled = {};
     var orders_table = $('#ordersDasboardTable').on('preXhr.dt', function (e, settings, data) {
         fetch(baseUrl+ 'get-tocken', {
             method: 'GET',
@@ -388,67 +387,9 @@ $(document).ready(function() {
             { data: 'id', width: '5%', name: 'id'},
             { data: 'order_id', name: 'order_id'},
             { data: 'user_name', name: 'user_name'},
-            {
-                data: 'card_brand',
-                orderable: false,
-                render: function(data, type, full, meta) {
-                    if(!full.payment_intent_id){
-                        return '-';
-                    }
-                    var resultElement = $('<div id="divDist-'+full.id+'"><div class="loader-sm"></div></div>');
-                    var payment_intent_id = full.payment_intent_id;
-                    $('.loader-show').show();
-                    if (!ajaxCalled[payment_intent_id]) {
-                        ajaxCalled[payment_intent_id] = true;
-                        fetchCardDetails(full).then(function(cardData) {
-                            if (ajaxCalled.hasOwnProperty(full.payment_intent_id)) {
-                                delete ajaxCalled[payment_intent_id];
-                            }
-                            if (Object.keys(ajaxCalled).length === 0) {
-                                $('.loader-show').hide();
-                            }
-                            if (cardData) {
-                                $('#divDist-' + full.id).text(cardData.brand);
-                                $('#cardNumber-' + full.id).text(cardData.last4);
-                                $('#cardExp-' + full.id).text(cardData.exp_date);
-                            } else {
-                                $('#divDist-' + full.id).text('-');
-                                $('#cardNumber-' + full.id).text('-');
-                                $('#cardExp-' + full.id).text('-');
-                            }
-                        })
-                        .catch(function(error) {
-                            $('#divDist-' + full.id).text('-');
-                            $('#cardNumber-' + full.id).text('-');
-                            $('#cardExp-' + full.id).text('-');
-                        });
-                    }
-
-                    return resultElement.prop('outerHTML');
-                }
-            },
-            {
-                data: 'card_number',
-                orderable: false,
-                render: function(data, type, full, meta) {
-                    if(!full.payment_intent_id){
-                        return '-';
-                    }
-                    var resultElement = $('<div id="cardNumber-' + full.id + '"><div class="loader-sm"></div></div>');
-                    return resultElement.prop('outerHTML');
-                }
-            },
-            {
-                data: 'card_exp',
-                orderable: false,
-                render: function(data, type, full, meta) {
-                    if(!full.payment_intent_id){
-                        return '-';
-                    }
-                    var resultElement = $('<div id="cardExp-' + full.id + '"><div class="loader-sm"></div></div>');
-                    return resultElement.prop('outerHTML');
-                }
-            },
+            { data: 'card_brand', name: 'card_brand'},
+            { data: 'card_number', name: 'card_number'},
+            { data: 'card_exp', name: 'card_exp'},
             { data: 'total_amount', name: 'total_amount', class: 'text-right'},
             { data: 'status', "width": "9%", name: 'status'},
             { data: 'created_at', "width": "15%", name: 'created_at'},
@@ -459,8 +400,7 @@ $(document).ready(function() {
         ],
         "order": [],
     });
-
-    var ajaxCalled = {};
+    
     var orders = $('#ordersTable').on('preXhr.dt', function (e, settings, data) {
         fetch(baseUrl+ 'get-tocken', {
             method: 'GET',
@@ -488,76 +428,9 @@ $(document).ready(function() {
             { data: 'order_id', name: 'order_id'},
             { data: 'user_name', name: 'user_name'},
             { data: 'total_amount', name: 'total_amount', class: 'text-right'},
-            {
-                data: 'card_brand',
-                orderable: false,
-                width: "6%",
-                render: function(data, type, full, meta) {
-                    if(!full.payment_intent_id){
-                        return '-';
-                    }
-                    var resultElement = $('<div id="divDist-'+full.id+'"><div class="loader-sm"></div></div>');
-                    var payment_intent_id = full.payment_intent_id;
-                    $('.loader-show').show();
-                    if (!ajaxCalled[payment_intent_id]) {
-                        ajaxCalled[payment_intent_id] = true;
-                        fetchCardDetails(full)
-                        .then(function(cardData) {
-                            if (ajaxCalled.hasOwnProperty(full.payment_intent_id)) {
-                                delete ajaxCalled[payment_intent_id];
-                            }
-                            if (Object.keys(ajaxCalled).length === 0) {
-                                $('.loader-show').hide();
-                            }
-                            console.log(full);
-                            console.log(cardData);
-                            if (cardData) {
-                                $('#divDist-' + full.id).text(cardData.brand);
-                                $('#cardNumber-' + full.id).text(cardData.last4);
-                                $('#cardExp-' + full.id).text(cardData.exp_date);
-                                console.log('in if');
-
-                            } else {
-                                $('#divDist-' + full.id).text('-');
-                                $('#cardNumber-' + full.id).text('-');
-                                $('#cardExp-' + full.id).text('-');
-                                console.log('in else');
-                            }
-                        })
-                        .catch(function(error) {
-                            $('#divDist-' + full.id).text('-');
-                            $('#cardNumber-' + full.id).text('-');
-                            $('#cardExp-' + full.id).text('-');
-                        });
-                    }
-
-                    return resultElement.prop('outerHTML');
-                }
-            },
-            {
-                data: 'card_number',
-                orderable: false,
-                width: "6%",
-                render: function(data, type, full, meta) {
-                    if(!full.payment_intent_id){
-                        return '-';
-                    }
-                    var resultElement = $('<div id="cardNumber-' + full.id + '"><div class="loader-sm"></div></div>');
-                    return resultElement.prop('outerHTML');
-                }
-            },
-            {
-                data: 'card_exp',
-                orderable: false,
-                width: "8%",
-                render: function(data, type, full, meta) {
-                    if(!full.payment_intent_id){
-                        return '-';
-                    }
-                    var resultElement = $('<div id="cardExp-' + full.id + '"><div class="loader-sm"></div></div>');
-                    return resultElement.prop('outerHTML');
-                }
-            },
+            { data: 'card_brand', name: 'card_brand', width:'6%'},
+            { data: 'card_number', name: 'card_number', width:'6%'},
+            { data: 'card_exp', name: 'card_exp', width:'8%'},
             { data: 'status', "width": "11%", name: 'status'},
             { data: 'created_at', "width": "15%", name: 'created_at'},
             { data: 'action', "width": "5%", name: 'action'},
@@ -835,72 +708,55 @@ $(document).ready(function() {
     }
 
     $(".description").each(function() {
-            var textarea = $(this);
-            textarea.summernote({
-                height: 250,
-                placeholder: textarea.attr('placeholder'),
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough', 'superscript', 'subscript']],
-                    ['fontsize', ['fontsize', 'height']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['insert', ['table','picture','link','map','minidiag']],
-                    ['misc', ['codeview']],
-                ],
-                callbacks: {
-                    onImageUpload: function(files) {
-                        for (var i = 0; i < files.length; i++)
-                            upload_image(files[i], this);
-                    }
-                },
-                onInit: function() {
+        var textarea = $(this);
+        textarea.summernote({
+            height: 250,
+            placeholder: textarea.attr('placeholder'),
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize', 'height']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['table','picture','link','map','minidiag']],
+                ['misc', ['codeview']],
+            ],
+            callbacks: {
+                onImageUpload: function(files) {
+                    for (var i = 0; i < files.length; i++)
+                        upload_image(files[i], this);
+                }
+            },
+            onInit: function() {
+                var placeholderText = textarea.attr('placeholder');
+                placeholderText = placeholderText.replace(/\n/g, "<br>");
+                textarea.summernote('option', 'placeholder', placeholderText);
+            },
+            onChange: function(contents) {
+                if (contents.trim() === '') {
                     var placeholderText = textarea.attr('placeholder');
                     placeholderText = placeholderText.replace(/\n/g, "<br>");
                     textarea.summernote('option', 'placeholder', placeholderText);
-                },
-                onChange: function(contents) {
-                    if (contents.trim() === '') {
-                        var placeholderText = textarea.attr('placeholder');
-                        placeholderText = placeholderText.replace(/\n/g, "<br>");
-                        textarea.summernote('option', 'placeholder', placeholderText);
-                    }
                 }
-            });
+            }
         });
+    });
       
-        $('#daterange').daterangepicker({
-            opens: 'left',
-            locale: {
-                format: 'YYYY/MM/DD'
-            },
-            autoUpdateInput: false
-        });
+    $('#daterange').daterangepicker({
+        opens: 'left',
+        locale: {
+            format: 'YYYY/MM/DD'
+        },
+        autoUpdateInput: false
+    });
 
-        $('#daterange').on('apply.daterangepicker', function(event, picker) {
-            $(this).val(picker.startDate.format('YYYY/MM/DD') + ' - ' + picker.endDate.format('YYYY/MM/DD'));
-        });
+    $('#daterange').on('apply.daterangepicker', function(event, picker) {
+        $(this).val(picker.startDate.format('YYYY/MM/DD') + ' - ' + picker.endDate.format('YYYY/MM/DD'));
+    });
 
-        $("input[data-bootstrap-switch]").each(function(){
-            $(this).bootstrapSwitch('state', $(this).prop('checked'));
-        })
-
-        function fetchCardDetails(full) {
-            return new Promise(function(resolve, reject) {
-                $.ajax({
-                    url: baseUrl + "admin/orders/card-details",
-                    method: 'GET',
-                    data: { payment_intent_id: full.payment_intent_id },
-                    success: function(response) {
-                        resolve(response.card_data);
-                    },
-                    error: function(xhr, status, error) {
-                        reject(error);
-                    },
-                });
-            });
-        }
-
+    $("input[data-bootstrap-switch]").each(function(){
+        $(this).bootstrapSwitch('state', $(this).prop('checked'));
+    })
 </script>
 <script type="text/javascript">
 	$(function () {
